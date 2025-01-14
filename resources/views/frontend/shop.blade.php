@@ -219,7 +219,7 @@
                 const queryString = filterForm.serialize();
 
                 history.pushState({}, '', `{{ route('public.shop') }}?${queryString}`);
-
+   
 
                 // AJAX request
                 $.ajax({
