@@ -633,15 +633,12 @@ class ProductController extends Controller
             }
         }
 
-
-
         $size       = trim($size ?? '');
         $color      = trim($color ?? '');
         $sizeCode   = Size::where('size_value', $size)->pluck('size_code')->first();
         $colorCode  = Color::where('color_name', $color)->pluck('color_code')->first();
 
-
-        return $seller_code . $product_no . $art_code . $colorCode . $sizeCode;
+        return $seller_code .'-'. $product_no .'-'. $art_code .'-'. $colorCode .'-'. $sizeCode;
     }
 
 

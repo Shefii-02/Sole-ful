@@ -882,7 +882,7 @@
                     validation_errors += 'A SKU (Stock Keeping Unit) is required' + "<br/>";
                 }
 
-                var pattern = /^[A-Z0-9]+$/i;
+                var pattern = /^[A-Z0-9-]+$/i;
 
                 if (!$("input[name=product_sku_single]").val().match(pattern)) {
                     validation_errors +=
@@ -998,7 +998,7 @@
                     var selection = $(this).val();
 
 
-                    var pattern = /^[A-Z0-9]+$/i;
+                    var pattern = /^[A-Z0-9-]+$/i;
 
                     if (!$(this).val().match(pattern)) {
                         validation_errors +=

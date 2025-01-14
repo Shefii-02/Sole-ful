@@ -49,6 +49,10 @@ class Product extends Model
         return $this->hasOne(FeaturedProduct::class);
     }
 
+    public function getMinPriceAttribute(){
+        return $this->product_variation->min('price');
+    }
+
 
     public function getMainThumbImageAttribute()
     {
