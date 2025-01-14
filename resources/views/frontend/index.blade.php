@@ -1,7 +1,4 @@
 @extends('layouts.app')
-
-
-
 @section('content')
     <!-- hero slider section start -->
     <section class="hero-slider">
@@ -9,33 +6,31 @@
             <div class="row">
                 <div class="col-12">
                     <div class="hero-slider-active slick-arrow-style slick-arrow-style_hero slick-dot-style">
-                        <!-- single slider item start -->
-                        <div class="hero-single-slide">
-                            <div class="hero-slider-item bg-img" data-bg="assets/img/slider/slider-1.jpg">
-                                <div class="hero-slider-content slide-1">
-                                    <h5 class="slide-subtitle">Top Selling!</h5>
-                                    <h2 class="slide-title">New Collection</h2>
-                                    <p class="slide-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        sed do eiusmod tempor incidid</p>
-                                    <a href="shop.html" class="btn btn-hero">SHOP NOW</a>
+                        @detect
+                            {{-- 
+                        slider_in_mobile
+                        bestSellProduct
+                        featuredProduct --}}
+                            @foreach ($slider_in_mobile ?? [] as $mobile)
+                                <!-- single slider item start -->
+                                <div class="hero-single-slide">
+                                    <div class="hero-slider-item bg-img" data-bg="{{ asset('images/'.$mobile) }}">
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- single slider item end -->
-
-                        <!-- single slider item start -->
-                        <div class="hero-single-slide">
-                            <div class="hero-slider-item bg-img" data-bg="assets/img/slider/slider-2.jpg">
-                                <div class="hero-slider-content slide-1">
-                                    <h5 class="slide-subtitle">Best Selling!</h5>
-                                    <h2 class="slide-title">Top Collection</h2>
-                                    <p class="slide-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                        sed do eiusmod tempor incidid</p>
-                                    <a href="shop.html" class="btn btn-hero">SHOP NOW</a>
+                                <!-- single slider item end -->
+                            @endforeach
+                        @else
+                            @foreach ($slider_in_desktop ?? [] as $desktop)
+                                <!-- single slider item start -->
+                                <div class="hero-single-slide">
+                                    <div class="hero-slider-item bg-img" data-bg="{{ asset('images/'.$desktop) }}">
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- single slider item end -->
+                                <!-- single slider item end -->
+                            @endforeach
+                        @enddetect
                     </div>
                 </div>
             </div>

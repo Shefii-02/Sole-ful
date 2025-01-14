@@ -2044,13 +2044,25 @@ fieldset legend {
 @media only screen and (min-width: 768px) and (max-width: 991.98px),
 only screen and (max-width: 767.98px) {
   .hero-slider-item {
-    height: 400px;
+    max-height: 530px;
+    min-height: 400px;
+    margin-top: 50px;
+  }
+
+  .header-area .container {
+    width: 100% !important;
   }
 }
 
 @media only screen and (max-width: 575.98px) {
   .hero-slider-item {
-    height: 350px;
+    max-height: 530px;
+    min-height: 400px;
+    margin-top: 50px;
+  }
+
+  .header-area .container {
+    width: 100% !important;
   }
 }
 
@@ -2239,7 +2251,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .product-item:hover {
-  border-color: #ab863d; 
+  border-color: #ab863d;
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
   background-color: #e5e7eb88;
 }
@@ -2277,7 +2289,8 @@ only screen and (max-width: 767.98px) {
 .product-content .product-name {
   padding-bottom: 12px;
 }
-.product-content .product-name a{
+
+.product-content .product-name a {
   text-decoration: none;
 }
 

@@ -430,7 +430,7 @@ class ProductController extends Controller
     {
         //
         try {
-            $product = Product::where('id', $product)->first() or abort(404);
+            $product = Product::where('id', $product)->delete() or abort(404);
             Session::flash('success_msg', "Successfully deleted the product");
             return redirect()->route('admin.products.index');
             exit;

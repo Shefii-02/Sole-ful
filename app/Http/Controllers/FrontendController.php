@@ -48,7 +48,7 @@ class FrontendController extends Controller
 
         // $testimonials = $this->getTestimonials();
         // compact('slider_in_desktop', 'slider_in_mobile', 'services', 'blogs', 'doctors', 'testimonials')
-        return view('frontend.index');
+        return view('frontend.index',compact('slider_in_desktop','slider_in_mobile','bestSellProduct','featuredProduct'));
     }
     
 

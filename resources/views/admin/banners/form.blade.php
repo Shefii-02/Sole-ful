@@ -127,17 +127,17 @@
                             </label>
                         </div>
                     </div>
-                    <div class="mb-2 w-1/2">
+                    <div class="mb-3 w-1/2 d-none">
                         <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Button Text</label>
                         <input type="text" autocomplete="off" name="name" class="form-control" value="{{ isset($banner) ? $banner->name : '' }}">
                     </div>
-                    <div class="mb-2 w-1/2">
+                    <div class="mb-3 w-1/2">
                         <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Redirect Url</label>
                         <input type="url" autocomplete="off" name="redirection" class="form-control" value="{{ isset($banner) ? $banner->link : '' }}">
                     </div>
 
                     <!-- Display Order -->
-                    <div class="mb-5 w-1/4">
+                    <div class="mb-4 w-1/2">
                         <label class="block text-sm font-medium text-black dark:text-dark">Display Order</label>
                         <select class="form-control mt-2" name="display_order" required>
                             @for ($i = 1; $i < 10; $i++)
