@@ -39,16 +39,14 @@ class FrontendController extends Controller
 
     public function index()
     {
-        $banners    = Banner::where('status', 1)->orderby('display_order')->get();
-        $slider_in_desktop = $banners->pluck('desktop');
-        $slider_in_mobile = $banners->pluck('mobile');
-        $bestSellProduct   = BestSellProduct::get();
-        $featuredProduct      = FeaturedProduct::get();
-        // $doctors    = Doctor::where('status', 1)->orderby('display_order')->get();
+        $banners                = Banner::where('status', 1)->orderby('display_order')->get();
+        $slider_in_desktop      = $banners->pluck('desktop');
+        $slider_in_mobile       = $banners->pluck('mobile');
+        $bestSellProduct        = BestSellProduct::get();
+        $featuredProduct        = FeaturedProduct::get();
+        $blogs                  = BlogPost::orderBy('created_at','desc')->get();
 
-        // $testimonials = $this->getTestimonials();
-        // compact('slider_in_desktop', 'slider_in_mobile', 'services', 'blogs', 'doctors', 'testimonials')
-        return view('frontend.index',compact('slider_in_desktop','slider_in_mobile','bestSellProduct','featuredProduct'));
+        return view('frontend.index',compact('slider_in_desktop','slider_in_mobile','bestSellProduct','featuredProduct','blogs'));
     }
     
 

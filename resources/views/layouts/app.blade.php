@@ -278,8 +278,8 @@
                     <div class="row">
                         <div class="col-md-6 order-2 order-md-1">
                             <div class="copyright-text text-center text-md-start">
-                                <p>&copy; 2022 <b>Juan</b> Made with <i class="fa fa-heart text-danger"></i> by <a
-                                        href="https://hasthemes.com/"><b>HasThemes</b></a></p>
+                                <p>&copy; {{ date('Y') }} <b>Soleful</b> Made with <i class="fa fa-heart text-danger"></i> by <a
+                                    target="_blank"   href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a></p>
                             </div>
                         </div>
                         <div class="col-md-6 order-1 order-md-2">
