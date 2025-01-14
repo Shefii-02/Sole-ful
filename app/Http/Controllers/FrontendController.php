@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Banner;
+use App\Models\BestSellProduct;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\Doctor;
 use App\Models\Enquiry;
+use App\Models\FeaturedProduct;
 use App\Models\Package;
 use App\Models\Service;
 use Exception;
@@ -37,11 +39,11 @@ class FrontendController extends Controller
 
     public function index()
     {
-        // $banners    = Banner::where('status', 1)->orderby('display_order')->get();
-        // $slider_in_desktop = $banners->pluck('desktop');
-        // $slider_in_mobile = $banners->pluck('mobile');
-        // $services   = Service::where('status', 1)->orderby('display_order')->get();
-        // $blogs      = BlogPost::where('status', 1)->orderby('created_at', 'desc')->get();
+        $banners    = Banner::where('status', 1)->orderby('display_order')->get();
+        $slider_in_desktop = $banners->pluck('desktop');
+        $slider_in_mobile = $banners->pluck('mobile');
+        $bestSellProduct   = BestSellProduct::get();
+        $featuredProduct      = FeaturedProduct::get();
         // $doctors    = Doctor::where('status', 1)->orderby('display_order')->get();
 
         // $testimonials = $this->getTestimonials();

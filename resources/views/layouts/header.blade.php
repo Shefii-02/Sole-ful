@@ -128,9 +128,15 @@
                                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
                                     class="dropdown-menu show"
                                     style="width: auto; padding: 10px; position: absolute; z-index: 1000;">
+                                    @if(auth()->user()->type == 'superadmin')
+                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="{{ route('admin.dashboard') }}">
+                                            <i class="bi bi-person"></i> Dashboard
+                                        </a>
+                                    @else
                                     <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="">
                                         <i class="bi bi-person"></i> My Account
                                     </a>
+                                    @endif
                                     <form action="{{ route('logout') }}" id="logout-form" method="POST">
                                         @method('POST') @csrf </form>
                                     <button type="submit" form="logout-form"
