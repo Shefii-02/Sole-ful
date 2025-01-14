@@ -83,7 +83,7 @@
                                     <img src="{{ asset('images/' . $banner->mobile) }}" class="w-50 rounded-5">
                                 </div>
                                 <div class="w-2/12 text-center">
-                                    <span class="font-medium">{{ $banner->link }}</span>
+                                    <a href="{{ $banner->link }}" target="_blank" title="{{ $banner->link }}" class="font-medium">{{ Str::limit($banner->link,10) }}</a>
                                 </div>
                                 <div class="w-1/12 text-center">
                                     <span class="font-medium">{{ $banner->display_order }}</span>
