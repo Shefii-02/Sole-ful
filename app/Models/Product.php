@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     /** @use HasFactory<\Database\Factories\ProductFactory> */
-    use HasFactory,SoftDeletes;
-    protected $dates = ['deleted_at'];
+    // SoftDeletes
+    use HasFactory;
+    // protected $dates = ['deleted_at'];
 
 
 
@@ -24,14 +25,25 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function variationKeys()
+    {
+        return $this->hasMany(VariationKey::class);
+    }
+
+    
     public function getStatusTextAttribute()
     {
         return $this->status == 1 ? '<span class="text-success"> Published </span>' : '<span class="text-danger"> Drafted </span>';
     }
 
-    public function categories(){
-        return $this->hasMany(ProductCategory::class);
+    // public function categories(){
+    //     return $this->hasMany(ProductCategory::class);
+    // }
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'product_categories', 'product_id', 'category_id');
     }
+
 
     public function option(){
         return $this->hasMany(Option::class);

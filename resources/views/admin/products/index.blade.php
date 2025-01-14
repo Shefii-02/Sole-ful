@@ -55,7 +55,6 @@
                     </div>
 
                 </div>
-
                 <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
                     <div class="flex justify-between items-center gap-x-6">
                         <div class="w-1/12 text-left"><span class="small">Product no</span></div>

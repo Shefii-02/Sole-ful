@@ -7,11 +7,14 @@ use App\Models\Banner;
 use App\Models\BestSellProduct;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
+use App\Models\Category;
 use App\Models\Doctor;
 use App\Models\Enquiry;
 use App\Models\FeaturedProduct;
 use App\Models\Package;
+use App\Models\Product;
 use App\Models\Service;
+use App\Models\VariationKey;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,14 +28,14 @@ class FrontendController extends Controller
 {
 
 
-    public function home(){
-        if(Auth::check() && auth('web')->user()->type == 'superadmin'){
+    public function home()
+    {
+        if (Auth::check() && auth('web')->user()->type == 'superadmin') {
             return redirect()->route('admin.dashboard');
         }
-        if(Auth::check() && auth('web')->user()->type == 'user'){
+        if (Auth::check() && auth('web')->user()->type == 'user') {
             return redirect()->route('account.dashboard');
-        }
-        else{
+        } else {
             return redirect()->route('login');
         }
     }
@@ -44,17 +47,144 @@ class FrontendController extends Controller
         $slider_in_mobile       = $banners->pluck('mobile');
         $bestSellProduct        = BestSellProduct::get();
         $featuredProduct        = FeaturedProduct::get();
-        $blogs                  = BlogPost::orderBy('created_at','desc')->get();
+        $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
 
-        return view('frontend.index',compact('slider_in_desktop','slider_in_mobile','bestSellProduct','featuredProduct','blogs'));
+        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs'));
     }
-    
 
-    public function shop()
+
+    // public function shop(Request $request)
+    // {
+    //     $products           = Product::where('status', 1)->orderby('created_at', 'desc')->get();
+    //     $categories         = Category::orderby('created_at', 'desc')->get();
+    //     $available_colors = VariationKey::where('type', 'color')
+    //                                     ->distinct('value')
+    //                                     ->pluck('value');
+
+    //     $available_sizes = VariationKey::where('type', 'size')
+    //                                     ->distinct('value')
+    //                                     ->pluck('value');
+
+    //     return view('frontend.shop', compact('products','available_colors','available_sizes'));
+    // }
+    // public function shop(Request $request)
+    // {
+    //     $query = Product::where('status', 1);
+
+    //     // Filter by price range
+    //     if ($request->has('price_min') && $request->has('price_max')) {
+    //         $query->whereBetween('price', [$request->price_min, $request->price_max]);
+    //     }
+
+    //     // Filter by color
+    //     if ($request->has('color')) {
+    //         $query->whereHas('variationKeys', function ($q) use ($request) {
+    //             $q->where('type', 'color')->whereIn('value', $request->color);
+    //         });
+    //     }
+
+    //     // Filter by size
+    //     if ($request->has('size')) {
+    //         $query->whereHas('variationKeys', function ($q) use ($request) {
+    //             $q->where('type', 'size')->whereIn('value', $request->size);
+    //         });
+    //     }
+
+    //     $products = $query->get();
+
+    //     $available_colors = VariationKey::where('type', 'color')
+    //         ->withCount(['product' => function ($query) use ($request) {
+    //             if ($request->has('color')) {
+    //                 $query->whereIn('value', $request->color);
+    //             }
+    //         }])
+    //         ->distinct('value')
+    //         ->get();
+
+    //     $available_sizes = VariationKey::where('type', 'size')
+    //         ->withCount(['product' => function ($query) use ($request) {
+    //             if ($request->has('size')) {
+    //                 $query->whereIn('value', $request->size);
+    //             }
+    //         }])
+    //         ->distinct('value')
+    //         ->get();
+
+    //     $categories = Category::withCount([
+    //         'products' => function ($query) {
+    //             $query->where('status', 1);
+    //         }
+    //     ])->orderby('created_at', 'desc')->get();
+
+    //     return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories'));
+    // }
+
+    public function shop(Request $request)
     {
-        // $services   = Service::where('status', 1)->orderby('display_order')->get();, compact('services')
-        return view('frontend.shop');
+        $query = Product::where('status', 1);
+
+        // Filter by price range
+        if ($request->has('price_min') && $request->has('price_max')) {
+            $query->whereHas('product_variation', function ($q) use ($request) {
+                $q->whereBetween('price', [$request->price_min, $request->price_max]);
+            });
+        }
+
+        // Filter by color
+        if ($request->has('colors')) {
+
+            $query->whereHas('variationKeys', function ($q) use ($request) {
+                $q->where('type', 'color')->whereIn('value', $request->colors);
+            });
+        }
+
+        // Filter by size
+        if ($request->has('sizes')) {
+            $query->whereHas('variationKeys', function ($q) use ($request) {
+                $q->where('type', 'size')->whereIn('value', $request->sizes);
+            });
+        }
+
+        if ($request->has('categories')) {
+            $query->whereHas('categories', function ($q) use ($request) {
+                $q->whereIn('name', $request->categories);
+            });
+        }
+
+
+        $products = $query->get();
+
+        // Get available colors with unique product counts
+        $available_colors =  VariationKey::where('type', 'color')
+            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
+            ->groupBy('value')
+            ->get();
+
+
+        // Get available sizes with unique product counts
+        $available_sizes = VariationKey::where('type', 'size')
+            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
+            ->groupBy('value')
+            ->get();
+        // Categories with product counts
+        $categories = Category::withCount([
+            'products' => function ($query) {
+                $query->where('status', 1);
+            }
+        ])->orderby('created_at', 'desc')->get();
+
+
+        if ($request->ajax()) {
+            // Render product list view and return as JSON for AJAX
+            $html = view('frontend.product_list', compact('products'))->render();
+            return response()->json(['html' => $html]);
+        }
+
+        return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories'));
     }
+
+
+
     public function product($slug)
     {
         // $services   = Service::where('status', 1)->orderby('display_order')->get();
@@ -62,28 +192,7 @@ class FrontendController extends Controller
         // , compact('service', 'services')
         return view('frontend.product-single');
     }
-    public function doctors()
-    {
-        $doctors   = Doctor::where('status', 1)->orderby('display_order')->get();
-        return view('frontend.doctors', compact('doctors'));
-    }
-    public function doctorSingle($slug)
-    {
-        $doctor   = Doctor::where('status', 1)->where('slug', $slug)->first() ?? abort(404);
-        return view('frontend.doctor-single', compact('doctor'));
-    }
-    public function packages()
-    {
-        $packages   = Package::where('status', 1)->orderby('display_order')->get();
-        return view('frontend.packages', compact('packages'));
-    }
-    public function packageSingle($slug)
-    {
-        $packages   = Package::where('status', 1)->orderby('display_order')->get();
-
-        $package   = Package::where('status', 1)->where('slug', $slug)->first() ?? abort(404);
-        return view('frontend.package-single', compact('package', 'packages'));
-    }
+    
     public function blogs()
     {
         $blogs   = BlogPost::where('status', 1)->orderby('created_at', 'desc')->get();
@@ -111,7 +220,8 @@ class FrontendController extends Controller
         return view('frontend.contact');
     }
 
-    public function contactSend(Request $request){
+    public function contactSend(Request $request)
+    {
         DB::beginTransaction();
         try {
             $new            = new Enquiry();

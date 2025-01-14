@@ -21,9 +21,9 @@ Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home')
 Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
     Route::get('shop', 'FrontendController@shop')->name('shop');
-    Route::get('product/{slug}', 'FrontendController@product')->name('product');
-    
+    Route::get('/shop/filter', [ProductController::class, 'filterProducts'])->name('shop.filter');
 
+    Route::get('product/{slug}', 'FrontendController@product')->name('product');
     
     Route::get('services', 'FrontendController@services')->name('services');
     Route::get('services/{slug}', 'FrontendController@serviceSingle')->name('services-single');
