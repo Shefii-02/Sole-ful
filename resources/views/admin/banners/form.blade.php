@@ -129,7 +129,7 @@
                     </div>
                     <div class="mb-2 w-1/2">
                         <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Button Text</label>
-                        <input type="url" autocomplete="off" name="name" class="form-control" value="{{ isset($banner) ? $banner->name : '' }}">
+                        <input type="text" autocomplete="off" name="name" class="form-control" value="{{ isset($banner) ? $banner->name : '' }}">
                     </div>
                     <div class="mb-2 w-1/2">
                         <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Redirect Url</label>
