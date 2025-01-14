@@ -61,7 +61,7 @@
                         <div class="w-1/12 text-left"><span class="font-medium">#</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Desktop Image</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Mobile Image</span></div>
-                        <div class="w-2/12 text-center"><span class="font-medium">Type</span></div>
+                        <div class="w-2/12 text-center"><span class="font-medium">Redirection</span></div>
                         <div class="w-1/12 text-center"><span class="font-medium">Order</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Created at</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Status</span></div>
@@ -82,8 +82,8 @@
                                 <div class="w-2/12 flex justify-center">
                                     <img src="{{ asset('images/' . $banner->mobile) }}" class="w-50 rounded-5">
                                 </div>
-                                <div class="w-1/12 text-center">
-                                    <span class="font-medium">{{ $banner->type }}</span>
+                                <div class="w-2/12 text-center">
+                                    <span class="font-medium">{{ $banner->link }}</span>
                                 </div>
                                 <div class="w-1/12 text-center">
                                     <span class="font-medium">{{ $banner->display_order }}</span>

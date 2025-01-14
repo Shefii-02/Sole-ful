@@ -131,8 +131,8 @@ label.control-label {
 .del-option-value, .del-nutrition {
     color: #000;
     position:absolute;
-    right:25px;
-    margin-top:10px;
+    right:-15px;
+    
 }
 
 .del-option-value:hover, .del-nutrition:hover {

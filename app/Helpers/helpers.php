@@ -288,3 +288,31 @@ if (!function_exists('dateFormat')) {
         return  $date;
     }
 }
+
+
+if (!function_exists('getVariants')) {
+
+    function getVariants($opt = [], $idx = 0, $prefix = null) {
+    
+        $string = '';
+        
+        if(isset($opt[$idx])) {                                            
+            foreach($opt[$idx]['values'] as $item) {
+                if(isset($opt[$idx+1])) {
+                    $string .= getVariants($opt, $idx+1, $prefix . ($idx === 0 ? '':',') . $opt[$idx]['name'] . ':' . $item);
+                }   
+                else {
+                    $string .= $prefix . ($idx === 0 ? '':',') . $opt[$idx]['name'] . ':' . $item . "\n";
+                }
+            
+            }
+        }
+        else {
+            return false;
+        }
+        
+        return $string;
+        
+    }    
+}
+

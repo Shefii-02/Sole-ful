@@ -39,7 +39,9 @@ return new class extends Migration
             $table->string('manufactured_by')->nullable();
             $table->string('country_of_origin')->nullable();
             $table->text('care_instruction')->nullable();
+            $table->boolean('has_variation')->default('0');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

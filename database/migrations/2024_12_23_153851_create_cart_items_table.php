@@ -48,6 +48,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->foreignId('product_variant_id')->constrained('product_variants')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

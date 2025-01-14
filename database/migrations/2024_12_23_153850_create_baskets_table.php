@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('remarks')->nullable();
             $table->boolean('open')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

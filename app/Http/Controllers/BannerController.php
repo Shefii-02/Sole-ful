@@ -44,6 +44,7 @@ class BannerController extends Controller
                 $new->desktop   = uploadFile($request->file('desktop_image'), 'banners');
                 $new->mobile    = uploadFile($request->file('mobile_image'), 'banners');
                 $new->display_order  = $request->display_order;
+                $new->link      = $request->redirection;
                 $new->name      = $request->name;
                 $new->type      = 'Banner';
                 $new->status    = $request->has('status') ? 1 : 0;
@@ -108,6 +109,7 @@ class BannerController extends Controller
             $banner->display_order  = $request->display_order;
             $banner->status    = $request->has('status') ? 1 : 0;
             $banner->name      = $request->name;
+            $banner->link         = $request->redirection;
             $banner->save();
             Db::commit();
             Session::flash('success_msg', 'Successfully Updated');

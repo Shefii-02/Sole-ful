@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('min_sale', 10, 2)->nullable();
             $table->enum('status', ['active', 'expired', 'inactive'])->default('active');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

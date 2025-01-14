@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('house_name')->nullable();
             $table->string('house_no')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

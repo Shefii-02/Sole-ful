@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('card_type', 50)->nullable();
             $table->dateTime('paid_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

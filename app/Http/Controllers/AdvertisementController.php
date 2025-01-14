@@ -48,9 +48,10 @@ class AdvertisementController extends Controller
             $result = uploadFile($request->file('icon'), 'general');
             $furnishing->image = $result;
             $furnishing->save();
+
             Db::commit();
         } catch (Exception $e) {
-            dd($e);
+       
             DB::rollback();
             Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
             return redirect()->back();

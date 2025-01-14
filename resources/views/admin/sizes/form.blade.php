@@ -88,7 +88,7 @@
                     <div class="mb-2 w-1/4">
                         <label class="block text-sm mb-2 font-medium text-black dark:text-dark">Display Order</label>
                         <select class="form-control mt-2" name="display_order" required>
-                            @for ($i = 1; $i < 10; $i++)
+                            @for ($i = 1; $i < 20; $i++)
                                 <option {{ isset($size) && $size->display_order == $i ? 'selected' : '' }}
                                     value="{{ $i }}">{{ $i }}</option>
                             @endfor

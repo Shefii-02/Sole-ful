@@ -56,9 +56,18 @@ Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.'
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/products/best-selling', [ProductController::class, 'bestSelling'])->name('best-selling.index');
+    Route::post('/products/best-selling', [ProductController::class, 'bestSellingUpdate'])->name('best-selling.update');
     Route::get('/products/featured-products', [ProductController::class, 'featuredProducts'])->name('featured-products.index');
+    Route::post('/products/featured-products', [ProductController::class, 'featuredProductsUpdate'])->name('featured-products.update');
     Route::get('/products/stock', [ProductController::class, 'stock'])->name('stock.index');
-    Route::post('/products/stock', [ProductController::class, 'stockUpdate'])->name('stock.update');
+    Route::post('/products/stock/{id}', [ProductController::class, 'stockUpdate'])->name('stock.update');
+    Route::any('/products/art_code-check', [ProductController::class, 'artCodeCheck'])->name('products.art_code-check');
+    Route::any('/products/product_no-check', [ProductController::class, 'productNoCheck'])->name('products.product_no-check');
+    Route::any('/products/sku-check', [ProductController::class, 'skuCheck'])->name('products.sku-check');
+    Route::any('/products/generate-autosku', [ProductController::class, 'generateAutosku'])->name('products.generate-autosku');
+    
+    
+
     Route::resource('products', ProductController::class)->names('products');
     Route::resource('orders', OrderController::class)->names('orders');
 

@@ -54,8 +54,8 @@ return new class extends Migration
             $table->dateTime('delivered_at')->nullable();
             $table->unsignedBigInteger('delivery_date')->nullable();
             $table->string('payment_terms', 100)->nullable();
-
-            $table->timestamps();
+            $table->timestamps(); 
+            $table->softDeletes();
         });
     }
 

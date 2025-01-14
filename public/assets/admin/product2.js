@@ -25,8 +25,8 @@ $(document).ready(function () {
     $("body").delegate(".option-type", "change", function () {
         var type = $(this).val();
         var rand_name = $(this).data("random");
-        var selector    = $(`.option-value-${rand_name}`)
- 
+        var selector = $(`.option-value-${rand_name}`)
+
         // Predefined options for colors and sizes
         var colorOptions = `
             <option value="">Select Color</option>
@@ -43,20 +43,20 @@ $(document).ready(function () {
             <option value="L">Large (L)</option>
             <option value="XL">Extra Large (XL)</option>
             <option value="XXL">Double Extra Large (XXL)</option>`;
-    
-            selector.each(function () {
 
-                // Populate the dropdown based on the selected type
-                if (type === "color") {
-                    $(this).html(colorOptions).show();
-                } else if (type === "size") {
-                    $(this).html(sizeOptions).show();
-                } else {
-                    $(this).hide();
-                }
+        selector.each(function () {
 
-            });
-      
+            // Populate the dropdown based on the selected type
+            if (type === "color") {
+                $(this).html(colorOptions).show();
+            } else if (type === "size") {
+                $(this).html(sizeOptions).show();
+            } else {
+                $(this).hide();
+            }
+
+        });
+
     });
 
     let variants = [];
@@ -262,7 +262,7 @@ $(document).ready(function () {
         });
     }
 
-   
+
 
     $("#has-variants").click(function () {
         var status = $(this).is(":checked");
@@ -280,7 +280,7 @@ $(document).ready(function () {
     })
 
 
- 
+
 
     $(".add-option").click(function (e) {
         e.preventDefault();
@@ -304,17 +304,17 @@ $(document).ready(function () {
         $(`<div class="col-md-6 mb-3">
             <div class="box-div">
                 <div class="row position-relative">
-                    <a href="#" class="">
+                    <a href="#" class="position-relative">
                         <span class="bi bi-x-circle-fill text-danger del-option fs-3"></span>
                     </a>
                     <div class="col-md-6">
-                        <select class="form-control option-type option-type-`+ rand_name + `" data-random="`+ rand_name + `" name="variant_options[`+ rand_name + `]">
+                        <select class="form-control option-type option-type-`+ rand_name + `" data-random="` + rand_name + `" name="variant_options[` + rand_name + `]">
                             <option value="size">Size</option>
                             <option value="color">Color</option>
                         </select>
                     </div>
                     <div class="col-md-5 option-value-container" data-random="`+ rand_name + `">
-                         <select data-random="`+ rand_name + `" name="variant_option_values[` + rand_name + `][]" class="form-control option-value option-value-`+ rand_name + ` mb-2">
+                         <select data-random="`+ rand_name + `" name="variant_option_values[` + rand_name + `][]" class="form-control option-value option-value-` + rand_name + ` mb-2">
                            `+ sizeOptions + `
                         </select>
                         <a href="#" class="add-option-value mt-2" data-random="`+ rand_name + `">
@@ -325,7 +325,7 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>`).insertBefore($(this).parent());
-//  <input type="text" class="form-control option-value" data-random="`+ rand_name + `" name="variant_option_values[` + rand_name + `][]"/>
+        //  <input type="text" class="form-control option-value" data-random="`+ rand_name + `" name="variant_option_values[` + rand_name + `][]"/>
         $(".option-select").trigger("change");
     })
 
@@ -349,7 +349,7 @@ $(document).ready(function () {
             <option value="XL">Extra Large (XL)</option>
             <option value="XXL">Double Extra Large (XXL)</option>`;
 
-        var optionType = $(`.option-type-`+KeyVal).val();
+        var optionType = $(`.option-type-` + KeyVal).val();
 
         if (optionType === "color") {
             var content = colorOptions;
@@ -361,10 +361,10 @@ $(document).ready(function () {
             showError('Oops...', "<h4>Sorry, please fix...</h4>" + "<p style='color:red;'>Please enter value</p>");
         } else {
             $(`<a href="#" class="del-option-value"><span class="bi bi-x fs-3 text-danger"></span></a>
-                <select data-random="`+ KeyVal + `" name="variant_option_values[` + KeyVal + `][]" class="form-control option-value  option-value-`+ KeyVal + ` mb-2">
-                `+ content +`
+                <select data-random="`+ KeyVal + `" name="variant_option_values[` + KeyVal + `][]" class="form-control option-value  option-value-` + KeyVal + ` mb-2">
+                `+ content + `
                 </select>`).insertBefore($(this));
-              // <input type="text" class="form-control option-value mt-2" name="variant_option_values[` + KeyVal + `][]" />
+            // <input type="text" class="form-control option-value mt-2" name="variant_option_values[` + KeyVal + `][]" />
         }
     });
 
@@ -418,7 +418,7 @@ $(document).ready(function () {
         var rand_name = Math.random().toString(36).substring(2, 9);
 
         var elem = $(`<div class="row mb-3">
-            <a href="#" class=""><span class="bi bi-x-circle text-danger del-variant"></span></a>
+            <a href="#" class="position-relative"><span class="bi bi-x-circle text-danger del-variant"></span></a>
             <div class="col-md-12">
                 <div class="row productVariant" data-id="${rand_name}">
                     <div class="col-md-2">
@@ -498,7 +498,7 @@ $(document).ready(function () {
                 <div class="box-div">
                     <div class="row">
                         <div class="col-md-8">
-                            <a href="#" class="del-image" data-id="`+ rand_name + `">
+                            <a href="#" class="del-image position-relative" data-id="`+ rand_name + `">
                                 <span class="bi bi-x-circle text-danger fs-3"></span>
                             </a>
                             <input type="file"  class="product-image" data-img="img-`+ rand_name + `"  data-src="src-` + rand_name + `" />
@@ -511,7 +511,7 @@ $(document).ready(function () {
                                 <option value="Main Image">Main</option>
                                 <option value="Thumbnail">Thumbnail</option>
                             </select>
-                            <div class="box-div" style="height:200px;">
+                            <div class="box-div overflow-auto" style="height:200px;">
                                 <div class="product-images-variants" id="`+ rand_name + `">
                                     ` + getImageVariantsCheckboxes(rand_name) + `
                                 </div>
@@ -522,36 +522,6 @@ $(document).ready(function () {
             </div>`).insertBefore($(this).parent());
     });
 
-
-    $(".add-nutrition").click(function (e) {
-        e.preventDefault();
-        var rand_name = Math.random().toString(36).substring(2, 9);
-
-        var options = '';
-
-        if (nutrition_attributes.length) {
-            nutrition_attributes.forEach(function (item) {
-                options = options + '<option value="' + item.id + '">' + item.title + '</option>' + "\n";
-            })
-        }
-
-        $(`<div class="col-md-3 mb-4">
-                <a href="#" class="del-nutrition">
-                    <span class="material-symbols-outlined">close</span>
-                </a>
-                <select name="nutrition[`+ rand_name + `]" class="form-control mb-3" id="nuselect-` + rand_name + `">
-                `+ options + `
-                </select>
-                <div class="nutrition-info" id="`+ rand_name + `">
-                    `+ getNutritionVariantInputs(rand_name) + `
-                </div>
-            </div>`).insertBefore($(this).parent());
-    });
-
-    $("body").delegate(".del-nutrition", "click", function (e) {
-        e.preventDefault();
-        $(this).parent().remove();
-    })
 
     $("body").delegate(".product-image", "change", function () {
         var img = $(this).data('img');
@@ -620,14 +590,27 @@ $(document).ready(function () {
 
         entered_variants.forEach(function (item) {
 
-            html = html + `<div class="product-images-variant">
-                                <div class="pretty p-switch p-fill">
-                                    <input type="checkbox" name="product_images_variant[`+ rand_name + `][` + item.id + `]" ` + (selected.includes(item.sku) ? 'checked' : '') + ` value="` + item.sku + `" />
-                                    <div class="state p-success">
-                                        <label class="control-label">`+ item.name + `</label>
-                                    </div>
-                                </div>
+            html = html +  `<div class="form-check form-switch">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    id="img-${rand_name}-${item.id}" 
+                                    name="product_images_variant[${rand_name}][${item.id}]" 
+                                    value="${item.sku}" 
+                                    ${selected.includes(item.sku) ? 'checked' : ''}>
+                                <label class="form-check-label" for="img-${rand_name}-${item.id}">
+                                    ${item.name}
+                                </label>
                             </div>`+ "\n";
+
+            // html = html + `<div class="product-images-variant">
+            //                     <div class="pretty p-switch p-fill">
+            //                         <input type="checkbox"  />
+            //                         <div class="state p-success">
+            //                             <label class="control-label">`+ item.name + `</label>
+            //                         </div>
+            //                     </div>
+            //                 </div>`+ "\n";
 
 
         })
@@ -635,62 +618,6 @@ $(document).ready(function () {
         return html;
     }
 
-    function getNutritionVariantInputs(rand_name) {
-        var html = '';
-
-        if (!$("#has-variants").is(":checked")) {
-
-            var curval = $("#" + rand_name).find("nft-value").val();
-            var name = $("input[name=product_name_single]").val();
-            var sku = $("input[name=product_sku_single]").val();
-
-            var curval2 = $("#" + rand_name).find(".nft-percentage").val();
-
-            html = html + `<div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                      <div class="input-group-text">`+ name + '(' + sku + `)</div>
-                                    </div>
-                                    <input type="text" class="form-control nft-value" data-sku="`+ sku + `" name="nutrition_values[` + rand_name + `][` + sku + `]" value="` + (curval === undefined ? '' : curval) + `" placeholder="0" />
-                                    <input type="text" class="form-control nft-percentage" data-sku="`+ sku + `" name="nutrition_percentages[` + rand_name + `][` + sku + `]" value="` + (curval2 === undefined ? '' : curval2) + `" placeholder="In percentage" />
-                                </div>`;
-        }
-        else {
-
-            var nutritions = [];
-
-            $("#" + rand_name).find(".nft-value").each(function () {
-                var current = $(this).val();
-                var percentage = $(this).parent().find('.nft-percentage').val();
-                if (current != '') {
-                    nutritions.push({ 'sku': $(this).attr("data-sku"), 'value': current, percentage: percentage });
-                }
-            });
-
-            entered_variants.forEach(function (item) {
-
-                var curval = '';
-                var curval2 = '';
-                nutritions.forEach(function (curitem) {
-                    if (curitem.sku == item.sku) {
-                        curval = curitem.value;
-                        curval2 = curitem.percentage;
-                    }
-                })
-
-                html = html + `<div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                      <div class="input-group-text">`+ item.name + `</div>
-                                    </div>
-                                    <input type="text" class="form-control nft-value" data-sku="`+ item.sku + `" name="nutrition_values[` + rand_name + `][` + item.sku + `]" value="` + (curval === undefined ? '' : curval) + `" placeholder="0" />
-                                    <input type="text" class="form-control nft-percentage" data-sku="`+ item.sku + `" name="nutrition_percentages[` + rand_name + `][` + item.sku + `]" value="` + (curval2 === undefined ? '' : curval2) + `" placeholder="In percentage" />
-                                </div>`;
-            });
-        }
-
-        return html;
-    }
-
- 
 
     /***************** Show Error Alert ***************/
 
@@ -712,9 +639,28 @@ $(document).ready(function () {
 
         var validation_errors = false;
 
-        if ($("#name").val() == '') {
+
+        if ($("#art_code").val() == '') {
+            validation_errors = "A product ART code is required!<br/>" + "\n";
+        }
+        else {
+            //check already existed
+        }
+        if ($("#product_no").val() == '') {
+            validation_errors = "A product number  is required!<br/>" + "\n";
+        }
+        else {
+            //check already existed
+        }
+
+
+        if ($("#product_name").val() == '') {
             validation_errors = "A product name is required!<br/>" + "\n";
         }
+
+
+
+
 
         if (validation_errors) {
             showError('Oops...', "<h4>Sorry, please fix...</h4>" + "<p style='color:red;'>" + validation_errors + '</p>');
@@ -762,6 +708,10 @@ $(document).ready(function () {
             if (!$("input[name=product_sku_single]").val().match(pattern)) {
                 validation_errors += 'SKU must be Alphanumeric, no space or special characters allowed' + "<br/>";
             }
+            else if ($("input[name=product_sku_single]").val() != '') {
+                //check value already exist our db
+            }
+
 
             if ($("input[name=product_price_single]").val() == '') {
                 validation_errors += 'A price value is required' + "<br/>";
@@ -828,6 +778,9 @@ $(document).ready(function () {
                     validation_errors += 'SKU must be Alphanumeric, no space or special characters allowed' + "<br/>";
                     return false;
                 }
+                else {
+                    //check already used or not in our db
+                }
 
                 if (checker[selection]) {
                     //if the property is defined, then we've already encountered this value
@@ -889,58 +842,52 @@ $(document).ready(function () {
             $(this).html(getImageVariantsCheckboxes(id));
         });
 
-        $(".nutrition-info").each(function () {
-            var id = $(this).attr("id");
-            $(this).html(getNutritionVariantInputs(id));
-        });
-
-  
 
         $("#tab-navigation li").removeClass("active");
         $("#product-variants").css("display", "none");
 
         $("#nav-images").addClass("active");
-        $("#product-images").css("display","block");
+        $("#product-images").css("display", "block");
 
         scrollTop();
 
     });
 
-  
 
 
-  
-    $("#back-product-variants, #back-product-variants").click(function(e){
+
+
+    $("#back-product-variants, #back-product-variants").click(function (e) {
         e.preventDefault();
         $("#tab-navigation li").removeClass("active");
-        $("#product-instore").css("display","none");
+        $("#product-instore").css("display", "none");
         $("#nav-variants").addClass("active");
-        $("#product-variants").css("display","block");
-        
+        $("#product-variants").css("display", "block");
+
         scrollTop();
     });
- 
-    
-    $("#save-product-images, #save-product-images").click(function(e){
+
+
+    $("#save-product-images, #save-product-images").click(function (e) {
         e.preventDefault();
         $("#tab-navigation li").removeClass("active");
-        $("#product-images").css("display","none");
-        
+        $("#product-images").css("display", "none");
+
         scrollTop();
     });
-    
-    $("#back-product-images, #back-product-images").click(function(e){
+
+    $("#back-product-images, #back-product-images").click(function (e) {
         e.preventDefault();
         $("#tab-navigation li").removeClass("active");
-        $("#product-images").css("display","none");
+        $("#product-images").css("display", "none");
 
         $("#nav-variants").addClass("active");
-        $("#product-variants").css("display","block");
-        
+        $("#product-variants").css("display", "block");
+
         scrollTop();
     });
-    
-    $("#save-product-nutrition, #save-product-nutrition").click(function(e){
+
+    $("#save-product-nutrition, #save-product-nutrition").click(function (e) {
         e.preventDefault();
         $("#product_form").submit();
         document.body.style.filter = 'grayscale(100%)';

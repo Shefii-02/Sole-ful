@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('stock_updates', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->foreignId('variation_id')->references('id')->on('product_variants')->onDelete('cascade');
+            $table->string('variation_id')->nullable();
             $table->integer('last_stock')->nullable();
             $table->integer('updated_stock');
             $table->timestamps();

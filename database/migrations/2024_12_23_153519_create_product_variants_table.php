@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('variation');
             $table->string('variation_name')->nullable();
             $table->string('slug')->nullable();
-            $table->string('color_code', 10);
-            $table->string('size_code', 10);
+            $table->string('color_code', 10)->nullable();
+            $table->string('size_code', 10)->nullable();
             $table->string('sku')->unique();
             $table->decimal('price', 10, 2);
             $table->integer('in_stock')->default(0)->nullable();
@@ -27,10 +27,12 @@ return new class extends Migration
             $table->string('upper_material')->nullable();
             $table->integer('box_quantity')->default(1)->nullable();
             $table->integer('status')->default(1)->nullable();
+            $table->string('weight')->nullable();
             $table->decimal('weight_type',10,2)->nullable();
             $table->decimal('org_price', 10, 2)->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

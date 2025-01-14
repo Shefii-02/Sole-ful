@@ -323,12 +323,18 @@
     <div class="flex flex-col gap-9">
         <!-- Form Container -->
         <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div class="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+            <div class="px-6.5 py-4">
                 <h2 class="text-title-sm2 font-bold text-black dark:text-black">
                     {{ isset($product) ? 'Edit Product' : 'Create a Product' }}
                 </h2>
             </div>
-            <form method="post" action="" id="product_form" enctype="multipart/form-data">
+            <form method="post"
+                action="{{ isset($product) ? route('admin.products.update', $product->id) : route('admin.products.store') }}"
+                id="product_form" enctype="multipart/form-data">
+                @csrf()
+                @if (isset($product))
+                    @method('PUT')
+                @endif
                 <div id="tab-wrapper">
                     <!----------------------------------------// TAB NAVIGATION //---------------------------------->
                     <nav id="tab-navigation">
@@ -372,103 +378,121 @@
                             </div>
                             <h2>Basic Product Info</h2>
 
-                            <div class="row mb-3">
+                            <div class="row mb-4">
                                 <div class="form-group col-md-12">
                                     <label class="form-group__label">Product Name</label>
-                                    <input class="form-control" name="name" id="name" type="text"
-                                        value="{{ old('name', isset($product) ? $product->name : '') }}" placeholder=""
-                                        autocomplete="off">
+                                    <input class="form-control" name="product_name" id="product_name" type="text"
+                                        value="{{ old('product_name', isset($product) ? $product->product_name : '') }}"
+                                        placeholder="" autocomplete="off">
 
                                 </div>
                             </div>
 
                             <div class="row ">
-                                <div class="form-group col-md-4 mb-3">
+                                <div class="form-group col-md-4 mb-4">
                                     <label class="form-group__label">ART Code</label>
-                                    <input class="form-control" name="name" id="name" type="text"
-                                        value="{{ old('name', isset($product) ? $product->name : '') }}" placeholder=""
-                                        autocomplete="off">
+                                    <input class="form-control" name="art_code" id="art_code" type="text"
+                                        value="{{ old('art_code', isset($product) ? $product->art_code : '') }}"
+                                        placeholder="" autocomplete="off">
                                 </div>
-                                <div class="form-group col-md-4 mb-3">
+                                <div class="form-group col-md-4 mb-4">
+                                    <label class="form-group__label" for="product_no">Product Number</label>
+                                    <select class="form-control" name="product_no" id="product_no" autocomplete="off">
+                                        <option value="">Select Product no</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4 mb-4">
                                     <label class="form-group__label">Shoe Type</label>
-                                    <input class="form-control" name="name" id="name" type="text"
-                                        value="{{ old('name', isset($product) ? $product->name : '') }}" placeholder=""
-                                        autocomplete="off">
-                                </div>
-                                <div class="form-group col-md-4 mb-3">
-                                    <label class="form-group__label">Gender</label>
-                                    <input class="form-control" name="name" id="name" type="text"
-                                        value="{{ old('name', isset($product) ? $product->name : '') }}" placeholder=""
-                                        autocomplete="off">
+
+                                    <select class="form-control" name="shoe_type">
+                                        <option
+                                            {{ isset($product) && $product->shoe_type == 'Casual Slides' ? 'selected' : '' }}
+                                            value="Casual Slides">Casual Slides</option>
+                                        <option
+                                            {{ isset($product) && $product->shoe_type == 'Ethnic Slides' ? 'selected' : '' }}
+                                            value="Ethnic Slides">Ethnic Slides</option>
+                                    </select>
+
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-4">
                                 <div class="form-group col-md-12">
                                     <label class="form-group__label">Care Instruction</label>
-                                    <textarea name="contents" class="form-control ckeditor-textarea" id="contents" rows="4" placeholder=""
-                                        autocomplete="off">{{ old(
-                                            'contents',
+                                    <textarea name="care_instruction" class="form-control ckeditor-textarea" id="care_instruction" rows="4"
+                                        placeholder="" autocomplete="off">{{ old(
+                                            'care_instruction',
                                             isset($product)
-                                                ? $product->contents
+                                                ? $product->care_instruction
                                                 : 'Keep your product dry avoid getting it wet or damp. To clean it, simply wipe with a dry cloth. keep fasteners and zip running smoothly by running pencil leads over the open teeth.',
                                         ) }}</textarea>
                                 </div>
                             </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <label class="mb-3">Categories</label>
+                                <div class="row">
+                                    @foreach ($categories ?? [] as $category)
+                                        <div class="form-group col-md-3 mb-4">
+                                            <label class="form-check form-switch" for="category-{{ $category->id }}">
+                                                <input class="form-check-input" name="categories[]" type="checkbox"
+                                                    value="{{ $category->id }}" id="category-{{ $category->id }}"
+                                                    {{ isset($product) && in_array($category->id, $product->categories->pluck('category_id')->toArray()) ? 'checked' : '' }}>
+                                                <span class="form-check-label">{{ $category->name }}</span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
 
-                            <div class="row mb-3">
+
+                            <div class="row mb-4">
                                 <div class="form-group col-md-12">
                                     <label class="form-group__label">Marketed By</label>
-                                    <textarea name="baking_info" class="form-control" id="baking_info" rows="4" placeholder=""
+                                    <textarea name="marketed_by" class="form-control" id="marketed_by" rows="4" placeholder=""
                                         autocomplete="off">{{ old(
-                                            'baking_info',
+                                            'marketed_by',
                                             isset($product)
-                                                ? $product->baking_info
+                                                ? $product->marketed_by
                                                 : 'VOCHE THE INTERIOR STUDIO #5 1 FLOOR GEDDALAHALLI,HENNUR BAGLUR MAIN ROAD KOTHALUR POST BLR.560077',
                                         ) }}</textarea>
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-4">
                                 <div class="form-group col-md-12">
                                     <label class="form-group__label">Manufactured By</label>
-                                    <textarea name="baking_info" class="form-control" id="baking_info" rows="4" placeholder=""
-                                        autocomplete="off">{{ old('baking_info', isset($product) ? $product->baking_info : 'UNIVERSAL EXPORTS # 101 ARIHANT COMMERCIAL COMPLEX PURNA VILLAGE  BHIWANDI ,THAHE .421302') }}</textarea>
+                                    <textarea name="manufactured_by" class="form-control" id="manufactured_by" rows="4" placeholder=""
+                                        autocomplete="off">{{ old('manufactured_by', isset($product) ? $product->manufactured_by : 'UNIVERSAL EXPORTS # 101 ARIHANT COMMERCIAL COMPLEX PURNA VILLAGE  BHIWANDI ,THAHE .421302') }}</textarea>
                                 </div>
                             </div>
 
 
 
-                            <div class="row mb-3">
+                            <div class="row mb-4">
                                 <div class="form-group col-xs-2 col-md-4">
                                     <div class="mb-2 w-full me-3">
-                                      
                                         <div class="form-group mb-3">
                                             <label class="form-check form-switch">
-                                                <input class="form-check-input" name="status" x-model="enabled" type="checkbox" value="active"
-                                                    id="status"
-                                                    {{ old('status', isset($coupon) && $coupon->status ? 'checked' : '') }}>
+                                                <input class="form-check-input" name="featured" type="checkbox"
+                                                    value="active" id="featured"
+                                                    {{ old('featured', isset($product->featuredProduct) && $product->featuredProduct->product_id ? 'checked' : '') }}>
                                                 <span class="form-check-label">Set as Featured product</span>
                                             </label>
                                         </div>
-                                        
                                     </div>
-
                                 </div>
                                 <div class="form-group col-xs-2 col-md-4">
                                     <div class="mb-2 w-full me-3">
-                                      
                                         <div class="form-group mb-3 ">
                                             <label class="form-check form-switch">
-                                                <input class="form-check-input" name="status" x-model="enabled" type="checkbox" value="active"
-                                                    id="status"
-                                                    {{ old('status', isset($coupon) && $coupon->status ? 'checked' : '') }}>
+                                                <input class="form-check-input" name="bestSell" type="checkbox"
+                                                    value="active" id="bestSell"
+                                                    {{ old('bestSell', isset($product->bestSellProduct) && $product->bestSellProduct->product_id ? 'checked' : '') }}>
                                                 <span class="form-check-label">Set as Best selling product</span>
                                             </label>
                                         </div>
-                                        
                                     </div>
-                                   
+
                                 </div>
 
                                 {{-- <div class="form-group col-xs-2 col-md-12">
@@ -476,9 +500,9 @@
                                       
                                         <div class="form-group mb-3">
                                             <label class="form-check form-switch">
-                                                <input class="form-check-input" name="status" x-model="enabled" type="checkbox" value="active"
+                                                <input class="form-check-input" name="status"  type="checkbox" value="active"
                                                     id="status"
-                                                    {{ old('status', isset($coupon) && $coupon->status ? 'checked' : '') }}>
+                                                    {{ old('status', isset($product) && $product->status ? 'checked' : '') }}>
                                                 <span class="form-check-label">Mark out of stock</span>
                                             </label>
                                         </div>
@@ -490,16 +514,16 @@
                                     <div class="mb-2 w-full me-3">
                                         <div class="form-group mb-3">
                                             <label class="form-check form-switch">
-                                                <input class="form-check-input" name="status" x-model="enabled" type="checkbox" value="active"
-                                                    id="status"
-                                                    {{ old('status', isset($coupon) && $coupon->status ? 'checked' : '') }}>
+                                                <input class="form-check-input" name="status" type="checkbox"
+                                                    value="active" id="status"
+                                                    {{ old('status', isset($product) && $product->status ? 'checked' : '') }}>
                                                 <span class="form-check-label">Enable on Publish</span>
                                             </label>
                                         </div>
-                                        
+
                                     </div>
 
-                                   
+
                                 </div>
 
                             </div>
@@ -529,13 +553,13 @@
                                     <div class="mb-2 w-full me-3">
                                         <div class="form-group mb-3 col-md-4">
                                             <label class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" value="active" name="has_variants"
-                                                    @if (old('has_variation', isset($product) ? $product->has_variation : 0) == 1) checked @endif id="has-variants" 
-                                                >
+                                                <input class="form-check-input" type="checkbox" value="active"
+                                                    name="has_variants" @if (old('has_variation', isset($product) ? $product->has_variation : 0) == 1) checked @endif
+                                                    id="has-variants">
                                                 <span class="form-check-label">This product has multiple prices</span>
                                             </label>
                                         </div>
-                                        
+
                                     </div>
 
                                     {{-- <div class="pretty p-switch p-fill">
@@ -564,9 +588,6 @@
                                                 <label class="form-group__label">Sku</label>
                                             </div>
 
-                                            <!--<div class="col-md-1">-->
-                                            <!--    <input type="number" min="0" name="product_quantity_single" value="{{ old('product_quantity_single', isset($product) && !$product->has_variation ? $product->product_variation->first()->box_quantity : '') }}" class="form-control pv-name" placeholder="Quantity" />-->
-                                            <!--</div>-->
                                             <div class="col-md-3 form-group">
                                                 <input type="text" name="product_weight_single"
                                                     value="{{ old('product_sku_single', isset($product) && !$product->has_variation ? $product->product_variation->first()->weight : 0) }}"
@@ -579,9 +600,9 @@
                                                     class="form-control pv-price" placeholder="" />
                                                 <label class="form-group__label">Price</label>
                                             </div>
-
                                             <div class="col-md-2 form-group">
-                                                <input type="text" name="product_stock_single" value="0"
+                                                <input type="text" name="product_stock_single"
+                                                    value="{{ old('product_sku_single', isset($product) && !$product->has_variation ? $product->product_variation->first()->in_stock : 1) }}"
                                                     class="form-control option-price" placeholder="" />
                                                 <label class="form-group__label">Stock</label>
                                             </div>
@@ -624,11 +645,11 @@
 
                                     @endphp
 
-                                    @foreach ($product->product_variation as $vkey => $variation)
+                                    @foreach ($product->product_variation ?? [] as $vkey => $variation)
                                         <div class="row mb-3">
 
                                             @php $rand_name = 'UID-'.$variation->id; @endphp
-                                            <a href="#" class=""><span
+                                            <a href="#" class="position-relative"><span
                                                     class="bi bi-x-circle text-danger del-variant"></span></a>
                                             <div class="col-md-12">
                                                 <div class="row productVariant" data-id="{{ $rand_name }}">
@@ -638,7 +659,7 @@
                                                             name="variants[{{ $rand_name }}]"
                                                             data-option="{{ $rand_name }}">
                                                             <option value="">Select an Option</option>
-                                                            @foreach ($variant_options as $option)
+                                                            @foreach ($variant_options ?? [] as $option)
                                                                 @php
                                                                     $parts = explode(',', $option);
                                                                     $option_string = '';
@@ -686,8 +707,8 @@
                                                     </div>
                                                     <div class="col-md-2 form-group">
                                                         <input type="text" name="variants_stock[{{ $rand_name }}]"
-                                                            value="0" class="form-control option-price"
-                                                            placeholder="" />
+                                                            value="{{ $variation->in_stock }}"
+                                                            class="form-control option-price" placeholder="" />
                                                         <label class="form-group__label">Stock</label>
                                                     </div>
 
@@ -698,7 +719,7 @@
                                     @endforeach
                                 @else
                                     <div class="row mb-3">
-                                        <a href="#" class=""><span
+                                        <a href="#" class="position-relative"><span
                                                 class="bi bi-x-circle text-danger del-variant"></span></a>
                                         @php $rand_name = substr(md5(rand()),2,7); @endphp
                                         <div class="col-md-12">
@@ -787,7 +808,7 @@
 
 
                                 @if (isset($product) && count($product->images))
-                                    @foreach ($product->images->sortBy('id') as $image)
+                                    @foreach ($product->images->sortBy('id') ?? [] as $image)
                                         @php $rand_name = 'UID-'.$image->id; @endphp
                                         <div class="col-md-6 mb-3">
                                             <div class="box-div">
@@ -800,7 +821,7 @@
                                                         <input type="file" class="product-image"
                                                             data-img="img-{{ $rand_name }}"
                                                             data-src="src-{{ $rand_name }}" />
-                                                        <img src="/images/products/{{ $image->picture }}"
+                                                        <img src="/images/products/{{ $image->image }}"
                                                             style="width:200px;height:auto;" class="mt-3"
                                                             id="img-{{ $rand_name }}" />
                                                         <input type="hidden" name="product_images[{{ $rand_name }}]"
@@ -820,11 +841,11 @@
                                                                 Thumbnail</option>
                                                         </select>
 
-                                                        <div class="box-div" style="height:200px;">
+                                                        <div class="box-div overflow-auto" style="height:200px;">
                                                             <div class="product-images-variants"
                                                                 id="{{ $rand_name }}">
 
-                                                                @foreach ($product->product_variation as $vkey => $variation)
+                                                                @foreach ($product->product_variation ?? [] as $vkey => $variation)
                                                                     <div class="product-images-variant">
                                                                         <div class="pretty p-switch p-fill">
                                                                             <input type="checkbox"
@@ -852,8 +873,9 @@
                                         <div class="box-div">
                                             <div class="row">
                                                 <div class="col-md-7 ">
-                                                    <a href="#" class="del-image" data-id="{{ $rand_name }}">
-                                                        <span class="bi bi-x fs-3"></span>
+                                                    <a href="#" class="del-image position-relative "
+                                                        data-id="{{ $rand_name }}">
+                                                        <span class="bi bi-x-circle text-danger fs-3"></span>
                                                     </a>
                                                     <input type="file" class="product-image"
                                                         data-img="img-{{ $rand_name }}"
@@ -871,7 +893,7 @@
                                                         <option value="Thumbnail">Thumbnail</option>
                                                     </select>
 
-                                                    <div class="box-div" style="height:200px;">
+                                                    <div class="box-div overflow-auto" style="height:200px;">
                                                         <div class="product-images-variants" id="{{ $rand_name }}">
 
 
@@ -926,18 +948,18 @@
                                             $options = [];
                                         @endphp
 
-                                        @foreach ($product->option as $option)
+                                        @foreach ($product->option ?? [] as $option)
                                             @php
                                                 $options[$option->name][] = $option;
                                             @endphp
                                         @endforeach
 
-                                        @foreach ($options as $key => $option)
+                                        @foreach ($options ?? [] as $key => $option)
                                             <div class="col-md-6 mb-3">
                                                 @php $rand_name = substr(md5(rand()),2,7); @endphp
                                                 <div class="box-div">
                                                     <div class="row">
-                                                        <a href="#" class="">
+                                                        <a href="#" class="position-relative">
                                                             <span
                                                                 class="bi bi-x-circle-fill fs-3 text-danger del-option"></span>
                                                         </a>
@@ -947,35 +969,42 @@
                                                                 data-random="{{ $rand_name }}"
                                                                 name="variant_options[{{ $rand_name }}]">
                                                                 <option value="size"
-                                                                    @if ($key == 'size') selected @endif>
-                                                                    Size</option>
+                                                                    @if ($key == 'size') selected @endif>Size
+                                                                </option>
                                                                 <option value="color"
-                                                                    @if ($key == 'color') selected @endif>
-                                                                    Color</option>
+                                                                    @if ($key == 'color') selected @endif>Color
+                                                                </option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-md-5">
-                                                            @foreach ($option as $option_values)
+                                                        <div class="col-md-5 position-relative">
+                                                            @foreach ($option ?? [] as $option_values)
                                                                 <a href="#" class="del-option-value"><span
-                                                                        class="bi bi-x fs-3 text-danger">close</span></a>
+                                                                        class="bi bi-x fs-3 text-danger"></span></a>
                                                                 <select
                                                                     name="variant_option_values[{{ $rand_name }}][]"
                                                                     class="form-control option-value mb-2">
-                                                                    <option value="">Select Size</option>
-                                                                    <option value="S">Small (S)</option>
-                                                                    <option value="M">Medium (M)</option>
-                                                                    <option value="L">Large (L)</option>
-                                                                    <option value="XL">Extra Large (XL)
-                                                                    </option>
-                                                                    <option value="XXL">Double Extra Large
-                                                                        (XXL)
-                                                                    </option>
+                                                                    @if ($key == 'size')
+                                                                        <option
+                                                                            {{ $option_values->value == '' ? 'selected' : '' }}
+                                                                            value="">Select Size</option>
+                                                                        @foreach ($sizes ?? [] as $size)
+                                                                            <option
+                                                                                {{ $option_values->value == $size->size_value ? 'selected' : '' }}
+                                                                                value="{{ $size->size_value }}">
+                                                                                {{ $size->size_value }}</option>
+                                                                        @endforeach
+                                                                    @elseif($key == 'color')
+                                                                        <option value=""
+                                                                            {{ $option_values->value == '' ? 'selected' : '' }}>
+                                                                            Select Color</option>
+                                                                        @foreach ($colors ?? [] as $color)
+                                                                            <option
+                                                                                {{ $option_values->value == $color->color_name ? 'selected' : '' }}
+                                                                                value="{{ $color->color_name }}">
+                                                                                {{ $color->color_name }}</option>
+                                                                        @endforeach
+                                                                    @endif
                                                                 </select>
-                                                                {{-- <input type="text"
-                                                                                class="form-control option-value mb-2"
-                                                                                data-random="{{ $rand_name }}"
-                                                                                value="{{ $option_values->value }}"
-                                                                                name="variant_option_values[{{ $rand_name }}][]" /> --}}
                                                             @endforeach
                                                             <a href="#" class="add-option-value mt-2"
                                                                 data-random="{{ $rand_name }}">
@@ -993,7 +1022,7 @@
                                             @php $rand_name = substr(md5(rand()),2,7); @endphp
                                             <div class="box-div">
                                                 <div class="row position-relative">
-                                                    <a href="#" class="">
+                                                    <a href="#" class="position-relative">
                                                         <span
                                                             class="bi bi-x-circle-fill fs-3 text-danger del-option"></span>
                                                     </a>
@@ -1007,22 +1036,17 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-md-5 position-relative">
-                                                        {{-- <a href="#" class="del-option-value"><span
-                                                                            class="bi bi-x fs-3 text-danger"></span></a> --}}
-                                                        {{-- <input type="text"
-                                                                        class="form-control option-value mb-2"
-                                                                        data-random="{{ $rand_name }}"
-                                                                        name="variant_option_values[{{ $rand_name }}][]" /> --}}
+                                                        <a href="#" class="del-option-value"><span
+                                                                class="bi bi-x fs-3 text-danger"></span></a>
                                                         <select name="variant_option_values[{{ $rand_name }}][]"
                                                             data-random="{{ $rand_name }}"
                                                             class="form-control option-value mb-2 option-value-{{ $rand_name }}">
                                                             <option value="">Select Size</option>
-                                                            <option value="S">Small (S)</option>
-                                                            <option value="M">Medium (M)</option>
-                                                            <option value="L">Large (L)</option>
-                                                            <option value="XL">Extra Large (XL)</option>
-                                                            <option value="XXL">Double Extra Large (XXL)
-                                                            </option>
+                                                            @foreach ($sizes ?? [] as $size)
+                                                                <option value="{{ $size->size_value }}">
+                                                                    {{ $size->size_value }}
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                         <a href="#" class="add-option-value mt-2"
                                                             data-random="{{ $rand_name }}">
@@ -1060,7 +1084,6 @@
     </div>
 @endsection
 @push('footer')
-    <script language="javascript" src="/assets/admin/product2.js?v=1.1.0" defer></script>
     <script language="javascript">
         @isset($product)
             $('.tabnav').on('click', function() {
@@ -1072,178 +1095,88 @@
             });
         @endif
 
-        $(document).on('click', '.del-ingredient', function(e) {
-            e.preventDefault();
-            $(this).closest('.ingredient-group-container').remove();
-        });
+        $("#product_form").submit(function(e) {
+            e.preventDefault(); // Prevent the default form submission.
 
-        $('.apply-to-all').on('click', function(e) {
-            if ($('#special_price').is(':checked')) {
-                applyAll()
-            }
-        });
+            const form = $(this);
+            const actionUrl = form.attr("action");
 
-        $('#has-variants').on('click', function(e) {
-            if ($('#special_price').is(':checked') && $('.special_variants').children().length) {
-                applyAll()
-            }
-
-        });
-
-        function applyAll() {
-            let pvs = $('.productVariant')
-            if ($('#has-variants').is(':checked')) {
-                pvs = $('.variants-yes .productVariant')
-            } else {
-                pvs = $('.variants-no .productVariant')
-            }
-            $('.special_variants').empty();
-            pushSpecialPrice(pvs);
-        }
-
-        function pushSpecialPrice(pvs) {
-            if ($('#has-variants').is(':checked')) {
-                $('.id-single_variant').remove();
-            } else {
-                $('.sp:not(.id-single_variant)').remove();
-            }
-
-            pvs.each(function() {
-                let id = $(this).attr('data-id');
-
-                if (!$('.id-' + id).length) {
-                    let sku = $(this).find('.pv-sku').val();
-                    let name = $(this).find('.pv-name').val();
-                    let price = parseFloat($(this).find('.pv-price').val());
-                    price = isNaN(price) ? 0 : price;
-
-                    let discountType = $('[name="discount_type"]').val();
-                    let discountValue = parseFloat($('[name="discount_value"]').val());
-
-                    discountValue = isNaN(discountValue) ? 0 : discountValue;
-
-                    let newPrice = price;
-
-                    if (discountValue && !isNaN(discountValue) && discountType == 'percentage') {
-                        newPrice = Math.max((discountValue + 100) / 100 * price, 0)
-                    } else if (discountValue && !isNaN(discountValue) && discountType == 'amount') {
-                        newPrice = Math.max(price + discountValue, 0)
+            $.ajax({
+                type: "POST",
+                url: actionUrl,
+                data: form.serialize(), // Serialize form data.
+                success: function(response) {
+                    document.body.style.filter = 'grayscale(0%)';
+                    if (response.success) {
+                        toastr.success(response.message || "Operation completed successfully.");
+                        window.location=`{{ route('admin.products.index') }}`;
+                    } else {
+                        if (response.errors && typeof response.errors === "object") {
+                            // Iterate through errors and display each
+                            Object.values(response.errors).forEach((errorArray) => {
+                                errorArray.forEach((error) => toastr.error(error));
+                            });
+                        } else {
+                            toastr.error(response.message || "An error occurred.");
+                        }
                     }
-
-                    let priceDiff = newPrice - price;
-
-                    $('.special_variants').append(`<div class="sp splist row align-items-center mb-2 id-${id}" data-id="${id}">
-                <div class="col-lg-2 font-weight-bold spl-name">${name} <span class="font-weight-normal">($${price.toFixed(2)})</span></div>
-                <div class="col-lg-2"><input type="number" step="any" min="0" max="${price.toFixed(2)}" name="special_price[${sku}]" data-price="${price.toFixed(2)}" value="${newPrice.toFixed(2)}" class="form-control spl-price" placeholder="Special price"></div>
-                <div class="col-lg-2 priceText"></div>
-                </div>`);
-                    $(setPriceText);
-                }
+                },
+                error: function(xhr) {
+                    document.body.style.filter = 'grayscale(0%)';
+                    const errorResponse = xhr.responseJSON;
+                    if (errorResponse && errorResponse.errors) {
+                        // Iterate through validation errors
+                        Object.values(errorResponse.errors).forEach((errorArray) => {
+                            errorArray.forEach((error) => toastr.error(error));
+                        });
+                    } else if (errorResponse && errorResponse.message) {
+                        toastr.error(errorResponse.message); // General error message
+                    } else {
+                        toastr.error("An unexpected error occurred. Please try again later.");
+                    }
+                    console.error("Error Response:", xhr); // Log error for debugging
+                },
             });
-        }
-
-        $('.add-variant').on('click', function() {
-            setTimeout(function() {
-                if ($('#special_price').is(':checked') && $('.special_variants').children().length) {
-                    pvs = $('.variants-yes .productVariant');
-                    pushSpecialPrice(pvs);
-                }
-            }, 500)
         });
 
-        const setPriceText = function() {
-            let discountType = $('[name="discount_type"]').val();
-            $('.splist').each(function() {
-                let actualPrice = parseFloat($(this).find('.spl-price').attr('data-price'));
-                let specialPrice = parseFloat($(this).find('.spl-price').val());
 
-                let diff = specialPrice - actualPrice;
-
-                let prefix = specialPrice > actualPrice ? '+' : (actualPrice > specialPrice ? '-' : '');
-
-                let discountValue = 0;
-                let discountText = null;
-
-                let d = actualPrice > specialPrice ? 'Discount' : (actualPrice < specialPrice ? 'Over price' :
-                    '');
-
-                if (discountType == 'amount') {
-                    discountText = `${prefix}$${Math.abs(diff).toFixed(2)}`;
-                } else {
-                    discountValue = ((Math.abs(diff) / actualPrice) * 100).toFixed(1);
-                    discountValue = isNaN(discountValue) ? 0 : discountValue;
-                    discountText = `${prefix}$${Math.abs(diff).toFixed(2)}(${discountValue}%)`;
-                }
-
-                $(this).find('.priceText').text(`${d} ${discountText}`);
-            });
-        }
-
-        function discountInput(input) {
-            let value = input.value.trim();
-            if (value !== '') {
-                let num = parseFloat(value);
-                if (!isNaN(num)) {
-                    input.value = -Math.abs(num);
-                } else {
-                    input.value = '';
-                }
-            }
-        }
-        // $('#discount_value').on('input keyup change', function(){
-        //     let v = $(this).val().trim();
-        //     let n = v.replace(/[^0-9.]+/g, '').replace(/(\.\.)+/g, '.').replace(/^(\d*\.\d*)\./, '$1');
-        //     if(n){
-        //       $(this).val('-'+n)  
-        //     }else{
-        //         $(this).val('');
+        // $('#has-variants').on('click', function(e) {
+        //     if ($('#special_price').is(':checked') && $('.special_variants').children().length) {
+        //         applyAll()
         //     }
 
         // });
-        $(document).on('change input keyup', '.spl-price', setPriceText);
 
-        $(setPriceText);
-
-        $(document).on('change input keyup', '.pv-name, .pv-price', function() {
-            let id = $(this).closest('.productVariant').attr('data-id');
-            $('.id-' + id).find('.spl-name').html($(this).closest('.productVariant').find('.pv-name').val() +
-                `<span class="font-weight-normal"> ($${$(this).closest('.productVariant').find('.pv-price').val()})</span>`
-            );
-            $('.id-' + id).find('.spl-price').attr('data-price', $(this).closest('.productVariant').find(
-                '.pv-price').val());
-        });
-
-        $(document).on('change input keyup', '.pv-sku', function() {
-            let id = $(this).closest('.productVariant').attr('data-id');
-            $('.id-' + id).find('.spl-price').attr('name', `special_price[${$(this).val()}]`);
-        });
-
-        const specialPrice = function() {
-            if ($('#special_price').is(':checked')) {
-                $('.special_price_settings').show();
-                $('#special_price_from, #special_price_to').attr('required', true);
-            } else {
-                $('#special_price_from, #special_price_to').removeAttr('required');
-                $('.special_price_settings').hide();
-            }
-
-            if ($('#special_price').is(':checked') && !$('.special_variants').children().length) {
-                applyAll()
-            }
-
-        }
-
-        $('#special_price').on('click', specialPrice)
-        $(specialPrice);
-
-        $("body").delegate("#select-all-stores", "click", function(e) {
-
-            if ($(this).is(":checked")) {
-                $(".store-select").attr("checked", "checked");
-            } else {
-                $(".store-select").removeAttr("checked");
-            }
-
-        });
+        // $(document).on('change input keyup', '.pv-name, .pv-price', function() {
+        //     let id = $(this).closest('.productVariant').attr('data-id');
+        //     $('.id-' + id).find('.spl-name').html($(this).closest('.productVariant').find('.pv-name').val() +
+        //         `<span class="font-weight-normal"> ($${$(this).closest('.productVariant').find('.pv-price').val()})</span>`
+        //     );
+        //     $('.id-' + id).find('.spl-price').attr('data-price', $(this).closest('.productVariant').find(
+        //         '.pv-price').val());
+        // });
     </script>
+    <script>
+        // Get the dropdown element
+        const productNoDropdown = document.getElementById('product_no');
+        const productNoSelected = `{{ isset($product) ? $product->product_no : '' }}`; // Get the selected value
+        // Populate dropdown with product numbers from 01 to 100
+        for (let i = 1; i <= 100; i++) {
+            // Format the number with leading zero
+            const productNumber = i.toString().padStart(2, '0');
+
+            // Create an option element
+            const option = document.createElement('option');
+            option.value = productNumber; // Set the value of the option
+            option.textContent = productNumber; // Set the text content of the option
+
+            if (productNumber === productNoSelected) {
+                option.selected = true;
+            }
+
+            // Append the option to the dropdown
+            productNoDropdown.appendChild(option);
+        }
+    </script>
+    @include('admin.products.scripts')
 @endpush
