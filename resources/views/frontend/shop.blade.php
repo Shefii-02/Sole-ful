@@ -1,7 +1,4 @@
 @extends('layouts.app')
-
-
-
 @section('content')
     <!-- breadcrumb area start -->
     <div class="breadcrumb-area bg-img pt-12" data-bg="assets/img/banner/breadcrumb-banner.jpg">

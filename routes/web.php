@@ -16,7 +16,23 @@ use App\Http\Controllers\SizeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
+// Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
+
+    Route::get('T&C', function () {
+        return view('frontend.documents.T-C');
+    })->name('t-c');
+    Route::get('refund_policy', function () {
+        return view('frontend.documents.refund_policy');
+    })->name('refund_policy');
+    Route::get('privacy_policy', function () {
+        return view('frontend.documents.privacy_policy');
+    })->name('privacy_policy');
+    Route::get('return_policy', function () {
+        return view('frontend.documents.return_policy');
+    })->name('return_policy');
+    Route::get('shipping_policy', function () {
+        return view('frontend.documents.shipping_policy');
+    })->name('shipping_policy');
 
 Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
