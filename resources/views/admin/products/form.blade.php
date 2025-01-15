@@ -415,7 +415,18 @@
 
                                 </div>
                             </div>
-
+                            <div class="row mb-4">
+                                <div class="form-group col-md-12">
+                                    <label class="form-group__label">Description</label>
+                                    <textarea name="description" class="form-control ckeditor-textarea" id="description" rows="4"
+                                        placeholder="" autocomplete="off">{{ old(
+                                            'description',
+                                            isset($product)
+                                                ? $product->description
+                                                : '',
+                                        ) }}</textarea>
+                                </div>
+                            </div>
                             <div class="row mb-4">
                                 <div class="form-group col-md-12">
                                     <label class="form-group__label">Care Instruction</label>
@@ -447,13 +458,13 @@
 
                             <div class="row mb-4">
                                 <div class="form-group col-md-12">
-                                    <label class="form-group__label">Marketed By</label>
+                                    <label class="form-group__label">Packed and Marketed By</label>
                                     <textarea name="marketed_by" class="form-control" id="marketed_by" rows="4" placeholder=""
                                         autocomplete="off">{{ old(
                                             'marketed_by',
                                             isset($product)
                                                 ? $product->marketed_by
-                                                : 'VOCHE THE INTERIOR STUDIO #5 1 FLOOR GEDDALAHALLI,HENNUR BAGLUR MAIN ROAD KOTHALUR POST BLR.560077',
+                                                : 'Soleful #5 1 FLOOR GEDDALAHALLI,HENNUR BAGLUR MAIN ROAD KOTHALUR POST BLR.560077',
                                         ) }}</textarea>
                                 </div>
                             </div>
