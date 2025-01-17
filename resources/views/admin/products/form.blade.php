@@ -411,6 +411,9 @@
                                         <option
                                             {{ isset($product) && $product->shoe_type == 'Ethnic Slides' ? 'selected' : '' }}
                                             value="Ethnic Slides">Ethnic Slides</option>
+                                            <option
+                                            {{ isset($product) && $product->shoe_type == 'Casual Slipons' ? 'selected' : '' }}
+                                            value="Casual Slipons">Casual Slipons</option>
                                     </select>
 
                                 </div>
