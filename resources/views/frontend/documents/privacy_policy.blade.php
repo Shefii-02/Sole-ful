@@ -27,7 +27,7 @@
         <div class="container">
             <div class="row">
                 <p>
-                    Introduction
+                    Introduction<br>
                     This Privacy Policy describes how VOCHE THE INTERIOR STUDIO and its affiliates (collectively "VOCHE THE
                     INTERIOR STUDIO, we, our, us") collect, use, share, protect or otherwise process your information/
                     personal data through our website https://stage.soleful.in (hereinafter referred to as Platform). Please
@@ -38,7 +38,7 @@
                     this Privacy Policy, the Terms of Use and the applicable service/product terms and conditions, and agree
                     to be governed by the laws of India including but not limited to the laws applicable to data protection
                     and privacy. If you do not agree please do not use or access our Platform.
-
+                        <br>
                     Collection-We collect your personal data when you use our Platform, services or otherwise interact with
                     us during the course of our relationship.and related information provided from time to time. Some of the
                     information that we may collect includes but is not limited to personal data / information provided to
@@ -60,7 +60,7 @@
                     card PIN, net-banking or mobile banking password, we request you to never provide such information. If
                     you have already revealed such information, report it immediately to an appropriate law enforcement
                     agency.
-
+                    <br>
                     Usage- We use personal data to provide the services you request. To the extent we use your personal data
                     to market to you, we will provide you the ability to opt-out of such uses. We use your personal data to
                     assist sellers and business partners in handling and fulfilling orders; enhancing customer experience;
@@ -69,7 +69,7 @@
                     criminal activity; enforce our terms and conditions; conduct marketing research, analysis and surveys;
                     and as otherwise described to you at the time of collection of information. You understand that your
                     access to these products/services may be affected in the event permission is not provided to us.
-
+                    <br>
                     Sharing- We may share your personal data internally within our group entities, our other corporate
                     entities, and affiliates to provide you access to the services and products offered by them. These
                     entities and affiliates may market to you as a result of such sharing unless you explicitly opt-out. We
@@ -86,7 +86,7 @@
                     reasonably necessary to: enforce our Terms of Use or Privacy Policy; respond to claims that an
                     advertisement, posting or other content violates the rights of a third party; or protect the rights,
                     property or personal safety of our users or the general public.
-
+                    <br>
                     Security Precautions- To protect your personal data from unauthorised access or disclosure, loss or
                     misuse we adopt reasonable security practices and procedures. Once your information is in our possession
                     or whenever you access your account information, we adhere to our security guidelines to protect it
@@ -96,7 +96,7 @@
                     cannot always be guaranteed as completely secure, and therefore, there would always remain certain
                     inherent risks regarding use of the Platform. Users are responsible for ensuring the protection of login
                     and password records for their account.
-
+                    <br>
                     Data Deletion and Retention- You have an option to delete your account by visiting your profile and
                     settings on our Platform , this action would result in you losing all information related to your
                     account. You may also write to us at the contact information provided below to assist you with these
@@ -107,10 +107,10 @@
                     related to you if we believe it may be necessary to prevent fraud or future abuse or for other
                     legitimate purposes. We may continue to retain your data in anonymised form for analytical and research
                     purposes.
-
+                    <br>
                     Your Rights- You may access, rectify, and update your personal data directly through the functionalities
                     provided on the Platform.
-
+                    <br>
                     Consent- By visiting our Platform or by providing your information, you consent to the collection, use,
                     storage, disclosure and otherwise processing of your information on the Platform in accordance with this
                     Privacy Policy. If you disclose to us any personal data relating to other people, you represent that you
@@ -126,26 +126,26 @@
                     accordance with the Terms of Use, this Privacy Policy, and applicable laws. In the event you withdraw
                     consent given to us under this Privacy Policy, we reserve the right to restrict or deny the provision of
                     our services for which we consider such information to be necessary.
-
+                    <br>
                     Changes to this Privacy Policy- Please check our Privacy Policy periodically for changes. We may update
                     this Privacy Policy to reflect changes to our information practices. We may alert / notify you about the
                     significant changes to the Privacy Policy, in the manner as may be required under applicable laws.
-
+                    <br>
                     Grievance Officer
-
+                    <br>
                     Insert Name of the Office:
-
+                    <br>
                     Zameer
-
+                    <br>
                     Designation:
-
+                    <br>
                     Soleful<br>
                     #5 1 FLOOR GEDDALAHALLI,HENNUR<br>
                     BAGLUR MAIN ROAD KOTHALUR POST BLR.560077
-
-                    Contact us:
+                    <br>
+                    Contact us:<br>
                     +917996666225
-
+                    <br>
                     Phone: Time: Monday - Friday(9:00 - 18:00)
                 </p>
             </div>
