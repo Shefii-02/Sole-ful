@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
 
-    Route::get('T&C', function () {
-        return view('frontend.documents.T-C');
-    })->name('t-c');
+    Route::get('T&C', function () { return view('frontend.documents.T-C');})->name('t-c');
     Route::get('refund_policy', function () {
         return view('frontend.documents.refund_policy');
     })->name('refund_policy');

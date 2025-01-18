@@ -130,60 +130,6 @@
 <body>
     <div id="app">
         @include('layouts.header')
-        {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav> --}}
-
         <main class="py-4">
             @yield('content')
         </main>
@@ -200,12 +146,14 @@
                                 <h5 class="widget-title">My Account</h5>
                                 <div class="widget-body">
                                     <ul class="location-wrap">
-                                        <li><i class="ion-ios-location-outline"></i>184 Main Rd E, St Albans VIC 3021,
-                                            Australia</li>
+                                        <li><i class="ion-ios-location-outline"></i>
+                                            Soleful<br>
+                                            #5 1 FLOOR GEDDALAHALLI,HENNUR<br>
+                                            BAGLUR MAIN ROAD KOTHALUR POST BLR.560077</li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
-                                                href="mailto:yourmail@gmail.com">yourmail@gmail.com</a></li>
+                                                href="mailto:solefulfootwears@gmail.com">solefulfootwears@gmail.com </a></li>
                                         <li><i class="ion-ios-telephone-outline"></i>Phone: <a
-                                                href="%2b0025425456554.html">+ 00 254 254565</a></li>
+                                                href="tel:+917996666225">+91 79966 66225</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -236,12 +184,12 @@
                                 <h5 class="widget-title">Information</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Returns & Exchanges</a></li>
-                                        <li><a href="#">Shipping & Delivery</a></li>
-                                        <li><a href="#">Privacy Policy</a></li>
+                                        <li><a target="_blank" href="{{ url('/') }}">Home</a></li>
+                                        <li><a target="_blank" href="{{ url('T&C') }}">Terms and Conditions</a></li>
+                                        <li><a target="_blank" href="{{ url('refund_policy') }}">Refund Policy</a></li>
+                                        <li><a target="_blank" href="{{ url('return_policy') }}">Returns & Exchanges</a></li>
+                                        <li><a target="_blank" href="{{ url('shipping_policy') }}">Shipping & Delivery</a></li>
+                                        <li><a target="_blank" href="{{ url('privacy_policy') }}">Privacy Policy</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -254,12 +202,12 @@
                                 <h5 class="widget-title">Quick Links</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li><a href="#">Store Location</a></li>
-                                        <li><a href="#">My Account</a></li>
-                                        <li><a href="#">Orders Tracking</a></li>
-                                        <li><a href="#">Size Guide</a></li>
-                                        <li><a href="#">Shopping Rates</a></li>
-                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="{{ url('/') }}">Store Location</a></li>
+                                        <li><a href="{{ url('/') }}">My Account</a></li>
+                                        <li><a href="{{ url('/') }}">Orders Tracking</a></li>
+                                        <li><a href="{{ url('/') }}">Size Guide</a></li>
+                                        <li><a href="{{ url('/') }}">Shopping Rates</a></li>
+                                        <li><a href="{{ url('/') }}">Contact Us</a></li>
                                     </ul>
                                 </div>
                             </div>
