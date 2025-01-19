@@ -39,7 +39,7 @@
                                                 <li class="mb-3">
                                                     <a class="dropdown-item" href="/">Shop</a>
                                                 </li>
-                                                <hr class="border-3 mb-3" />
+                                                <hr class="border-2 mb-3" />
                                                 <li class="mb-3">
                                                     <a class="dropdown-item" href="/">Casual Slides</a>
                                                 </li>
@@ -49,12 +49,29 @@
                                                 <li class="mb-3">
                                                     <a class="dropdown-item" href="/">Casual Slipons</a>
                                                 </li>
-                                                <hr class="border-3 mb-3"/>
+                                                <hr class="border-2 mb-3"/>
                                                 <li class="mb-3">
                                                     <a class="dropdown-item" href="/">Party Wear</a>
                                                 </li>
                                                 <li class="mb-3">
                                                     <a class="dropdown-item" href="/">Casual Wear</a>
+                                                </li>
+                                                <hr class="border-2 mb-3" />
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Terms and Conditions</a>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Refund Policy</a>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Returns & Exchanges</a>
+                                                </li>
+                                                <hr class="border-2 mb-3"/>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Shipping & Delivery</a>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Privacy Policy</a>
                                                 </li>
 
                                             </ul>
