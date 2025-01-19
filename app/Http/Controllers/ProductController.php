@@ -222,6 +222,8 @@ class ProductController extends Controller
         $sizes = Size::get();
         $colors = Color::get();
 
+
+
         return view('admin.products.form', compact('categories', 'sizes', 'colors', 'product'));
     }
 
@@ -269,13 +271,15 @@ class ProductController extends Controller
             VariationKey::where('product_id', $product->id)->delete();
             ProductCategory::where('product_id', $product->id)->delete();
 
+         
             if ($request->has('categories') && count($request->categories) > 0) {
-                foreach ($request->categories as $category) {
+                foreach ($request->categories ?? [] as $category) {
                     $category_product                   = new ProductCategory();
                     $category_product->category_id      = $category;
                     $category_product->product_id       = $product->id;
                     $category_product->save();
                 }
+            
             }
 
             if ($request->has('has_variants')) {

@@ -450,7 +450,7 @@
                                             <label class="form-check form-switch" for="category-{{ $category->id }}">
                                                 <input class="form-check-input" name="categories[]" type="checkbox"
                                                     value="{{ $category->id }}" id="category-{{ $category->id }}"
-                                                    {{ isset($product) && in_array($category->id, $product->categories->pluck('category_id')->toArray()) ? 'checked' : '' }}>
+                                                    {{ isset($product) && in_array($category->id, $product->categories->pluck('id')->toArray()) ? 'checked' : '' }}>
                                                 <span class="form-check-label">{{ $category->name }}</span>
                                             </label>
                                         </div>

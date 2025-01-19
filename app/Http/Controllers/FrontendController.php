@@ -42,7 +42,7 @@ class FrontendController extends Controller
 
     public function index()
     {
-        $banners                = Banner::where('status', 1)->select('desktop','mobile','link')->orderby('display_order');
+        $banners                = Banner::where('status', 1)->select('desktop', 'mobile', 'link')->orderby('display_order');
         $slider_in_desktop      = $banners->whereNotNull('desktop')->select('desktop', 'link')->get();
         $slider_in_mobile       = $banners->whereNotNull('mobile')->select('mobile', 'link')->get();
         $bestSellProduct        = BestSellProduct::get();
@@ -61,13 +61,14 @@ class FrontendController extends Controller
     }
 
 
-    public function QuickView(Request $request){
+    public function QuickView(Request $request)
+    {
         $product_id = $request->product_id;
         $product = Product::where('id', $product_id)->first() ??  abort(404);
 
         return view('frontend.partials.product-single', compact('product'))->render();
     }
-    
+
 
 
     // public function shop(Request $request)
@@ -173,24 +174,30 @@ class FrontendController extends Controller
 
         // Get available colors with unique product counts
         $available_colors =  VariationKey::where('type', 'color')
-            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
-            ->groupBy('value')
-            ->get();
+                                            ->whereHas('product', function ($q) {
+                                                $q->where('status', 1);
+                                            })
+                                            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
+                                            ->groupBy('value')
+                                            ->get();
 
 
         // Get available sizes with unique product counts
         $available_sizes = VariationKey::where('type', 'size')
-            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
-            ->groupBy('value')
-            ->get();
+                                        ->whereHas('product', function ($q) {
+                                            $q->where('status', 1);
+                                        })
+                                        ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
+                                        ->groupBy('value')
+                                        ->get();
         // Categories with product counts
-        $categories = Category::withCount([
-            'products' => function ($query) {
-                $query->where('status', 1);
-            }
-        ])->orderby('created_at', 'desc')->get();
+        $categories = Category::with('products')->withCount([
+                                    'products' => function ($query) {
+                                        $query->where('status', 1);
+                                    }
+                                ])->orderby('created_at', 'desc')->get();
 
-
+       
         if ($request->ajax()) {
             // Render product list view and return as JSON for AJAX
             $html = view('frontend.product_list', compact('products'))->render();
