@@ -268,7 +268,7 @@
                     <div class="row mtn-40">
                         <!-- footer widget item start -->
                         <div class="col-xl-5 col-lg-3 col-md-6">
-                            <div class="widget-item mt-40">
+                            <div class="widget-item mt-10">
                                 <h5 class="widget-title">My Account</h5>
                                 <div class="widget-body">
                                     <ul class="location-wrap">
@@ -289,16 +289,28 @@
 
                         <!-- footer widget item start -->
                         <div class="col-xl-2 col-lg-3 col-md-6">
-                            <div class="widget-item mt-40">
-                                <h5 class="widget-title">Categories</h5>
+                            <div class="widget-item mt-10">
+                                <h5 class="widget-title">Pages</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li><a href="#">Ecommerce</a></li>
-                                        <li><a href="#">Shopify</a></li>
-                                        <li><a href="#">Prestashop</a></li>
-                                        <li><a href="#">Opencart</a></li>
-                                        <li><a href="#">Magento</a></li>
-                                        <li><a href="#">Jigoshop</a></li>
+                                        <li class="mb-3">
+                                            <a target="_blank"  href="/">Shop</a>
+                                        </li>
+                                        <li class="mb-3">
+                                            <a target="_blank"  href="/">Casual Slides</a>
+                                        </li>
+                                        <li class="mb-3">
+                                            <a target="_blank"  href="/">Ethnic Slides</a>
+                                        </li>
+                                        <li class="mb-3">
+                                            <a target="_blank"  href="/">Casual Slipons</a>
+                                        </li>
+                                        <li class="mb-3">
+                                            <a target="_blank"  href="/">Party Wear</a>
+                                        </li>
+                                        <li class="mb-3">
+                                            <a target="_blank"  href="/">Casual Wear</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -307,7 +319,7 @@
 
                         <!-- footer widget item start -->
                         <div class="col-xl-2 col-lg-3 col-md-6">
-                            <div class="widget-item mt-40">
+                            <div class="widget-item mt-10">
                                 <h5 class="widget-title">Information</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
@@ -328,7 +340,7 @@
 
                         <!-- footer widget item start -->
                         <div class="col-xl-2 col-lg-3 offset-xl-1 col-md-6">
-                            <div class="widget-item mt-40">
+                            <div class="widget-item mt-10">
                                 <h5 class="widget-title">Quick Links</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
