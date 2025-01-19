@@ -3,7 +3,8 @@
         <!-- product grid item start -->
         <div class="product-item mb-53">
             <div class="product-thumb">
-                <a target="_blank" href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">
+                <a target="_blank"
+                    href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">
                     <img src="{{ asset('images/products/' . ($product->MainThumbImage->image ?? '')) }}" alt="">
                 </a>
             </div>
@@ -17,11 +18,16 @@
                         {{ number_format($product->minPrice) }}</span>
                 </div>
                 <div class="product-action-link">
-                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                            class="ion-android-favorite-outline"></i></a>
-                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view">
-                        <span data-bs-toggle="tooltip" title="Quick View"><i class="ion-ios-eye-outline"></i></span>
+                    <a href="#" id="wishlist-btn-{{ $product->id }}" class="wishlist-btn"
+                        data-product-id="{{ $product->id }}" title="Add To Wishlist"><i class="bi bi-heart"></i></a>
+                    <a href="#" data-bs-toggle="modal" data-product-id="{{ $product->id }}"
+                        data-bs-target="#quick_view" class="quick_view-btn" title="Add To Cart"><i
+                            class="bi bi-bag-check"></i></a>
+                    <a target="_blank"
+                        href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">
+                        <span title="Detail View">
+                            <i class="ion-ios-eye-outline"></i>
+                        </span>
                     </a>
                 </div>
             </div>
@@ -48,13 +54,16 @@
                 </div>
                 <p>{{ $product->care_instruction }}</p>
                 <div class="product-link-2 position-static">
-                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                            class="ion-android-favorite-outline"></i></a>
-                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i class="ion-bag"></i></a>
+                    <a href="#" id="wishlist-btn-{{ $product->id }}" class="wishlist-btn"
+                        data-product-id="{{ $product->id }}" title="Add To Wishlist"><i class="bi bi-heart"></i></a>
+                    <a href="#" data-bs-toggle="modal" data-product-id="{{ $product->id }}"
+                        data-bs-target="#quick_view" class="quick_view-btn" title="Add To Cart"><i
+                            class="bi bi-bag-check"></i></a>
                     <a target="_blank"
-                        href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}"
-                        data-bs-toggle="modal" data-bs-target="#quick_view">
-                        <span data-bs-toggle="tooltip" title="Detail View"><i class="ion-ios-eye-outline"></i></span>
+                        href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">
+                        <span title="Detail View">
+                            <i class="ion-ios-eye-outline"></i>
+                        </span>
                     </a>
                 </div>
             </div>

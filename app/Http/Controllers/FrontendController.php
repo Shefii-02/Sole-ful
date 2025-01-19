@@ -169,7 +169,6 @@ class FrontendController extends Controller
             });
         }
 
-
         $products = $query->get();
 
         // Get available colors with unique product counts

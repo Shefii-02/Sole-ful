@@ -224,9 +224,9 @@
                     method: 'GET',
                     data: queryString,
                     success: function(response) {
-                        if (response.html) {
+                        // if (response.html) {
                             productContainer.html(response.html); // Update product list dynamically
-                        }
+                        // }
                         $('html, body').animate({
                             scrollTop: 0
                         }, 300); 

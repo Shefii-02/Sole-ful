@@ -2039,8 +2039,8 @@ fieldset legend {
   align-items: center;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  /* border-top-left-radius: 20px;
+  border-top-right-radius: 20px; */
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991.98px),
