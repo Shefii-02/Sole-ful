@@ -76,6 +76,7 @@ class ProductController extends Controller
         $product->seo_description   = $request->seo_description ?? '';
         $product->seo_keywords      = $request->seo_keywords ?? '';
         $product->has_variation     = $request->has('has_variants');
+        $product->unique_value      = auth()->user()->id . date('mYdahis');
         try {
             $product->save();
             if ($request->has('categories') && count($request->categories) > 0) {
@@ -254,12 +255,12 @@ class ProductController extends Controller
         $product->seo_description   = $request->seo_description ?? '';
         $product->seo_keywords      = $request->seo_keywords ?? '';
         $product->has_variation     = $request->has('has_variants');
+        if ($product->unique_value == '') {
+            $product->unique_value        = auth()->user()->id . date('mYdahis');
+        }
         try {
             $product->save();
-
             // Delete all relationship data for recreation
-
-
 
             Option::where('product_id', $product->id)->delete();
             VariationImage::where('product_id', $product->id)->delete();

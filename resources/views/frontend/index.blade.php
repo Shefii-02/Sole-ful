@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <!-- Hero Slider Section Start -->
-    <section class="hero-slider">
+    <section class="hero-slider" style="margin-top: 47px;">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -10,8 +10,12 @@
                             @foreach ($slider_in_mobile ?? [] as $mobile)
                                 <!-- Single Slider Item Start -->
                                 <div class="hero-single-slide">
-                                    <div class="hero-slider-item bg-img" data-bg="{{ asset('images/' . $mobile) }}">
-                                    </div>
+                                    <a href="{{ $desktop['link'] != null ? $desktop['link'] : '#' }}" target="_blank">
+
+                                        <div class="hero-slider-item bg-img" data-bg="{{ asset('images/' . $mobile['mobile']) }}">
+                                        </div>
+
+                                    </a>
                                 </div>
                                 <!-- Single Slider Item End -->
                             @endforeach
@@ -19,8 +23,11 @@
                             @foreach ($slider_in_desktop ?? [] as $desktop)
                                 <!-- Single Slider Item Start -->
                                 <div class="hero-single-slide">
-                                    <div class="hero-slider-item bg-img" data-bg="{{ asset('images/' . $desktop) }}">
-                                    </div>
+                                    <a href="{{ $desktop['link'] != null ? $desktop['link'] : '#' }}" target="_blank">
+                                        <div class="hero-slider-item bg-img"
+                                            data-bg="{{ asset('images/' . $desktop['desktop']) }}">
+                                        </div>
+                                    </a>
                                 </div>
                                 <!-- Single Slider Item End -->
                             @endforeach
@@ -71,27 +78,30 @@
                         @foreach ($featuredProduct ?? [] as $featuredPdct)
                             <div class="product-item mb-50">
                                 <div class="product-thumb">
-                                    <a target="_blank" href="{{ route('public.product', $featuredPdct->product->slug) }}">
+                                    <a target="_blank" href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">
                                         <img src="{{ asset('images/products/' . ($featuredPdct->product->MainThumbImage->image ?? '')) }}"
                                             alt="{{ $featuredPdct->product->product_name }}">
                                     </a>
                                 </div>
                                 <div class="product-content">
                                     <h5 class="product-name">
-                                        <a target="_blank" href="{{ route('public.product', $featuredPdct->product->slug) }}">{{ $featuredPdct->product->product_name }}</a>
+                                        <a target="_blank"
+                                            href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">{{ $featuredPdct->product->product_name }}</a>
                                     </h5>
                                     <div class="price-box">
                                         <span class="price-regular small fw-semibold">
                                             ₹ {{ number_format($featuredPdct->product->minPrice) }}</span>
                                     </div>
                                     <div class="product-action-link">
-                                        <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                class="ion-android-favorite-outline"></i></a>
-                                        <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                class="ion-bag"></i></a>
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view"> <span
-                                                data-bs-toggle="tooltip" title="Quick View"><i
-                                                    class="ion-ios-eye-outline"></i></span> </a>
+                                        <a href="#" id="wishlist-btn-{{ $featuredPdct->product->id }}" class="wishlist-btn"
+                                                data-product-id="{{ $featuredPdct->product->id }}"  title="Add To Wishlist"><i
+                                                    class="bi bi-heart"></i></a>
+                                        <a href="#" data-bs-toggle="modal"  data-product-id="{{ $featuredPdct->product->id }}"  data-bs-target="#quick_view" class="quick_view-btn" title="Add To Cart"><i class="bi bi-bag-check"></i></a>
+                                        <a target="_blank" href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">
+                                            <span  title="Detail View">
+                                                <i class="ion-ios-eye-outline"></i>
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -101,6 +111,7 @@
             </div>
         </div>
     </section>
+
     <!-- Featured Collections End -->
 
     <!-- Banner Statistic Area Start -->
@@ -151,18 +162,20 @@
                             <div class="slide-item">
                                 <div class="pro-item-small mt-30">
                                     <div class="product-thumb">
-                                        <a target="_blank" href="{{ route('public.product', $featuredPdct->product->slug) }}">
+                                        <a target="_blank"
+                                            href="{{ route('public.product', ['uid' => $bestPRoduct->product->unique_value, 'slug' => $bestPRoduct->product->slug]) }}">
                                             <img src="{{ asset('images/products/' . ($bestPRoduct->product->MainThumbImage->image ?? '')) }}"
-                                            alt="{{ $bestPRoduct->product->product_name }}">
+                                                alt="{{ $bestPRoduct->product->product_name }}">
                                         </a>
                                     </div>
                                     <div class="pro-small-content">
                                         <h6 class="product-name">
-                                            <a target="_blank" href="{{ route('public.product', $featuredPdct->product->slug) }}">{{ $bestPRoduct->product->product_name }}</a>
+                                            <a target="_blank"
+                                                href="{{ route('public.product', ['uid' => $bestPRoduct->product->unique_value, 'slug' => $bestPRoduct->product->slug]) }}">{{ $bestPRoduct->product->product_name }}</a>
                                         </h6>
                                         <div class="price-box">
-                                            <span class="price-regular">₹ {{ number_format($bestPRoduct->product->minPrice) }}</span>
-                                            {{-- <span class="price-old"><del>$70.00</del></span> --}}
+                                            <span class="price-regular">₹
+                                                {{ number_format($bestPRoduct->product->minPrice) }}</span>
                                         </div>
                                         <div class="ratings">
                                             <span><i class="ion-android-star"></i></span>
@@ -172,11 +185,14 @@
                                             <span><i class="ion-android-star"></i></span>
                                         </div>
                                         <div class="product-link-2">
-                                            <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                    class="ion-android-favorite-outline"></i></a>
-                                            <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                    class="ion-bag"></i></a>
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#quick_view">
+                                            <a href="#" id="wishlist-btn-{{ $bestPRoduct->product->id }}" class="wishlist-btn"
+                                                data-product-id="{{ $bestPRoduct->product->id }}"  data-bs-toggle="tooltip" title="Add To Wishlist"><i
+                                                    class="bi bi-heart"></i></a>
+                                            <a  data-bs-toggle="modal"  data-product-id="{{ $bestPRoduct->product->id }}"  data-bs-target="#quick_view" title="Add To Cart" class="quick_view-btn" >
+                                                <i class="bi bi-bag-check"></i>
+                                            </a> 
+                                           
+                                            <a  target="_blank" href="{{ route('public.product', ['uid' => $bestPRoduct->product->unique_value, 'slug' => $bestPRoduct->product->slug]) }}">
                                                 <span data-bs-toggle="tooltip" title="Quick View"><i
                                                         class="ion-ios-eye-outline"></i></span> </a>
                                         </div>
@@ -192,6 +208,7 @@
         </div>
     </section>
     <!-- top seller area end -->
+    @if($blogs->count())
     <!-- Latest Blog Area Start -->
     <section class="latest-blog-area section-padding">
         <div class="container">
@@ -210,7 +227,8 @@
                             <div class="blog-post-item">
                                 <div class="blog-thumb">
                                     <a href="blog-details.html">
-                                        <img style="height:200px" src="{{ asset('images/'.$blog->image) }}" alt="blog thumb">
+                                        <img style="height:200px" src="{{ asset('images/' . $blog->image) }}"
+                                            alt="blog thumb">
                                     </a>
                                 </div>
                                 <div class="blog-content">
@@ -218,7 +236,7 @@
                                         <a href="blog-details.html">{{ $blog->title }}</a>
                                     </h5>
                                     <ul class="blog-meta">
-                                        <li><span>Created at: </span>{{ date('d-M-Y',strtotime($blog->created_at)) }}</li>
+                                        <li><span>Created at: </span>{{ date('d-M-Y', strtotime($blog->created_at)) }}</li>
                                     </ul>
                                     <a href="blog-details.html" class="read-more">Read More...</a>
                                 </div>
@@ -229,7 +247,8 @@
             </div>
         </div>
     </section>
-    <!-- Latest Blog Area End -->
+    @endif
+
 @endsection
 
 @push('footer')

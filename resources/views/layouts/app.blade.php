@@ -123,6 +123,132 @@
                 /* Larger width for medium screens */
             }
         }
+
+        .shimmer-bar {
+            animation: shimmer 5s infinite;
+        }
+
+        .shimmer-bar2 {
+            animation: shimmer2 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                opacity: 0.9;
+                transform: scale(0);
+            }
+
+            10% {
+                opacity: 0.7;
+                transform: none;
+            }
+
+            20% {
+                opacity: 0.5;
+                transform: none;
+            }
+
+            30% {
+                opacity: 0.3;
+                transform: none;
+            }
+
+            40% {
+                opacity: 0.2;
+                transform: none;
+            }
+
+            50% {
+                opacity: 0.1;
+                transform: none;
+            }
+
+            60% {
+                opacity: 0.1;
+                transform: none;
+            }
+
+            70% {
+                opacity: 0.3;
+                transform: none;
+            }
+
+            80% {
+                opacity: 0.5;
+                transform: none;
+            }
+
+            90% {
+                opacity: 0.7;
+                transform: none;
+            }
+
+            100% {
+                opacity: 0.9;
+                transform: none;
+            }
+        }
+
+        @keyframes shimmer2 {
+            0% {
+                opacity: 0.9;
+                transform: scale(0);
+            }
+
+            10% {
+                opacity: 0.7;
+                transform: none;
+            }
+
+            20% {
+                opacity: 0.5;
+                transform: none;
+            }
+
+            30% {
+                opacity: 0.3;
+                transform: none;
+            }
+
+            40% {
+                opacity: 0.2;
+                transform: none;
+            }
+
+            50% {
+                opacity: 0.1;
+                transform: none;
+            }
+
+            60% {
+                opacity: 0.1;
+                transform: none;
+            }
+
+            70% {
+                opacity: 0.3;
+                transform: none;
+            }
+
+            80% {
+                opacity: 0.5;
+                transform: none;
+            }
+
+            90% {
+                opacity: 0.7;
+                transform: none;
+            }
+
+            100% {
+                opacity: 0.9;
+                transform: none;
+            }
+        }
+
+        .bi-heart-fill {
+            color: #dc3545;
+        }
     </style>
 
 </head>
@@ -151,7 +277,8 @@
                                             #5 1 FLOOR GEDDALAHALLI,HENNUR<br>
                                             BAGLUR MAIN ROAD KOTHALUR POST BLR.560077</li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
-                                                href="mailto:solefulfootwears@gmail.com">solefulfootwears@gmail.com </a></li>
+                                                href="mailto:solefulfootwears@gmail.com">solefulfootwears@gmail.com </a>
+                                        </li>
                                         <li><i class="ion-ios-telephone-outline"></i>Phone: <a
                                                 href="tel:+917996666225">+91 79966 66225</a></li>
                                     </ul>
@@ -187,9 +314,12 @@
                                         <li><a target="_blank" href="{{ url('/') }}">Home</a></li>
                                         <li><a target="_blank" href="{{ url('T&C') }}">Terms and Conditions</a></li>
                                         <li><a target="_blank" href="{{ url('refund_policy') }}">Refund Policy</a></li>
-                                        <li><a target="_blank" href="{{ url('return_policy') }}">Returns & Exchanges</a></li>
-                                        <li><a target="_blank" href="{{ url('shipping_policy') }}">Shipping & Delivery</a></li>
-                                        <li><a target="_blank" href="{{ url('privacy_policy') }}">Privacy Policy</a></li>
+                                        <li><a target="_blank" href="{{ url('return_policy') }}">Returns & Exchanges</a>
+                                        </li>
+                                        <li><a target="_blank" href="{{ url('shipping_policy') }}">Shipping &
+                                                Delivery</a></li>
+                                        <li><a target="_blank" href="{{ url('privacy_policy') }}">Privacy Policy</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -202,12 +332,13 @@
                                 <h5 class="widget-title">Quick Links</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li><a href="{{ url('/') }}">Store Location</a></li>
-                                        <li><a href="{{ url('/') }}">My Account</a></li>
-                                        <li><a href="{{ url('/') }}">Orders Tracking</a></li>
-                                        <li><a href="{{ url('/') }}">Size Guide</a></li>
-                                        <li><a href="{{ url('/') }}">Shopping Rates</a></li>
-                                        <li><a href="{{ url('/') }}">Contact Us</a></li>
+                                        <li><a target="_blank" href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8">Store
+                                                Location</a></li>
+                                        <li><a href="{{ url('/accounts') }}">My Account</a></li>
+                                        <li><a href="{{ url('/order-track') }}">Orders Tracking</a></li>
+                                        <li><a href="#">Size Guide</a></li>
+                                        <li><a href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
+                                        <li><a href="{{ url('contact-us') }}">Contact Us</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -224,8 +355,9 @@
                     <div class="row">
                         <div class="col-md-6 order-2 order-md-1">
                             <div class="copyright-text text-center text-md-start">
-                                <p>&copy; {{ date('Y') }} <b>Soleful</b> Made with <i class="fa fa-heart text-danger"></i> by <a
-                                    target="_blank"   href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a></p>
+                                <p>&copy; {{ date('Y') }} <b>Soleful</b> Made with <i
+                                        class="fa fa-heart text-danger"></i> by <a target="_blank"
+                                        href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a></p>
                             </div>
                         </div>
                         <div class="col-md-6 order-1 order-md-2">
@@ -243,8 +375,51 @@
         </footer>
         <!-- End Footer Area Wrapper -->
 
+
+        <!-- Quick view modal start -->
+        <div class="modal" id="quick_view">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body quickBody">
+                        <div class="col-12 mb-4">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="col-lg-12 rounded-5 h-75 bg-gray-100 ">
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <div class="row gap-2 justify-center">
+                                            <div class="col-3 rounded-5 h-10 bg-gray-100 ">
+                                            </div>
+                                            <div class="col-3 rounded-5 h-10 bg-gray-100 ">
+                                            </div>
+                                            <div class="col-3 rounded-5 h-10 bg-gray-100 ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                    <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                    <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                    <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                    <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                    <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                    <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                    <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Quick view modal end -->
+
         <!-- offcanvas search form start -->
-        <div class="offcanvas-search-wrapper">
+        {{-- <div class="offcanvas-search-wrapper">
             <div class="offcanvas-search-inner">
                 <div class="offcanvas-close">
                     <i class="ion-android-close"></i>
@@ -258,11 +433,11 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- offcanvas search form end -->
 
         <!-- offcanvas mini cart start -->
-        <div class="offcanvas-minicart-wrapper">
+        {{-- <div class="offcanvas-minicart-wrapper">
             <div class="minicart-inner">
                 <div class="offcanvas-overlay"></div>
                 <div class="minicart-inner-content">
@@ -339,7 +514,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- offcanvas mini cart end -->
 
         <!-- Scroll to top start -->
@@ -347,38 +522,170 @@
             <i class="fa fa-angle-up"></i>
         </div>
         <!-- Scroll to Top End -->
-
     </div>
+    <div class="offcanvas offcanvas-end" id="Wishlist" aria-labelledby="WishlistLabel">
+        <div class="offcanvas-header">
+            <h5 id="WishlistLabel" class="fw-bold">Wishlist</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body wishlistBody">
+            <div class="col-12 h-100 overflow-hidden">
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
 
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
 
-    <!--=======================Javascript============================-->
-    <!--=== All Vendor Js ===-->
-    <script src="/assets/js/vendor.js"></script>
-    <!--=== All Plugins Js ===-->
-    <script src="/assets/js/plugins.js"></script>
-    <!--=== Active Js ===-->
-    <script src="/assets/js/active.js"></script>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
 
-    <script>
-        const toggleSearch = (search, button) => {
-            const searchBar = document.getElementById(search),
-                searchButton = document.getElementById(button),
-                closeButton = searchBar.querySelector('.search__close'); // Close button
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100">
 
-            searchButton.addEventListener('click', () => {
-                // Toggle the show-search class to expand the search bar
-                searchBar.classList.toggle('show-search');
-            });
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
 
-            closeButton.addEventListener('click', () => {
-                // Close the search bar if close button is clicked
-                searchBar.classList.remove('show-search');
-            });
-        };
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
 
-        toggleSearch('search-bar', 'search-button');
-    </script>
-    @stack('footer')
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
+
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
+
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!--=======================Javascript============================-->
+        <!--=== All Vendor Js ===-->
+        <script src="/assets/js/vendor.js"></script>
+        <!--=== All Plugins Js ===-->
+        <script src="/assets/js/plugins.js"></script>
+        <!--=== Active Js ===-->
+        <script src="/assets/js/active.js"></script>
+
+        <script>
+            const toggleSearch = (search, button) => {
+                const searchBar = document.getElementById(search),
+                    searchButton = document.getElementById(button),
+                    closeButton = searchBar.querySelector('.search__close'); // Close button
+
+                searchButton.addEventListener('click', () => {
+                    // Toggle the show-search class to expand the search bar
+                    searchBar.classList.toggle('show-search');
+                });
+
+                closeButton.addEventListener('click', () => {
+                    // Close the search bar if close button is clicked
+                    searchBar.classList.remove('show-search');
+                });
+            };
+
+            toggleSearch('search-bar', 'search-button');
+        </script>
+
+        @stack('footer')
 </body>
 
 </html>

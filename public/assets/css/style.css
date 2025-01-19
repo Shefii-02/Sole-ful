@@ -46,7 +46,7 @@ a {
 
 a:hover,
 a:focus {
-  color: #ab863d;
+  color: #df9b19;
   outline: none;
   text-decoration: none;
 }
@@ -294,7 +294,7 @@ fieldset legend {
 
 .slider-arrow-style.slick-slider .slick-arrow:hover {
   color: #fff;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .slider-arrow-style.slick-slider:hover .slick-arrow {
@@ -352,7 +352,7 @@ fieldset legend {
 
 .slick-arrow-style.slick-slider .slick-arrow:hover {
   color: #fff;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .slick-arrow-style.slick-slider:hover .slick-arrow {
@@ -390,7 +390,7 @@ fieldset legend {
 }
 
 .slick-dot-style ul.slick-dots li.slick-active button {
-  background-color: #ab863d;
+  background-color: #df9b19;
   border-radius: 10px;
 }
 
@@ -423,7 +423,7 @@ fieldset legend {
   width: 50px;
   content: "";
   position: absolute;
-  background-color: #ab863d;
+  background-color: #df9b19;
   cursor: pointer;
   -webkit-transform: scale(0);
   transform: scale(0);
@@ -452,7 +452,7 @@ fieldset legend {
 }
 
 .slick-dot-style__style-2 ul.slick-dots li.slick-active button {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .slick-dot-style__style-2 ul.slick-dots li:last-child {
@@ -580,7 +580,7 @@ fieldset legend {
 }
 
 .theme-bg {
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .color1 {
@@ -718,7 +718,7 @@ fieldset legend {
 }
 
 .header-top-settings ul li .dropdown-list li a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .header-top-settings ul li .dropdown-list li a img {
@@ -774,11 +774,11 @@ fieldset legend {
   font-size: 10px;
   color: #fff;
   border-radius: 50%;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .header-configure-area ul li a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .header-configure-area ul li:first-child {
@@ -821,7 +821,7 @@ fieldset legend {
 }
 
 .header-configure-area ul li.user-hover .dropdown-list li a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .header-configure-area ul li.user-hover:hover .dropdown-list {
@@ -875,7 +875,7 @@ fieldset legend {
 
 .main-menu ul li:hover>a,
 .main-menu ul li.active>a {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .main-menu ul li ul.dropdown {
@@ -918,7 +918,7 @@ fieldset legend {
 }
 
 .main-menu ul li ul.dropdown li:hover>a {
-  color: #ab863d;
+  color: #df9b19;
   background-color: #fff;
 }
 
@@ -963,7 +963,7 @@ fieldset legend {
 }
 
 .main-menu ul li ul.megamenu li:hover>a {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .main-menu ul li ul.megamenu li.megamenu-banners {
@@ -1176,7 +1176,7 @@ fieldset legend {
 }
 
 .mobile-main-header .mobile-menu-toggler .mini-cart-wrap a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .mobile-main-header .mobile-menu-toggler .mini-cart-wrap .notification {
@@ -1191,7 +1191,7 @@ fieldset legend {
   right: -8px;
   top: 0;
   position: absolute;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .mobile-main-header .mobile-menu-toggler .mobile-menu-btn {
@@ -1207,7 +1207,7 @@ fieldset legend {
 }
 
 .mobile-main-header .mobile-menu-toggler .mobile-menu-btn .off-canvas-btn:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .mobile-navigation {
@@ -1245,7 +1245,7 @@ fieldset legend {
 }
 
 .mobile-menu li>a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .mobile-menu li ul li {
@@ -1331,7 +1331,7 @@ fieldset legend {
 }
 
 .off-canvas-contact-widget li a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .off-canvas-social-widget {
@@ -1346,7 +1346,7 @@ fieldset legend {
 }
 
 .off-canvas-social-widget a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 /*------ offcanvas widget area end ------*/
@@ -1416,7 +1416,7 @@ fieldset legend {
   position: absolute;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .off-canvas-wrapper .btn-close-off-canvas i {
@@ -1471,7 +1471,7 @@ fieldset legend {
 }
 
 .search-box-offcanvas form .search-btn:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 /*------- mobile top bar settings start -------*/
@@ -1499,7 +1499,7 @@ fieldset legend {
 }
 
 .mobile-settings .nav .mobile-top-dropdown .dropdown-toggle:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .mobile-settings .nav .mobile-top-dropdown .dropdown-toggle:after {
@@ -1549,7 +1549,7 @@ fieldset legend {
   height: 50px;
   text-align: center;
   background-color: #fff;
-  color: #ab863d;
+  color: #df9b19;
   font-size: 22px;
   cursor: pointer;
   top: 50px;
@@ -1591,7 +1591,7 @@ fieldset legend {
 }
 
 .offcanvas-search-box .bdr-bottom {
-  border-color: #ab863d;
+  border-color: #df9b19;
 }
 
 .offcanvas-search-box input {
@@ -1659,7 +1659,7 @@ fieldset legend {
 }
 
 .offcanvas-search-box .search-btn:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 /*-------- off canvas mini cart start --------*/
@@ -1701,7 +1701,7 @@ fieldset legend {
   width: 50px;
   height: 50px;
   text-align: center;
-  background-color: #ab863d;
+  background-color: #df9b19;
   color: #fff;
   font-size: 25px;
   cursor: pointer;
@@ -1795,7 +1795,7 @@ fieldset legend {
 }
 
 .minicart-content .product-name a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .minicart-content .cart-quantity {
@@ -1811,7 +1811,7 @@ fieldset legend {
 }
 
 .minicart-content .cart-price {
-  color: #ab863d;
+  color: #df9b19;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -1828,7 +1828,7 @@ fieldset legend {
 }
 
 .minicart-remove:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .minicart-pricing-box {
@@ -1855,7 +1855,7 @@ fieldset legend {
 }
 
 .minicart-pricing-box li span strong {
-  color: #ab863d;
+  color: #df9b19;
   font-weight: 500;
 }
 
@@ -1887,7 +1887,7 @@ fieldset legend {
 }
 
 .minicart-button a:hover {
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .minicart-button a:last-child {
@@ -1955,7 +1955,7 @@ fieldset legend {
   -webkit-transition: 0.4s;
   transition: 0.4s;
   border-radius: 4px;
-  background-color: #ab863d;
+  background-color: #df9b19;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
@@ -2001,7 +2001,7 @@ fieldset legend {
 }
 
 .form-check-label a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .form-check-input {
@@ -2020,8 +2020,8 @@ fieldset legend {
 }
 
 .form-check-input:checked {
-  background-color: #ab863d;
-  border-color: #ab863d;
+  background-color: #df9b19;
+  border-color: #df9b19;
 }
 
 /*-------- Custom Checkbox Style end --------*/
@@ -2039,6 +2039,8 @@ fieldset legend {
   align-items: center;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991.98px),
@@ -2152,7 +2154,7 @@ only screen and (max-width: 767.98px) {
   font-size: 16px;
   font-weight: 400;
   line-height: 1;
-  color: #ab863d;
+  color: #df9b19;
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -2171,7 +2173,7 @@ only screen and (max-width: 767.98px) {
 
 .btn:hover {
   color: #fff;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .btn-hero {
@@ -2182,7 +2184,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .btn-hero:hover {
-  color: #ab863d;
+  color: #df9b19;
   background-color: #333333;
 }
 
@@ -2194,8 +2196,8 @@ only screen and (max-width: 767.98px) {
 }
 
 .btn__bg:hover {
-  border-color: #ab863d;
-  background-color: #ab863d;
+  border-color: #df9b19;
+  background-color: #df9b19;
 }
 
 /*------- service policy area start -------*/
@@ -2251,7 +2253,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .product-item:hover {
-  border-color: #ab863d;
+  border-color: #df9b19;
   box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
   background-color: #e5e7eb88;
 }
@@ -2306,7 +2308,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .product-name a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .price-box {
@@ -2325,7 +2327,7 @@ only screen and (max-width: 767.98px) {
 
 .ratings {
   font-size: 16px;
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .product-action-link a {
@@ -2334,7 +2336,7 @@ only screen and (max-width: 767.98px) {
   bottom: -23px;
   margin: auto;
   position: absolute;
-  color: #ab863d;
+  color: #df9b19;
   width: 46px;
   height: 46px;
   font-size: 20px;
@@ -2343,7 +2345,7 @@ only screen and (max-width: 767.98px) {
   text-align: center;
   display: inline-block;
   border-radius: 50%;
-  border: 1px solid #ab863d;
+  border: 1px solid #df9b19;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
@@ -2353,7 +2355,7 @@ only screen and (max-width: 767.98px) {
 
 .product-action-link a:hover {
   color: #fff;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .product-action-link a:nth-child(2) {
@@ -2465,7 +2467,7 @@ only screen and (max-width: 767.98px) {
 
 .product-link-2 a:hover {
   color: #fff;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 /*-------- product small item end --------*/
@@ -2767,7 +2769,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .blog-title a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .blog-meta {
@@ -2799,7 +2801,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .blog-details blockquote {
-  border-left: 5px solid #ab863d;
+  border-left: 5px solid #df9b19;
   margin: 25px 32px 25px 30px;
   background-color: #f8f8f8;
   padding: 15px;
@@ -2911,8 +2913,8 @@ only screen and (max-width: 767.98px) {
 
 .comment-section ul li .comment-body .reply-btn a:hover {
   color: #fff;
-  border-color: #ab863d;
-  background-color: #ab863d;
+  border-color: #df9b19;
+  background-color: #df9b19;
 }
 
 /*--- blog comment section end ---*/
@@ -3040,11 +3042,11 @@ only screen and (max-width: 767.98px) {
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item.active {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item:first-child::before {
@@ -3106,7 +3108,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .price-range-wrap .price-range.ui-widget-content .ui-slider-range {
-  background-color: #ab863d;
+  background-color: #df9b19;
   border-radius: 0;
 }
 
@@ -3130,7 +3132,7 @@ only screen and (max-width: 767.98px) {
   width: 8px;
   height: 8px;
   position: absolute;
-  background-color: #ab863d;
+  background-color: #df9b19;
   border-radius: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -3172,7 +3174,7 @@ only screen and (max-width: 767.98px) {
 
 .price-range-wrap .range-slider button.filter-btn:hover {
   color: #fff;
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 /*------ pricing filter slider end ------*/
@@ -3209,7 +3211,7 @@ only screen and (max-width: 767.98px) {
 
 .color-list li a:hover,
 .size-list li a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 /*----- color list area end -----*/
@@ -3266,7 +3268,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .blog-widget .blog-author-title .blog-widget-icon a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .blog-widget .blog-author-title .blog-widget-icon a:last-child {
@@ -3319,7 +3321,7 @@ only screen and (max-width: 767.98px) {
 .widget-search-form .search-btn {
   width: 46px;
   height: 46px;
-  background-color: #ab863d;
+  background-color: #df9b19;
   color: #fff;
   font-size: 18px;
   line-height: 46px;
@@ -3373,7 +3375,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .recent-posts-title a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .recent-posts:last-child {
@@ -3401,11 +3403,11 @@ only screen and (max-width: 767.98px) {
 }
 
 .blog-categories li:hover a {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .blog-categories li:hover span {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .blog-tag {
@@ -3424,8 +3426,8 @@ only screen and (max-width: 767.98px) {
 
 .blog-tag a:hover {
   color: #fff;
-  background-color: #ab863d;
-  border-color: #ab863d;
+  background-color: #df9b19;
+  border-color: #df9b19;
 }
 
 /*----- blog sidebar end -------*/
@@ -3463,11 +3465,11 @@ only screen and (max-width: 767.98px) {
 }
 
 .top-bar-left .product-view-mode a:hover {
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .top-bar-left .product-view-mode a.active {
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .top-bar-right {
@@ -3541,7 +3543,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .nice-select.open {
-  border-color: #ab863d;
+  border-color: #df9b19;
 }
 
 .nice-select .list {
@@ -3623,14 +3625,14 @@ only screen and (max-width: 767.98px) {
 
 .paginatoin-area .pagination-box li a:hover {
   color: #fff;
-  border-color: #ab863d;
-  background-color: #ab863d;
+  border-color: #df9b19;
+  background-color: #df9b19;
 }
 
 .paginatoin-area .pagination-box li.active a {
   color: #fff;
-  border-color: #ab863d;
-  background-color: #ab863d;
+  border-color: #df9b19;
+  background-color: #df9b19;
 }
 
 /*----- product details slider start ----*/
@@ -3709,7 +3711,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .product-details-des .pro-review a {
-  color: #ab863d;
+  color: #df9b19;
   font-size: 14px;
 }
 
@@ -3797,8 +3799,8 @@ only screen and (max-width: 767.98px) {
 
 .product-details-des .share-icon a:hover {
   color: #fff;
-  border-color: #ab863d;
-  background-color: #ab863d;
+  border-color: #df9b19;
+  background-color: #df9b19;
 }
 
 .product-details-des .color-option {
@@ -3865,7 +3867,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .product-details-des .group-product-table td a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .product-details-des .group-product-table td .pro-qty {
@@ -3999,7 +4001,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .product-review-info .tab-content .review-description .tab-des h3 {
-  color: #ab863d;
+  color: #df9b19;
   font-size: 20px;
   font-weight: 22px;
   font-weight: 500;
@@ -4020,7 +4022,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .review-form h5 span {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -4090,14 +4092,14 @@ only screen and (max-width: 767.98px) {
   font-size: 18px;
   font-weight: 500;
   background-color: #f7f7f7;
-  border-top: 3px solid #ab863d;
+  border-top: 3px solid #df9b19;
   padding: 15px 20px;
   position: relative;
   text-transform: capitalize;
 }
 
 .checkoutaccordion h5 span {
-  color: #ab863d;
+  color: #df9b19;
   cursor: pointer;
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -4182,7 +4184,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .forget-pwd {
-  color: #ab863d;
+  color: #df9b19;
   font-size: 12px;
   margin-top: -6px;
 }
@@ -4356,7 +4358,7 @@ only screen and (max-width: 767.98px) {
 .single-input-item input:not([type=checkbox]):focus,
 .single-input-item textarea:active,
 .single-input-item textarea:focus {
-  border-color: #ab863d;
+  border-color: #df9b19;
   background-color: #fff;
 }
 
@@ -4386,11 +4388,11 @@ only screen and (max-width: 767.98px) {
 }
 
 .cart-table .table thead {
-  background-color: #ab863d;
+  background-color: #df9b19;
 }
 
 .cart-table .table thead tr th {
-  border-color: #ab863d;
+  border-color: #df9b19;
   border-bottom: 0 solid transparent;
   color: #fff;
   font-size: 14px;
@@ -4415,7 +4417,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .cart-table .table tbody tr td a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .cart-table .table tbody tr td a.btn {
@@ -4530,7 +4532,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 .cart-update-option .apply-coupon-wrapper form input:focus,
 .cart-update-option .apply-coupon-wrapper form input:active {
-  border-color: #ab863d;
+  border-color: #df9b19;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -4574,7 +4576,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .cart-calculator-wrapper .cart-calculate-items .table tr td.total-amount {
-  color: #ab863d;
+  color: #df9b19;
   font-weight: 700;
 }
 
@@ -4627,7 +4629,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
   float: left;
   clear: both;
   font-size: 14px;
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .compare-table .table tbody tr td.product-image-title .title {
@@ -4638,7 +4640,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .compare-table .table tbody tr td.product-image-title .title:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .compare-table .table tbody tr td.pro-desc p {
@@ -4671,7 +4673,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .compare-table .table tbody tr td.pro-ratting i {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 /*------ end Compare Page Wrapper -----*/
@@ -4715,7 +4717,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .login-reg-form-wrap .login-reg-form-meta a {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -4755,8 +4757,8 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 .myaccount-tab-menu a.active,
 .myaccount-tab-menu button:hover,
 .myaccount-tab-menu button.active {
-  background-color: #ab863d;
-  border-color: #ab863d;
+  background-color: #df9b19;
+  border-color: #df9b19;
   color: #fff;
 }
 
@@ -4801,12 +4803,12 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .myaccount-content .welcome a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .myaccount-content .welcome strong {
   font-weight: 600;
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .myaccount-content fieldset {
@@ -4845,7 +4847,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 .saved-message {
   background-color: #f4f5f7;
-  border-top: 3px solid #ab863d;
+  border-top: 3px solid #df9b19;
   border-radius: 5px 5px 0 0;
   font-weight: 600;
   font-size: 15px;
@@ -4995,7 +4997,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 .location-wrap li a:hover,
 .useful-link li a:hover {
-  color: #ab863d;
+  color: #df9b19;
   padding-left: 5px;
 }
 
@@ -5033,7 +5035,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .copyright-text p a {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 .footer-social-link a {
@@ -5043,7 +5045,7 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 }
 
 .footer-social-link a:hover {
-  color: #ab863d;
+  color: #df9b19;
 }
 
 /*------- footer bottom end -------*/

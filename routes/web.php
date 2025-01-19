@@ -32,12 +32,18 @@ use Illuminate\Support\Facades\Route;
         return view('frontend.documents.shipping_policy');
     })->name('shipping_policy');
 
+
+   
+    
+
 Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
     Route::get('shop', 'FrontendController@shop')->name('shop');
     Route::get('/shop/filter', [ProductController::class, 'filterProducts'])->name('shop.filter');
-
-    Route::get('product/{slug}', 'FrontendController@product')->name('product');
+    Route::get('/shop/{page}', [ProductController::class, 'categoryProducts'])->name('shop.page');
+    Route::get('wishlist', 'FrontendController@getWishlist')->name('wishlist');
+    Route::get('quick-view', 'FrontendController@QuickView')->name('quick-view');
+    Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
     
     Route::get('services', 'FrontendController@services')->name('services');
     Route::get('services/{slug}', 'FrontendController@serviceSingle')->name('services-single');

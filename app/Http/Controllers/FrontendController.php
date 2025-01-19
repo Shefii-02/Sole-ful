@@ -43,14 +43,31 @@ class FrontendController extends Controller
     public function index()
     {
         $banners                = Banner::where('status', 1)->orderby('display_order')->get();
-        $slider_in_desktop      = $banners->pluck('desktop');
-        $slider_in_mobile       = $banners->pluck('mobile');
+        $slider_in_desktop      = $banners->select('desktop', 'link');
+        $slider_in_mobile       = $banners->select('mobile', 'link');
         $bestSellProduct        = BestSellProduct::get();
         $featuredProduct        = FeaturedProduct::get();
         $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
 
         return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs'));
     }
+
+    public function getWishlist(Request $request)
+    {
+        $wishlistIds = $request->input('wishlist');
+        $products = Product::whereIn('id', $wishlistIds)->get();
+
+        return view('frontend.partials.wishlist', compact('products'))->render();
+    }
+
+
+    public function QuickView(Request $request){
+        $product_id = $request->product_id;
+        $product = Product::where('id', $product_id)->first() ??  abort(404);
+
+        return view('frontend.partials.product-single', compact('product'))->render();
+    }
+    
 
 
     // public function shop(Request $request)
@@ -192,7 +209,7 @@ class FrontendController extends Controller
         // , compact('service', 'services')
         return view('frontend.product-single');
     }
-    
+
     public function blogs()
     {
         $blogs   = BlogPost::where('status', 1)->orderby('created_at', 'desc')->get();

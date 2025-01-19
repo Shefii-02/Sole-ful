@@ -13,6 +13,7 @@
                             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
                                 aria-labelledby="offcanvasExampleLabel">
                                 <div class="offcanvas-header">
+                                    <img src="/assets/img/logo/logo.png" class="w-20" />
                                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                         aria-label="Close"></button>
                                     @guest
@@ -27,18 +28,35 @@
                                     @endguest
                                 </div>
 
-                                <div class="offcanvas-body"
-                                    style="display: flex; flex-direction: column; justify-content: space-between;">
-
+                                <div class="offcanvas-body">
                                     <div class="for-sup">
                                         <div class="f-msp">
                                             <ul id="header-wr" class="menu">
 
-                                                <li class="menu-item-has-children">
-
+                                                <li class="mb-3">
                                                     <a class="dropdown-item" href="/">Home</a>
-
                                                 </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Shop</a>
+                                                </li>
+                                                <hr class="border-3 mb-3" />
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Casual Slides</a>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Ethnic Slides</a>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Casual Slipons</a>
+                                                </li>
+                                                <hr class="border-3 mb-3"/>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Party Wear</a>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <a class="dropdown-item" href="/">Casual Wear</a>
+                                                </li>
+
                                             </ul>
 
                                         </div>
@@ -46,20 +64,12 @@
 
                                     </div>
                                     <div class="social-links">
-                                        <ul>
-                                            <li class="text-capitalize">
-                                                <a href="https://www.facebook.com/mysweetiepie.ca" title="Facebook">
-                                                    <i class="fa fa fa-facebook"></i> </a>
-                                            </li>
-                                            <li class="text-capitalize">
-                                                <a href="https://www.instagram.com/mysweetiepie.ca/" title="Instagram">
-                                                    <i class="fa bi bi-instagram"></i> </a>
-                                            </li>
-                                            <li class="text-capitalize">
-                                                <a href="https://www.tiktok.com/@mysweetiepie.ca" title="Tiktok">
-                                                    <i class="fa bi bi-tiktok"></i> </a>
-                                            </li>
-                                        </ul>
+                                        <div class="footer-social-link text-center text-md-end">
+                                            <a href="#"><i class="fa fa-facebook"></i></a>
+                                            <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <a href="#"><i class="fa fa-instagram"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -73,29 +83,39 @@
                         </li>
                     </ul>
                 </div>
-              
+
                 <div class="px-4">
                     <ul class="d-flex gap-3 align-items-end align-content-end m-1">
-                       <li>
-                        <div class="search" id="search-bar">
-                            <input type="search" placeholder="Type something..." name="q" class="search__input">
-                            <div class="search__button" id="search-button">
-                                <i class="ri-search-2-line bi bi-search text-theme"></i>
-                                <i class="ri-close-line bi bi-x"></i>
+                        <li>
+                            <div class="search" id="search-bar">
+                                <input type="search" placeholder="Type something..." name="q"
+                                    class="search__input">
+                                <div class="search__button" id="search-button">
+                                    <i class="ri-search-2-line bi bi-search text-theme"></i>
+                                    <i class="ri-close-line bi bi-x"></i>
+                                </div>
                             </div>
-                        </div>
-                       </li>
-                        <li class="cursor-pointer">
-                            <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5">Order Now</a>
                         </li>
                         <li class="cursor-pointer">
-                            <a href="menu" class="btn btn-theme btn-sm rounded-5">Track Now</a>
+                            <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Order Now</a>
+                        </li>
+                        <li class="cursor-pointer">
+                            <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Now</a>
                         </li>
                         <li>
                             <a href="/cart">
                                 <div class="cart-icon text-theme">
                                     <i class="bi bi-cart fs-5 fw-bold"></i>
-                                    <span class="cart-count d-none">0</span>
+                                    <span style="top: 10px;" class="cart-count absolute">0</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="me-0 ms-2 wishlist-section" style="display: none">
+                            <a href="#" class="d-inline " id="wishlist-btn-view" data-bs-toggle="offcanvas"
+                                data-bs-target="#Wishlist" aria-controls="Wishlist">
+                                <div class="cart-icon text-theme relative">
+                                    <i class="bi bi-heart-fill fs-5"></i>
+                                    <span style="top: -15px;" class="wishlist-count absolute">0</span>
                                 </div>
                             </a>
                         </li>
@@ -115,7 +135,6 @@
                                     </a>
                                 </li>
                             @endif
-
                         @endguest
                         @auth
                             <li class="last-one" x-data="{ open: false }" @click.away="open = false">
@@ -128,14 +147,15 @@
                                     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
                                     class="dropdown-menu show"
                                     style="width: auto; padding: 10px; position: absolute; z-index: 1000;">
-                                    @if(auth()->user()->type == 'superadmin')
-                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="{{ route('admin.dashboard') }}">
+                                    @if (auth()->user()->type == 'superadmin')
+                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme"
+                                            href="{{ route('admin.dashboard') }}">
                                             <i class="bi bi-person"></i> Dashboard
                                         </a>
                                     @else
-                                    <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="">
-                                        <i class="bi bi-person"></i> My Account
-                                    </a>
+                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="">
+                                            <i class="bi bi-person"></i> My Account
+                                        </a>
                                     @endif
                                     <form action="{{ route('logout') }}" id="logout-form" method="POST">
                                         @method('POST') @csrf </form>
@@ -147,7 +167,6 @@
 
                                 </div>
                             </li>
-
                         @endauth
 
 
@@ -160,8 +179,8 @@
                     </ul>
                 </div>
             </div>
-           
-            
+
+
         </div>
     </div>
     <!-- main header start -->
