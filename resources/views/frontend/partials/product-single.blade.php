@@ -22,7 +22,7 @@
                 <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img3.jpg" alt="" /></div>
                 <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img4.jpg" alt="" /></div>
             </div>
-        </div>
+        </div>    
         <div class="col-lg-7">
             <div class="product-details-des">
                 <h3 class="pro-det-title">Primitive Mens Premium Shoes</h3>
