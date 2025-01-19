@@ -42,9 +42,9 @@ class FrontendController extends Controller
 
     public function index()
     {
-        $banners                = Banner::where('status', 1)->select('desktop','mobile','link')->orderby('display_order')->get();
-        $slider_in_desktop      = $banners->select('desktop', 'link');
-        $slider_in_mobile       = $banners->select('mobile', 'link');
+        $banners                = Banner::where('status', 1)->select('desktop','mobile','link')->orderby('display_order');
+        $slider_in_desktop      = $banners->whereNotNull('desktop')->select('desktop', 'link')->get();
+        $slider_in_mobile       = $banners->whereNotNull('mobile')->select('mobile', 'link')->get();
         $bestSellProduct        = BestSellProduct::get();
         $featuredProduct        = FeaturedProduct::get();
         $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
