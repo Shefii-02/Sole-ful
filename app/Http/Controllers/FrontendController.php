@@ -48,7 +48,7 @@ class FrontendController extends Controller
         $bestSellProduct        = BestSellProduct::get();
         $featuredProduct        = FeaturedProduct::get();
         $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
-dd($slider_in_desktop,$slider_in_mobile);
+
         return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs'));
     }
 
