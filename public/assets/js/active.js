@@ -411,26 +411,26 @@
 				data: { product_id: Id },
 				success: function (response) {
 					$('.quickBody').html(response);
-					  // Reinitialize slick if necessary
-    // prodct details slider active
-	$('.product-large-slider').slick({
-		fade: true,
-		arrows: false,
-		asNavFor: '.pro-nav'
-	});
+					// Reinitialize slick if necessary
+					// prodct details slider active
+					$('.product-large-slider').slick({
+						fade: true,
+						arrows: false,
+						asNavFor: '.pro-nav'
+					});
 
 
-	// product details slider nav active
-	$('.pro-nav').slick({
-		slidesToShow: 4,
-		asNavFor: '.product-large-slider',
-		arrows: false,
-		focusOnSelect: true
-	});
+					// product details slider nav active
+					$('.pro-nav').slick({
+						slidesToShow: 4,
+						asNavFor: '.product-large-slider',
+						arrows: false,
+						focusOnSelect: true
+					});
 				}
 			});
 		});
-		
+
 
 
 	});

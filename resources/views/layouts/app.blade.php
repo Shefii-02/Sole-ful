@@ -250,6 +250,9 @@
             color: #dc3545;
         }
     </style>
+    <script type="text/javascript"
+        src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
+        async="async"></script>
 
 </head>
 
@@ -294,22 +297,22 @@
                                 <div class="widget-body">
                                     <ul class="useful-link">
                                         <li class="mb-3">
-                                            <a target="_blank"  href="/">Shop</a>
+                                            <a target="_blank" href="/">Shop</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank"  href="/">Casual Slides</a>
+                                            <a target="_blank" href="/">Casual Slides</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank"  href="/">Ethnic Slides</a>
+                                            <a target="_blank" href="/">Ethnic Slides</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank"  href="/">Casual Slipons</a>
+                                            <a target="_blank" href="/">Casual Slipons</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank"  href="/">Party Wear</a>
+                                            <a target="_blank" href="/">Party Wear</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank"  href="/">Casual Wear</a>
+                                            <a target="_blank" href="/">Casual Wear</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -348,7 +351,7 @@
                                                 Location</a></li>
                                         <li><a href="{{ url('/accounts') }}">My Account</a></li>
                                         <li><a href="{{ url('/order-track') }}">Orders Tracking</a></li>
-                                        <li><a href="#">Size Guide</a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size Guide</a></li>
                                         <li><a href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
                                         <li><a href="{{ url('contact-us') }}">Contact Us</a></li>
                                     </ul>
@@ -429,6 +432,21 @@
             </div>
         </div>
         <!-- Quick view modal end -->
+
+        <!-- Size Chart modal start -->
+        <div class="modal" id="sizeChart">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close text-danger" data-bs-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body ">
+                        <img src="{{ asset('assets/img/size-chart.png') }}" class="w-100 mx-auto " />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Size Chart modal end -->
 
         <!-- offcanvas search form start -->
         {{-- <div class="offcanvas-search-wrapper">

@@ -13,6 +13,7 @@ use App\Models\Enquiry;
 use App\Models\FeaturedProduct;
 use App\Models\Package;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\Service;
 use App\Models\VariationKey;
 use Exception;
@@ -69,74 +70,6 @@ class FrontendController extends Controller
         return view('frontend.partials.product-single', compact('product'))->render();
     }
 
-
-
-    // public function shop(Request $request)
-    // {
-    //     $products           = Product::where('status', 1)->orderby('created_at', 'desc')->get();
-    //     $categories         = Category::orderby('created_at', 'desc')->get();
-    //     $available_colors = VariationKey::where('type', 'color')
-    //                                     ->distinct('value')
-    //                                     ->pluck('value');
-
-    //     $available_sizes = VariationKey::where('type', 'size')
-    //                                     ->distinct('value')
-    //                                     ->pluck('value');
-
-    //     return view('frontend.shop', compact('products','available_colors','available_sizes'));
-    // }
-    // public function shop(Request $request)
-    // {
-    //     $query = Product::where('status', 1);
-
-    //     // Filter by price range
-    //     if ($request->has('price_min') && $request->has('price_max')) {
-    //         $query->whereBetween('price', [$request->price_min, $request->price_max]);
-    //     }
-
-    //     // Filter by color
-    //     if ($request->has('color')) {
-    //         $query->whereHas('variationKeys', function ($q) use ($request) {
-    //             $q->where('type', 'color')->whereIn('value', $request->color);
-    //         });
-    //     }
-
-    //     // Filter by size
-    //     if ($request->has('size')) {
-    //         $query->whereHas('variationKeys', function ($q) use ($request) {
-    //             $q->where('type', 'size')->whereIn('value', $request->size);
-    //         });
-    //     }
-
-    //     $products = $query->get();
-
-    //     $available_colors = VariationKey::where('type', 'color')
-    //         ->withCount(['product' => function ($query) use ($request) {
-    //             if ($request->has('color')) {
-    //                 $query->whereIn('value', $request->color);
-    //             }
-    //         }])
-    //         ->distinct('value')
-    //         ->get();
-
-    //     $available_sizes = VariationKey::where('type', 'size')
-    //         ->withCount(['product' => function ($query) use ($request) {
-    //             if ($request->has('size')) {
-    //                 $query->whereIn('value', $request->size);
-    //             }
-    //         }])
-    //         ->distinct('value')
-    //         ->get();
-
-    //     $categories = Category::withCount([
-    //         'products' => function ($query) {
-    //             $query->where('status', 1);
-    //         }
-    //     ])->orderby('created_at', 'desc')->get();
-
-    //     return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories'));
-    // }
-
     public function shop(Request $request)
     {
         $query = Product::where('status', 1);
@@ -173,30 +106,30 @@ class FrontendController extends Controller
 
         // Get available colors with unique product counts
         $available_colors =  VariationKey::where('type', 'color')
-                                            ->whereHas('product', function ($q) {
-                                                $q->where('status', 1);
-                                            })
-                                            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
-                                            ->groupBy('value')
-                                            ->get();
+            ->whereHas('product', function ($q) {
+                $q->where('status', 1);
+            })
+            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
+            ->groupBy('value')
+            ->get();
 
 
         // Get available sizes with unique product counts
         $available_sizes = VariationKey::where('type', 'size')
-                                        ->whereHas('product', function ($q) {
-                                            $q->where('status', 1);
-                                        })
-                                        ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
-                                        ->groupBy('value')
-                                        ->get();
+            ->whereHas('product', function ($q) {
+                $q->where('status', 1);
+            })
+            ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
+            ->groupBy('value')
+            ->get();
         // Categories with product counts
         $categories = Category::with('products')->withCount([
-                                    'products' => function ($query) {
-                                        $query->where('status', 1);
-                                    }
-                                ])->orderby('created_at', 'desc')->get();
+            'products' => function ($query) {
+                $query->where('status', 1);
+            }
+        ])->orderby('created_at', 'desc')->get();
 
-       
+
         if ($request->ajax()) {
             // Render product list view and return as JSON for AJAX
             $html = view('frontend.product_list', compact('products'))->render();
@@ -207,14 +140,30 @@ class FrontendController extends Controller
     }
 
 
-
-    public function product($slug)
+    public function product($uid, $slug)
     {
-        // $services   = Service::where('status', 1)->orderby('display_order')->get();
-        // $service   = Service::where('status', 1)->where('slug', $slug)->first() ?? abort(404);
-        // , compact('service', 'services')
-        return view('frontend.product-single');
+        $products = Product::with('product_variation','product_variation.variationkey','variationList')->where('slug',$slug)->first() ?? abort(404);
+
+        $product = Product::where('unique_value', $uid)->where('slug', $slug)->first() ?? abort(404);
+        $similarProducts = Product::limit(10)->get();
+        $sizes = $product->variationKeys->where('type', 'size')->unique('value');
+        $colors = $product->variationKeys->where('type', 'color')->unique('value');
+        return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors'));
     }
+
+
+    public function getVariationDetails(Request $request)
+    {
+        $product = $request->product_id;
+        $size    = $request->size;
+        $variationIds = VariationKey::where('type','size')->where('product_id',$product)->where('value',$size)->pluck('variation_id');
+        $variations = ProductVariant::query()->whereHas('variationkey', function ($q) use ($variationIds) {
+                                                $q->whereIn('variation_id', $variationIds);
+                                            })->get();
+        
+        return view('frontend.partials.product-variations', ['variations' => $variations])->render();
+    }
+
 
     public function blogs()
     {

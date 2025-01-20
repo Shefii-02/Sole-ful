@@ -41,9 +41,8 @@
             width: 100%;
         }
 
-        .color-tab label.active img,
-        .size-button.active {
-            border: 2px solid #df9b19;
+        .color-tab label.active img {
+            border: 2px solid #e30024;
         }
 
         .color-tab label img {
@@ -83,6 +82,7 @@
                     <div class="product-details-inner">
                         <div class="row">
                             <div class="col-lg-5">
+
                                 @php
                                     $images = product_images($product->id);
                                 @endphp
@@ -127,39 +127,185 @@
                                     </div>
                                     <p>{{ $product->care_instruction }}</p>
                                     <div class="product__variations">
-                                        <div class="size-tab round-radio">
-                                            @foreach (['37', '38', '39', '40', '41'] as $size)
-                                                <label
-                                                    class="size-button {{ $sizes->contains('value', $size) ? '' : 'disabled' }}"
-                                                    data-size-id="{{ $size }}">
-                                                    <input type="radio" class="hidden variSize_checkbox"
-                                                        data-product="{{ $product->id }}" name="size"
-                                                        value="{{ $size }}">
-                                                    <span>{{ $size }}</span>
-                                                </label>
-                                            @endforeach
-                                        </div>
-
-
-
-
-                                        <div class="size-chart mb-2">
-                                            <a href="#" class="text-theme" data-bs-toggle="modal"
-                                                data-bs-target="#sizeChart">Size Guide</a>
-                                        </div>
-
-                                        <div class="color-option1 mb-4">
-                                            <h5 class="cat-title mb-3 fw-bolder">Colors :</h5>
-                                            <div class="color-tab">
-                                                {{-- @foreach ($colors as $color)
-                                                    <label class="color-button" data-color-id="{{ $color->id }}">
-                                                        <img src="{{ asset('images/products/' . $color->image_url) }}"
-                                                            alt="{{ $color->value }}">
-                                                    </label>
-                                                @endforeach --}}
+                                        @if(count($product->option)>0 && ($product->has_variation == 1))
+                                            @php
+                                                $options = $product->option->pluck('type')->unique()->toArray();
+                                                if(in_array('size', $options))
+                                                    $first_option = 'size';
+                                                elseif(in_array('type', $options))
+                                                    $first_option = 'type';
+                                                else
+                                                    $first_option = 'color';
+                                            @endphp
+                                           <div class="product__variations @if($product->has_customization) d-none @endif">
+                                                <div class="row position-relative d-flex align-items-center w-100" >
+                                                    <div class="col-3">
+                                                            <h5 class="mb-0 mt-3">Select {{ ($first_option)}}</h5>
+                                                    </div>
+                                                    <div class="col-9">
+                                                        <div class="row" >
+                                                            @php
+                                                                $key1 =0;
+                                                               // dd($product->option->groupBy('variation_id'));
+                                                            @endphp
+                                                            
+                                                            {{-- @foreach($product->option->where('type',$first_option) as $size_items)  --}}
+                                                            @php
+                                                                $uniq_types = $product->option()->where('type',$first_option)->get();
+                                                            @endphp
+                                                            
+                                                            @foreach($uniq_types->unique('value') as $size_items)
+                                                    <!--/////////// Show First Option ////////////////////-->  
+                                                                <div class="col-6 col-lg-4 text-center option_vals cursor-pointer">
+                                                                    @php
+                                                                        if($first_option == 'size')
+                                                                            if(in_array('type', $options))
+                                                                        	    $second_option = 'type';
+                                                                        	else
+                                                                        	    $second_option = 'color';
+                                                                        elseif($first_option == 'type')
+                                                                            if(in_array('color', $options))
+                                                                        	    $second_option = 'color';
+                                                                        else
+                                                                                $second_option = '';
+                                                                    @endphp
+                                                                   
+                                                                      @if ($product->option->where('type', $second_option)->count() == 0)
+                                                                            @php
+                                                                                $variation_data = App\Models\VariationKey::leftJoin('product_variations', 'variation_keys.variation_id', 'product_variations.id')
+                                                                                    ->where(function ($query) {
+                                                                                        return $query->where('product_variations.sku', '<>', '')->orWhere('product_variations.sku', '<>', null);
+                                                                                    })
+                                                                                    ->where('value', $size_items->value)
+                                                                                    ->where('product_variations.product_id', $product->id)
+                                                                                    ->first();
+                                                                            @endphp
+                                                                        @endif
+                                                             
+                                                                    <div class="round-checkbox  mb-2"> 
+                                                                        <input type="radio" name="single_selection" @if($product->option->where('type',$second_option)->count() == 0 && ($variation_data))  data-vname="{{$variation_data->variation}}" data-price="{{$variation_data->price}}" data-specialprice="{{$variation_data->special_price}}" data-id="{{$variation_data->variation_id}}" @endif data-option="{{$size_items->id}}" @if($key1 == 0) checked @endif class="vari_checkbox" id="checkbox_option_rounded_{{$size_items->id}}">
+                                                                        <label for="checkbox_option_rounded_{{$size_items->id}}" ></label>
+                                                                    </div>
+                                                                    <div data-option="{{$size_items->id}}" id="show_variations_{{$size_items->id}}" class="show_variations @if($key1 == 0) active @endif">
+                                                                        <div class="card position-relative bg-white vari_type border-0 justify-content-center" >
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 position-relative">
+                                                                                    <img src="{{imageExisted('/assets/images/icon-img/'.$size_items->value.'.png')}}">
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <p class="card-price fw-bold">{{$size_items->value}} </p>
+                                                                                    @if($product->option->where('type',$second_option)->count() == 0 && ($variation_data))
+                                                                                        <small class="d-none">{{getPrice($variation_data->price)}} </small>
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                    <!--/////////// Show Only  Two Option Time ////////////////////-->  
+                                                                        @if($product->option->where('type',$second_option)->count() > 0)
+                                                                            <div id="child_div_{{$size_items->id}}" class=" rounded mt-3 child_div pt-4" @if($key1 == 0) style="display:block" @endif>
+                                                                                
+                                                                                <div class="row d-flex align-items-center w-100 m-0">
+                                                                                     <div class="col-3">
+                                                                                         <div class="row">
+                                                                                            <h5 class=" text-start">Select {{titleText($second_option)}}</h5>
+                                                                                             
+                                                                                         </div>
+                                                                                    </div>
+                                                                                    <div class="col-9 p-0">
+                                                                                        <div class="row flex-row-reverse11 justify-content-end11 w-100 m-0" >
+                                                                                            @php
+                                                                                                    $ii = 0;
+                                                                                                    $third_option ='';
+                                                                                                    if($second_option == 'type'){
+                                                                                                        if(in_array('color', $options))
+                                                                                                    	    $third_option = 'color';
+                                                                                                        else
+                                                                                                            $third_option = '';
+                                                                                                    }
+                                                                                                    $key2 = 0
+                                                                                               @endphp
+                                                                                        @php
+                                                                                            // $uniq_values = $product->option()->where('type',$second_option)->get();
+                                                                                            $firstOption_Vids = $product->option()->where('type',$first_option)->where('value',$size_items->value)->pluck('variation_id')->toArray();
+                                                                                            $uniq_values = $product->option()->where('type',$second_option)->whereIn('variation_id',$firstOption_Vids)->get();
+                                                                                           
+                                                                                        @endphp
+                                                                                            @foreach($uniq_values as $type_items)
+                                                                                                @if($product->option->where('type',$second_option)->count() == 0)
+                                                                                                    @php
+                                                                                                        $variation_data = App\Models\VariationKey::leftJoin('product_variations','variation_keys.variation_id','product_variations.id')
+                                                                                                                                            ->where(function($query){
+                                                                                                                                                 return $query
+                                                                                                                                                        ->where('product_variations.sku', '<>','')
+                                                                                                                                                        ->orWhere('product_variations.sku', '<>',NULL);
+                                                                                                                     						})
+                                                                                                                     						->where('value',$size_items->value)
+                                                                                                                                            ->where('product_variations.product_id',$product->id)
+                                                                                                                                            ->first(); 
+                                                                                                    @endphp
+                                                                                                @else
+                                                                                
+                                                                                                   @php
+                                                                                                       $vari_ids = $product->variationList->where('value',$size_items->value)->pluck('variation_id');
+                                                                                                       $variation_data = App\Models\VariationKey::leftJoin('product_variations','variation_keys.variation_id','product_variations.id')
+                                                                                                                                                ->where(function($query){
+                                                                                                                                                     return $query
+                                                                                                                                                            ->where('product_variations.sku', '<>','')
+                                                                                                                                                            ->orWhere('product_variations.sku', '<>',NULL);
+                                                                                                                         						})
+                                                                                                                                                ->where('product_variations.product_id',$product->id)
+                                                                                                                                                ->where('value',$type_items->value)
+                                                                                                                                                ->whereIn('variation_id',$vari_ids)
+                                                                                                                                                ->first(); 
+                                                                                                   
+                                                                                                    @endphp
+                                                                                                @endif
+                                                                                                @if($variation_data)
+                                                                                                        <div class="col-6 col-md-6 col-lg-4 text-center child_div_type {{$variation_data->value}}">
+                                                                                                            <div class="card position-relative bg-white second_section border-0" data-childId="child_div_{{$type_items->id}}">
+                                                                                                                <div class="row">
+                                                                                                                    <div class="col-md-12 position-relative">
+                                                                                                                        <img src="{{imageExisted('/assets/images/icon-img/'.$variation_data->value.'.png')}}">
+                                                                                                                    </div>
+                                                                                                                    <div class="col-md-12">
+                                                                                                                        <p class="card-price fw-bold">{{$variation_data->value}} </p>
+                                                                                                                        @if($third_option == '')
+                                                                                                                        <small class="d-none">{{getPrice($variation_data->price)}} </small>
+                                                                                                                        @endif
+                                                                                                                    </div>
+                                                                                                                    <div class="round-radio ">
+                                                                                                                        <input type="radio" data-childId="child_div_{{$type_items->id}}"  class="option__type" @if($third_option == '') data-vname="{{$variation_data->variation}}"  data-price="{{$variation_data->price}}" data-specialprice="{{$variation_data->special_price}}" data-id="{{$variation_data->variation_id}}" @endif  name="vari_type_{{$key1}}" @if($key1 == 0 && $ii == 0) checked @endif  id="radio_rounded_{{$key1}}_{{$key2}}">
+                                                                                                                        <label for="radio_rounded_{{$key1}}_{{$key2}}" ></label>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        @php 
+                                                                                                            $ii = $ii + 1;
+                                                                                                        @endphp
+                                                                                                @endif
+                                                                                                @php
+                                                                                                    $key2 = $key2 +1;
+                                                                                                @endphp
+                                                                                            @endforeach  
+                                                                                        </div>
+                                                                                    </div>
+                                                                                     
+                                                                               </div>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                                @php
+                                                                    $key1= $key1 +1;
+                                                                @endphp
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
                                             </div>
-                                        </div>
-
+                                        @endif
                                     </div>
                                     <div class="quantity-cart-box d-flex align-items-center mb-4">
                                         <div class="quantity">
@@ -167,7 +313,7 @@
                                         </div>
                                         <a href="cart.html" class="btn btn-dark">Add To Cart</a>
                                     </div>
-                                    {{-- <div class="pro-size1 mb-4 ">
+                                    <div class="pro-size1 mb-4 ">
                                         <h5 class="cat-title mb-3 fw-bolder">Size :</h5>
 
                                         <div class="size-tab">
@@ -186,9 +332,9 @@
                                             <a href="#" class="text-theme" data-bs-toggle="modal"
                                                 data-bs-target="#sizeChart">Size Guide</a>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
-                                    {{-- <div class="color-option1 mb-4">
+                                    <div class="color-option1 mb-4">
                                         <h5 class="cat-title mb-3 fw-bolder">Colors :</h5>
                                         <div class="color-tab">
                                             @foreach ($colors as $color)
@@ -198,7 +344,7 @@
                                                 </label>
                                             @endforeach
                                         </div>
-                                    </div> --}}
+                                    </div>
 
                                     <div class="availability mb-4">
                                         <h5 class="cat-title">Availability:</h5>
@@ -546,37 +692,67 @@
 @push('footer')
     <script>
         $(document).ready(function() {
-            $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
-            // Function to handle active class toggle
-            $('.variSize_checkbox').on('change', function() {
-                // Remove 'active' class from all labels
-                $('.size-button').removeClass('active');
+            let selectedSize = null;
+            let selectedColor = null;
 
-                // Add 'active' class to the parent label of the checked input
-                if ($(this).is(':checked')) {
-                    $(this).closest('.size-button').addClass('active');
-                }
-                var size = $(this).val();
-                var product = $(this).data('product');
-
-                $.ajax({
-                    url: '/get-variation-details',
-                    method: 'GET',
-                    data: {
-                        product_id: product,
-                        size: size,
-                    },
-                    success: function(response) {
-      
-                        $('.color-tab').html(response);
-                    }
-                });
-
-
+            // Handle size selection
+            $('.size-tab').on('click', '.size-button:not(.disabled)', function() {
+                $('.size-tab .size-button').removeClass('active');
+                $(this).addClass('active');
+                selectedSize = $(this).data('size-id');
+                updateProductDetails();
             });
 
-            // Trigger change event on the initially checked radio input
-            $('.variSize_checkbox:checked').trigger('change');
+            // Handle color selection
+            $('.color-tab').on('click', '.color-button', function() {
+                $('.color-tab .color-button').removeClass('active');
+                $(this).addClass('active');
+                selectedColor = $(this).data('color-id');
+                updateProductDetails();
+            });
+
+            function updateProductDetails() {
+                if (selectedSize && selectedColor) {
+                    $.ajax({
+                        url: '/product-variation-details',
+                        method: 'GET',
+                        data: {
+                            size_id: selectedSize,
+                            color_id: selectedColor
+                        },
+                        success: function(response) {
+                            // Update product price, image, and other details
+                            $('.regular-price').text('₹ ' + response.price);
+                            $('.product-large-slider').html(response.imagesHtml);
+                            $('.pro-nav').html(response.thumbnailsHtml);
+
+                            // Reinitialize slick slider
+                            initializeSlickSlider();
+                        },
+                        error: function() {
+                            alert('Failed to update product details. Please try again.');
+                        }
+                    });
+                }
+            }
+
+            function initializeSlickSlider() {
+                $('.product-large-slider').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: true,
+                    fade: true,
+                    asNavFor: '.pro-nav',
+                });
+
+                $('.pro-nav').slick({
+                    slidesToShow: 4,
+                    slidesToScroll: 1,
+                    asNavFor: '.product-large-slider',
+                    dots: false,
+                    focusOnSelect: true,
+                });
+            }
         });
     </script>
 @endpush

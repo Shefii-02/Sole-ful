@@ -9,6 +9,7 @@ use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
@@ -43,6 +44,9 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::get('/shop/{page}', [ProductController::class, 'categoryProducts'])->name('shop.page');
     Route::get('wishlist', 'FrontendController@getWishlist')->name('wishlist');
     Route::get('quick-view', 'FrontendController@QuickView')->name('quick-view');
+    Route::get('/get-variation-details', [FrontendController::class, 'getVariationDetails']);
+    
+
     Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
     
     Route::get('services', 'FrontendController@services')->name('services');
