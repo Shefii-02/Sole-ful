@@ -139,7 +139,7 @@ class FrontendController extends Controller
             return response()->json(['html' => $html]);
         }
 
-        return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories'));
+        return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories','productOffer'));
     }
 
 
