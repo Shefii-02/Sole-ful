@@ -163,7 +163,7 @@
                                     </div>
                                     <div class="availability mb-4">
                                         <h5 class="cat-title">Availability:</h5>
-                                        <span class="stockStatus">In Stock</span>
+                                        <span class="stockStatus text-capitalize">In Stock</span>
                                     </div>
                                     <div class="share-icon">
                                         <h5 class="cat-title">Share:</h5>
@@ -490,8 +490,15 @@
             // Dynamically update SKU, price, and stock
             $('.productSku').text(sku);
             $('.regular-price').text(price);
-            $('#stockStatus').text(stock);
+            $('.stockStatus').text(stock);
             $('.product-title').text(pName);
+            if(stock == 'in-stock'){
+
+                $('.stockStatus').addClass('text-success').removeClass('text-danger');
+            }
+            else{
+                $('.stockStatus').addClass('text-danger').removeClass('text-success');    
+            }
         });
     </script>
 @endpush
