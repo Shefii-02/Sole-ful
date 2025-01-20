@@ -43,7 +43,7 @@
 
         .color-tab label.active img,
         .size-button.active {
-            border: 2px solid #df9b19;
+            border: 5px solid #df9b19;
         }
 
         .color-tab label img {
@@ -116,11 +116,14 @@
                             <div class="col-lg-7">
                                 <div class="product-details-des">
                                     <h3 class="pro-det-title product-title">{{ $product->product_name }}</h3>
-                                    {{-- <div class="pro-review">
-                                        <span><a href="#">1 Review(s)</a></span>
-                                    </div> --}}
+                                    <div class="pro-review">
+                                        <span><a href="#">0 Review(s)</a></span>
+                                    </div>
                                     <div class="price-box">
                                         <span class="regular-price">{{ min_price($product->id) }}</span>
+                                    </div>
+                                    <div class="price-box small">
+                                       <small>SKU</small>  : <span class="text-theme  productSku"></span>
                                     </div>
                                     <div class="price-box">
                                         <span class="text-success small">Inclusive of all taxes</span>
@@ -139,10 +142,6 @@
                                                 </label>
                                             @endforeach
                                         </div>
-
-
-
-
                                         <div class="size-chart mb-2">
                                             <a href="#" class="text-theme" data-bs-toggle="modal"
                                                 data-bs-target="#sizeChart">Size Guide</a>
@@ -151,12 +150,7 @@
                                         <div class="color-option1 mb-4">
                                             <h5 class="cat-title mb-3 fw-bolder">Colors :</h5>
                                             <div class="color-tab">
-                                                {{-- @foreach ($colors as $color)
-                                                    <label class="color-button" data-color-id="{{ $color->id }}">
-                                                        <img src="{{ asset('images/products/' . $color->image_url) }}"
-                                                            alt="{{ $color->value }}">
-                                                    </label>
-                                                @endforeach --}}
+
                                             </div>
                                         </div>
 
@@ -167,42 +161,9 @@
                                         </div>
                                         <a href="cart.html" class="btn btn-dark">Add To Cart</a>
                                     </div>
-                                    {{-- <div class="pro-size1 mb-4 ">
-                                        <h5 class="cat-title mb-3 fw-bolder">Size :</h5>
-
-                                        <div class="size-tab">
-                                            @foreach (['37', '38', '39', '40', '41'] as $size)
-                                                <label
-                                                    class="size-button {{ $sizes->contains('value', $size) ? '' : 'disabled' }}"
-                                                    data-size-id="{{ $size }}">
-                                                    <input type="radio" class="hidden" name="size"
-                                                        value="{{ $size }}">
-                                                    {{ $size }}
-                                                </label>
-                                            @endforeach
-                                        </div>
-
-                                        <div class="size-chart">
-                                            <a href="#" class="text-theme" data-bs-toggle="modal"
-                                                data-bs-target="#sizeChart">Size Guide</a>
-                                        </div>
-                                    </div> --}}
-
-                                    {{-- <div class="color-option1 mb-4">
-                                        <h5 class="cat-title mb-3 fw-bolder">Colors :</h5>
-                                        <div class="color-tab">
-                                            @foreach ($colors as $color)
-                                                <label class="color-button" data-color-id="{{ $color->id }}">
-                                                    <img src="{{ asset('images/products/' . $color->image_url) }}"
-                                                        alt="{{ $color->value }}">
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    </div> --}}
-
                                     <div class="availability mb-4">
                                         <h5 class="cat-title">Availability:</h5>
-                                        <span>In Stock</span>
+                                        <span class="stockStatus">In Stock</span>
                                     </div>
                                     <div class="share-icon">
                                         <h5 class="cat-title">Share:</h5>
@@ -365,7 +326,6 @@
                         </div>
                     </div>
                     <!-- product details reviews end -->
-
                     <!-- featured product area start -->
                     <section class="Related-product">
                         <div class="container">
@@ -373,162 +333,50 @@
                                 <div class="col-12">
                                     <div class="section-title text-center">
                                         <h2 class="title">Related Product</h2>
-                                        <p class="sub-title">Lorem ipsum dolor sit amet consectetur adipisicing</p>
+                                        <p class="sub-title">you may also like</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="product-carousel-4 mbn-50 slick-row-15 slick-arrow-style">
-                                        <!-- product single item start -->
-                                        <div class="product-item mb-50">
-                                            <div class="product-thumb">
-                                                <a href="product-details.html">
-                                                    <img src="assets/img/product/product-1.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <h5 class="product-name">
-                                                    <a href="product-details.html">Leather Mens Slipper</a>
-                                                </h5>
-                                                <div class="price-box">
-                                                    <span class="price-regular">$80.00</span>
-                                                    <span class="price-old"><del>$70.00</del></span>
-                                                </div>
-                                                <div class="product-action-link">
-                                                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                            class="ion-android-favorite-outline"></i></a>
-                                                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                            class="ion-bag"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#quick_view">
-                                                        <span data-bs-toggle="tooltip" title="Quick View"><i
-                                                                class="ion-ios-eye-outline"></i></span>
+                                        @foreach ($similarProducts ?? [] as $similarProduct)
+                                            <div class="product-item mb-50">
+                                                <div class="product-thumb">
+                                                    <a target="_blank"
+                                                        href="{{ route('public.product', ['uid' => $similarProduct->unique_value, 'slug' => $similarProduct->slug]) }}">
+                                                        <img src="{{ isset($similarProduct->MainThumbImage) && $similarProduct->MainThumbImage->image ? asset('images/products/' . $similarProduct->MainThumbImage->image) : asset('images/default.jpg') }}"
+                                                            alt="{{ $similarProduct->product_name }}">
                                                     </a>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <!-- product single item start -->
-
-                                        <!-- product single item start -->
-                                        <div class="product-item mb-50">
-                                            <div class="product-thumb">
-                                                <a href="product-details.html">
-                                                    <img src="assets/img/product/product-2.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <h5 class="product-name">
-                                                    <a href="product-details.html">Quickiin Mens shoes</a>
-                                                </h5>
-                                                <div class="price-box">
-                                                    <span class="price-regular">$80.00</span>
-                                                    <span class="price-old"><del>$70.00</del></span>
-                                                </div>
-                                                <div class="product-action-link">
-                                                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                            class="ion-android-favorite-outline"></i></a>
-                                                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                            class="ion-bag"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#quick_view">
-                                                        <span data-bs-toggle="tooltip" title="Quick View"><i
-                                                                class="ion-ios-eye-outline"></i></span>
-                                                    </a>
+                                                <div class="product-content">
+                                                    <h5 class="product-name">
+                                                        <a target="_blank"
+                                                            href="{{ route('public.product', ['uid' => $similarProduct->unique_value, 'slug' => $similarProduct->slug]) }}">{{ $similarProduct->product_name }}</a>
+                                                    </h5>
+                                                    <div class="price-box">
+                                                        <span class="price-regular small fw-semibold">
+                                                            ₹ {{ number_format($similarProduct->minPrice) }}</span>
+                                                    </div>
+                                                    <div class="product-action-link">
+                                                        <a href="#" id="wishlist-btn-{{ $similarProduct->id }}"
+                                                            class="wishlist-btn"
+                                                            data-product-id="{{ $similarProduct->id }}"
+                                                            title="Add To Wishlist"><i class="bi bi-heart"></i></a>
+                                                        <a href="#" data-bs-toggle="modal"
+                                                            data-product-id="{{ $similarProduct->id }}"
+                                                            data-bs-target="#quick_view" class="quick_view-btn"
+                                                            title="Add To Cart"><i class="bi bi-bag-check"></i></a>
+                                                        <a target="_blank"
+                                                            href="{{ route('public.product', ['uid' => $similarProduct->unique_value, 'slug' => $similarProduct->slug]) }}">
+                                                            <span title="Detail View">
+                                                                <i class="ion-ios-eye-outline"></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- product single item start -->
-
-                                        <!-- product single item start -->
-                                        <div class="product-item mb-50">
-                                            <div class="product-thumb">
-                                                <a href="product-details.html">
-                                                    <img src="assets/img/product/product-3.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <h5 class="product-name">
-                                                    <a href="product-details.html">Rexpo Womens shoes</a>
-                                                </h5>
-                                                <div class="price-box">
-                                                    <span class="price-regular">$80.00</span>
-                                                    <span class="price-old"><del>$70.00</del></span>
-                                                </div>
-                                                <div class="product-action-link">
-                                                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                            class="ion-android-favorite-outline"></i></a>
-                                                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                            class="ion-bag"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#quick_view">
-                                                        <span data-bs-toggle="tooltip" title="Quick View"><i
-                                                                class="ion-ios-eye-outline"></i></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product single item start -->
-
-                                        <!-- product single item start -->
-                                        <div class="product-item mb-50">
-                                            <div class="product-thumb">
-                                                <a href="product-details.html">
-                                                    <img src="assets/img/product/product-4.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <h5 class="product-name">
-                                                    <a href="product-details.html">Primitive Mens shoes</a>
-                                                </h5>
-                                                <div class="price-box">
-                                                    <span class="price-regular">$80.00</span>
-                                                    <span class="price-old"><del>$70.00</del></span>
-                                                </div>
-                                                <div class="product-action-link">
-                                                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                            class="ion-android-favorite-outline"></i></a>
-                                                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                            class="ion-bag"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#quick_view">
-                                                        <span data-bs-toggle="tooltip" title="Quick View"><i
-                                                                class="ion-ios-eye-outline"></i></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product single item start -->
-
-                                        <!-- product single item start -->
-                                        <div class="product-item mb-50">
-                                            <div class="product-thumb">
-                                                <a href="product-details.html">
-                                                    <img src="assets/img/product/product-5.jpg" alt="">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <h5 class="product-name">
-                                                    <a href="product-details.html">Leather Mens Slipper</a>
-                                                </h5>
-                                                <div class="price-box">
-                                                    <span class="price-regular">$80.00</span>
-                                                    <span class="price-old"><del>$70.00</del></span>
-                                                </div>
-                                                <div class="product-action-link">
-                                                    <a href="#" data-bs-toggle="tooltip" title="Wishlist"><i
-                                                            class="ion-android-favorite-outline"></i></a>
-                                                    <a href="#" data-bs-toggle="tooltip" title="Add To Cart"><i
-                                                            class="ion-bag"></i></a>
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#quick_view">
-                                                        <span data-bs-toggle="tooltip" title="Quick View"><i
-                                                                class="ion-ios-eye-outline"></i></span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- product single item start -->
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -542,7 +390,7 @@
     <!-- product details wrapper end -->
 @endsection
 
-
+{{-- 
 @push('footer')
     <script>
         $(document).ready(function() {
@@ -567,8 +415,9 @@
                         size: size,
                     },
                     success: function(response) {
-      
                         $('.color-tab').html(response);
+                        $('.color-tab .color-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
+
                     }
                 });
 
@@ -577,6 +426,73 @@
 
             // Trigger change event on the initially checked radio input
             $('.variSize_checkbox:checked').trigger('change');
+        });
+    </script>
+@endpush --}}
+
+@push('footer')
+    <script>
+        $(document).ready(function() {
+            // Set first size button as checked by default
+            $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
+
+            // Function to handle active class toggle
+            $('body').on('change','.variSize_checkbox',function(e){
+                // Remove 'active' class from all labels
+                $('.size-button').removeClass('active');
+
+                // Add 'active' class to the parent label of the checked input
+                if ($(this).is(':checked')) {
+                    $(this).closest('.size-button').addClass('active');
+                }
+                var size = $(this).val();
+                var product = $(this).data('product');
+
+                // AJAX request for variation details
+                $.ajax({
+                    url: '/get-variation-details',
+                    method: 'GET',
+                    data: {
+                        product_id: product,
+                        size: size,
+                    },
+                    success: function(response) {
+                        $('.color-tab').html(response);
+
+                        // Set first color button as checked by default in the color-tab
+                        $('.color-tab .color-button').not('.disabled').first().find(
+                            'input[type="radio"]').prop('checked', true);
+                        // Trigger change event on the first color option
+                        $('.variColor_checkbox:checked').trigger('change');
+                    }
+                });
+            });
+
+            // Trigger change event on the initially checked size radio input
+            $('.variSize_checkbox:checked').trigger('change');
+        });
+
+ // Function to handle color change
+        $('body').on('change','.variColor_checkbox',function(e){
+            // Remove 'active' class from all labels
+            $('.color-button').removeClass('active');
+
+            // Add 'active' class to the parent label of the checked input
+            if ($(this).is(':checked')) {
+                $(this).closest('.color-button').addClass('active');
+            }
+
+            var color = $(this).val();
+            var sku = $(this).data('sku');
+            var price = $(this).data('price');
+            var stock = $(this).data('stock');
+            var pName = $(this).data('productName');
+            // Dynamically update SKU, price, and stock
+        alert(price,stock,pName)
+            $('.productSku').text(sku);
+            $('.regular-price').text(price);
+            $('#stockStatus').text(stock);
+            $('.product-title').text(pName);
         });
     </script>
 @endpush

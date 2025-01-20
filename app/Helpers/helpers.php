@@ -253,5 +253,16 @@ if (!function_exists('getVariants')) {
         return $string;
         
     }    
+
+
+
+    function productVariationName($baseName, $color) {
+        $parts = explode('Women', $baseName);
+
+        $rest = isset($parts[1]) ? $parts[1] : ''; // 'Casual Slides'
+    
+        return 'Women' . ' ' . ucfirst($color) . ' ' . $rest;
+    }
+    
 }
 

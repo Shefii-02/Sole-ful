@@ -142,8 +142,6 @@ class FrontendController extends Controller
 
     public function product($uid, $slug)
     {
-        $products = Product::with('product_variation','product_variation.variationkey','variationList')->where('slug',$slug)->first() ?? abort(404);
-
         $product = Product::where('unique_value', $uid)->where('slug', $slug)->first() ?? abort(404);
         $similarProducts = Product::limit(10)->get();
         $sizes = $product->variationKeys->where('type', 'size')->unique('value');
