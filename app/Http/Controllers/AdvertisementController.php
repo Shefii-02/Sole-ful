@@ -44,10 +44,11 @@ class AdvertisementController extends Controller
         //
         DB::beginTransaction();
         try {
-            $furnishing = Advertisement::query()->create($request->input());
+            $advertisement = Advertisement::query()->create($request->input());
             $result = uploadFile($request->file('icon'), 'general');
-            $furnishing->image = $result;
-            $furnishing->save();
+            $advertisement->image = $result;
+            $advertisement->text = $request->type;
+            $advertisement->save();
 
             Db::commit();
         } catch (Exception $e) {
@@ -104,6 +105,7 @@ class AdvertisementController extends Controller
                 $result = uploadFile($request->file('icon'), 'general');
                 $advertisement->image = $result;
             }
+            $advertisement->text = $request->type;
             $advertisement->save();
 
             Db::commit();

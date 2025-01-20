@@ -135,6 +135,13 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="col-lg-6 mb-3">
+                            <label class="mb-3 block text-sm font-medium text-black dark:text-dark">Type</label>
+                            <select class="form-control" name="type">
+                                <option value="offer" {{ isset($advertisement) && $advertisement->text == 'offer' ? 'selected' : '' }}>Offer Banner</option>
+                                <option value="product" {{ isset($advertisement) && $advertisement->text == 'product' ? 'selected' : '' }}>Product</option>
+                            </select>
+                        </div>
                         <div class="mb-2 w-1/2">
                             <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Redirect Url</label>
                             <input type="url" autocomplete="off" name="redirection" class="form-control" value="{{ old('redirection', $advertisement->redirection ?? '') }}" />
