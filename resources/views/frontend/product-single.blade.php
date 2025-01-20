@@ -175,7 +175,7 @@
                     </div>
 
                     <!-- product details reviews start -->
-                    <div class="product-details-reviews section-padding">
+                    <div class="product-details-reviews section-padding d-none">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="product-review-info">
@@ -327,7 +327,7 @@
                     </div>
                     <!-- product details reviews end -->
                     <!-- featured product area start -->
-                    <section class="Related-product">
+                    <section class="Related-product mt-20">
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
@@ -486,9 +486,8 @@
             var sku = $(this).data('sku');
             var price = $(this).data('price');
             var stock = $(this).data('stock');
-            var pName = $(this).data('productName');
+            var pName = $(this).data('productname');
             // Dynamically update SKU, price, and stock
-        alert(price,stock,pName)
             $('.productSku').text(sku);
             $('.regular-price').text(price);
             $('#stockStatus').text(stock);

@@ -261,7 +261,7 @@ if (!function_exists('getVariants')) {
 
         $rest = isset($parts[1]) ? $parts[1] : ''; // 'Casual Slides'
     
-        return 'Women' . ' ' . ucfirst($color) . ' ' . $rest;
+        return ucfirst(strtolower('Women' . ' ' . ucfirst($color) . ' ' . $rest));
     }
     
 }
