@@ -123,7 +123,7 @@
                                         <span class="regular-price">{{ min_price($product->id) }}</span>
                                     </div>
                                     <div class="price-box small">
-                                       <small>SKU</small>  : <span class="text-theme  productSku"></span>
+                                        <small>SKU</small> : <span class="text-theme  productSku"></span>
                                     </div>
                                     <div class="price-box">
                                         <span class="text-success small">Inclusive of all taxes</span>
@@ -156,10 +156,15 @@
 
                                     </div>
                                     <div class="quantity-cart-box d-flex align-items-center mb-4">
-                                        <div class="quantity">
-                                            <div class="pro-qty"><input type="text" value="1"></div>
+                                        <div class="quantity" x-data="{ quantity: 1 }">
+                                            <div class="pro-qty">
+                                                <button class="dec qtybtn"
+                                                    @click="quantity > 1 ? quantity-- : quantity">-</button>
+                                                <input id="quantity" type="text" x-model="quantity" readonly>
+                                                <button class="inc qtybtn" @click="quantity++">+</button>
+                                            </div>
                                         </div>
-                                        <a href="cart.html" class="btn btn-dark">Add To Cart</a>
+                                        <button id="addToCartBtn" class="btn btn-dark add-to-cart">Add To Cart</button>
                                     </div>
                                     <div class="availability mb-4">
                                         <h5 class="cat-title">Availability:</h5>
@@ -437,7 +442,7 @@
             $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
 
             // Function to handle active class toggle
-            $('body').on('change','.variSize_checkbox',function(e){
+            $('body').on('change', '.variSize_checkbox', function(e) {
                 // Remove 'active' class from all labels
                 $('.size-button').removeClass('active');
 
@@ -472,8 +477,8 @@
             $('.variSize_checkbox:checked').trigger('change');
         });
 
- // Function to handle color change
-        $('body').on('change','.variColor_checkbox',function(e){
+        // Function to handle color change
+        $('body').on('change', '.variColor_checkbox', function(e) {
             // Remove 'active' class from all labels
             $('.color-button').removeClass('active');
 
@@ -492,13 +497,59 @@
             $('.regular-price').text(price);
             $('.stockStatus').text(stock);
             $('.product-title').text(pName);
-            if(stock == 'in-stock'){
+            if (stock == 'in-stock') {
 
                 $('.stockStatus').addClass('text-success').removeClass('text-danger');
+            } else {
+                $('.stockStatus').addClass('text-danger').removeClass('text-success');
             }
-            else{
-                $('.stockStatus').addClass('text-danger').removeClass('text-success');    
-            }
+        });
+
+        $(document).ready(function() {
+            $('#addToCartBtn').on('click', function() {
+                // Get the selected color radio input
+                const selectedColorInput = $('.variColor_checkbox:checked');
+
+                if (!selectedColorInput.length) {
+                    alert('Please select a color.');
+                    return;
+                }
+
+                // Extract data from the selected color and quantity input
+                const color = selectedColorInput.val();
+                const sku = selectedColorInput.data('sku');
+                const variationId = selectedColorInput.data('variation');
+                const price = selectedColorInput.data('price');
+                const productName = selectedColorInput.data('productname');
+                const stockStatus = selectedColorInput.data('stock');
+                const quantity = $('#quantity').val();
+
+                // Send the data via AJAX
+                // $.ajax({
+                //     url: '/add-to-cart',
+                //     method: 'GET',
+                //     data: {
+                //         color: color,
+                //         sku: sku,
+                //         variation_id: variationId,
+                //         price: price,
+                //         product_name: productName,
+                //         stock_status: stockStatus,
+                //         quantity: quantity,
+                //         // _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
+                //     },
+                //     success: function(response) {
+                //         if (response.success) {
+                //             alert('Product added to cart successfully!');
+                //         } else {
+                //             alert('Failed to add product to cart.');
+                //         }
+                //     },
+                //     error: function() {
+                //         alert('An error occurred. Please try again.');
+                //     }
+                // });
+            });
         });
     </script>
 @endpush

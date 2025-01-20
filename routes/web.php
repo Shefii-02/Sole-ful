@@ -45,6 +45,7 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::get('wishlist', 'FrontendController@getWishlist')->name('wishlist');
     Route::get('quick-view', 'FrontendController@QuickView')->name('quick-view');
     Route::get('/get-variation-details', [FrontendController::class, 'getVariationDetails']);
+    Route::get('/add-to-cart', [FrontendController::class, 'addToCart']);
     
 
     Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');

@@ -149,6 +149,10 @@ class FrontendController extends Controller
         return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors'));
     }
 
+    public function addToCart(Request $request){
+        dd($request->all());
+    }
+
 
     public function getVariationDetails(Request $request)
     {
