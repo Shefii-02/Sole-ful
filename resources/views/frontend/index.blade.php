@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <!-- Hero Slider Section Start -->
-    <section class="hero-slider"  @detect style="margin-top: 47px;" @else style="margin-top: 35px;" @enddetect >
+    <section class="hero-slider"  @detect style="margin-top: 35px;" @else style="margin-top: 47px;" @enddetect >
         <div class="container">
             <div class="row">
                 <div class="col-12">
