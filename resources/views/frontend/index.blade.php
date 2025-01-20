@@ -10,7 +10,7 @@
                             @foreach ($slider_in_mobile ?? [] as $mobile)
                                 <!-- Single Slider Item Start -->
                                 <div class="hero-single-slide">
-                                    <a href="{{ $desktop['link'] != null ? $desktop['link'] : '#' }}" target="_blank">
+                                    <a href="{{ $mobile['link'] != null ? $desktop['link'] : '#' }}" target="_blank">
 
                                         <div class="hero-slider-item bg-img" data-bg="{{ asset('images/' . $mobile['mobile']) }}">
                                         </div>
