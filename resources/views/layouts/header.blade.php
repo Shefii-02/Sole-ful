@@ -187,7 +187,7 @@
                         @endauth
 
 
-                        <li>
+                        <li class="d-none d-md-block">
                             <a href="tel:(647)245-3301" class="text-theme" title="(647)245-3301">
                                 <i class="bi bi-telephone-outbound fs-5" style="font-size: 19px;"></i>
                             </a>
