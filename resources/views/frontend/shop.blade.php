@@ -128,9 +128,11 @@
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-banner">
-                                <a href="#">
-                                    <img src="assets/img/banner/banner_left.jpg" alt="">
+                                @if($productOffer)
+                                <a href="{{ $productOffer->redirection }}" target="_blank">
+                                    <img src="{{ asset('images/' . $productOffer->image) }}" alt="product banner">
                                 </a>
+                                @endif
                             </div>
                         </div>
                         <!-- single sidebar end -->
@@ -216,7 +218,7 @@
                 const queryString = filterForm.serialize();
 
                 history.pushState({}, '', `{{ route('public.shop') }}?${queryString}`);
-   
+
 
                 // AJAX request
                 $.ajax({
@@ -225,11 +227,11 @@
                     data: queryString,
                     success: function(response) {
                         // if (response.html) {
-                            productContainer.html(response.html); // Update product list dynamically
+                        productContainer.html(response.html); // Update product list dynamically
                         // }
                         $('html, body').animate({
                             scrollTop: 0
-                        }, 300); 
+                        }, 300);
                     },
                     error: function(xhr, status, error) {
                         console.error('Error:', error);

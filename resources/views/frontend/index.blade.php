@@ -149,11 +149,13 @@
             </div>
             <div class="row">
                 <div class="col-xl-4 col-lg-5 col-md-5">
+                    @if($productOffer)
                     <div class="product-banner">
-                        <a href="#">
-                            <img src="assets/img/banner/banner-3.jpg" alt="product banner">
+                        <a href="{{ $productOffer->redirection }}" target="_blank">
+                            <img src="{{ asset('images/'.$productOffer->image) }}" alt="product banner">
                         </a>
                     </div>
+                    @endif
                 </div>
                 <div class="col-xl-8 col-lg-7 col-md-7">
                     <div class="top-seller-carousel slick-row-15 mtn-30">

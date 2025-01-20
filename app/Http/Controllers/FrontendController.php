@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advertisement;
 use App\Models\Appointment;
 use App\Models\Banner;
 use App\Models\BestSellProduct;
@@ -49,8 +50,8 @@ class FrontendController extends Controller
         $bestSellProduct        = BestSellProduct::get();
         $featuredProduct        = FeaturedProduct::get();
         $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
-
-        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs'));
+        $productOffer           = Advertisement::where('text','product')->inRandomOrder()->limit(1)->first();
+        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs','productOffer'));
     }
 
     public function getWishlist(Request $request)
@@ -72,6 +73,8 @@ class FrontendController extends Controller
 
     public function shop(Request $request)
     {
+        $productOffer           = Advertisement::where('text','product')->inRandomOrder()->limit(1)->first();
+
         $query = Product::where('status', 1);
 
         // Filter by price range
