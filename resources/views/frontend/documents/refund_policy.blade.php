@@ -28,25 +28,21 @@
             <div class="row">
                 <p>
                     Refund Policy<br>
-                    This refund and cancellation policy outlines how you can cancel or seek a refund for a product / service
-                    that you have purchased through the Platform. Under this policy:<br>
-                    Cancellations will only be considered if the request is made 3 days of placing the order. However,
-                    cancellation requests may not be entertained if the orders have been communicated to such sellers /
-                    merchant(s) listed on the Platform and they have initiated the process of shipping them, or the product
-                    is out for delivery. In such an event, you may choose to reject the product at the doorstep.
-                    VOCHE THE INTERIOR STUDIO does not accept cancellation requests for perishable items like flowers,
-                    eatables, etc. However, the refund / replacement can be made if the user establishes that the quality of
-                    the product delivered is not good.<br>
-                    In case of receipt of damaged or defective items, please report to our customer service team. The
-                    request would be entertained once the seller/ merchant listed on the Platform, has checked and
-                    determined the same at its own end. This should be reported within 3 days of receipt of products. In
-                    case you feel that the product received is not as shown on the site or as per your expectations, you
-                    must bring it to the notice of our customer service within 3 days of receiving the product. The customer
-                    service team after looking into your complaint will take an appropriate decision.
-                    In case of complaints regarding the products that come with a warranty from the manufacturers, please
-                    refer the issue to them.<br>
-                    In case of any refunds approved by VOCHE THE INTERIOR STUDIO, it will take 7 days for the refund to be
-                    processed to you.
+                    • For any reason if you cancel an order within two hours of placing it or before it moves to procurement, a full refund of online credit will be credited to your wallet within 3-5 business days.<br>
+                    • In case where orders cannot be processed, procured or shipped due to unforeseen circumstances or reasons beyond our control, the order will be cancelled and the full amount will be refunded without any liability to either party.<br>
+                    • Online credit will only be issued if the delivered order is subject to manufacturing defects.<br>
+                    • No refund or exchange will be provided if the product is delivered in the correct size and colors as selected during the order placement.<br>
+                    <br>
+                    • Refund timelines:<br>
+                    o Cash on Delivery (COD): Refunds will reflect in your online credit account within 5 to 7 business days after initiation.<br>
+                    o Prepaid Orders: Refunds will reflect as online credit within 5 to 7 business days, depending on the bank partner.<br>
+                    • Refunds are initiated only after the returned item passes the condition checks. The timeline for refund initiation depends on the courier partner's return delivery to the Soleful warehouse.<br>
+                </p>
+                <p>
+                    Warranty/Guarantee Policy<br>
+                    • No warranty, guarantee, exchange or repairs are available for products purchased at discounted prices on the website.<br>
+                    Quality Check<br>
+                    • Each product is shipped with a seal tag to ensure seamless returns. The seal tag must remain attached and intact. Returns or exchanges will not be accepted if the seal tag is removed, damaged or tampered with.<br>
                 </p>
             </div>
         </div>

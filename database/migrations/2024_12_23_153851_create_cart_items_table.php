@@ -40,13 +40,13 @@ return new class extends Migration
             $table->string('category')->nullable();
             $table->unsignedBigInteger('occasion_id')->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
+            $table->unsignedBigInteger('customer_id')->nullable();
+            
             $table->decimal('tax', 10, 2)->nullable();
             $table->text('note')->nullable();
             $table->boolean('send_gift')->default(false);
             // Indexes
             $table->index(['basket_id', 'product_id', 'product_variation_id']);
-            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('product_variant_id')->constrained('product_variants')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

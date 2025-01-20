@@ -33,6 +33,7 @@ return new class extends Migration
             $table->unsignedBigInteger('affiliate_id')->nullable();
             $table->string('remarks')->nullable();
             $table->boolean('open')->default(true);
+            $table->boolean('status')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

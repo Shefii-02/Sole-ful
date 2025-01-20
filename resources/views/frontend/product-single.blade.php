@@ -525,30 +525,32 @@
                 const quantity = $('#quantity').val();
 
                 // Send the data via AJAX
-                // $.ajax({
-                //     url: '/add-to-cart',
-                //     method: 'GET',
-                //     data: {
-                //         color: color,
-                //         sku: sku,
-                //         variation_id: variationId,
-                //         price: price,
-                //         product_name: productName,
-                //         stock_status: stockStatus,
-                //         quantity: quantity,
-                //         // _token: $('meta[name="csrf-token"]').attr('content') // CSRF token
-                //     },
-                //     success: function(response) {
-                //         if (response.success) {
-                //             alert('Product added to cart successfully!');
-                //         } else {
-                //             alert('Failed to add product to cart.');
-                //         }
-                //     },
-                //     error: function() {
-                //         alert('An error occurred. Please try again.');
-                //     }
-                // });
+                $.ajax({
+                    url: '/add-to-cart',
+                    method: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    data: {
+                        color: color,
+                        sku: sku,
+                        variation_id: variationId,
+                        price: price,
+                        product_name: productName,
+                        stock_status: stockStatus,
+                        quantity: quantity,
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert('Product added to cart successfully!');
+                        } else {
+                            alert('Failed to add product to cart.');
+                        }
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
             });
         });
     </script>
