@@ -43,7 +43,7 @@
     <section class="service-policy-area">
         <div class="container">
             <div class="row">
-                @foreach ([['icon' => 'policy-1.png', 'title' => 'FREE SHIPPING', 'desc' => 'Free shipping on all order'], ['icon' => 'policy-2.png', 'title' => 'ONLINE SUPPORT', 'desc' => 'Online support 24 hours a day'], ['icon' => 'policy-3.png', 'title' => 'MONEY RETURN', 'desc' => 'Back guarantee under 5 days']] as $policy)
+                @foreach ([['icon' => 'policy-1.png', 'title' => 'FREE SHIPPING', 'desc' => 'Free shipping on all order'], ['icon' => 'policy-2.png', 'title' => 'ONLINE SUPPORT', 'desc' => 'Dedicated online support'], ['icon' => 'policy-3.png', 'title' => 'PAYMENTS', 'desc' => 'Hassle-Free Payments.']] as $policy)
                     <div class="col-lg-4">
                         <div class="service-policy-item mt-30 bg-{{ $loop->iteration }} rounded-3">
                             <div class="policy-icon">
