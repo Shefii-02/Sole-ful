@@ -92,7 +92,7 @@
                                         @foreach ($variaion_slider as $vari_images)
                                             <div class="pro-large-img img-zoom" data-category="{{ $key }}">
                                                 <img src="{{ asset('images/products/' . $vari_images) }}"
-                                                    onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
+                                                    onerror="this.onerror=null;this.src='/images/default.png';"
                                                     alt="{{ $product->product_name }}">
                                             </div>
                                         @endforeach

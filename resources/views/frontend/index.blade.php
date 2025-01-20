@@ -79,7 +79,7 @@
                             <div class="product-item mb-50">
                                 <div class="product-thumb">
                                     <a target="_blank" href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">
-                                        <img src="{{ asset('images/products/' . ($featuredPdct->product->MainThumbImage->image ?? '')) }}"
+                                        <img src="{{ isset($featuredPdct->product->MainThumbImage) && $featuredPdct->product->MainThumbImage->image ? asset('images/products/' . $featuredPdct->product->MainThumbImage->image) : asset('images/default.jpg') }}"
                                             alt="{{ $featuredPdct->product->product_name }}">
                                     </a>
                                 </div>
@@ -164,7 +164,7 @@
                                     <div class="product-thumb">
                                         <a target="_blank"
                                             href="{{ route('public.product', ['uid' => $bestPRoduct->product->unique_value, 'slug' => $bestPRoduct->product->slug]) }}">
-                                            <img src="{{ asset('images/products/' . ($bestPRoduct->product->MainThumbImage->image ?? '')) }}"
+                                            <img src="{{ isset($bestPRoduct->product->MainThumbImage) && $bestPRoduct->product->MainThumbImage->image ? asset('images/products/' . $bestPRoduct->product->MainThumbImage->image) : asset('images/default.jpg') }}"
                                                 alt="{{ $bestPRoduct->product->product_name }}">
                                         </a>
                                     </div>

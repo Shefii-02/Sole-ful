@@ -5,8 +5,7 @@
             <div class="product-thumb">
                 <a target="_blank"
                     href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">
-                    <img src="{{ asset('images/products/' . ($product->MainThumbImage->image ?? '')) }}" alt="">
-                </a>
+                    <img  src="{{ isset($product->MainThumbImage) && $product->MainThumbImage->image ? asset('images/products/' . $product->MainThumbImage->image) : asset('images/default.jpg') }}" alt=""> </a>
             </div>
             <div class="product-content">
                 <h5 class="product-name">
