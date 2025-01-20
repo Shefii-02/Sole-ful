@@ -136,14 +136,14 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="d-md-none d-flex me-0 ms-2">
+                        {{-- <li class="d-md-none d-flex me-0 ms-2">
                             <a href="/cart" class="d-md-none d-inline">
                                 <div class="cart-icon text-theme">
                                     <i class="bi bi-cart fs-5"></i>
                                     <span class="cart-count">0</span>
                                 </div>
                             </a>
-                        </li>
+                        </li> --}}
                         @guest
                             @if (Route::has('login'))
                                 <li class="last-one">
