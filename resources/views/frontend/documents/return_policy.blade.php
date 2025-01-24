@@ -1,6 +1,34 @@
 @extends('layouts.app')
 
+@push('header')
+    <style>
+        .documents h1,
+        .documents h2 {
+            font-size: 1.5rem;
+        }
 
+        .documents h3 {
+            font-size: 1.2rem;
+        }
+
+        .documents p,
+        .documents ul,
+        .documents h1,
+        .documents h2,
+        .documents h3 {
+            margin-bottom: 20px;
+        }
+
+        .documents ul {
+            padding-left: 30px;
+        }
+
+        .documents ul li {
+            list-style: disc !important;
+
+        }
+    </style>
+@endpush
 
 @section('content')
     <!-- breadcrumb area start -->
@@ -23,16 +51,15 @@
     </div>
     <!-- breadcrumb area end -->
     <!-- page main wrapper start -->
-    <div class="shop-main-wrapper section-padding">
+    <div class="shop-main-wrapper section-padding documents">
         <div class="container">
             <div class="row">
-                <p>
-                    Return Policy<br>
-                    • Returns are accepted against manufacturing defects only within 7 days from the day of delivery of the order.<br>
-                    • Items eligible for return and refund must be unused, intact and in their original packaging (including labels, tags, boxes and plastic wrap).<br>
-                    • To initiate a return, log in to the website <a href="https://www.soleful.in" target="_blank">www.soleful.in</a> and raise a return request from the "My Orders" section. Our team will gladly look into the concerns and resolve them.
-                    
-                </p>
+                <p><strong>Effective Date:</strong> 1st Jan 2025</p>
+                <ul>
+                    <li>Returns are accepted against manufacturing defects only within 7 days from the day of delivery of the order.</li>
+                    <li>Items eligible for return and refund must be unused, intact, and in their original packaging (including labels, tags, boxes, and plastic wrap).</li>
+                    <li>To initiate a return, log in to the website <a href="https://www.soleful.in">www.soleful.in</a> and raise a return request from the "My Orders" section. Our team will gladly look into the concerns and resolve them.</li>
+                </ul>
             </div>
         </div>
     </div>

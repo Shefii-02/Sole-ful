@@ -117,7 +117,7 @@
                             <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Order Now</a>
                         </li>
                         <li class="cursor-pointer">
-                            <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Now</a>
+                            <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
                         </li>
                         <li >
                             <a href="#" id="cartList-btn-view" data-bs-toggle="offcanvas"
