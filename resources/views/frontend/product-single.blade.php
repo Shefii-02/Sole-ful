@@ -527,7 +527,7 @@
                 // Send the data via AJAX
                 $.ajax({
                     url: '/add-to-cart',
-                    method: 'GET',
+                    method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
@@ -541,11 +541,15 @@
                         quantity: quantity,
                     },
                     success: function(response) {
-                        if (response.success) {
-                            alert('Product added to cart successfully!');
+                        
+                        if (response.result) {
+                            toastr.success(response.message, "Success");
+                    
                         } else {
-                            alert('Failed to add product to cart.');
+                            toastr.success(response.message, "Error");
+  
                         }
+                        $('.cart-count').text(response.cart_count)
                     },
                     error: function() {
                         alert('An error occurred. Please try again.');

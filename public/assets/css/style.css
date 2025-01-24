@@ -2982,7 +2982,7 @@ only screen and (max-width: 767.98px) {
 /*------- blog comment box end --------*/
 /*----- breadcrumb style css start -----*/
 .breadcrumb-wrap {
-  padding: 55px 0 60px;
+  padding: 100px 0 60px;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -2995,6 +2995,7 @@ only screen and (max-width: 767.98px) {
   font-size: 24px;
   padding-bottom: 15px;
   text-transform: uppercase;
+  font-weight: 800;
 }
 
 .breadcrumb-wrap nav h2 {

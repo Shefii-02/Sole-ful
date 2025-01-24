@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('invoice_id')->unique();
             $table->foreignId('customer_id')->nullable()->constrained('customers')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('basket_id')->nullable()->constrained('baskets')->onUpdate('cascade')->onDelete('set null');
+            $table->integer('user_id')->nullable();
             $table->decimal('subtotal', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('tax', 10, 2)->nullable();

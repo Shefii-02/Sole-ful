@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Basket;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,5 +47,8 @@ class AppServiceProvider extends ServiceProvider
         $productAdvertisements = \App\Models\Advertisement::where('text','product')->select('image','redirection')->get();
         View::share('productAdvertisements', $productAdvertisements);
 
+
+       
+       
     }
 }

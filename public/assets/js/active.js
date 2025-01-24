@@ -378,6 +378,17 @@
 			});
 		});
 
+		$('body').on('click', '#cartList-btn-view', function (e) {
+			$.ajax({
+				url: '/cart-list',
+				method: 'GET',
+				data: { wishlist: wishlist },
+				success: function (response) {
+					$('.cartlistBody').html(response);
+				}
+			});
+		});
+
 		$('body').on('click', '.wishlist-btn-remove', function (e) {
 			e.preventDefault();
 			const product_Id = $(this).data('product-id');
@@ -431,7 +442,7 @@
 			});
 		});
 
-
+	
 
 	});
 

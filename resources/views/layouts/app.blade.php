@@ -22,241 +22,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    <meta http-equiv="refresh" content="1800"> 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-        <!-- Toastr CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-        <!-- Toastr JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-        
     @stack('header')
-    <style>
-        /* Ensure the search bar is positioned correctly */
-        .search {
-            position: relative;
-            width: 40px;
-            height: 40px;
 
-            box-shadow: 0 4px 24px hsla(222, 68%, 12%, 0.1);
-            border-radius: 4rem;
-            padding: 10px;
-            overflow: hidden;
-            transition: width 0.5s cubic-bezier(0.9, 0, 0.3, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Input styling */
-        .search__input {
-            border: none;
-            outline: none;
-            width: 100%;
-            /* Full width within the container */
-            height: 100%;
-            border-radius: 4rem;
-            padding-left: 14px;
-            font-family: var(--body-font);
-            font-size: var(--small-font-size);
-            font-weight: 500;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1.5s;
-        }
-
-        /* Search button styling */
-        .search__button {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 10px;
-            margin: auto;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            transition: transform 0.6s cubic-bezier(0.9, 0, 0.3, 0.9);
-        }
-
-        .search__icon,
-        .search__close {
-            color: var(--white-color);
-            font-size: 1.5rem;
-            position: absolute;
-            transition: opacity 0.5s cubic-bezier(0.9, 0, 0.3, 0.9);
-        }
-
-        .search__close {
-            opacity: 0;
-            /* Hidden by default */
-        }
-
-        /* When search bar expands */
-        .show-search {
-            width: 100%;
-        }
-
-        .show-search .search__input {
-            opacity: 1;
-            pointer-events: initial;
-        }
-
-        .show-search .search__button {
-            transform: rotate(90deg);
-        }
-
-        .show-search .search__icon {
-            opacity: 0;
-        }
-
-        .show-search .search__close {
-            opacity: 1;
-        }
-
-        /*=============== BREAKPOINTS ===============*/
-        @media screen and (min-width: 576px) {
-            .show-search {
-                width: 450px;
-                /* Larger width for medium screens */
-            }
-        }
-
-        .shimmer-bar {
-            animation: shimmer 5s infinite;
-        }
-
-        .shimmer-bar2 {
-            animation: shimmer2 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% {
-                opacity: 0.9;
-                transform: scale(0);
-            }
-
-            10% {
-                opacity: 0.7;
-                transform: none;
-            }
-
-            20% {
-                opacity: 0.5;
-                transform: none;
-            }
-
-            30% {
-                opacity: 0.3;
-                transform: none;
-            }
-
-            40% {
-                opacity: 0.2;
-                transform: none;
-            }
-
-            50% {
-                opacity: 0.1;
-                transform: none;
-            }
-
-            60% {
-                opacity: 0.1;
-                transform: none;
-            }
-
-            70% {
-                opacity: 0.3;
-                transform: none;
-            }
-
-            80% {
-                opacity: 0.5;
-                transform: none;
-            }
-
-            90% {
-                opacity: 0.7;
-                transform: none;
-            }
-
-            100% {
-                opacity: 0.9;
-                transform: none;
-            }
-        }
-
-        @keyframes shimmer2 {
-            0% {
-                opacity: 0.9;
-                transform: scale(0);
-            }
-
-            10% {
-                opacity: 0.7;
-                transform: none;
-            }
-
-            20% {
-                opacity: 0.5;
-                transform: none;
-            }
-
-            30% {
-                opacity: 0.3;
-                transform: none;
-            }
-
-            40% {
-                opacity: 0.2;
-                transform: none;
-            }
-
-            50% {
-                opacity: 0.1;
-                transform: none;
-            }
-
-            60% {
-                opacity: 0.1;
-                transform: none;
-            }
-
-            70% {
-                opacity: 0.3;
-                transform: none;
-            }
-
-            80% {
-                opacity: 0.5;
-                transform: none;
-            }
-
-            90% {
-                opacity: 0.7;
-                transform: none;
-            }
-
-            100% {
-                opacity: 0.9;
-                transform: none;
-            }
-        }
-
-        .bi-heart-fill {
-            color: #dc3545;
-        }
-    </style>
     <script type="text/javascript"
         src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
         async="async"></script>
@@ -358,7 +131,8 @@
                                                 Location</a></li>
                                         <li><a href="{{ url('/accounts') }}">My Account</a></li>
                                         <li><a href="{{ url('/order-track') }}">Orders Tracking</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size Guide</a></li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
+                                                Guide</a></li>
                                         <li><a href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
                                         <li><a href="{{ url('contact-us') }}">Contact Us</a></li>
                                     </ul>
@@ -693,6 +467,142 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end" id="CartList" aria-labelledby="CartLabel">
+        <div class="offcanvas-header">
+            <h5 id="CartLabel" class="fw-bold">Cart</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body cartlistBody">
+            <div class="col-12 h-100 overflow-hidden">
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
+
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
+
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
+
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100">
+
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
+
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
+
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
+
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
+
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!--=======================Javascript============================-->
         <!--=== All Vendor Js ===-->
@@ -720,6 +630,25 @@
             };
 
             toggleSearch('search-bar', 'search-button');
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
+        <!-- Toastr CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+        <!-- Toastr JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+        <script type="text/javascript">
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "preventDuplicates": false,
+                "positionClass": "toast-top-right", // Toast position
+                "timeOut": "5000", // Timeout duration
+                "extendedTimeOut": "5000",
+            };
         </script>
 
         @stack('footer')

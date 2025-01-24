@@ -6,8 +6,12 @@ use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Basket;
 use App\Models\CartItem;
+use App\Models\Coupon;
+use App\Models\Myaddress;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class OrderController extends Controller
 {
@@ -27,11 +31,14 @@ class OrderController extends Controller
         //
     }
 
-    public function place_order(CheckoutFormRequest $request)
+    public function placeOrder(Request $request)
     {
 
-        if (session()->has('session_string')) {
 
+
+        $this->submitPaymentForm($request);
+
+        if (session()->has('session_string')) {
             $session_string = session('session_string');
 
             $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
@@ -40,20 +47,6 @@ class OrderController extends Controller
                 if (($request->nameOnCard == 'Card Test') &&  ($request->cardNumber == 4111111111111111)) {
                 } else {
                     return redirect('/checkout')->withInput($request->input())->with('error', 'Payment Failed' . '<br><span style="color:red;font-size:16px;font-weight:700;">Only accepted Test cards<span>');
-                }
-            }
-
-
-            if ($basket->order_type == 'pickup') {
-                $store = Store::where('id', $basket->pickup_id)->first();
-            } else {
-                $store = Store::where('shipping', 1)->first() ?? '';
-
-
-                if ($request->has('make_gift_checkbox')) {
-                    $basket->make_gift   = $request->has('make_gift_checkbox') ? 1 : 0;
-                    $basket->card_msg    = $request->card_msg;
-                    $basket->save();
                 }
             }
 
@@ -87,27 +80,11 @@ class OrderController extends Controller
 
                 $shipping_data = json_decode(json_encode($shipping_add)); // convert array to collection
                 // }
-                //////////////////////////////////////////////////////Sign up///////////////////////////////////////
-                if ($request->has('clickedSignup')) {
-                    if ($user = $this->userSignup($billing_add)) {
-
-                        Auth::login($user);
-
-                        if ($basket) {
-                            $basket = Basket::where('id', $basket->id)->first();
-                            $basket->user_id    =  $user->id;
-                            $basket->email      =  $user->email;
-                            $basket->save();
-                        }
-                    }
-                }
+             
             }
 
             if ($basket) {
-
-
                 //calculation_part
-
                 $calculations  = $this->GrandTotalCalculation($basket);
 
                 $calculations = json_decode($calculations);
@@ -123,13 +100,13 @@ class OrderController extends Controller
                 DB::beginTransaction();
 
                 try {
-                    Address::where('basket_id', $basket->id)->delete();
+                    MyAddress::where('basket_id', $basket->id)->delete();
 
                     //existing customer address details
                     if (auth()->check()) {
-                        $billing_add  = Myaddress::where('id', $request->billing_address)->first();
+                        $billing_add  = MyAddress::where('id', $request->billing_address)->first();
                         if (!$billing_add) {
-                            $billing_add = Myaddress::where('user_id', auth()->user()->id)->first();
+                            $billing_add = MyAddress::where('user_id', auth()->user()->id)->first();
                         }
 
                         $this->storeAddress($billing_add, $basket->id, 'billing');
@@ -140,7 +117,7 @@ class OrderController extends Controller
                             // }
                             // else
                             // {
-                            $shipping_add = Myaddress::where('id', $request->shipping_address)->first();
+                            $shipping_add = MyAddress::where('id', $request->shipping_address)->first();
                             if (!$shipping_add && $shipping_data) {
                                 $shipping_add = $shipping_data;
                             }
@@ -167,41 +144,12 @@ class OrderController extends Controller
                         }
                     }
 
-                    //promotional_mails store
-                    if ($request->has('promotional_mails')) {
-                        $already = Subscribe::where('email', $billing_add->email)->first();
-                        if (!$already && isset($billing_add->email)) {
-
-                            $new = new Subscribe();
-                            $new->email = $billing_add->email;
-                            $new->save();
-                        }
-
-                        // $apiDomain = env('TNG_API_DOMAIN'); 
-                        // $url = $apiDomain."/api/website/new-subscriber";
-                        // $post = ['email'        => auth()->check() ? auth()->user()->email : $billing_add->email];
-                        // $result__api = CurlSendPostRequest($url,$post);
-                        // $result__api = json_decode($result__api);
-                    }
-
+                
 
                     ///////////////////////////////////////////////////Payment Integration////////////////////////////////////////////////////////////////////////////
                     $now = \DateTime::createFromFormat('U.u', microtime(true));
-                    $paymeny_id = 'SWP' . $now->format("YmdHis") . rand(0, 10);
-                    // $pay = $this->makePayment($paymeny_id,$grand,$basket,$request);
-
-                    // $refNum = $pay->getReferenceNum();
-                    // $txnNum = $pay->getTxnNumber();
-                    // $resCod = $pay->getResponseCode();
-                    // $receipt = new MonerisReceipt($pay->receipt());
-                    // $txnNum = $receipt->read('transaction');
-                    // $refNum = $receipt->read('reference');
-                    // $resCod = $pay->status;
-
-
-                    // // 
-                    // if( ($resCod< 50 && strlen($refNum) > 5 && strlen($txnNum) > 5 && is_numeric($resCod)) || env('APP_URL') == 'https://www.stage.mysweetiepie.ca')
-                    // {
+                    $paymeny_id = 'Soleful' . $now->format("YmdHis") . rand(0, 10);
+                  
                     $pay = $this->makePayment($paymeny_id, $grand, $basket, $request);
 
                     $refNum = $pay->getReferenceNum();
@@ -243,12 +191,12 @@ class OrderController extends Controller
                         $basket->save();
 
                         if ($basket->discount > 0 && $basket->coupon) {
-                            Discount::whereName($basket->coupon)->increment('usage');
+                            Coupon::whereName($basket->coupon)->increment('usage');
                         }
 
                         if ($order->status == 1) {
 
-                            Address::where('basket_id', $basket->id)->update(['order_id' => $order->id]);
+                            MyAddress::where('basket_id', $basket->id)->update(['order_id' => $order->id]);
 
 
                             $basket->status = '1';
@@ -284,12 +232,12 @@ class OrderController extends Controller
                         return redirect('/thankyou?order=' . $string);
                     } else {
                         $message_text = $pay->getMessage();
-                        Address::where('basket_id', $basket->id)->delete();
+                        MyAddress::where('basket_id', $basket->id)->delete();
                         return redirect('/checkout')->withInput($request->input())->with('error', 'Payment Failed' . '<br><span style="color:red;font-size:16px;font-weight:700;">' . $message_text . '-' . $pay->getResponseCode() . '<span>'); //
                     }
                 } catch (\Exception $e) {
                     DB::rollback();
-                    Address::where('basket_id', $basket->id)->delete();
+                    MyAddress::where('basket_id', $basket->id)->delete();
                 }
             } else {
                 return redirect('/');
@@ -406,10 +354,9 @@ class OrderController extends Controller
     {
         $address = $data;
         try {
-            $save_add              = new Address();
+            $save_add              = new Myaddress();
             $save_add->order_id    = 0;
-            $save_add->firstname   = $address->firstname;
-            $save_add->lastname    = $address->lastname;
+            $save_add->name   = $address->name;
             $save_add->address     = $address->address;
             $save_add->postalcode  = $address->postalcode;
             $save_add->city        = $address->city;
@@ -427,131 +374,28 @@ class OrderController extends Controller
         }
     }
 
-    public function userSignup($billing)
+   
+
+
+
+    function invoiceNumberGenerate()
     {
-        $userCheck = User::where('email', $billing->email)->first();
-
-        if (!$userCheck) {
-            $user               = new User();
-            $user->email         = $billing->email;
-            $user->firstname     = $billing->firstname;
-            $user->lastname     = $billing->lastname;
-            $user->name         = $billing->firstname . ' ' . $billing->lastname;
-            $user->address      = $billing->address;
-            $user->postalcode     = $billing->postalcode;
-            $user->city          = $billing->city;
-            $user->province     = $billing->province;
-            $user->country      = 'canada';
-            $user->phone        = $billing->phone;
-            $user->province     = $billing->province;
-            $user->birthday     = '';
-            $user->password     = Hash::make($billing->password);
-            $user->status          = 1;
-
-            try {
-                $user->save();
-
-                $myadd              = new Myaddress();
-                $myadd->user_id        = $user->id;
-                $myadd->firstname   = $user->firstname;
-                $myadd->lastname    = $user->lastname;
-                $myadd->address     = $user->address;
-                $myadd->postalcode  = $user->postalcode;
-                $myadd->city        = $user->city;
-                $myadd->province    = $user->province;
-                $myadd->country      = 'canada';
-                $myadd->base        = '1';
-                $myadd->save();
-
-                try {
-                    Mail::to($user->email)->send(new SignupMail($user));
-                } catch (\Exception $e) {
-                }
-
-                return $user;
-            } catch (\Exception $e) {
-            }
-
-            return false;
-        } else {
-            return false;
-        }
+        $ordercount = Order::where('created_at', '>=', date('Y-m-d 00:00:00'))->where('created_at', '<=', date('Y-m-d 23:59:59'))->count();
+        return 'Soleful' . date('ymd') . sprintf('%04d', $ordercount + 1);
     }
-    function makePayment($paymeny_id, $grand_total, $basket, Request $request)
+    public function CheckOutCalculation()
     {
-        $store_id = 'gwca049783';
-        $api_token = 'HlZvxtFTjW1WOobrS9wj';
 
-        //$store_id = 'store3'; //'monca06152';
-        //$api_token = 'yesguy'; //'CfYSX9fhTgM8v1vPXd8Q';
-
-        /*if(($request->has('cardtest') && $request->cardtest == 'yes') || $_SERVER['REMOTE_ADDR'] == '127.0.0.1')
-        {
-            $store_id='store5';
-            $api_token='yesguy';
-        }*/
-
-        $exp_dates = explode('/', $request->expirationDate);
-
-        $cvv = $request->securityCode;
-        $expiry_year = $exp_dates[1];
-        $expiry_month = sprintf("%02d", $exp_dates[0]); // Format the month as a two-digit number
-        $date = $expiry_year . $expiry_month;
-
-        $customername   = $request->nameOnCard;
-        $type           = 'purchase';
-        $cust_id        = $customername . ' | ' . $basket->email;
-        $order_id       = $paymeny_id;
-        $amount         = number_format($grand_total, 2);
-        $pan            = $request->cardNumber;
-        $expiry_date    = $date;
-        $crypt          = '7';
-        $dynamic_descriptor = 'MySweetiePie Order';
-        $status_check   = 'false';
-
-        $txnArray = array(
-            'type' => $type,
-            'order_id' => $order_id,
-            'cust_id' => $cust_id,
-            'amount' => $amount,
-            'pan' => $pan,
-            'expdate' => $expiry_date,
-            'crypt_type' => $crypt,
-            'dynamic_descriptor' => $dynamic_descriptor
-        );
-
-        $mpgTxn = new mpgTransaction($txnArray);
-        $mpgRequest = new mpgRequest($mpgTxn);
-        $mpgRequest->setProcCountryCode("CA");
-
-        //if(($request->has('cardtest') && $request->cardtest == 'yes') || $_SERVER['REMOTE_ADDR'] == '127.0.0.1')
-
-        // $mpgRequest->setTestMode(true);
-
-
-        $mpgHttpPost  = new mpgHttpsPost($store_id, $api_token, $mpgRequest);
-        $mpgResponse = $mpgHttpPost->getMpgResponse();
-
-
-        return $mpgResponse;
-    }
-
-    
-    function invoiceNumberGenerate(){
-        $ordercount = Order::where('created_at','>=',date('Y-m-d 00:00:00'))->where('created_at','<=',date('Y-m-d 23:59:59'))->count();
-        return 'SWP'.date('ymd').sprintf('%04d', $ordercount+1);
-    }
-    public function CheckOutCalculation(){
-        
         $session_string = session('session_string');;
-        $basket = Basket::where('session',$session_string)->where('status',0)->first() ?? abort(404); 
+        $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
         $calculations  = $this->GrandTotalCalculation($basket);
-        return view('frontend.checkout-calculation',compact('calculations','basket'))->render();
+        return view('frontend.checkout-calculation', compact('calculations', 'basket'))->render();
     }
-    
 
-        
-    function GrandTotalCalculation($basket){
+
+
+    function GrandTotalCalculation($basket)
+    {
         $Calculation['subTotal']       = 0;
         $Calculation['Discount']       = 0;
         $Calculation['ShippingCharge'] = 0;
@@ -560,126 +404,239 @@ class OrderController extends Controller
         $Calculation['TotalTax']       = 0;
         $Calculation['grandTotal']     = 0;
         $Calculation['DiscountCode']   = '';
-        
+
         $itemttlTax = array();
         $discount      = 0;
         $subTotal2 = 0;
-        
+
         $date_now       = date('Y-m-d h:i:s');
-        $items = CartItem::where('basket_id',$basket->id)->get();
+        $items = CartItem::where('basket_id', $basket->id)->get();
         $itemCount = $items->count() ?? 0;
-   
-        
-        foreach ($items as $listing2){
+
+
+        foreach ($items as $listing2) {
             $itemSubTtl2      = floatval($listing2->price_amount * $listing2->quantity);
-           
+
             $subTotal2      = $subTotal2 + $itemSubTtl2;
         }
 
+        $coupon_details = Coupon::where('id', $basket->coupon_id)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sale', '<=', $subTotal2)->first();
+        if ($coupon_details && $basket->coupon_id != '' && $basket->coupon_id != NULL) {
+            if ($coupon_details->value_type == 'amount') {
+                $discount = floatval($coupon_details->value);
+                $discount_amount = 0;
+                if ($itemCount > 0) {
+                    $discount_amount = floatval($discount / $itemCount);
+                }
+                foreach ($items as $listing) {
+                    $itemSubTtl      = floatval($listing->price_amount * $listing->quantity);
+                    $itemSub_total   = $itemSubTtl - $discount_amount;
+                    $itemttlTax[]    = ($itemSub_total * $listing->tax_percentage) / 100;
+                    $subTotal[]      = $itemSubTtl;
+                }
+            } else {
+                $dicountPercentage = $coupon_details->value;
+                $ttlDiscount = array();
+                foreach ($items as $listing) {
+                    $itemSubTtl = floatval($listing->price_amount * $listing->quantity);
+                    $discount_amount = ($itemSubTtl * $dicountPercentage) / 100;
+                    $itemSub_total   = $itemSubTtl - $discount_amount;
+                    $itemttlTax[]    = ($itemSub_total * $listing->tax_percentage) / 100;
+                    $ttlDiscount[]   =  $discount_amount;
+                    $subTotal[]      = $itemSubTtl;
+                }
 
-            $coupon_details = Coupon::where('id',$basket->coupon_id)->where('start_time','<=',$date_now)->where('end_time','>=',$date_now)->where('min_sale','<=',$subTotal2)->first();
-            if($coupon_details && $basket->coupon_id != '' && $basket->coupon_id != NULL){
-                if($coupon_details->value_type == 'amount'){
-                    $discount = floatval($coupon_details->value);
-                    $discount_amount = 0;
-                    if($itemCount > 0){
-                        $discount_amount = floatval($discount/$itemCount);
-                    }
-                   
-                    foreach ($items as $listing){
-                        $itemSubTtl      = floatval($listing->price_amount * $listing->quantity);
-                        $itemSub_total   = $itemSubTtl - $discount_amount;
-                        $itemttlTax[]    = ($itemSub_total * $listing->tax_percentage) / 100;
-                        $subTotal[]      = $itemSubTtl;
-                    }
-                }
-                else
-                {
-                    $dicountPercentage = $coupon_details->value;
-                    $ttlDiscount = array();
-                    foreach ($items as $listing){
-                        $itemSubTtl = floatval($listing->price_amount * $listing->quantity);
-                        $discount_amount = ( $itemSubTtl * $dicountPercentage) / 100;
-                        $itemSub_total   = $itemSubTtl - $discount_amount;
-                        $itemttlTax[]    = ($itemSub_total * $listing->tax_percentage) / 100;
-                        $ttlDiscount[]   =  $discount_amount;
-                        $subTotal[]      = $itemSubTtl;
-                    }
-                    
-                    $discount = array_sum($ttlDiscount);
-                }
-                
-                
-                $Calculation['DiscountCode'] =  $coupon_details->code;
+                $discount = array_sum($ttlDiscount);
             }
-            else{
-                foreach ($items as $listing){
-                   
-                        $amnt           = $listing->price_amount;
-                    
-                    	        
-                    $itemSubTtl     = floatval($amnt * $listing->quantity);
-                    $itemttlTax[]   = ($itemSubTtl * $listing->tax_percentage) / 100;
-                    $subTotal[]     = $itemSubTtl;
-                }
+
+
+            $Calculation['DiscountCode'] =  $coupon_details->code;
+        } else {
+            foreach ($items as $listing) {
+
+                $amnt           = $listing->price_amount;
+                $itemSubTtl     = floatval($amnt * $listing->quantity);
+                $itemttlTax[]   = ($itemSubTtl * $listing->tax_percentage) / 100;
+                $subTotal[]     = $itemSubTtl;
             }
-            
-            //shipping charge
-            $shiping_method = Shipping::where('order_type',$basket->order_type)->first();
-            $discount = min($discount, array_sum($subTotal));
-            $Calculation['subTotal']        = array_sum($subTotal);
-            $Calculation['itemTotalTax']    = array_sum($itemttlTax);
-            $Calculation['Discount']        = $discount;
-            $Calculation['ShippingCharge']  = $shiping_method->charge;
-            $Calculation['shippingTax']     = ($shiping_method->charge * 13) / 100; 
-            $Calculation['TotalTax']        = $Calculation['itemTotalTax'] + $Calculation['shippingTax'];
-            $Calculation['grandTotal']      = ($Calculation['subTotal'] - $Calculation['Discount']) + $Calculation['ShippingCharge'] + $Calculation['TotalTax'] ;
-            
+        }
+
+        $discount = min($discount, array_sum($subTotal));
+        $Calculation['subTotal']        = array_sum($subTotal);
+        $Calculation['itemTotalTax']    = array_sum($itemttlTax);
+        $Calculation['Discount']        = $discount;
+        $Calculation['grandTotal']      = ($Calculation['subTotal'] - $Calculation['Discount']) + $Calculation['ShippingCharge'] + $Calculation['TotalTax'];
         return json_encode($Calculation);
     }
 
-    function identifyCreditCard($cardNumber) {
-        $cardTypes = array(
-            'visa_card'              => '/^4[0-9]{12}(?:[0-9]{3})?$/',
-            'master_card'        => '/^5[1-5][0-9]{14}$/',
-            'american_expres'  => '/^3[47][0-9]{13}$/',
-            'discover_card'          => '/^6(?:011|5[0-9]{2})[0-9]{12}$/',
-        );
-    
-        foreach ($cardTypes as $type => $pattern) {
-            if (preg_match($pattern, $cardNumber)) {
-                return $type;
-            }
-        }
-    
-        return null;
-    }
-        
-        
-    function CartRefresh(){
+
+
+    function CartRefresh()
+    {
         if (session()->has('session_string')) {
             $session_string = session('session_string');
-            $basket = Basket::where('session',$session_string)->where('status',0)->first();
-            if($basket){
-                $items = CartItem::where('basket_id',$basket->id)->get();
-                if($items){
-                    foreach($items as $listing){
-                        if($listing->product_variation){
-                            if($listing->has_special_price == 1){
-                                $checkSpecialPrice    = $listing->product->has_special_price == 1 && $listing->product->special_price_from <= date('Y-m-d') && $listing->product->special_price_to >= date('Y-m-d');   
-                                if(!$checkSpecialPrice && $listing->product->has_special_price == 1)
-                                {
-                                    CartItem::where('id',$listing->id)->update(['has_special_price' => 0,'price_amount' => $listing->product->price,'special_price_from' => null,'special_price_to' =>null]);
+            $basket = Basket::where('session', $session_string)->where('status', 0)->first();
+            if ($basket) {
+                $items = CartItem::where('basket_id', $basket->id)->get();
+                if ($items) {
+                    foreach ($items as $listing) {
+                        if ($listing->product_variation) {
+                            if ($listing->has_special_price == 1) {
+                                $checkSpecialPrice    = $listing->product->has_special_price == 1 && $listing->product->special_price_from <= date('Y-m-d') && $listing->product->special_price_to >= date('Y-m-d');
+                                if (!$checkSpecialPrice && $listing->product->has_special_price == 1) {
+                                    CartItem::where('id', $listing->id)->update(['has_special_price' => 0, 'price_amount' => $listing->product->price, 'special_price_from' => null, 'special_price_to' => null]);
                                 }
                             }
+                        } else {
+                            CartItem::where('id', $listing->id)->delete();
                         }
-                        else{
-                           CartItem::where('id',$listing->id)->delete(); 
-                        }
-                        
                     }
                 }
             }
+        }
+    }
+
+
+    public function submitPaymentForm(Request $request)
+    {
+        $amount = 2000;
+        $name   = 'shefii';
+
+        if ($name != '' && $amount != '') {
+
+            $merchantId = env('PhonePeMerchantId');
+            $apiKey = env('PhonePeApiKey');
+
+            $redirectUrl = url('confirm');
+            $order_id = uniqid();
+
+
+            $transaction_data = array(
+                'merchantId' => "$merchantId",
+                'merchantTransactionId' => "$order_id",
+                "merchantUserId" => $order_id,
+                'amount' => $amount * 100,
+                'redirectUrl' => "$redirectUrl",
+                'redirectMode' => "POST",
+                'callbackUrl' => "$redirectUrl",
+                "paymentInstrument" => array(
+                    "type" => "PAY_PAGE",
+                )
+            );
+
+
+            $encode = json_encode($transaction_data);
+            $payloadMain = base64_encode($encode);
+            $salt_index = 1; //key index 1
+            $payload = $payloadMain . "/pg/v1/pay" . $apiKey;
+            $sha256 = hash("sha256", $payload);
+            $final_x_header = $sha256 . '###' . $salt_index;
+            $request = json_encode(array('request' => $payloadMain));
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => $request,
+                CURLOPT_HTTPHEADER => [
+                    "Content-Type: application/json",
+                    "X-VERIFY: " . $final_x_header,
+                    "accept: application/json"
+                ],
+            ]);
+
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+
+            curl_close($curl);
+
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            } else {
+                $res = json_decode($response);
+
+                // Store information into database
+
+                $data = [
+                    'amount' => $amount,
+                    'transaction_id' => $order_id,
+                    'payment_status' => 'PAYMENT_PENDING',
+                    'response_msg' => $response,
+                    'providerReferenceId' => '',
+                    'merchantOrderId' => '',
+                    'checksum' => ''
+                ];
+
+
+                dd($res, $data, 'Pending for Payment integration');
+
+                // end database insert
+
+                if (isset($res->code) && ($res->code == 'PAYMENT_INITIATED')) {
+
+                    $payUrl = $res->data->instrumentResponse->redirectInfo->url;
+
+                    return redirect()->away($payUrl);
+                } else {
+                    //HANDLE YOUR ERROR MESSAGE HERE
+                    dd('ERROR : ' . $res);
+                }
+            }
+        }
+    }
+
+
+    public function giftCodeApply(Request $request)
+    {
+        $date_now                = date('Y-m-d h:i:s');
+        $response                = array();
+        $response['result']      = 0;
+        $response['msg']         = '';
+        $response['value']       = 0;
+        $response['value_type']  = 0;
+        $response['coupon_id']   = 0;
+        $response['coupon_code'] = 0;
+        $subTotal = 0;
+        $session_string = session('session_string');;
+        $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
+
+
+        $items = CartItem::where('basket_id', $basket->id)->get();
+        foreach ($items as $listing) {
+            $itemSubTtl      = floatval($listing->price_amount * $listing->quantity);
+
+            $subTotal      = $subTotal + $itemSubTtl;
+        }
+
+        $coupon_details = Coupon::where('availability', '<>', 'in-store')->where('code', $request->gift_code)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sale', '<=', $subTotal)->first();
+        if ($coupon_details && $coupon_details->value_type) {
+            if ($coupon_details->value_type == 'percentage') {
+                $value = intval($coupon_details->value) . '% OFF';
+            } else {
+                $value = '$' . $coupon_details->value . ' OFF';
+            }
+
+            $response['msg']      = '<span class="text-success">Coupon "' . $request->gift_code . '" Applied ' . $value . '</span>';
+            $response['value']       = $coupon_details->value;
+            $response['coupon_id']   = $coupon_details->id;
+            $response['coupon_code'] = $coupon_details->code;
+            $response['value_type']  = $coupon_details->value_type;
+            $response['result']      = 1;
+
+            return  response()->json($response);
+        } else {
+            $response['msg']      = '<span class="text-danger">Coupon "' . $request->gift_code . '" is invalid or not applicable</span>';
+            $response['result']      = 0;
+            $response['value']       = 0;
+            $response['value_type']  = '';
+
+            return  response()->json($response);
         }
     }
 }

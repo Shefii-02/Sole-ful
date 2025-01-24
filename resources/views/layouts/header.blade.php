@@ -13,7 +13,7 @@
                             <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample"
                                 aria-labelledby="offcanvasExampleLabel">
                                 <div class="offcanvas-header">
-                                    <img src="/assets/img/logo/logo.png" class="w-20" />
+                                    <img src="{{ url('assets/img/logo/logo.png') }}" class="w-20" />
                                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
                                         aria-label="Close"></button>
                                     @guest
@@ -94,7 +94,7 @@
                         <li>
                             <div class="logo">
                                 <a href="/">
-                                    <img src="assets/img/logo/logo.png" alt="">
+                                    <img src="{{ url('assets/img/logo/logo.png') }}" alt="">
                                 </a>
                             </div>
                         </li>
@@ -119,20 +119,21 @@
                         <li class="cursor-pointer">
                             <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Now</a>
                         </li>
-                        <li>
-                            <a href="/cart">
-                                <div class="cart-icon text-theme">
+                        <li >
+                            <a href="#" id="cartList-btn-view" data-bs-toggle="offcanvas"
+                            data-bs-target="#CartList" aria-controls="CartList">
+                                <div class="cart-icon text-center text-theme">
                                     <i class="bi bi-cart fs-5 fw-bold"></i>
-                                    <span style="top: 10px;" class="cart-count absolute">0</span>
+                                    <span class="cart-count absolute count-rounded">{{ basketItems() }}</span>
                                 </div>
                             </a>
                         </li>
                         <li class="me-0 ms-2 wishlist-section" style="display: none">
                             <a href="#" class="d-inline " id="wishlist-btn-view" data-bs-toggle="offcanvas"
                                 data-bs-target="#Wishlist" aria-controls="Wishlist">
-                                <div class="cart-icon text-theme relative">
+                                <div class="cart-icon text-center text-theme relative">
                                     <i class="bi bi-heart-fill fs-5"></i>
-                                    <span style="top: -15px;" class="wishlist-count absolute">0</span>
+                                    <span style="top: -15px;" class="wishlist-count absolute count-rounded">0</span>
                                 </div>
                             </a>
                         </li>
@@ -212,7 +213,7 @@
                     <div class="col-lg-2">
                         <div class="logo">
                             <a href="/">
-                                <img src="assets/img/logo/logo.png" alt="">
+                                <img src="{{ url('assets/img/logo/logo.png') }}" alt="">
                             </a>
                         </div>
                     </div>
@@ -383,7 +384,7 @@
                     <div class="mobile-main-header">
                         <div class="mobile-logo">
                             <a href="/">
-                                <img src="assets/img/logo/logo.png" alt="Brand Logo">
+                                <img src="{{ url('assets/img/logo/logo.png') }}" alt="Brand Logo">
                             </a>
                         </div>
                         <div class="mobile-menu-toggler">

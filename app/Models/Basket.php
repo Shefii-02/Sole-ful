@@ -13,4 +13,9 @@ class Basket extends Model
     protected $dates = ['deleted_at'];
 
 
+
+    public function items()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

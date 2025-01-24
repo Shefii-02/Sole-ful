@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AdvertisementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BasketController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\ColorController;
@@ -45,30 +47,53 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::get('wishlist', 'FrontendController@getWishlist')->name('wishlist');
     Route::get('quick-view', 'FrontendController@QuickView')->name('quick-view');
     Route::get('/get-variation-details', [FrontendController::class, 'getVariationDetails']);
-    Route::get('/add-to-cart', [FrontendController::class, 'addToCart']);
-    
+    Route::get('cart-list', 'BasketController@getCartList')->name('cart-list');
+    Route::get('cart', 'BasketController@cart')->name('cart-list');
+    Route::post('cart/product-add', 'BasketController@cartProductAdd')->name('product-add');
+    Route::get('checkout', 'BasketController@checkout')->name('checkout');
+    Route::get('gift-code-apply', 'OrderController@giftCodeApply')->name('gift-code-apply');
 
-    Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
+    Route::get('checkout/calculation', 'OrderController@checkoutCalculation')->name('checkout.calculation');
     
-    Route::get('services', 'FrontendController@services')->name('services');
-    Route::get('services/{slug}', 'FrontendController@serviceSingle')->name('services-single');
-    Route::get('doctors', 'FrontendController@doctors')->name('doctors');
-    Route::get('doctors/{slug}', 'FrontendController@doctorSingle')->name('doctors-single');
-    Route::get('packages', 'FrontendController@packages')->name('packages');
-    Route::get('packages/{slug}', 'FrontendController@packageSingle')->name('packages-single');
+    
+    Route::post('/add-to-cart', [BasketController::class, 'store']);
+    Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
+    Route::post('place-order', 'OrderController@placeOrder')->name('place-order');
+    
+    
     Route::get('blogs', 'FrontendController@blogs')->name('blogs');
     Route::get('blogs/category/{slug}', 'FrontendController@blogCategory')->name('blog-category');
     Route::get('blogs/{slug}', 'FrontendController@blogSingle')->name('blog-single');
     Route::get('contact-us', 'FrontendController@contact')->name('contact');
     Route::post('contact-us', 'FrontendController@contactSend')->name('contact-send');
     Route::get('about-us', 'FrontendController@about')->name('about');
-    Route::post('appointment', 'FrontendController@appointment')->name('appointment');
+    
+});
+
+Route::group(['middleware' => ['auth:web'],'as' => 'account.','prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function (){
+
+    Route::get('/', [AccountController::class, 'myaccount'])->name('home');
+    Route::get('orders', [AccountController::class, 'ordersShow'])->name('orders.show');
+    Route::post('orders/details/{id}', [AccountController::class, 'ordersDetails'])->name('orders.details');
+    Route::post('orders/cancell/{id}', [AccountController::class, 'ordersCancell'])->name('orders.cancell');
+    Route::post('orders/track/{id}', [AccountController::class, 'ordersTrack'])->name('orders.track');
+
+    Route::get('address', [AccountController::class, 'addressShow'])->name('address.show');
+    Route::post('address/create', [AccountController::class, 'addressCreate'])->name('address.add');
+    Route::post('address/update', [AccountController::class, 'addressUpdate'])->name('address.update');
+    Route::delete('address/delete/{id}', [AccountController::class, 'addressDelete'])->name('address.delete');
+
+    Route::get('profile', [AccountController::class, 'profileShow'])->name('profile.show');
+    Route::post('profile', [AccountController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('reset-password', [AccountController::class, 'resetPassword'])->name('profile.reset-password');
+    Route::get('support-center', [AccountController::class, 'supportCenter'])->name('support-center');
+
 });
 
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers'], function () {
     // Route::get('dashboard', function () {
