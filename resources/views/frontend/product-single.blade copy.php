@@ -53,7 +53,7 @@
 @endpush
 @section('content')
     <!-- breadcrumb area start -->
-    <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+    <div class="breadcrumb-area bg-img" data-bg="assets/img/breadcrumb-banner.webp">
         <div class="container">
             <div class="row">
                 <div class="col-12">

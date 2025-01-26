@@ -121,7 +121,7 @@
                       </li>
                       <!-- Menu Item Packages -->
                       <!-- Menu Item Subscribers -->
-                      <li class="d-none">
+                      {{-- <li class="d-none">
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                               href="{{ route('admin.subscribers.index') }}"
                               @click="selected = (selected === 'Subscribers' ? '':'Subscribers')"
@@ -134,7 +134,7 @@
                               </svg>
                               Newsletter Subscribers
                           </a>
-                      </li>
+                      </li> --}}
 
 
                       <!-- Menu Item Task -->
@@ -219,13 +219,13 @@
                                     </a>
                                 </li>
 
-                                  <li>
+                                  {{-- <li>
                                       <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
                                           href="{{ route('admin.reviews.index') }}"
                                           @click="page = (page === 'Reviews' ? '' : 'Reviews')"
                                           :class="page === 'Reviews' && '!text-white'">Reviews
                                       </a>
-                                  </li>
+                                  </li> --}}
 
                                   <li>
                                       <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
@@ -325,7 +325,7 @@
                       </li>
                       <!-- Menu Item Blog -->
                       <!-- Menu Item Activity Logs -->
-                      <li>
+                      {{-- <li>
                           <a class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
                               href="{{ route('admin.activity.index') }}"
                               @click="selected = (selected === 'Activity' ? '':'Activity')"
@@ -338,7 +338,7 @@
                               </svg>
                               Activity Logs
                           </a>
-                      </li>
+                      </li> --}}
                       <!-- Menu Item Activity Logs -->
 
                   </ul>

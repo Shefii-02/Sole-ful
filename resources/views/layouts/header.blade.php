@@ -33,45 +33,45 @@
                                         <div class="f-msp">
                                             <ul id="header-wr" class="menu">
 
-                                                <li class="mb-3">
+                                                <li class="mb-2">
                                                     <a class="dropdown-item" href="/">Home</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Shop</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank" href="{{ route('public.shop') }}">Shop</a>
                                                 </li>
-                                                <hr class="border-2 mb-3" />
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Casual Slides</a>
+                                                <hr class="border-2 mb-2" />
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['shoe_type[]'=>'Casual Slides']) }}">Casual Slides</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Ethnic Slides</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['shoe_type[]'=>'Ethnic Slides']) }}">Ethnic Slides</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Casual Slipons</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['shoe_type[]'=>'Casual Slipons']) }}">Casual Slipons</a>
                                                 </li>
-                                                <hr class="border-2 mb-3"/>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Party Wear</a>
+                                          
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" ttarget="_blank"  href="{{ route('public.shop',['categories[]'=>'Party Wear']) }}">Party Wear</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Casual Wear</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['categories[]'=>'Casual Wear']) }}">Casual Wear</a>
                                                 </li>
-                                                <hr class="border-2 mb-3" />
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Terms and Conditions</a>
+                                                <hr class="border-2 mb-2" />
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('t-c') }}">Terms and Conditions</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Refund Policy</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('refund_policy') }}">Refund Policy</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Returns & Exchanges</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('return_policy') }}">Returns & Exchanges</a>
                                                 </li>
-                                                <hr class="border-2 mb-3"/>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Shipping & Delivery</a>
+
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('shipping_policy') }}">Shipping & Delivery</a>
                                                 </li>
-                                                <li class="mb-3">
-                                                    <a class="dropdown-item" href="/">Privacy Policy</a>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"  href="{{ route('privacy_policy') }}">Privacy Policy</a>
                                                 </li>
 
                                             </ul>

@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <meta http-equiv="refresh" content="1800"> 
+    <meta http-equiv="refresh" content="1800">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -33,7 +33,53 @@
     <script type="text/javascript"
         src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
         async="async"></script>
+        <style>
 
+            .product-listing .cart-item, .product-detail-slider .cart-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 10px;
+            }
+            .product-listing .cart-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 15px 5px;
+            }
+            .product-listing .cart-item-image, .product-detail-slider .cart-item-image {
+                width: 40px;
+                height: 40px;
+                background-color: #eee;
+                margin-right: 10px;
+            }
+            .item-count-addon {
+                position: absolute;
+                top: -20px;
+                right: -10px;
+                background-color: var(--primary);
+                color: white;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                font-size: 12px;
+            }
+            .text-truncate {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .cart-item-details {
+                flex-grow: 1;
+                margin-right: 10px;
+            }
+            .product-listing .cart-item-title, .product-detail-slider .cart-item-title {
+                font-size: 14px;
+                color: #333;
+                margin-bottom: 3px;
+            }
+            </style>
 </head>
 
 <body>
@@ -77,22 +123,22 @@
                                 <div class="widget-body">
                                     <ul class="useful-link">
                                         <li class="mb-3">
-                                            <a target="_blank" href="/">Shop</a>
+                                            <a target="_blank" href="{{ route('public.shop') }}">Shop</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="/">Casual Slides</a>
+                                            <a target="_blank" href="{{ route('public.shop',['shoe_type[]'=>'Casual Slides']) }}">Casual Slides</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="/">Ethnic Slides</a>
+                                            <a target="_blank" href="{{ route('public.shop',['shoe_type[]'=>'Ethnic Slides']) }}">Ethnic Slides</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="/">Casual Slipons</a>
+                                            <a target="_blank" href="{{ route('public.shop',['shoe_type[]'=>'Casual Slipons']) }}">Casual Slipons</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="/">Party Wear</a>
+                                            <a target="_blank" href="{{ route('public.shop',['categories[]'=>'Party Wear']) }}">Party Wear</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="/">Casual Wear</a>
+                                            <a target="_blank" href="{{ route('public.shop',['categories[]'=>'Casual Wear']) }}">Casual Wear</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -129,12 +175,12 @@
                                     <ul class="useful-link">
                                         <li><a target="_blank" href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8">Store
                                                 Location</a></li>
-                                        <li><a href="{{ url('/accounts') }}">My Account</a></li>
-                                        <li><a href="{{ url('/order-track') }}">Orders Tracking</a></li>
-                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
+                                        <li><a target="_blank" href="{{ url('/accounts') }}">My Account</a></li>
+                                        <li><a  target="_blank" href="{{ url('/order-track') }}">Orders Tracking</a></li>
+                                        <li><a  href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
                                                 Guide</a></li>
-                                        <li><a href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
-                                        <li><a href="{{ url('contact-us') }}">Contact Us</a></li>
+                                        <li><a  target="_blank" href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
+                                        <li><a  target="_blank" href="{{ url('contact-us') }}">Contact Us</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -172,48 +218,6 @@
         <!-- End Footer Area Wrapper -->
 
 
-        <!-- Quick view modal start -->
-        <div class="modal" id="quick_view">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body quickBody">
-                        <div class="col-12 mb-4">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="col-lg-12 rounded-5 h-75 bg-gray-100 ">
-                                    </div>
-                                    <div class="col-12 mt-4">
-                                        <div class="row gap-2 justify-center">
-                                            <div class="col-3 rounded-5 h-10 bg-gray-100 ">
-                                            </div>
-                                            <div class="col-3 rounded-5 h-10 bg-gray-100 ">
-                                            </div>
-                                            <div class="col-3 rounded-5 h-10 bg-gray-100 ">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-8">
-                                    <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                    <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                    <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                    <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                    <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                    <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                    <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                    <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Quick view modal end -->
-
         <!-- Size Chart modal start -->
         <div class="modal" id="sizeChart">
             <div class="modal-dialog modal-dialog-centered">
@@ -229,104 +233,7 @@
         </div>
         <!-- Size Chart modal end -->
 
-        <!-- offcanvas search form start -->
-        {{-- <div class="offcanvas-search-wrapper">
-            <div class="offcanvas-search-inner">
-                <div class="offcanvas-close">
-                    <i class="ion-android-close"></i>
-                </div>
-                <div class="container">
-                    <div class="offcanvas-search-box">
-                        <form class="d-flex bdr-bottom w-100">
-                            <input type="text" placeholder="Search entire storage here...">
-                            <button class="search-btn"><i class="ion-ios-search-strong"></i>search</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- offcanvas search form end -->
 
-        <!-- offcanvas mini cart start -->
-        {{-- <div class="offcanvas-minicart-wrapper">
-            <div class="minicart-inner">
-                <div class="offcanvas-overlay"></div>
-                <div class="minicart-inner-content">
-                    <div class="minicart-close">
-                        <i class="ion-android-close"></i>
-                    </div>
-                    <div class="minicart-content-box">
-                        <div class="minicart-item-wrapper">
-                            <ul>
-                                <li class="minicart-item">
-                                    <div class="minicart-thumb">
-                                        <a href="product-details.html">
-                                            <img src="assets/img/cart/cart-1.jpg" alt="product">
-                                        </a>
-                                    </div>
-                                    <div class="minicart-content">
-                                        <h3 class="product-name">
-                                            <a href="product-details.html">Flowers bouquet pink for all flower
-                                                lovers</a>
-                                        </h3>
-                                        <p>
-                                            <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                            <span class="cart-price">$100.00</span>
-                                        </p>
-                                    </div>
-                                    <button class="minicart-remove"><i class="ion-android-close"></i></button>
-                                </li>
-                                <li class="minicart-item">
-                                    <div class="minicart-thumb">
-                                        <a href="product-details.html">
-                                            <img src="assets/img/cart/cart-2.jpg" alt="product">
-                                        </a>
-                                    </div>
-                                    <div class="minicart-content">
-                                        <h3 class="product-name">
-                                            <a href="product-details.html">Jasmine flowers white for all flower
-                                                lovers</a>
-                                        </h3>
-                                        <p>
-                                            <span class="cart-quantity">1 <strong>&times;</strong></span>
-                                            <span class="cart-price">$80.00</span>
-                                        </p>
-                                    </div>
-                                    <button class="minicart-remove"><i class="ion-android-close"></i></button>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="minicart-pricing-box">
-                            <ul>
-                                <li>
-                                    <span>sub-total</span>
-                                    <span><strong>$300.00</strong></span>
-                                </li>
-                                <li>
-                                    <span>Eco Tax (-2.00)</span>
-                                    <span><strong>$10.00</strong></span>
-                                </li>
-                                <li>
-                                    <span>VAT (20%)</span>
-                                    <span><strong>$60.00</strong></span>
-                                </li>
-                                <li class="total">
-                                    <span>total</span>
-                                    <span><strong>$370.00</strong></span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="minicart-button">
-                            <a href="cart.html"><i class="fa fa-shopping-cart"></i> view cart</a>
-                            <a href="cart.html"><i class="fa fa-share"></i> checkout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-        <!-- offcanvas mini cart end -->
 
         <!-- Scroll to top start -->
         <div class="scroll-top not-visible">
@@ -334,6 +241,50 @@
         </div>
         <!-- Scroll to Top End -->
     </div>
+
+
+    <!-- Quick view modal start -->
+    <div class="modal" id="quick_view">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body quickBody">
+                    <div class="col-12 mb-4">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="col-lg-12 rounded-5 h-75 bg-gray-100 ">
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <div class="row gap-2 justify-center">
+                                        <div class="col-3 rounded-5 h-10 bg-gray-100 ">
+                                        </div>
+                                        <div class="col-3 rounded-5 h-10 bg-gray-100 ">
+                                        </div>
+                                        <div class="col-3 rounded-5 h-10 bg-gray-100 ">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
+                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
+                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Quick view modal end -->
+
     <div class="offcanvas offcanvas-end" id="Wishlist" aria-labelledby="WishlistLabel">
         <div class="offcanvas-header">
             <h5 id="WishlistLabel" class="fw-bold">Wishlist</h5>
@@ -604,54 +555,74 @@
         </div>
     </div>
 
-        <!--=======================Javascript============================-->
-        <!--=== All Vendor Js ===-->
-        <script src="/assets/js/vendor.js"></script>
-        <!--=== All Plugins Js ===-->
-        <script src="/assets/js/plugins.js"></script>
-        <!--=== Active Js ===-->
-        <script src="/assets/js/active.js"></script>
+    <!--=======================Javascript============================-->
+    <!--=== All Vendor Js ===-->
+    <script src="/assets/js/vendor.js"></script>
+    <!--=== All Plugins Js ===-->
+    <script src="/assets/js/plugins.js"></script>
+    <!--=== Active Js ===-->
+    <script src="/assets/js/active.js"></script>
 
-        <script>
-            const toggleSearch = (search, button) => {
-                const searchBar = document.getElementById(search),
-                    searchButton = document.getElementById(button),
-                    closeButton = searchBar.querySelector('.search__close'); // Close button
+    <script>
+        const toggleSearch = (search, button) => {
+            const searchBar = document.getElementById(search),
+                searchButton = document.getElementById(button),
+                closeButton = searchBar.querySelector('.search__close'); // Close button
 
-                searchButton.addEventListener('click', () => {
-                    // Toggle the show-search class to expand the search bar
-                    searchBar.classList.toggle('show-search');
-                });
+            searchButton.addEventListener('click', () => {
+                // Toggle the show-search class to expand the search bar
+                searchBar.classList.toggle('show-search');
+            });
 
-                closeButton.addEventListener('click', () => {
-                    // Close the search bar if close button is clicked
-                    searchBar.classList.remove('show-search');
-                });
-            };
+            closeButton.addEventListener('click', () => {
+                // Close the search bar if close button is clicked
+                searchBar.classList.remove('show-search');
+            });
+        };
 
-            toggleSearch('search-bar', 'search-button');
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-        </script>
-        <!-- Toastr CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+        toggleSearch('search-bar', 'search-button');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
-        <!-- Toastr JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
-        <script type="text/javascript">
-            toastr.options = {
-                "closeButton": true,
-                "progressBar": true,
-                "preventDuplicates": false,
-                "positionClass": "toast-top-right", // Toast position
-                "timeOut": "5000", // Timeout duration
-                "extendedTimeOut": "5000",
-            };
-        </script>
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-top-right", // Toast position
+            "timeOut": "5000", // Timeout duration
+            "extendedTimeOut": "5000",
+        };
+    </script>
+    <script type="text/javascript">
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "preventDuplicates": false,
+            "positionClass": "toast-top-right", // Toast position
+            "timeOut": "5000", // Timeout duration
+            "extendedTimeOut": "5000",
+        };
 
-        @stack('footer')
+        @if (session('success_msg'))
+            toastr.success("{{ session('success_msg') }}", "Success");
+        @elseif (session('failed_msg'))
+            toastr.error("{{ session('failed_msg') }}", "Error");
+        @elseif (session('info'))
+            toastr.info("{{ session('info') }}", "Info");
+        @elseif (session('warning'))
+            toastr.warning("{{ session('warning') }}", "Warning");
+        @endif
+    </script>
+
+    @stack('footer')
 </body>
 
 </html>

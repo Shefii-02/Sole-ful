@@ -101,11 +101,14 @@ class BasketController extends Controller
 
     public function getCartList(Request $request)
     {
-
-        $wishlistIds = $request->input('wishlist');
-        $products = CartItem::whereIn('id', $wishlistIds)->get();
-
-        return view('frontend.partials.wishlist', compact('products'))->render();
+        if (session()->has('session_string')) {
+            $session_string = session('session_string');;
+            $basket = Basket::where('session', $session_string)->where('status', 0)->first();
+            $products = CartItem::where('basket_id', $basket->id)->get();
+            return view('frontend.partials.cart-listing', compact('products'))->render();
+        } else {
+            return view('frontend.partials.cart-listing')->render();
+        }
     }
 
     /**
@@ -146,7 +149,7 @@ class BasketController extends Controller
                     $psku = $request->product_sku;
                 }
                 $items            = CartItem::where('product_sku', $psku)->where('basket_id', $basket->id)->first();
-         
+
                 $items->quantity =  $request->quantity;
                 try {
                     if ($request->quantity >= 1) {
@@ -198,8 +201,6 @@ class BasketController extends Controller
 
     public function checkout(Request $request)
     {
-
-
         $this->CartRefresh();
 
         if (session()->has('session_string')) {
@@ -237,109 +238,54 @@ class BasketController extends Controller
         }
         return redirect('/cart');
     }
-    public function gift_code_apply(Request $request)
-    {
-        $date_now                = date('Y-m-d h:i:s');
-        $response                = array();
-        $response['result']      = 0;
-        $response['msg']         = '';
-        $response['value']       = 0;
-        $response['value_type']  = 0;
-        $response['coupon_id']   = 0;
-        $response['coupon_code'] = 0;
-        $subTotal = 0;
-        $session_string = session('session_string');;
-        $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
-
-
-        $items = Item::where('basket_id', $basket->id)->get();
-        foreach ($items as $listing) {
-            $itemSubTtl      = floatval($listing->price_amount * $listing->quantity);
-
-            $subTotal      = $subTotal + $itemSubTtl;
-        }
-
-        $coupon_details = Coupon::where('availability', '<>', 'in-store')->where('code', $request->gift_code)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sale', '<=', $subTotal)->first();
-        if ($coupon_details && $coupon_details->value_type) {
-            if ($coupon_details->value_type == 'percentage') {
-                $value = intval($coupon_details->value) . '% OFF';
-            } else {
-                $value = '$' . $coupon_details->value . ' OFF';
-            }
-
-            $response['msg']      = '<span class="text-success">Coupon "' . $request->gift_code . '" Applied ' . $value . '</span>';
-            $response['value']       = $coupon_details->value;
-            $response['coupon_id']   = $coupon_details->id;
-            $response['coupon_code'] = $coupon_details->code;
-            $response['value_type']  = $coupon_details->value_type;
-            $response['result']      = 1;
-
-            $basket->coupon_id = $coupon_details->id;
-            $basket->save();
-            return  response()->json($response);
-        } else {
-            $response['msg']      = '<span class="text-danger">Coupon "' . $request->gift_code . '" is invalid or not applicable</span>';
-            $response['result']      = 0;
-            $response['value']       = 0;
-            $response['value_type']  = '';
-
-            $basket->coupon_id = NULL;
-            $basket->save();
-            return  response()->json($response);
-        }
-    }
-  
-
+ 
     function postSignin(Request $request)
-	{
-		$request->validate(['email'		=>'bail|required|email',
-							'password'	=> 'bail|required']);
+    {
+        $request->validate([
+            'email'        => 'bail|required|email',
+            'password'    => 'bail|required'
+        ]);
         $rememberMe = $request->has('remember');
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 1], $rememberMe)) {
-            $session_string = session('session_string');						
-            $basket = Basket::where('session',$session_string)->where('status',0)->first();
-    
-            if($basket){	
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], $rememberMe)) {
+            $session_string = session('session_string');
+            $basket = Basket::where('session', $session_string)->where('status', 0)->first();
+
+            if ($basket) {
                 $basket->user_id =  auth()->user()->id;
                 $basket->email =  auth()->user()->email;
                 $basket->save();
-                
             }
-			if($request->has('redirect_uri'))
-			{
-				return redirect($request->redirect_uri);
-				exit;
-			}
+            if ($request->has('redirect_uri')) {
+                return redirect($request->redirect_uri);
+                exit;
+            }
 
-    		session()->flash('success', 'You have successfully logged in.');
-    			return redirect()->back();
-// 			return redirect('/myaccount');
+            session()->flash('success', 'You have successfully logged in.');
+            return redirect()->back();
+    
 
-		}
-		else
-		{
-		    session()->flash('failed', 'Invalid login attempt');
+        } else {
+            session()->flash('failed', 'Invalid login attempt');
 
-			return redirect()->back();
-		}
-
-	}
+            return redirect()->back();
+        }
+    }
 
 
 
 
-    function CartRefresh(){
+    function CartRefresh()
+    {
         if (session()->has('session_string')) {
             $session_string = session('session_string');
-            $basket = Basket::where('session',$session_string)->where('status',0)->first();
-            if($basket){
-                $items = CartItem::where('basket_id',$basket->id)->get();
-                if($items){
-                    foreach($items as $listing){
-                        if(!$listing->product_variation){
-                           CartItem::where('id',$listing->id)->delete(); 
+            $basket = Basket::where('session', $session_string)->where('status', 0)->first();
+            if ($basket) {
+                $items = CartItem::where('basket_id', $basket->id)->get();
+                if ($items) {
+                    foreach ($items as $listing) {
+                        if (!$listing->product_variation) {
+                            CartItem::where('id', $listing->id)->delete();
                         }
-                        
                     }
                 }
             }

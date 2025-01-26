@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <!-- breadcrumb area start -->
-    <div class="breadcrumb-area bg-img pt-12" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+    <div class="breadcrumb-area bg-img pt-12" data-bg="assets/img/breadcrumb-banner.webp">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -48,6 +48,44 @@
                                                 id="{{ 'category-' . $item->id }}">
                                         </li>
                                     @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- single sidebar end -->
+                        <!-- single sidebar start -->
+                        <div class="sidebar-single">
+                            <div class="sidebar-title">
+                                <h3 class="text-theme">Shoe Type</h3>
+                            </div>
+                            <div class="sidebar-body">
+                                <ul class="color-list">
+                                    <li role="button" class="d-flex justify-between">
+                                        <label for="CasualSlides"><span class="text-capitalize">Casual Slides</span></label>
+                                        <input
+                                            {{ in_array(trim('Casual Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
+                                            form="filter" type="checkbox" name="categories[]"
+                                            value="Casual Slides" class="checkbox"
+                                            id="CasualSlides">
+                                    </li>
+                                    <li role="button" class="d-flex justify-between">
+                                        <label for="EthnicSlides">
+                                            <span class="text-capitalize">Ethnic Slides</span></label>
+                                        <input
+                                            {{ in_array(trim('Ethnic Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
+                                            form="filter" type="checkbox" name="categories[]"
+                                            value="{{ trim('Ethnic Slides') }}" class="checkbox"
+                                            id="EthnicSlides">
+                                    </li>
+                                    <li role="button" class="d-flex justify-between">
+                                        <label for="CasualSlipons">
+
+                                            <span class="text-capitalize">{{ $item->name }}</label>
+                                        <input {{ in_array(trim('Casual Slipons'), request()->shoe_type ?? []) ? 'checked' : '' }}
+                                            form="filter" type="checkbox" name="categories[]"
+                                            value="Casual Slipons" class="checkbox"
+                                            id="CasualSlipons">
+                                    </li>
+                             
                                 </ul>
                             </div>
                         </div>

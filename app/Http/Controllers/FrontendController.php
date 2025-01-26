@@ -30,13 +30,14 @@ class FrontendController extends Controller
 {
 
 
+
     public function home()
     {
         if (Auth::check() && auth('web')->user()->type == 'superadmin') {
             return redirect()->route('admin.dashboard');
         }
         if (Auth::check() && auth('web')->user()->type == 'user') {
-            return redirect()->route('account.dashboard');
+            return redirect()->route('account.home');
         } else {
             return redirect()->route('login');
         }
@@ -103,6 +104,10 @@ class FrontendController extends Controller
             $query->whereHas('categories', function ($q) use ($request) {
                 $q->whereIn('name', $request->categories);
             });
+        }
+
+        if ($request->has('shoe_type')) {
+            $query->whereIn('shoe_type',$request->shoe_type);
         }
 
         $products = $query->get();
@@ -218,28 +223,7 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
 
-    public function appointment(Request $request)
-    {
-        DB::beginTransaction();
-        try {
-            $new            = new Appointment();
-            $new->name      = $request->fullname;
-            $new->email     = $request->email;
-            $new->mobile    = $request->phone;
-            $new->doctor_id = $request->has('doctor') ? $request->doctor : null;
-            $new->service_id = $request->has('service_id') ? $request->service_id : null;
-            $new->notes     = $request->message;
-            $new->status    = 0;
-            $new->save();
-            DB::commit();
-            Session::flash('success_msg', 'Successfully Submited');
-            return redirect()->back();
-        } catch (Exception $e) {
-            DB::rollBack();
-            Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
-            return redirect()->back();
-        }
-    }
+  
 
 
 

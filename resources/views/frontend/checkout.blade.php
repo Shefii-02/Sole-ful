@@ -118,7 +118,7 @@
 
     <section class="product-listing-banner">
         <!-- breadcrumb area start -->
-        <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+        <div class="breadcrumb-area bg-img" data-bg="assets/img/breadcrumb-banner.webp">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
@@ -529,7 +529,7 @@
                     </div>
                     <div class="modal-body bg-secondary-subtle">
 
-                        <form method="post" id="existingCustomer" action="{{ url('sign-in') }}" novalidate>
+                        <form method="post" id="existingCustomer" action="{{ route('public.signIn') }}" novalidate>
                             @csrf()
                             <!-- Existing Customer Login Form -->
                             <div class="mb-3">
@@ -562,7 +562,7 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                Don't have an account? <a target="_blank" href="{{ route('register') }}">Create new
+                                Don't have an account? <a  href="{{ route('register',['redirection_url'=>route('public.checkout')]) }}">Create new
                                     account</a>
                             </div>
                         </form>
@@ -574,20 +574,7 @@
     @endif
 @endsection
 @push('footer')
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    <script>
-        function onSubmit(token) {
-
-            $('#g-recaptcha-response').attr('form', "place__order")
-            $('.g-captcha-error').text('');
-            $("#place__order").trigger("submit");
-
-            setTimeout(function() {
-                grecaptcha.reset();
-            }, 10000);
-        }
-    </script>
-
+   
     <script>
         $('body').on('change', '#same_billing', function(e) {
 

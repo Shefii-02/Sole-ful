@@ -54,7 +54,7 @@
 @endpush
 @section('content')
     <!-- breadcrumb area start -->
-    <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+    <div class="breadcrumb-area bg-img" data-bg="assets/img/breadcrumb-banner.webp">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -116,7 +116,7 @@
                             <div class="col-lg-7">
                                 <div class="product-details-des">
                                     <h3 class="pro-det-title product-title">{{ $product->product_name }}</h3>
-                                    <div class="pro-review">
+                                    <div class="pro-review d-none">
                                         <span><a href="#">0 Review(s)</a></span>
                                     </div>
                                     <div class="price-box">
@@ -174,6 +174,77 @@
                                         <h5 class="cat-title">Share:</h5>
                                         <div class="sharethis-inline-share-buttons"></div>
                                     </div>
+                                </div>
+
+                                <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-ProductDetails">
+                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-ProductDetails"
+                                                aria-expanded="false" aria-controls="flush-ProductDetails">
+                                                Product Details
+                                            </button>
+                                        </h2>
+                                        <div id="flush-ProductDetails" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-ProductDetails" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                                first item's accordion body.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-CareInstruction">
+                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-CareInstruction"
+                                                aria-expanded="false" aria-controls="flush-CareInstruction">
+                                                Care Instruction
+                                            </button>
+                                        </h2>
+                                        <div id="flush-CareInstruction" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-CareInstruction" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                                second item's accordion body. Let's imagine this being filled with some
+                                                actual content.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-OtherDetails">
+                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-OtherDetails"
+                                                aria-expanded="false" aria-controls="flush-OtherDetails">
+                                                Other Details
+                                            </button>
+                                        </h2>
+                                        <div id="flush-OtherDetails" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-OtherDetails" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                                third item's accordion body. Nothing more exciting happening here in terms
+                                                of content, but just filling up the space to make it look, at least at first
+                                                glance, a bit more representative of how this would look in a real-world
+                                                application.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-ConsumerComplaintContact">
+                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-ConsumerComplaintContact"
+                                                aria-expanded="false" aria-controls="flush-ConsumerComplaintContact">
+                                                Consumer Complaint Contact
+                                            </button>
+                                        </h2>
+                                        <div id="flush-ConsumerComplaintContact" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-ConsumerComplaintContact" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                                third item's accordion body. Nothing more exciting happening here in terms
+                                                of content, but just filling up the space to make it look, at least at first
+                                                glance, a bit more representative of how this would look in a real-world
+                                                application.</div>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -541,13 +612,13 @@
                         quantity: quantity,
                     },
                     success: function(response) {
-                        
+
                         if (response.result) {
                             toastr.success(response.message, "Success");
-                    
+
                         } else {
                             toastr.success(response.message, "Error");
-  
+
                         }
                         $('.cart-count').text(response.cart_count)
                     },

@@ -19,7 +19,7 @@ use App\Http\Controllers\SizeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
+Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
 
     Route::get('T&C', function () { return view('frontend.documents.T-C');})->name('t-c');
     Route::get('refund_policy', function () {
@@ -55,6 +55,10 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
 
     Route::get('checkout/calculation', 'OrderController@checkoutCalculation')->name('checkout.calculation');
     
+    Route::post('sign-in', 'BasketController@postSignin')->name('signIn');
+
+    
+
     
     Route::post('/add-to-cart', [BasketController::class, 'store']);
     Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
@@ -70,7 +74,7 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     
 });
 
-Route::group(['middleware' => ['auth:web'],'as' => 'account.','prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function (){
+Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account.','prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function (){
 
     Route::get('/', [AccountController::class, 'myaccount'])->name('home');
     Route::get('orders', [AccountController::class, 'ordersShow'])->name('orders.show');
@@ -90,12 +94,9 @@ Route::group(['middleware' => ['auth:web'],'as' => 'account.','prefix' => 'accou
 
 });
 
-
 Auth::routes();
 
-
-
-Route::group(['middleware' => ['auth:web'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers'], function () {
+Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers'], function () {
     // Route::get('dashboard', function () {
     //     // $averageSessionDuration = Analytics::averageSessionDuration(Period::days(7));
 
