@@ -830,7 +830,7 @@
                     asNavFor: '.product-large-slider',
                     arrows: false,
                     focusOnSelect: true
-                });
+                });    
 
                 // Image zoom effect for the newly added images
                 $('.img-zoom').zoom();
