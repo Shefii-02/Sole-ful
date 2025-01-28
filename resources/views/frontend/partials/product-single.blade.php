@@ -2,7 +2,7 @@
 
 
 <!-- product details wrapper start -->
-<div class="product-details-wrapper section-padding">
+<div class="product-details-wrapper ">
     <div class="container custom-container">
         <div class="row">
             <div class="col-12">
@@ -37,6 +37,7 @@
                                 </div>
                            
                                 <div class="product__variations">
+                                    <h5 class="cat-title mb-3 fw-bolder">Available Sizes :</h5>
                                     <div class="size-tab round-radio">
                                         @foreach ($all_sizes as $size)
                                             <label
@@ -55,7 +56,7 @@
                                     </div>
 
                                     <div class="color-option1 mb-4">
-                                        <h5 class="cat-title mb-3 fw-bolder">Colors :</h5>
+                                        <h5 class="cat-title mb-3 fw-bolder">Available Colors :</h5>
                                         <div class="color-tab">
 
                                         </div>
