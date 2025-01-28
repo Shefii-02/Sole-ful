@@ -14,8 +14,22 @@
                         href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">{{ $product->product_name }}</a>
                 </h5>
                 <div class="price-box">
-                    <span class="price-regular">₹
-                        {{ number_format($product->minPrice) }}</span>
+                    <div class="">
+                        <small>Sizes :
+                            @foreach ($product->variationSizes->unique('value')->pluck('value') ?? [] as $abSize)
+                                <i class="text-grey">{{ $abSize }},</i>
+                            @endforeach
+                        </small>
+                    </div>
+                    <div class="my-2">
+                        <small>Colors :
+                            @foreach ($product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
+                                <i class="text-grey">{{ $abColor }},</i>
+                            @endforeach
+                        </small>
+                    </div>
+                    <span class="price-regular">
+                        {{ getPrice($product->minPrice) }}</span>
                 </div>
                 <div class="product-action-link">
                     <a href="#" id="wishlist-btn-{{ $product->id }}" class="wishlist-btn"

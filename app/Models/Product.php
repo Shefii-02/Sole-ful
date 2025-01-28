@@ -28,6 +28,13 @@ class Product extends Model
         return $this->hasMany(VariationKey::class);
     }
 
+    public function variationSizes(){
+        return $this->hasMany(VariationKey::class)->where('type','size');
+    }
+
+    public function variationColors(){
+        return $this->hasMany(VariationKey::class)->where('type','color');
+    }
     
     public function getStatusTextAttribute()
     {

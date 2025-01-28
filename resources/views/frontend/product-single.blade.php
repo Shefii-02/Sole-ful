@@ -31,35 +31,13 @@
                     <div class="product-details-inner">
                         <div class="row">
                             <div class="col-lg-5">
-                                @php
-                                    $images = product_images($product->id);
-                                @endphp
+                                
                                 <div class="product-large-slider mb-4">
-                                    {{-- @foreach ($images as $key => $variaion_slider)
-                                        <!--  img-showcase --> @php $x = 0; @endphp
-                                        @foreach ($variaion_slider as $vari_images)
-                                            <div class="pro-large-img  img-zoom imgshowing"
-                                                data-variation="{{ $key }}">
-                                                <img src="{{ asset('images/products/' . $vari_images) }}"
-                                                    onerror="this.onerror=null;this.src='/images/default.png';"
-                                                    alt="{{ $product->product_name }}">
-                                            </div>
-                                        @endforeach
-                                    @endforeach --}}
+                                  
                                 </div>
 
                                 <div class="pro-nav slick-row-5">
-                                    {{-- @foreach ($images as $key => $variaion_slider)
-                                        <!--  img-showcase --> @php $x = 0; @endphp
-                                        @foreach ($variaion_slider as $vari_images)
-                                            <div style="display: none" class="pro-nav-thumb imgshowing"
-                                                data-variation="{{ $key }}">
-                                                <img src="{{ asset('images/products/' . $vari_images) }}"
-                                                    onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
-                                                    alt="{{ $product->product_name }}" />
-                                            </div>
-                                        @endforeach
-                                    @endforeach --}}
+                                   
                                 </div>
 
                             </div>
@@ -305,6 +283,20 @@
                                                             {{ $similarProduct->product_name }}
                                                         </h5>
                                                         <div class="price-box">
+                                                            <div class="">
+                                                                <small>Sizes :
+                                                                    @foreach ($similarProduct->variationSizes->unique('value')->pluck('value') ?? [] as $abSize)
+                                                                        <i class="text-grey">{{ $abSize }},</i>
+                                                                    @endforeach
+                                                                </small>
+                                                            </div>
+                                                            <div class="my-2">
+                                                                <small>Colors :
+                                                                    @foreach ($similarProduct->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
+                                                                        <i class="text-grey">{{ $abColor }},</i>
+                                                                    @endforeach
+                                                                </small>
+                                                            </div>
                                                             <span class="price-regular small fw-semibold">
                                                                 ₹ {{ number_format($similarProduct->minPrice) }}</span>
                                                         </div>
