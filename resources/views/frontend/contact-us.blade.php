@@ -64,8 +64,13 @@
                        
                         
                         <ul>
-                            <li><i class="fa fa-fax"></i> Address :<a  href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">#5 1 FLOOR GEDDALAHALLI,HENNUR<br>
-                                BAGLUR MAIN ROAD, KOTHALUR POST, BANGALORE,560077</a></li>
+                            <li><i class="fa fa-fax"></i> Address :
+                                <a  href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">
+                                SOLEFUL<br>
+                                #5, 1st floor, Geddalahalli,<br>
+                                Hennur Bagalur Main Road,<br>
+                                Bangalore - 560077.
+                                </a></li>
                             <li><i class="fa fa-phone"></i> <a href="mailto:relationship@soleful.in" target="_blank">relationship@soleful.in</a></li>
                             <li><i class="fa fa-envelope-o"></i> <a href="tel:+917996666225" target="_blank">+91 79966 66225</a></li>
                         </ul>

@@ -98,13 +98,17 @@
                         <!-- footer widget item start -->
                         <div class="col-xl-5 col-lg-3 col-md-6">
                             <div class="widget-item mt-10">
-                                <h5 class="widget-title">My Account</h5>
+                                <h5 class="widget-title"> Contact Us</h5>
                                 <div class="widget-body">
                                     <ul class="location-wrap">
                                         <li><i class="ion-ios-location-outline"></i>
-                                            Soleful<br>
-                                            #5 1 FLOOR GEDDALAHALLI,HENNUR<br>
-                                            BAGLUR MAIN ROAD KOTHALUR POST BLR.560077</li>
+                                            <a  href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">
+                                                SOLEFUL<br>
+                                                #5, 1st floor, Geddalahalli,<br>
+                                                Hennur Bagalur Main Road,<br>
+                                                Bangalore - 560077.
+                                                </a>
+                                        </li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
                                         </li>
@@ -173,13 +177,12 @@
                                 <h5 class="widget-title">Quick Links</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li><a target="_blank" href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8">Store
-                                                Location</a></li>
-                                        <li><a target="_blank" href="{{ url('/accounts') }}">My Account</a></li>
+                                        
+                                        <li><a target="_blank" href="{{ url('/account') }}">My Account</a></li>
                                         <li><a  target="_blank" href="{{ url('/order-track') }}">Orders Tracking</a></li>
                                         <li><a  href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
                                                 Guide</a></li>
-                                        <li><a  target="_blank" href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
+                                      
                                         <li><a  target="_blank" href="{{ route('public.contact-us') }}">Contact Us</a></li>
                                     </ul>
                                 </div>
