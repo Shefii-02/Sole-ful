@@ -203,7 +203,7 @@
                                 </div>
                             </div>
                             @foreach ($items ?? [] as $listing)
-                                <div class="row cart-item-314 shadow-sm">
+                                <div class="row cart-item shadow-sm">
                                     <div class="col-md-2 column product_image">
                                         <img src="{{ asset('images/products/' . $listing->picture) }}" class="rounded-3"
                                             onerror="this.onerror=null;this.src='/images/default.jpg';" alt="">
@@ -232,10 +232,9 @@
                                     </div>
                                     <div class="col-md-2 column product_price text-center">
                                         <div class="price product-price" data-title="Price">
-                                            <input class="item-amount" type="hidden" value="16.00">
+                                            <input class="item-amount" type="hidden" value="{{ $listing->price_amount }}">
                                             {{ getPrice($listing->price_amount) }}
                                         </div>
-                                        <input class="item-amount" type="hidden" value="16.00">
                                     </div>
                                     <div class="col-md-2 col-8 column product-quantity " data-title="Quantity">
                                         <div class="input-group quantity qty-input">
@@ -415,6 +414,7 @@
             var price = parseFloat(item.find('.item-amount').val());
             var amount = price * quantity;
 
+
             item.find('.Item_total').text('$' + amount.toFixed(2));
             if (quantity <= 0) {
                 item.remove();
@@ -496,190 +496,6 @@
         }
 
 
-
-
-        $('body').on('click', '.addon-pdct-btn', function() {
-
-            var price = $(this).attr('data-price');
-            var pdct_id = $(this).attr('data-pid');
-            var parent_id = $(this).attr('data-parent_id');
-            var isChecked = $(this).is(":checked");
-            if (isChecked) {
-                var quantity = 1;
-            } else {
-                var quantity = 0;
-            }
-
-            $.ajax({
-                url: `{{ url('basket/add') }}`,
-                type: 'GET',
-                data: {
-                    price: price,
-                    pdct_id: pdct_id,
-                    quantity: quantity,
-                    parent_id: parent_id
-                },
-                success: function(response) {
-                    if (isChecked) {
-                        $(".alert__msg_" + pdct_id).html(
-                            `<span class="bg-success fw-bold p-1">Item Added</span>`)
-                        var GtotalAmount = parseFloat($('.addon_grandtotal').text().replace('$', ''));
-                        GtotalAmount = GtotalAmount + parseFloat(price)
-                        $('.addon_grandtotal').text('$' + GtotalAmount.toFixed(2))
-
-                    } else {
-                        $(".alert__msg_" + pdct_id).html(
-                            `<span class="bg-danger fw-bold p-1">Item Removed</span>`)
-                        var GtotalAmount = parseFloat($('.addon_grandtotal').text().replace('$', ''));
-                        GtotalAmount = GtotalAmount - parseFloat(price)
-                        $('.addon_grandtotal').text('$' + GtotalAmount.toFixed(2))
-                    }
-
-                }
-            });
-        });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
-    <script>
-        function addon_complete($form, response) {
-
-            $form.addClass($form.attr('data-classes'));
-            $form.submit();
-        }
-
-
-        $(document).ready(function() {
-            // Toggle calendar dropdown on button click
-
-            $('body').on('click', '#date-dropdown-toggle', function() {
-                $('#calendar-dropdown').toggleClass('d-none');
-            });
-
-            $(document).click(function(event) {
-                var target = $(event.target);
-                if (!target.closest('#calendar-dropdown').length && !target.is('#date-dropdown-toggle')) {
-                    $('#calendar-dropdown').addClass('d-none');
-                    $('.month-1').addClass('d-none');
-                    $(".show-more-dates").text('More dates');
-                }
-            });
-
-            $('body').on('click', '.valid_date', function(e) {
-                e.preventDefault();
-                var selectedDate = $(this).data('date');
-                var availableTime_on = $(this).data('start');
-                var availableTime_to = $(this).data('end');
-
-                $('.month-1').addClass('d-none');
-                $(".show-more-dates").text('More dates');
-
-                // Format the date using Moment.js
-                var formattedDate = moment(selectedDate).format('MMMM D, YYYY');
-
-                $('.date-input').text(formattedDate);
-
-                $('#date-dropdown-toggle-value').val(selectedDate);
-                $('#calendar-dropdown').addClass('d-none');
-
-                pickuptimeListing(availableTime_on, availableTime_to)
-
-            });
-
-            if ($('#date-dropdown-toggle-value').val() == '') {
-
-                $('.valid_date:first').click();
-            } else {
-
-                var dateBase = $('.shipping_date_hidden').val();
-                $('.valid_date').each(function() {
-                    var selectedDate = $(this).data('date');
-                    if (selectedDate == dateBase) {
-                        var availableTime_on = $(this).data('start');
-                        var availableTime_to = $(this).data('end');
-                        pickuptimeListing(availableTime_on, availableTime_to);
-                    }
-                });
-
-            }
-
-
-
-            $(".show-more-dates").click(function(e) {
-
-                $('.month-1').toggleClass('d-none');
-                e.preventDefault();
-
-
-                var text = $(this).text();
-
-                if (text === 'Less dates') {
-                    $(this).text('More dates');
-                } else {
-                    $(this).text('Less dates');
-                }
-
-            })
-
-
-            function convert12HourTo24Hour(time12Hour) {
-                return moment(time12Hour, 'hh:mm A').format('HH:mm');
-            }
-
-            function pickuptimeListing(startTime, endTime) {
-
-                var interval = 15; // 15 minutes
-                var options = '';
-
-                // Parse the start and end times using Moment.js
-                var startDate = moment(startTime, 'HH:mm');
-                var endDate = moment(endTime, 'HH:mm');
-
-                if (startDate <= endDate) {
-                    while (startDate <= endDate) {
-                        var time12Hour = startDate.format('hh:mm A'); // Format as 12-hour time with AM/PM
-                        var time24Hour = convert12HourTo24Hour(time12Hour); // Convert to 24-hour format
-
-                        options += '<option value="' + time24Hour + '">' + time12Hour + '</option>';
-
-                        // Increment time by 15 minutes
-                        startDate.add(interval, 'minutes');
-                    }
-                } else {
-                    $('.time_exceeded').html('Time exceeded please choose another date');
-                }
-
-
-
-                $('#pickup_time').html(options);
-
-                @if (isset($basket))
-                    @if ($basket->serve_time != null)
-                        var time = moment(`{{ $basket->serve_time }}`, 'HH:mm').format('HH:mm');
-                        $('#pickup_time').val(time)
-                    @endif
-                @endif
-            }
-
-
-
-        });
-
-
-
-        $(document).ready(function() {
-            $('.hover-container').mousemove(function(e) {
-                const x = e.pageX - $(this).offset().left;
-                const y = e.pageY - $(this).offset().top;
-
-                $(this).find('.hidden-div').css({
-                    display: 'block',
-                });
-            });
-
-            $('.hover-container').mouseleave(function() {
-                $(this).find('.hidden-div').css('display', 'none');
-            });
-        });
-    </script>
 @endpush
