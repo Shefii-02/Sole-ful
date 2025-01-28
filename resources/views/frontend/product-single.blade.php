@@ -118,7 +118,7 @@
                                     <h3 class="pro-det-title product-title">{{ $product->product_name }}</h3>
                                     <div class="pro-review d-none">
                                         <span><a href="#">0 Review(s)</a></span>
-                                    </div>
+                                    </div>   
                                     <div class="price-box">
                                         <span class="regular-price">{{ min_price($product->id) }}</span>
                                     </div>
