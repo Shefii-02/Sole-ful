@@ -213,20 +213,31 @@
 
 
 	// prodct details slider active
-	$('.product-large-slider').slick({
-		fade: true,
-		arrows: false,
-		asNavFor: '.pro-nav'
-	});
 
 
-	// product details slider nav active
-	$('.pro-nav').slick({
-		slidesToShow: 4,
-		asNavFor: '.product-large-slider',
-		arrows: false,
-		focusOnSelect: true
-	});
+	// const loadSlider = function (destroy = false) {
+	// 	if (destroy) {
+	// 		$('.product-large-slider').slick('unslick');
+	// 		$('.pro-nav').slick('unslick');
+	// 	}
+	// 	$('.product-large-slider').slick({
+	// 		fade: true,
+	// 		arrows: false,
+	// 		asNavFor: '.pro-nav'
+	// 	});
+
+
+	// // product details slider nav active
+	// 	$('.pro-nav').slick({
+	// 		slidesToShow: 4,
+	// 		asNavFor: '.product-large-slider',
+	// 		arrows: false,
+	// 		focusOnSelect: true
+	// 	});
+
+	// 	$('.img-zoom').zoom();
+	// }
+	// loadSlider(false);
 
 	// testimonial carousel active js
 	$('.testimonial-active').slick({
@@ -280,7 +291,7 @@
 	// });
 
 
-	
+
 
 	// scroll to top
 	$(window).on('scroll', function () {
@@ -425,7 +436,7 @@
 			});
 		});
 
-	
+
 
 	});
 

@@ -21,6 +21,7 @@
             <span class="small">{{ $color->value }}</span>
             <input type="radio" class="hidden variColor_checkbox" data-stock="{{ $variation->in_stock > 0  ? 'in-stock' : 'out-of-stock' }}"
                 data-product="{{ $productImage->id }}" name="color" data-productname="{{ productVariationName($variation->product->product_name, $color->value)}}"
+                data-image={{ $variation->images->pluck('image') }}
                 value="{{ $color->value }}" data-sku="{{ $variation->sku }}" data-variation="{{ $variation->id }}" data-price="{{ getPrice($variation->price )}}">
         </label>
     @endif

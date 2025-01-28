@@ -156,6 +156,7 @@ class FrontendController extends Controller
         $all_sizes   =  Size::query()->pluck('size_value');
         $sizes = $product->variationKeys->where('type', 'size')->unique('value');
         $colors = $product->variationKeys->where('type', 'color')->unique('value');
+
         return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors', 'all_sizes'));
     }
 
@@ -202,23 +203,7 @@ class FrontendController extends Controller
 
     public function contactSend(Request $request)
     {
-        DB::beginTransaction();
-        try {
-            $new            = new Enquiry();
-            $new->name      = $request->fullname;
-            $new->email     = $request->email;
-            $new->mobile    = $request->phone;
-            $new->notes     = $request->message;
-            $new->status    = 0;
-            $new->save();
-            DB::commit();
-            Session::flash('success_msg', 'Successfully Submited');
-            return redirect()->back();
-        } catch (Exception $e) {
-            DB::rollBack();
-            Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
-            return redirect()->back();
-        }
+      
     }
     public function about()
     {
