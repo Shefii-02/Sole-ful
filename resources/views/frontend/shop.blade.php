@@ -63,7 +63,7 @@
                                         <label for="CasualSlides"><span class="text-capitalize">Casual Slides</span></label>
                                         <input
                                             {{ in_array(trim('Casual Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="categories[]"
+                                            form="filter" type="checkbox" name="shoe_type[]"
                                             value="Casual Slides" class="checkbox"
                                             id="CasualSlides">
                                     </li>
@@ -72,7 +72,7 @@
                                             <span class="text-capitalize">Ethnic Slides</span></label>
                                         <input
                                             {{ in_array(trim('Ethnic Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="categories[]"
+                                            form="filter" type="checkbox" name="shoe_type[]"
                                             value="{{ trim('Ethnic Slides') }}" class="checkbox"
                                             id="EthnicSlides">
                                     </li>
@@ -81,7 +81,7 @@
 
                                             <span class="text-capitalize">{{ $item->name }}</label>
                                         <input {{ in_array(trim('Casual Slipons'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="categories[]"
+                                            form="filter" type="checkbox" name="shoe_type[]"
                                             value="Casual Slipons" class="checkbox"
                                             id="CasualSlipons">
                                     </li>
