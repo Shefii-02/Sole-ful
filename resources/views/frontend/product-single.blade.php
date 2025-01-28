@@ -190,8 +190,7 @@
                                             :class="{ 'show': open === 'ProductDetails' }"
                                             aria-labelledby="flush-ProductDetails">
                                             <div class="accordion-body">
-                                                Placeholder content for this accordion, which is intended to demonstrate the
-                                                `accordion-flush` class. This is the first item's accordion body.
+                                                <small > {{ $product->description }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -209,8 +208,7 @@
                                             :class="{ 'show': open === 'CareInstruction' }"
                                             aria-labelledby="flush-CareInstruction">
                                             <div class="accordion-body">
-                                                Placeholder content for this accordion, which is intended to demonstrate the
-                                                `accordion-flush` class. This is the second item's accordion body.
+                                                <small >{{ $product->care_instruction }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -228,8 +226,14 @@
                                             :class="{ 'show': open === 'OtherDetails' }"
                                             aria-labelledby="flush-OtherDetails">
                                             <div class="accordion-body">
-                                                Placeholder content for this accordion, which is intended to demonstrate the
-                                                `accordion-flush` class. This is the third item's accordion body.
+                                                <h6 class="fw-bold">
+                                                    Manufactured by:
+                                                </h6>
+                                                <small >{{ $product->manufactured_by }}</small>
+                                                <h6 class="mt-3 fw-bold">
+                                                    Marketed by:
+                                                </h6>
+                                                <small >{{ $product->marketed_by }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -248,8 +252,10 @@
                                             :class="{ 'show': open === 'ConsumerComplaintContact' }"
                                             aria-labelledby="flush-ConsumerComplaintContact">
                                             <div class="accordion-body">
-                                                Placeholder content for this accordion, which is intended to demonstrate the
-                                                `accordion-flush` class. This is the third item's accordion body.
+                                                <small>Email: <a href="mailto:relationship@soleful.in">relationship@soleful.in</a><br></small>
+                                                <small>Phone: <a href="tel:+91 79966 66225">+91 79966 66225</a></small>
+                                                <br>
+                                                <small class="fw-bold">Please contact us at the marketer's address for any customer complaints.</small>
                                             </div>
                                         </div>
                                     </div>
@@ -417,8 +423,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="section-title text-center">
-                                        <h2 class="title">Related Product</h2>
-                                        <p class="sub-title">you may also like</p>
+                                        <h2 class="title fw-bold">Similar Products</h2>
                                     </div>
                                 </div>
                             </div>

@@ -52,8 +52,8 @@ class FrontendController extends Controller
         $bestSellProduct        = BestSellProduct::get();
         $featuredProduct        = FeaturedProduct::get();
         $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
-        $productOffer           = Advertisement::where('text','product')->inRandomOrder()->limit(1)->first();
-        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs','productOffer'));
+        $productOffer           = Advertisement::where('text', 'product')->inRandomOrder()->limit(1)->first();
+        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs', 'productOffer'));
     }
 
     public function getWishlist(Request $request)
@@ -75,7 +75,7 @@ class FrontendController extends Controller
 
     public function shop(Request $request)
     {
-        $productOffer           = Advertisement::where('text','product')->inRandomOrder()->limit(1)->first();
+        $productOffer           = Advertisement::where('text', 'product')->inRandomOrder()->limit(1)->first();
 
         $query = Product::where('status', 1);
 
@@ -108,7 +108,7 @@ class FrontendController extends Controller
         }
 
         if ($request->has('shoe_type')) {
-            $query->whereIn('shoe_type',$request->shoe_type);
+            $query->whereIn('shoe_type', $request->shoe_type);
         }
 
         $products = $query->get();
@@ -141,11 +141,11 @@ class FrontendController extends Controller
 
         if ($request->ajax()) {
             // Render product list view and return as JSON for AJAX
-            $html = view('frontend.product_list', compact('products'))->render();
+            $html = view('frontend.partials.product_list', compact('products'))->render();
             return response()->json(['html' => $html]);
         }
 
-        return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories','productOffer'));
+        return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories', 'productOffer'));
     }
 
 
@@ -156,7 +156,7 @@ class FrontendController extends Controller
         $all_sizes   =  Size::query()->pluck('size_value');
         $sizes = $product->variationKeys->where('type', 'size')->unique('value');
         $colors = $product->variationKeys->where('type', 'color')->unique('value');
-        return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors' ,'all_sizes'));
+        return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors', 'all_sizes'));
     }
 
 
@@ -164,11 +164,11 @@ class FrontendController extends Controller
     {
         $product = $request->product_id;
         $size    = $request->size;
-        $variationIds = VariationKey::where('type','size')->where('product_id',$product)->where('value',$size)->pluck('variation_id');
+        $variationIds = VariationKey::where('type', 'size')->where('product_id', $product)->where('value', $size)->pluck('variation_id');
         $variations = ProductVariant::query()->whereHas('variationkey', function ($q) use ($variationIds) {
-                                                $q->whereIn('variation_id', $variationIds);
-                                            })->get();
-        
+            $q->whereIn('variation_id', $variationIds);
+        })->get();
+
         return view('frontend.partials.product-variations', ['variations' => $variations])->render();
     }
 
@@ -225,7 +225,7 @@ class FrontendController extends Controller
         return view('frontend.about');
     }
 
-  
+
 
 
 
@@ -274,5 +274,34 @@ class FrontendController extends Controller
             'error' => 'Failed to fetch place details',
             'status' => $response1->status() ?: $response2->status(),
         ];
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->get('q', '');
+
+        if (!$query) {
+            return response()->json([]);
+        }
+
+        $products = ProductVariant::query()
+            ->with(['product', 'variationkey']) // Preload relationships
+            ->where(function ($queryBuilder) use ($query) {
+                $queryBuilder->whereHas('product', function ($productQuery) use ($query) {
+                    $productQuery->Where('product_name', 'like', "%{$query}%")
+                                 ->Where('shoe_type', 'like', "%{$query}%");
+                                 
+                })
+                    ->orWhere('variation_name', 'like', "%{$query}%") // Search in variation name
+                    ->orWhere('variation', 'like', "%{$query}%"); // Search in variation
+            })
+            ->take(50) // Fetch more records initially for deduplication
+            ->get();
+
+        // Ensure uniqueness by product_id
+        $products = $products->unique('product_id')->values(); // Use Laravel Collection's `unique`
+        $results = view('frontend.partials.search-results', compact('products'))->render();
+
+        return response()->json($results);
     }
 }

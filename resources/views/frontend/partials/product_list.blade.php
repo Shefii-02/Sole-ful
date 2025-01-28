@@ -49,10 +49,10 @@
                         href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">{{ $product->product_name }}</a>
                 </h5>
                 <div class="price-box">
-                    <span class="price-regular">₹
-                        {{ number_format($product->minPrice) }}</span>
+                    <span class="price-regular">
+                        {{ getPrice($product->minPrice) }}</span>
                 </div>
-                <p>{{ $product->care_instruction }}</p>
+                <p>{{ $product->description }}</p>
                 <div class="product-link-2 position-static">
                     <a href="#" id="wishlist-btn-{{ $product->id }}" class="wishlist-btn"
                         data-product-id="{{ $product->id }}" title="Add To Wishlist"><i class="bi bi-heart"></i></a>

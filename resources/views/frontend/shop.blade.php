@@ -202,7 +202,7 @@
                         <!-- product item list start -->
                         <div class="shop-product-wrap grid-view row mbn-50">
 
-                            @include('frontend.product_list', compact('products'))
+                            @include('frontend.partials.product_list', compact('products'))
 
                         </div>
                         <!-- product item list end -->

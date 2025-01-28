@@ -1,3 +1,4 @@
+
 <!-- Start Header Area -->
 <header class="header-area">
     <div class="container bg-white rounded-5">
@@ -18,8 +19,7 @@
                                         aria-label="Close"></button>
                                     @guest
                                         @if (Route::has('login'))
-                                            <a href="{{ route('login') }}"
-                                                style="text-decoration: none; color: var(--white);" class="offcanvas-title"
+                                            <a href="{{ route('login') }}" class="offcanvas-title mx-3"
                                                 id="offcanvasExampleLabel">
                                                 Sign In
                                             </a>
@@ -120,49 +120,41 @@
                 <div class="px-4">
                     <ul class="d-flex gap-3 align-items-end align-content-end m-1">
                         <li class="position-relative">
-                            <div class="search" id="search-bar">
-                                <input type="search" placeholder="Type something..." name="q"
-                                    class="search__input">
+                            <div class="search" id="search-bar" x-data="{
+                                placeholders: ['Type something...','Just type if you want Shoe type', 'Just type if you want Category', 'Just type if you want Color', 'Just type if you want Size', 'Just type if you want Product name'],
+                                currentIndex: 0,
+                                init() {
+                                    this.cyclePlaceholders();
+                                },
+                                cyclePlaceholders() {
+                                    setInterval(() => {
+                                        this.$refs.inputElement.placeholder = this.placeholders[this.currentIndex];
+                                        this.currentIndex = (this.currentIndex + 1) % this.placeholders.length;
+                                    }, 2000); // Change placeholder every 2 seconds
+                                }
+                            }"
+                            x-init="init()">
+                                <input type="text" x-ref="inputElement"  autocomplete="off" placeholder="Type something..." name="q"
+                                    class="search__input" id="search-input">
                                 <div class="search__button" id="search-button">
                                     <i class="ri-search-2-line bi bi-search text-theme"></i>
                                     <i class="ri-close-line bi bi-x"></i>
                                 </div>
-
                             </div>
-                            <div class="bg-light shadow-lg position-absolute">
-                         
-                                    <ul id="suggestions-ul-search" class="list-none p-0 m-0 max-h-48 overflow-auto rounded-2xl">
-                                        
-                                        {{-- <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">
-                                            <a href="">
-                                                <div class="col-lg-12 my-2">
-                                                    <div class="row">
-                                                        <div class="col-2">
-                                                            <img src="http://127.0.0.1:8000/images/products/lsKLXeYOXisEshPJ9KWIQC8UuB10c3.png" class="w-20 rounded-2">
-                                                        </div>
-                                                        <div class="col-10">
-                                                            <span>
-                                                                Women lavender casual slides
-                                                            </span><br>
-                                                            <span>₹ 1,399.00</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                   --}}
-                                    </ul>
-                       
+                            <div class="bg-light shadow-lg position-absolute rounded-2xl w-100">
+                                <ul id="suggestions-ul-search"
+                                    class="list-none p-0 m-0 max-h-75 overflow-auto rounded-2xl">
+                                </ul>
                             </div>
                         </li>
-                        <li class="cursor-pointer">
+                        <li class="cursor-pointer d-none d-md-block ">
                             <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Order
                                 Now</a>
                         </li>
-                        <li class="cursor-pointer">
+                        <li class="cursor-pointer d-none d-md-block">
                             <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
                         </li>
-                        <li>
+                        <li class="d-none d-md-block">
                             <a href="#" id="cartList-btn-view" data-bs-toggle="offcanvas"
                                 data-bs-target="#CartList" aria-controls="CartList">
                                 <div class="cart-icon text-center text-theme">
@@ -171,7 +163,7 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="me-0 ms-2 wishlist-section" style="display: none">
+                        <li class="me-0 ms-2 wishlist-section d-none d-md-block" style="display: none">
                             <a href="#" class="d-inline " id="wishlist-btn-view" data-bs-toggle="offcanvas"
                                 data-bs-target="#Wishlist" aria-controls="Wishlist">
                                 <div class="cart-icon text-center text-theme relative">
@@ -190,7 +182,7 @@
                         </li> --}}
                         @guest
                             @if (Route::has('login'))
-                                <li class="last-one">
+                                <li class="last-one d-none d-md-block">
                                     <a href="{{ route('login') }}">
                                         <i class="bi bi-person fs-5 text-theme"></i>
                                     </a>
@@ -198,7 +190,7 @@
                             @endif
                         @endguest
                         @auth
-                            <li class="last-one" x-data="{ open: false }" @click.away="open = false">
+                            <li class="last-one d-none d-md-block" x-data="{ open: false }" @click.away="open = false">
                                 <a href="#" @click="open = !open">
                                     <i class="bi bi-person fs-5 text-theme"></i>
                                 </a>
@@ -451,3 +443,43 @@
     <!-- mobile header end -->
 </header>
 <!-- end Header Area -->
+
+
+@push('footer')
+    <script>
+        $(document).ready(function() {
+            $('body').on('input','#search-input', function() {
+                const $suggestionList = $('#suggestions-ul-search');
+                const query = $(this).val();
+                if (query.length >= 2) {
+                    // Perform AJAX request
+                    $.ajax({
+                        url: `/search`,
+                        method: 'GET',
+                        data: {
+                            q: query
+                        },
+                        success: function(data) {
+                           
+                            $suggestionList.empty(); // Clear existing suggestions
+
+                            $suggestionList.html(data)
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching search results:', error);
+                        }
+                    });
+                }
+                else{
+                    $suggestionList.empty();
+                }
+            });
+
+            $('body').on('click','.ri-close-line,.ri-search-2-line', function() {
+                $('#suggestions-ul-search').empty(); 
+                $('.search-input').val(''); 
+            });
+
+        });
+    </script>
+@endpush

@@ -71,6 +71,8 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::post('contact-us', 'FrontendController@contactSend')->name('contact-send');
     Route::get('about-us', 'FrontendController@about')->name('about');
     
+    Route::get('/search', [FrontendController::class, 'search'])->name('search');
+
 });
 
 Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account.','prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function (){

@@ -31,4 +31,16 @@ class ProductVariant extends Model
     {
         return $this->belongsTo(VariationImage::class);
     }
+
+    public function getVNameAttribute()
+    {
+        // Fetch the first color variation key
+        $variantColor = $this->variationkey()->where('type', 'color')->first();
+    
+        // Return a combined name if color exists; otherwise, just return the product name
+        return $variantColor 
+            ? productVariationName($this->product->product_name, $variantColor->value) 
+            : $this->product->product_name;
+    }
+    
 }
