@@ -345,8 +345,3 @@ header {
 .collapse {
     visibility: visible !important;
 }
-
-
-.max-h-75 {
-    max-height: 20rem;
-}

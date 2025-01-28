@@ -33,53 +33,65 @@
     <script type="text/javascript"
         src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
         async="async"></script>
-        <style>
+    <style>
+        .product-listing .cart-item,
+        .product-detail-slider .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
 
-            .product-listing .cart-item, .product-detail-slider .cart-item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 10px;
-            }
-            .product-listing .cart-item {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 15px 5px;
-            }
-            .product-listing .cart-item-image, .product-detail-slider .cart-item-image {
-                width: 40px;
-                height: 40px;
-                background-color: #eee;
-                margin-right: 10px;
-            }
-            .item-count-addon {
-                position: absolute;
-                top: -20px;
-                right: -10px;
-                background-color: var(--primary);
-                color: white;
-                border-radius: 50%;
-                width: 20px;
-                height: 20px;
-                text-align: center;
-                font-size: 12px;
-            }
-            .text-truncate {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-            .cart-item-details {
-                flex-grow: 1;
-                margin-right: 10px;
-            }
-            .product-listing .cart-item-title, .product-detail-slider .cart-item-title {
-                font-size: 14px;
-                color: #333;
-                margin-bottom: 3px;
-            }
-            </style>
+        .product-listing .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 5px;
+        }
+
+        .product-listing .cart-item-image,
+        .product-detail-slider .cart-item-image {
+            width: 40px;
+            height: 40px;
+            background-color: #eee;
+            margin-right: 10px;
+        }
+
+        .item-count-addon {
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .text-truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .product-listing .cart-item-title,
+        .product-detail-slider .cart-item-title {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .max-h-75 {
+            max-height: 20rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -102,12 +114,12 @@
                                 <div class="widget-body">
                                     <ul class="location-wrap">
                                         <li><i class="ion-ios-location-outline"></i>
-                                            <a  href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">
+                                            <a href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">
                                                 SOLEFUL<br>
                                                 #5, 1st floor, Geddalahalli,<br>
                                                 Hennur Bagalur Main Road,<br>
                                                 Bangalore - 560077.
-                                                </a>
+                                            </a>
                                         </li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
@@ -130,19 +142,29 @@
                                             <a target="_blank" href="{{ route('public.shop') }}">Shop</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="{{ route('public.shop',['shoe_type[]'=>'Casual Slides']) }}">Casual Slides</a>
+                                            <a target="_blank"
+                                                href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slides']) }}">Casual
+                                                Slides</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="{{ route('public.shop',['shoe_type[]'=>'Ethnic Slides']) }}">Ethnic Slides</a>
+                                            <a target="_blank"
+                                                href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic Slides']) }}">Ethnic
+                                                Slides</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="{{ route('public.shop',['shoe_type[]'=>'Casual Slipons']) }}">Casual Slipons</a>
+                                            <a target="_blank"
+                                                href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slipons']) }}">Casual
+                                                Slipons</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="{{ route('public.shop',['categories[]'=>'Party Wear']) }}">Party Wear</a>
+                                            <a target="_blank"
+                                                href="{{ route('public.shop', ['categories[]' => 'Party Wear']) }}">Party
+                                                Wear</a>
                                         </li>
                                         <li class="mb-3">
-                                            <a target="_blank" href="{{ route('public.shop',['categories[]'=>'Casual Wear']) }}">Casual Wear</a>
+                                            <a target="_blank"
+                                                href="{{ route('public.shop', ['categories[]' => 'Casual Wear']) }}">Casual
+                                                Wear</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -159,7 +181,8 @@
                                         <li><a target="_blank" href="{{ url('/') }}">Home</a></li>
                                         <li><a target="_blank" href="{{ url('T&C') }}">Terms and Conditions</a></li>
                                         <li><a target="_blank" href="{{ url('refund_policy') }}">Refund Policy</a></li>
-                                        <li><a target="_blank" href="{{ url('return_policy') }}">Returns & Exchanges</a>
+                                        <li><a target="_blank" href="{{ url('return_policy') }}">Returns &
+                                                Exchanges</a>
                                         </li>
                                         <li><a target="_blank" href="{{ url('shipping_policy') }}">Shipping &
                                                 Delivery</a></li>
@@ -177,13 +200,15 @@
                                 <h5 class="widget-title">Quick Links</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        
+
                                         <li><a target="_blank" href="{{ url('/account') }}">My Account</a></li>
-                                        <li><a  target="_blank" href="{{ url('/order-track') }}">Orders Tracking</a></li>
-                                        <li><a  href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
+                                        <li><a target="_blank" href="{{ url('/order-track') }}">Orders Tracking</a>
+                                        </li>
+                                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
                                                 Guide</a></li>
-                                      
-                                        <li><a  target="_blank" href="{{ route('public.contact-us') }}">Contact Us</a></li>
+
+                                        <li><a target="_blank" href="{{ route('public.contact-us') }}">Contact Us</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -564,7 +589,7 @@
     <!--=== All Plugins Js ===-->
     <script src="/assets/js/plugins.js"></script>
     <!--=== Active Js ===-->
-    <script src="/assets/js/active.js"></script> 
+    <script src="/assets/js/active.js"></script>
 
     <script>
         const toggleSearch = (search, button) => {
