@@ -280,7 +280,7 @@
 	// });
 
 
-	
+
 
 	// scroll to top
 	$(window).on('scroll', function () {
@@ -405,27 +405,18 @@
 				data: { product_id: Id },
 				success: function (response) {
 					$('.quickBody').html(response);
-					// Reinitialize slick if necessary
-					// prodct details slider active
-					$('.product-large-slider').slick({
-						fade: true,
-						arrows: false,
-						asNavFor: '.pro-nav'
-					});
+					var firstAvailableSize = $('.size-tab .size-button')
+						.not('.disabled')
+						.first();
 
-
-					// product details slider nav active
-					$('.pro-nav').slick({
-						slidesToShow: 4,
-						asNavFor: '.product-large-slider',
-						arrows: false,
-						focusOnSelect: true
-					});
+					if (firstAvailableSize.length > 0) {
+						firstAvailableSize.find('input[type="radio"]').prop('checked', true).trigger('change');
+					}
 				}
 			});
 		});
 
-	
+
 
 	});
 

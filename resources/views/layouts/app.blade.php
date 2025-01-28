@@ -92,6 +92,57 @@
             max-height: 20rem;
         }
     </style>
+    <style>
+        .size-tab label {
+            color: #444;
+            cursor: pointer;
+            display: inline-block;
+            font-family: "futuramedium";
+            font-size: 15px;
+            line-height: 1;
+            margin-bottom: 10px;
+            max-width: 100%;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .size-button {
+            background: #fff;
+            border: 1px solid #a1a1a1;
+            border-radius: 50%;
+            height: 50px;
+            line-height: 50px !important;
+            margin-right: 10px !important;
+            text-align: center;
+            width: 50px;
+        }
+
+        .size-tab label.disabled {
+            border: 1px solid #a1a1a1;
+            opacity: .5;
+        }
+
+        .size-tab label.disabled:after {
+            background-color: #d5d6d9;
+            content: "";
+            height: 1px;
+            left: 0;
+            position: absolute;
+            top: 50%;
+            transform: rotate(-45deg);
+            width: 100%;
+        }
+
+        .color-tab label.active img,
+        .size-button.active {
+            border: 5px solid #df9b19;
+        }
+
+        .color-tab label img {
+            border: 1px solid #a1a1a1;
+            border-radius: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -651,6 +702,193 @@
     </script>
 
     @stack('footer')
+    <script>
+        $(document).ready(function() {
+            // Set first size button as checked by default
+            $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
+
+            // Function to handle active class toggle
+            $('body').on('change', '.variSize_checkbox', function(e) {
+                // Remove 'active' class from all labels
+                $('.size-button').removeClass('active');
+
+                // Add 'active' class to the parent label of the checked input
+                if ($(this).is(':checked')) {
+                    $(this).closest('.size-button').addClass('active');
+                }
+                var size = $(this).val();
+                var product = $(this).data('product');
+
+                // AJAX request for variation details
+                $.ajax({
+                    url: '/get-variation-details',
+                    method: 'GET',
+                    data: {
+                        product_id: product,
+                        size: size,
+                    },
+                    success: function(response) {
+                        $('.color-tab').html(response);
+
+                        // Set first color button as checked by default in the color-tab
+                        $('.color-tab .color-button').not('.disabled').first().find(
+                            'input[type="radio"]').prop('checked', true);
+                        // Trigger change event on the first color option
+                        $('.variColor_checkbox:checked').trigger('change');
+                    }
+                });
+            });
+
+            // Trigger change event on the initially checked size radio input
+            $('.variSize_checkbox:checked').trigger('change');
+
+
+            // Function to handle color change
+            $('body').on('change', '.variColor_checkbox', function(e) {
+                // Remove 'active' class from all labels
+                var colorButton = $(this).closest('.color-button'); // get the closest color button
+                if (colorButton.length > 0) {
+                    $('.color-button').removeClass('active');
+                    colorButton.addClass('active');
+                }
+
+                var color = $(this).val();
+                var sku = $(this).data('sku');
+                var price = $(this).data('price');
+                var stock = $(this).data('stock');
+                var pName = $(this).data('productname');
+                var variation = $(this).data('variation');
+
+                // Dynamically update SKU, price, and stock
+                $('.productSku').text(sku);
+                $('.regular-price').text(price);
+                $('.stockStatus').text(stock);
+                $('.product-title').text(pName);
+                if (stock == 'in-stock') {
+                    $('.stockStatus').addClass('text-success').removeClass('text-danger');
+                } else {
+                    $('.stockStatus').addClass('text-danger').removeClass('text-success');
+                }
+
+                // Hide all previous images
+                $('.imgshowing').hide();
+
+                var images = JSON.parse($(this).attr(
+                    'data-image')); // Get the image array from the selected color
+                var mainSlider = $('.product-large-slider'); // The main image slider container
+                var thumbSlider = $('.pro-nav'); // The thumbnail slider container
+
+                // Clear the existing images in the main slider and the thumbnail slider
+                mainSlider.empty();
+                thumbSlider.empty();
+
+
+                // Add the new images to the main image slider dynamically
+                $.each(images, function(index, image) {
+                    mainSlider.append(`
+                        <div class="pro-large-img img-zoom imgshowing">
+                            <img src="{{ asset('images/products/') }}/${image}" 
+                                onerror="this.onerror=null;this.src='/images/default.png';"
+                                alt="Product Image ${index + 1}">
+                        </div>
+                    `);
+
+                    // Add corresponding thumbnails to the thumbnail slider
+                    thumbSlider.append(`
+                        <div class="pro-nav-thumb imgshowing">
+                            <img src="{{ asset('images/products/') }}/${image}" 
+                                onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
+                                alt="Thumbnail ${index + 1}" />
+                        </div>
+                    `);
+                });
+
+
+                // Try to unslick existing sliders if initialized
+                try {
+                    if (mainSlider.hasClass('slick-initialized')) {
+                        mainSlider.slick('unslick');
+                    }
+
+                    if (thumbSlider.hasClass('slick-initialized')) {
+                        thumbSlider.slick('unslick');
+                    }
+                } catch (error) {
+                    console.log('Error while unslicking: ', error);
+                }
+
+                // Initialize the product details slider
+                mainSlider.slick({
+                    fade: true,
+                    arrows: false,
+                    asNavFor: '.pro-nav'
+                });
+
+                // Initialize the thumbnail slider nav
+                thumbSlider.slick({
+                    slidesToShow: 4,
+                    asNavFor: '.product-large-slider',
+                    arrows: false,
+                    focusOnSelect: true
+                });
+
+                // Image zoom effect for the newly added images
+                $('.img-zoom').zoom();
+            });
+
+
+            $('body').on('click', '#addToCartBtn', function(e) {
+                // Get the selected color radio input
+                const selectedColorInput = $('.variColor_checkbox:checked');
+
+                if (!selectedColorInput.length) {
+                    alert('Please select a color.');
+                    return;
+                }
+
+                // Extract data from the selected color and quantity input
+                const color = selectedColorInput.val();
+                const sku = selectedColorInput.data('sku');
+                const variationId = selectedColorInput.data('variation');
+                const price = selectedColorInput.data('price');
+                const productName = selectedColorInput.data('productname');
+                const stockStatus = selectedColorInput.data('stock');
+                const quantity = $('#quantity').val();
+
+                // Send the data via AJAX
+                $.ajax({
+                    url: '/add-to-cart',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    data: {
+                        color: color,
+                        sku: sku,
+                        variation_id: variationId,
+                        price: price,
+                        product_name: productName,
+                        stock_status: stockStatus,
+                        quantity: quantity,
+                    },
+                    success: function(response) {
+
+                        if (response.result) {
+                            toastr.success(response.message, "Success");
+
+                        } else {
+                            toastr.success(response.message, "Error");
+
+                        }
+                        $('.cart-count').text(response.cart_count)
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

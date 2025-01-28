@@ -1,59 +1,93 @@
-<!-- product details inner end -->
-<div class="product-details-inner">
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="product-large-slider mb-20">
-                <div class="pro-large-img img-zoom">
-                    <img src="assets/img/product/product-details-img1.jpg" alt="product thumb" />
-                </div>
-                <div class="pro-large-img img-zoom">
-                    <img src="assets/img/product/product-details-img2.jpg" alt="product thumb"/>
-                </div>
-                <div class="pro-large-img img-zoom">
-                    <img src="assets/img/product/product-details-img3.jpg" alt="product thumb"/>
-                </div>
-                <div class="pro-large-img img-zoom">
-                    <img src="assets/img/product/product-details-img4.jpg" alt="product thumb"/>
-                </div>
-            </div>
-            <div class="pro-nav slick-row-5">
-                <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img1.jpg" alt="" /></div>
-                <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img2.jpg" alt="" /></div>
-                <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img3.jpg" alt="" /></div>
-                <div class="pro-nav-thumb"><img src="assets/img/product/product-details-img4.jpg" alt="" /></div>
-            </div>
-        </div>    
-        <div class="col-lg-7">
-            <div class="product-details-des">
-                <h3 class="pro-det-title">Primitive Mens Premium Shoes</h3>
-                <div class="pro-review">
-                    <span><a href="#">1 Review(s)</a></span>
-                </div>
-                <div class="price-box">
-                    <span class="regular-price">₹70.00</span>
-                    <span class="old-price"><del>₹80.00</del></span>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                <div class="quantity-cart-box d-flex align-items-center mb-20">
-                    <div class="quantity">
-                        <div class="pro-qty"><input type="text" value="1"></div>
+
+
+
+<!-- product details wrapper start -->
+<div class="product-details-wrapper section-padding">
+    <div class="container custom-container">
+        <div class="row">
+            <div class="col-12">
+                <!-- product details inner end -->
+                <div class="product-details-inner">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            @php
+                                $images = product_images($product->id);
+                            @endphp
+                            <div class="product-large-slider mb-4">
+
+                            </div>
+
+                            <div class="pro-nav slick-row-5">
+
+                            </div>
+
+                        </div>
+                        <div class="col-lg-7">
+                            <div class="product-details-des">
+                                <h3 class="pro-det-title product-title">{{ $product->product_name }}</h3>
+                                <small> {{ $product->description }}</small>
+                                <div class="price-box">
+                                    <span class="regular-price">{{ min_price($product->id) }}</span>
+                                </div>
+                                <div class="price-box small">
+                                    <small>SKU</small> : <span class="text-theme  productSku"></span>
+                                </div>
+                                <div class="price-box my-3">
+                                    <span class="text-success small">Inclusive of all taxes</span>
+                                </div>
+                           
+                                <div class="product__variations">
+                                    <div class="size-tab round-radio">
+                                        @foreach ($all_sizes as $size)
+                                            <label
+                                                class="size-button {{ $sizes->contains('value', $size) ? '' : 'disabled' }}"
+                                                data-size-id="{{ $size }}">
+                                                <input type="radio" class="hidden variSize_checkbox"
+                                                    data-product="{{ $product->id }}" name="size"
+                                                    value="{{ $size }}">
+                                                <span>{{ $size }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                    <div class="size-chart mb-2">
+                                        <a href="#" class="text-theme" data-bs-toggle="modal"
+                                            data-bs-target="#sizeChart">Size Guide</a>
+                                    </div>
+
+                                    <div class="color-option1 mb-4">
+                                        <h5 class="cat-title mb-3 fw-bolder">Colors :</h5>
+                                        <div class="color-tab">
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="quantity-cart-box d-flex align-items-center mb-4">
+                                    <div class="quantity" x-data="{ quantity: 1 }">
+                                        <div class="pro-qty">
+                                            <button class="dec qtybtn"
+                                                @click="quantity > 1 ? quantity-- : quantity">-</button>
+                                            <input id="quantity" type="text" x-model="quantity" readonly>
+                                            <button class="inc qtybtn" @click="quantity++">+</button>
+                                        </div>
+                                    </div>
+                                    <button id="addToCartBtn" class="btn btn-dark add-to-cart">Add To Cart</button>
+                                </div>
+                                <div class="availability mb-4">
+                                    <h5 class="cat-title">Availability:</h5>
+                                    <span class="stockStatus text-capitalize">In Stock</span>
+                                </div>
+                                <div class="share-icon">
+                                    <h5 class="cat-title">Share:</h5>
+                                    <div class="sharethis-inline-share-buttons"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <a href="cart.html" class="btn btn-default">Add To Cart</a>
-                </div>
-                <div class="availability mb-20">
-                    <h5 class="cat-title">Availability:</h5>
-                    <span>In Stock</span>
-                </div>
-                <div class="share-icon">
-                    <h5 class="cat-title">Share:</h5>
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
-                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                    <a href="#"><i class="fa fa-google-plus"></i></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- product details inner end -->
+<!-- product details wrapper end -->
 

@@ -30,8 +30,6 @@ use Illuminate\Support\Facades\Session;
 class FrontendController extends Controller
 {
 
-
-
     public function home()
     {
         if (Auth::check() && auth('web')->user()->type == 'superadmin') {
@@ -61,7 +59,7 @@ class FrontendController extends Controller
         $wishlistIds = $request->input('wishlist');
         $products = Product::whereIn('id', $wishlistIds)->get();
 
-        return view('frontend.partials.wishlist', compact('products'))->render();
+        return view('frontend.partials.wishlist', compact('products'));
     }
 
 
@@ -70,7 +68,10 @@ class FrontendController extends Controller
         $product_id = $request->product_id;
         $product = Product::where('id', $product_id)->first() ??  abort(404);
 
-        return view('frontend.partials.product-single', compact('product'))->render();
+        $all_sizes   =  Size::query()->pluck('size_value');
+        $sizes = $product->variationKeys->where('type', 'size')->unique('value');
+        $colors = $product->variationKeys->where('type', 'color')->unique('value');
+        return view('frontend.partials.product-single', compact('product','all_sizes','sizes','colors'))->render();
     }
 
     public function shop(Request $request)
@@ -169,6 +170,7 @@ class FrontendController extends Controller
         $variations = ProductVariant::query()->whereHas('variationkey', function ($q) use ($variationIds) {
             $q->whereIn('variation_id', $variationIds);
         })->get();
+        
 
         return view('frontend.partials.product-variations', ['variations' => $variations])->render();
     }

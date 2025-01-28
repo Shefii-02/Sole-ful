@@ -19,7 +19,7 @@ use App\Http\Controllers\SizeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
+Route::get('\home', 'App\Http\Controllers\FrontendController@home')->name('home');
 
     Route::get('T&C', function () { return view('frontend.documents.T-C');})->name('t-c');
     Route::get('refund_policy', function () {
