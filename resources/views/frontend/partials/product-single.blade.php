@@ -73,14 +73,11 @@
                                     </div>
                                     <button id="addToCartBtn" class="btn btn-dark add-to-cart">Add To Cart</button>
                                 </div>
-                                <div class="availability mb-4">
+                                {{-- <div class="availability mb-4">
                                     <h5 class="cat-title">Availability:</h5>
                                     <span class="stockStatus text-capitalize">In Stock</span>
-                                </div>
-                                <div class="share-icon">
-                                    <h5 class="cat-title">Share:</h5>
-                                    <div class="sharethis-inline-share-buttons"></div>
-                                </div>
+                                </div> --}}
+                               
                             </div>
                         </div>
                     </div>

@@ -78,7 +78,7 @@
                                     <div class="price-box my-3">
                                         <span class="text-success small">Inclusive of all taxes</span>
                                     </div>
-                             
+
                                     <div class="product__variations">
                                         <div class="size-tab round-radio">
                                             @foreach ($all_sizes as $size)
@@ -298,15 +298,17 @@
                                                     </a>
                                                 </div>
                                                 <div class="product-content">
-                                                    <h5 class="product-name">
-                                                        <a target="_blank"
-                                                            href="{{ route('public.product', ['uid' => $similarProduct->unique_value, 'slug' => $similarProduct->slug]) }}">{{ $similarProduct->product_name }}</a>
-                                                    </h5>
-                                                    <div class="price-box">
-                                                        <span class="price-regular small fw-semibold">
-                                                            ₹ {{ number_format($similarProduct->minPrice) }}</span>
-                                                    </div>
-                                                    <div class="product-action-link">
+                                                    <a target="_blank"
+                                                        href="{{ route('public.product', ['uid' => $similarProduct->unique_value, 'slug' => $similarProduct->slug]) }}">
+                                                        <h5 class="product-name">
+                                                            {{ $similarProduct->product_name }}
+                                                        </h5>
+                                                        <div class="price-box">
+                                                            <span class="price-regular small fw-semibold">
+                                                                ₹ {{ number_format($similarProduct->minPrice) }}</span>
+                                                        </div>
+                                                    </a>
+                                                    <div class="product-action-link d-none">
                                                         <a href="#" id="wishlist-btn-{{ $similarProduct->id }}"
                                                             class="wishlist-btn"
                                                             data-product-id="{{ $similarProduct->id }}"
@@ -338,193 +340,3 @@
     <!-- product details wrapper end -->
 @endsection
 
-
-@push('footer')
-    {{-- <script>
-        $(document).ready(function() {
-            // Set first size button as checked by default
-            $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
-
-            // Function to handle active class toggle
-            $('body').on('change', '.variSize_checkbox', function(e) {
-                // Remove 'active' class from all labels
-                $('.size-button').removeClass('active');
-
-                // Add 'active' class to the parent label of the checked input
-                if ($(this).is(':checked')) {
-                    $(this).closest('.size-button').addClass('active');
-                }
-                var size = $(this).val();
-                var product = $(this).data('product');
-
-                // AJAX request for variation details
-                $.ajax({
-                    url: '/get-variation-details',
-                    method: 'GET',
-                    data: {
-                        product_id: product,
-                        size: size,
-                    },
-                    success: function(response) {
-                        $('.color-tab').html(response);
-
-                        // Set first color button as checked by default in the color-tab
-                        $('.color-tab .color-button').not('.disabled').first().find(
-                            'input[type="radio"]').prop('checked', true);
-                        // Trigger change event on the first color option
-                        $('.variColor_checkbox:checked').trigger('change');
-                    }
-                });
-            });
-
-            // Trigger change event on the initially checked size radio input
-            $('.variSize_checkbox:checked').trigger('change');
-        });
-
-        // Function to handle color change
-        $('body').on('change', '.variColor_checkbox', function(e) {
-            // Remove 'active' class from all labels
-            var colorButton = $(this).closest('.color-button'); // get the closest color button
-            if (colorButton.length > 0) {
-                $('.color-button').removeClass('active');
-                colorButton.addClass('active');
-            }
-
-            var color = $(this).val();
-            var sku = $(this).data('sku');
-            var price = $(this).data('price');
-            var stock = $(this).data('stock');
-            var pName = $(this).data('productname');
-            var variation = $(this).data('variation');
-
-            // Dynamically update SKU, price, and stock
-            $('.productSku').text(sku);
-            $('.regular-price').text(price);
-            $('.stockStatus').text(stock);
-            $('.product-title').text(pName);
-            if (stock == 'in-stock') {
-                $('.stockStatus').addClass('text-success').removeClass('text-danger');
-            } else {
-                $('.stockStatus').addClass('text-danger').removeClass('text-success');
-            }
-
-            // Hide all previous images
-            $('.imgshowing').hide();
-
-            var images = JSON.parse($(this).attr('data-image')); // Get the image array from the selected color
-            var mainSlider = $('.product-large-slider'); // The main image slider container
-            var thumbSlider = $('.pro-nav'); // The thumbnail slider container
-
-            // Clear the existing images in the main slider and the thumbnail slider
-            mainSlider.empty();
-            thumbSlider.empty();
-
-
-            // Add the new images to the main image slider dynamically
-            $.each(images, function(index, image) {
-                mainSlider.append(`
-            <div class="pro-large-img img-zoom imgshowing">
-                <img src="{{ asset('images/products/') }}/${image}" 
-                    onerror="this.onerror=null;this.src='/images/default.png';"
-                    alt="Product Image ${index + 1}">
-            </div>
-        `);
-
-                // Add corresponding thumbnails to the thumbnail slider
-                thumbSlider.append(`
-            <div class="pro-nav-thumb imgshowing">
-                <img src="{{ asset('images/products/') }}/${image}" 
-                    onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
-                    alt="Thumbnail ${index + 1}" />
-            </div>
-        `);
-            });
-             
-
-            // Try to unslick existing sliders if initialized
-            try {
-                if (mainSlider.hasClass('slick-initialized')) {
-                    mainSlider.slick('unslick');
-                }
-                
-                if (thumbSlider.hasClass('slick-initialized')) {
-                    thumbSlider.slick('unslick');
-                }
-            } catch (error) {
-                console.log('Error while unslicking: ', error);
-            }
-
-            // Initialize the product details slider
-            mainSlider.slick({
-                fade: true,
-                arrows: false,
-                asNavFor: '.pro-nav'
-            });
-
-            // Initialize the thumbnail slider nav
-            thumbSlider.slick({
-                slidesToShow: 4,
-                asNavFor: '.product-large-slider',
-                arrows: false,
-                focusOnSelect: true
-            });
-
-            // Image zoom effect for the newly added images
-            $('.img-zoom').zoom();
-        });
-
-
-        $(document).ready(function() {
-            $('#addToCartBtn').on('click', function() {
-                // Get the selected color radio input
-                const selectedColorInput = $('.variColor_checkbox:checked');
-
-                if (!selectedColorInput.length) {
-                    alert('Please select a color.');
-                    return;
-                }
-
-                // Extract data from the selected color and quantity input
-                const color = selectedColorInput.val();
-                const sku = selectedColorInput.data('sku');
-                const variationId = selectedColorInput.data('variation');
-                const price = selectedColorInput.data('price');
-                const productName = selectedColorInput.data('productname');
-                const stockStatus = selectedColorInput.data('stock');
-                const quantity = $('#quantity').val();
-
-                // Send the data via AJAX
-                $.ajax({
-                    url: '/add-to-cart',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    data: {
-                        color: color,
-                        sku: sku,
-                        variation_id: variationId,
-                        price: price,
-                        product_name: productName,
-                        stock_status: stockStatus,
-                        quantity: quantity,
-                    },
-                    success: function(response) {
-
-                        if (response.result) {
-                            toastr.success(response.message, "Success");
-
-                        } else {
-                            toastr.success(response.message, "Error");
-
-                        }
-                        $('.cart-count').text(response.cart_count)
-                    },
-                    error: function() {
-                        alert('An error occurred. Please try again.');
-                    }
-                });
-            });
-        });
-    </script> --}}
-@endpush
