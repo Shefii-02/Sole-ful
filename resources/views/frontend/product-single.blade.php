@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="price-box small">
                                         <small>SKU</small> : <span class="text-theme  productSku"></span>
-                                    </div>
+                                    </div>   
                                     <div class="price-box">
                                         <span class="text-success small">Inclusive of all taxes</span>
                                     </div>
