@@ -52,11 +52,12 @@
     <!-- breadcrumb area end -->
     <!-- page main wrapper start -->
     <div class="shop-main-wrapper section-padding documents">
-        <div class="container">
+        <div class="container py-4">
             <div class="row">
+                <h1 class="text-center mb-3">Shipping Policy</h1>
                 <p><strong>Effective Date:</strong> 1st Jan 2025</p>
                 <ul>
-                    <li>All confirmed orders will be dispatched within 2 to 3 business days. Delivery timelines may vary depending on the courier partner's schedule.</li>
+                    <li>All confirmed orders will be delivered within 5 to 7 business days. Delivery timelines may vary depending on the courier partner's schedule.</li>
                     <li>Shipping is free of charge.</li>
                     <li>Once an order has been shipped from our warehouse, it cannot be cancelled. If you wish to cancel, you may refuse delivery when the courier partner attempts to deliver.</li>
                     <li>If you accept the delivery but are unsatisfied with your order, you can raise an exchange request.</li>

@@ -118,13 +118,13 @@
                                     <h3 class="pro-det-title product-title">{{ $product->product_name }}</h3>
                                     <div class="pro-review d-none">
                                         <span><a href="#">0 Review(s)</a></span>
-                                    </div>   
+                                    </div>
                                     <div class="price-box">
                                         <span class="regular-price">{{ min_price($product->id) }}</span>
                                     </div>
                                     <div class="price-box small">
                                         <small>SKU</small> : <span class="text-theme  productSku"></span>
-                                    </div>   
+                                    </div>
                                     <div class="price-box">
                                         <span class="text-success small">Inclusive of all taxes</span>
                                     </div>
@@ -176,76 +176,85 @@
                                     </div>
                                 </div>
 
-                                <div class="accordion accordion-flush mt-3" id="accordionFlushExample">
+                                <div class="accordion accordion-flush mt-3" x-data="{ open: '' }">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-ProductDetails">
-                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-ProductDetails"
-                                                aria-expanded="false" aria-controls="flush-ProductDetails">
+                                            <button class="accordion-button text-dark fw-bold"
+                                                :class="{ 'collapsed': open !== 'ProductDetails' }" type="button"
+                                                @click="open === 'ProductDetails' ? open = '' : open = 'ProductDetails'"
+                                                aria-controls="flush-ProductDetails">
                                                 Product Details
                                             </button>
                                         </h2>
-                                        <div id="flush-ProductDetails" class="collapse collapse-horizontal"
-                                            aria-labelledby="flush-ProductDetails" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is
-                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
-                                                first item's accordion body.</div>
+                                        <div id="flush-ProductDetails" class="accordion-collapse collapse"
+                                            :class="{ 'show': open === 'ProductDetails' }"
+                                            aria-labelledby="flush-ProductDetails">
+                                            <div class="accordion-body">
+                                                Placeholder content for this accordion, which is intended to demonstrate the
+                                                `accordion-flush` class. This is the first item's accordion body.
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-CareInstruction">
-                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-CareInstruction"
-                                                aria-expanded="false" aria-controls="flush-CareInstruction">
+                                            <button class="accordion-button text-dark fw-bold"
+                                                :class="{ 'collapsed': open !== 'CareInstruction' }" type="button"
+                                                @click="open === 'CareInstruction' ? open = '' : open = 'CareInstruction'"
+                                                aria-controls="flush-CareInstruction">
                                                 Care Instruction
                                             </button>
                                         </h2>
-                                        <div id="flush-CareInstruction" class="collapse collapse-horizontal"
-                                            aria-labelledby="flush-CareInstruction" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is
-                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
-                                                second item's accordion body. Let's imagine this being filled with some
-                                                actual content.</div>
+                                        <div id="flush-CareInstruction" class="accordion-collapse collapse"
+                                            :class="{ 'show': open === 'CareInstruction' }"
+                                            aria-labelledby="flush-CareInstruction">
+                                            <div class="accordion-body">
+                                                Placeholder content for this accordion, which is intended to demonstrate the
+                                                `accordion-flush` class. This is the second item's accordion body.
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-OtherDetails">
-                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-OtherDetails"
-                                                aria-expanded="false" aria-controls="flush-OtherDetails">
+                                            <button class="accordion-button text-dark fw-bold"
+                                                :class="{ 'collapsed': open !== 'OtherDetails' }" type="button"
+                                                @click="open === 'OtherDetails' ? open = '' : open = 'OtherDetails'"
+                                                aria-controls="flush-OtherDetails">
                                                 Other Details
                                             </button>
                                         </h2>
-                                        <div id="flush-OtherDetails" class="collapse collapse-horizontal"
-                                            aria-labelledby="flush-OtherDetails" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is
-                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
-                                                third item's accordion body. Nothing more exciting happening here in terms
-                                                of content, but just filling up the space to make it look, at least at first
-                                                glance, a bit more representative of how this would look in a real-world
-                                                application.</div>
+                                        <div id="flush-OtherDetails" class="accordion-collapse collapse"
+                                            :class="{ 'show': open === 'OtherDetails' }"
+                                            aria-labelledby="flush-OtherDetails">
+                                            <div class="accordion-body">
+                                                Placeholder content for this accordion, which is intended to demonstrate the
+                                                `accordion-flush` class. This is the third item's accordion body.
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-ConsumerComplaintContact">
-                                            <button class="accordion-button collapsed text-dark fw-bold" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#flush-ConsumerComplaintContact"
-                                                aria-expanded="false" aria-controls="flush-ConsumerComplaintContact">
+                                            <button class="accordion-button text-dark fw-bold"
+                                                :class="{ 'collapsed': open !== 'ConsumerComplaintContact' }"
+                                                type="button"
+                                                @click="open === 'ConsumerComplaintContact' ? open = '' : open = 'ConsumerComplaintContact'"
+                                                aria-controls="flush-ConsumerComplaintContact">
                                                 Consumer Complaint Contact
                                             </button>
                                         </h2>
-                                        <div id="flush-ConsumerComplaintContact" class="collapse collapse-horizontal"
-                                            aria-labelledby="flush-ConsumerComplaintContact" data-bs-parent="#accordionFlushExample">
-                                            <div class="accordion-body">Placeholder content for this accordion, which is
-                                                intended to demonstrate the <code>.accordion-flush</code> class. This is the
-                                                third item's accordion body. Nothing more exciting happening here in terms
-                                                of content, but just filling up the space to make it look, at least at first
-                                                glance, a bit more representative of how this would look in a real-world
-                                                application.</div>
+                                        <div id="flush-ConsumerComplaintContact" class="accordion-collapse collapse"
+                                            :class="{ 'show': open === 'ConsumerComplaintContact' }"
+                                            aria-labelledby="flush-ConsumerComplaintContact">
+                                            <div class="accordion-body">
+                                                Placeholder content for this accordion, which is intended to demonstrate the
+                                                `accordion-flush` class. This is the third item's accordion body.
+                                            </div>
                                         </div>
                                     </div>
-                                    
                                 </div>
+
                             </div>
                         </div>
                     </div>

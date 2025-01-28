@@ -53,14 +53,24 @@
     <!-- page main wrapper start -->
     <div class="shop-main-wrapper section-padding documents">
         <div class="container">
-            <div class="row">
-                <p><strong>Effective Date:</strong> 1st Jan 2025</p>
+            <div class="container py-4">
+                <h1 class="text-center mb-3">Return Policy</h1>
+
+                <p class="effective-date"><span class="highlight">Effective Date:</span> 1st Jan 2025</p>
+
                 <ul>
-                    <li>Returns are accepted against manufacturing defects only within 7 days from the day of delivery of the order.</li>
-                    <li>Items eligible for return and refund must be unused, intact, and in their original packaging (including labels, tags, boxes, and plastic wrap).</li>
-                    <li>To initiate a return, log in to the website <a href="https://www.soleful.in">www.soleful.in</a> and raise a return request from the "My Orders" section. Our team will gladly look into the concerns and resolve them.</li>
+                    <li>Returns are accepted against manufacturing defects only within <span class="highlight">7 days</span>
+                        from the day of delivery of the order.</li>
+                    <li>The return process will be completed within <span class="highlight">7 to 10 business days</span>.
+                    </li>
+                    <li>Replacement of the product will be completed in <span class="highlight">7 to 10 business
+                            days</span>.</li>
+                    <li>Items eligible for return and refund must be unused, intact, and in their original packaging
+                        (including labels, tags, boxes, and plastic wrap).</li>
+                    <li>To initiate a return, log in to the website <a href="https://www.soleful.in"
+                            target="_blank">www.soleful.in</a> and raise a return request from the "My Orders" section. Our
+                        team will gladly look into the concerns and resolve them.</li>
                 </ul>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
