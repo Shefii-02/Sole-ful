@@ -482,12 +482,8 @@
 
 
                     var addToCartData = response.addToCartData;
-                    console.log(addToCartData);
-                    if (quantity > 0) {
-                        gtag("event", "add_to_cart", addToCartData);
-                    } else {
-                        gtag("event", "remove_from_cart", addToCartData);
-                    }
+               
+                  
                 },
                 error: function(xhr, status, error) {
 

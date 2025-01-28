@@ -278,7 +278,7 @@
                                                         id="b_city" placeholder="" required>
                                                 </div>
                                                 <div class="col-lg-6 form-group mb-3">
-                                                    <label>Province</label>
+                                                    <label>State</label>
                                                     <input class="form-control province_fill" autocomplete="off"
                                                         type="text" name="b_province"
                                                         value="{{ old('b_province') ?? session()->has('billing_province') ? session('billing_province') : '' }}"
@@ -356,7 +356,7 @@
                                                         <span class="text-danger s_cityError"></span>
                                                     </div>
                                                     <div class="col-lg-6 form-group mb-3">
-                                                        <label>Province</label>
+                                                        <label>State</label>
                                                         <input class="form-control province_fill" autocomplete="off"
                                                             type="text" name="s_province"
                                                             value="{{ old('s_province') ?? session()->has('billing_province') ? session('billing_province') : '' }}"
@@ -496,7 +496,7 @@
                                     class="form-control city_fill" name="city">
                             </div>
                             <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="">Province</label>
+                                <label class="mb-2" for="">State</label>
                                 <input form="add_address" class="form-control province_fill" autocomplete="off"
                                     type="text" name="province" id="province" placeholder="" required>
 

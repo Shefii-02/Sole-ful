@@ -149,7 +149,7 @@
                                 class="form-control city_fill" name="city">
                         </div>
                         <div class="col-lg-6 form-group mb-2">
-                            <label class="mb-2" for="">Province</label>
+                            <label class="mb-2" for="">State</label>
                             <input form="add_address" class="form-control province_fill" autocomplete="off"
                                 type="text" name="province" id="province" placeholder="" required>
 
@@ -214,7 +214,7 @@
                         </div>
                         <div class="col-lg-6 form-group mb-2">
 
-                            <label class="mb-2" for="">Province</label>
+                            <label class="mb-2" for="">State</label>
                             <input form="edit_address" class="form-control province_fill" autocomplete="off"
                                 type="text" name="province" id="Editprovince" placeholder="" required>
 
