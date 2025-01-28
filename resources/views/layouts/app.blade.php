@@ -106,7 +106,7 @@
                                             #5 1 FLOOR GEDDALAHALLI,HENNUR<br>
                                             BAGLUR MAIN ROAD KOTHALUR POST BLR.560077</li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
-                                                href="mailto:solefulfootwears@gmail.com">solefulfootwears@gmail.com </a>
+                                                href="mailto:relationship@soleful.in">relationship@soleful.in</a>
                                         </li>
                                         <li><i class="ion-ios-telephone-outline"></i>Phone: <a
                                                 href="tel:+917996666225">+91 79966 66225</a></li>

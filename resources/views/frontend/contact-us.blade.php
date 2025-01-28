@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="contact-message">
-                        <h2 class="contact-title">tell us your suggestions</h2>
+                        <h2 class="contact-title">Contact Us</h2>
                         <form id="contact-form" action="{{ route('public.contact-send') }}" method="post"
                             class="contact-form">
                             @csrf
@@ -61,23 +61,17 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="contact-info pt-0">
-                        <h2 class="contact-title ">contact us</h2>
-                     
-                            <p>
-                                Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum
-                            est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum
-                            formas human.
-                            </p> 
+                       
                         
                         <ul>
-                            <li><i class="fa fa-fax"></i> Address :                             <a  href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">#5 1 FLOOR GEDDALAHALLI,HENNUR<br>
-                                BAGLUR MAIN ROAD KOTHALUR POST BLR.560077</a></li>
-                            <li><i class="fa fa-phone"></i> <a href="mailto:solefulfootwears@gmail.com" target="_blank">solefulfootwears@gmail.com</a></li>
+                            <li><i class="fa fa-fax"></i> Address :<a  href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">#5 1 FLOOR GEDDALAHALLI,HENNUR<br>
+                                BAGLUR MAIN ROAD, KOTHALUR POST, BANGALORE,560077</a></li>
+                            <li><i class="fa fa-phone"></i> <a href="mailto:relationship@soleful.in" target="_blank">relationship@soleful.in</a></li>
                             <li><i class="fa fa-envelope-o"></i> <a href="tel:+917996666225" target="_blank">+91 79966 66225</a></li>
                         </ul>
                         <div class="working-time">
                             <h3>Working Hours</h3>
-                            <p class="pb-0"><span>Monday – Saturday:</span>08:00 AM – 06:00 PM</p>
+                            <p class="pb-0"><span>Monday – Saturday:</span>08:00 AM – 09:30 PM</p>
                         </div>
                     </div>
                 </div>

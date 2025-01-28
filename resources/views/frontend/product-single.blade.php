@@ -185,7 +185,7 @@
                                                 Product Details
                                             </button>
                                         </h2>
-                                        <div id="flush-ProductDetails" class="accordion-collapse collapse"
+                                        <div id="flush-ProductDetails" class="collapse collapse-horizontal"
                                             aria-labelledby="flush-ProductDetails" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body">Placeholder content for this accordion, which is
                                                 intended to demonstrate the <code>.accordion-flush</code> class. This is the
@@ -200,7 +200,7 @@
                                                 Care Instruction
                                             </button>
                                         </h2>
-                                        <div id="flush-CareInstruction" class="accordion-collapse collapse"
+                                        <div id="flush-CareInstruction" class="collapse collapse-horizontal"
                                             aria-labelledby="flush-CareInstruction" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body">Placeholder content for this accordion, which is
                                                 intended to demonstrate the <code>.accordion-flush</code> class. This is the
@@ -216,7 +216,7 @@
                                                 Other Details
                                             </button>
                                         </h2>
-                                        <div id="flush-OtherDetails" class="accordion-collapse collapse"
+                                        <div id="flush-OtherDetails" class="collapse collapse-horizontal"
                                             aria-labelledby="flush-OtherDetails" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body">Placeholder content for this accordion, which is
                                                 intended to demonstrate the <code>.accordion-flush</code> class. This is the
@@ -234,7 +234,7 @@
                                                 Consumer Complaint Contact
                                             </button>
                                         </h2>
-                                        <div id="flush-ConsumerComplaintContact" class="accordion-collapse collapse"
+                                        <div id="flush-ConsumerComplaintContact" class="collapse collapse-horizontal"
                                             aria-labelledby="flush-ConsumerComplaintContact" data-bs-parent="#accordionFlushExample">
                                             <div class="accordion-body">Placeholder content for this accordion, which is
                                                 intended to demonstrate the <code>.accordion-flush</code> class. This is the
