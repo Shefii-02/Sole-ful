@@ -691,7 +691,7 @@
         };
 
         @if (session('success_msg'))
-            toastr.success("{{ session('success_msg') }}", "Success");
+            toastr.success("{!! session('success_msg') !!}", "Success");
         @elseif (session('failed_msg'))
             toastr.error("{{ session('failed_msg') }}", "Error");
         @elseif (session('info'))

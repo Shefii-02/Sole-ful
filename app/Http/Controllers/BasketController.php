@@ -80,14 +80,14 @@ class BasketController extends Controller
                 $itemsCounts = CartItem::where('basket_id', $basket->id)->count();
                 $response['result'] = true;
                 $response['cart_count'] = $itemsCounts;
-                $response['message'] = 'Product Added to your cart';
+                $response['message'] = 'Product Added to your cart <a href="/cart" target="_blank" class="my-3 btn btn-theme">View Cart</a>';
                 DB::commit();
             } catch (Exception $e) {
                 dd($e);
                 DB::rollBack();
                 $response['result'] = false;
                 $response['cart_count'] = CartItem::where('basket_id', $basket->id)->count();
-                $response['message'] = 'Product Can`t be added, some issue please try again';
+                $response['message'] = 'Product Can`t be added, some issue please try again ';
             }
         } else {
             $response['result'] = false;
