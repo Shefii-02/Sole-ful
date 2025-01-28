@@ -1,11 +1,12 @@
-@foreach ($products ?? [] as $product)
+@forelse ($products ?? [] as $product)
     <div class="col-lg-4 col-sm-6">
         <!-- product grid item start -->
         <div class="product-item mb-53">
             <div class="product-thumb">
                 <a target="_blank"
                     href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}">
-                    <img  src="{{ isset($product->MainThumbImage) && $product->MainThumbImage->image ? asset('images/products/' . $product->MainThumbImage->image) : asset('images/default.jpg') }}" alt=""> </a>
+                    <img src="{{ isset($product->MainThumbImage) && $product->MainThumbImage->image ? asset('images/products/' . $product->MainThumbImage->image) : asset('images/default.jpg') }}"
+                        alt=""> </a>
             </div>
             <div class="product-content">
                 <h5 class="product-name">
@@ -69,4 +70,11 @@
         </div>
         <!-- product list item start -->
     </div>
-@endforeach
+@empty
+    <div class="text-center">
+        <h2 class="my-3 fs-2">Sorry !</h2>
+        <p>
+            no product found
+        </p>
+    </div>
+@endforelse
