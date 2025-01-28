@@ -133,7 +133,7 @@
                          
                                     <ul id="suggestions-ul-search" class="list-none p-0 m-0 max-h-48 overflow-auto rounded-2xl">
                                         
-                                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">
+                                        {{-- <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                                             <a href="">
                                                 <div class="col-lg-12 my-2">
                                                     <div class="row">
@@ -150,7 +150,7 @@
                                                 </div>
                                             </a>
                                         </li>
-                                  
+                                   --}}
                                     </ul>
                        
                             </div>
@@ -232,7 +232,7 @@
 
 
                         <li class="d-none d-md-block">
-                            <a href="tel:(647)245-3301" class="text-theme" title="(647)245-3301">
+                            <a href="tel:+917996666225" class="text-theme" title="+91 79966 66225">
                                 <i class="bi bi-telephone-outbound fs-5" style="font-size: 19px;"></i>
                             </a>
                         </li>
