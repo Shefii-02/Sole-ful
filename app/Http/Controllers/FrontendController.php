@@ -16,6 +16,7 @@ use App\Models\Package;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Service;
+use App\Models\Size;
 use App\Models\VariationKey;
 use Exception;
 use Illuminate\Http\Request;
@@ -152,9 +153,10 @@ class FrontendController extends Controller
     {
         $product = Product::where('unique_value', $uid)->where('slug', $slug)->first() ?? abort(404);
         $similarProducts = Product::limit(10)->get();
+        $all_sizes   =  Size::query()->pluck('size_value');
         $sizes = $product->variationKeys->where('type', 'size')->unique('value');
         $colors = $product->variationKeys->where('type', 'color')->unique('value');
-        return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors'));
+        return view('frontend.product-single', compact('product', 'similarProducts', 'sizes', 'colors' ,'all_sizes'));
     }
 
 

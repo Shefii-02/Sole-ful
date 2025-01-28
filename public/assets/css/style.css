@@ -4073,9 +4073,6 @@ only screen and (min-width: 768px) and (max-width: 991.98px) {
 
 /*----- reviews area end -----*/
 /* Checkout Login Coupon Accordion Start */
-.checkout-page-wrapper {
-  margin-bottom: -8px;
-}
 
 @media only screen and (min-width: 768px) and (max-width: 991.98px),
 only screen and (max-width: 767.98px) {
@@ -4084,81 +4081,7 @@ only screen and (max-width: 767.98px) {
   }
 }
 
-.checkoutaccordion {
-  margin-bottom: 46px;
-}
 
-.checkoutaccordion h5 {
-  font-size: 18px;
-  font-weight: 500;
-  background-color: #f7f7f7;
-  border-top: 3px solid #df9b19;
-  padding: 15px 20px;
-  position: relative;
-  text-transform: capitalize;
-}
-
-.checkoutaccordion h5 span {
-  color: #df9b19;
-  cursor: pointer;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  margin-left: 10px;
-}
-
-@media only screen and (max-width: 479.98px) {
-  .checkoutaccordion h5 span {
-    display: block;
-    padding-top: 5px;
-    margin-left: 0;
-  }
-}
-
-.checkoutaccordion h5 span:hover {
-  color: #333333;
-}
-
-@media only screen and (max-width: 479.98px) {
-  .checkoutaccordion h5 {
-    font-size: 14px;
-  }
-}
-
-.checkoutaccordion .card {
-  border: none;
-  padding: 0;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-  margin-bottom: 30px;
-}
-
-.checkoutaccordion .card:last-child {
-  margin-bottom: 0;
-}
-
-.checkoutaccordion .card .card-body {
-  border: 1px solid #ccc;
-  font-size: 14px;
-  padding: 20px;
-}
-
-.checkoutaccordion .card .card-body .cart-update-option {
-  border: none;
-  padding: 0;
-}
-
-.checkoutaccordion .card .card-body .cart-update-option .apply-coupon-wrapper input {
-  padding: 12px 10px;
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  margin-right: 15px;
-}
-
-@media only screen and (max-width: 479.98px) {
-  .checkoutaccordion .card .card-body .cart-update-option .apply-coupon-wrapper input {
-    margin-bottom: 15px;
-  }
-}
 
 .checkout-box-wrap .custom-control {
   padding-left: 0;

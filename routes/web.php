@@ -57,7 +57,7 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     
     Route::post('sign-in', 'BasketController@postSignin')->name('signIn');
 
-    
+    Route::get('contact-us', function () { return view('frontend.contact-us');})->name('contact-us');
 
     
     Route::post('/add-to-cart', [BasketController::class, 'store']);
@@ -68,7 +68,6 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::get('blogs', 'FrontendController@blogs')->name('blogs');
     Route::get('blogs/category/{slug}', 'FrontendController@blogCategory')->name('blog-category');
     Route::get('blogs/{slug}', 'FrontendController@blogSingle')->name('blog-single');
-    Route::get('contact-us', 'FrontendController@contact')->name('contact');
     Route::post('contact-us', 'FrontendController@contactSend')->name('contact-send');
     Route::get('about-us', 'FrontendController@about')->name('about');
     

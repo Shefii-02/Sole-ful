@@ -180,7 +180,7 @@
                                         <li><a  href="#" data-bs-toggle="modal" data-bs-target="#sizeChart">Size
                                                 Guide</a></li>
                                         <li><a  target="_blank" href="{{ url('/accounts/orders') }}">Shopping Rates</a></li>
-                                        <li><a  target="_blank" href="{{ url('contact-us') }}">Contact Us</a></li>
+                                        <li><a  target="_blank" href="{{ route('public.contact-us') }}">Contact Us</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -561,7 +561,7 @@
     <!--=== All Plugins Js ===-->
     <script src="/assets/js/plugins.js"></script>
     <!--=== Active Js ===-->
-    <script src="/assets/js/active.js"></script>
+    <script src="/assets/js/active.js"></script> 
 
     <script>
         const toggleSearch = (search, button) => {

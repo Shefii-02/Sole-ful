@@ -333,3 +333,15 @@ header {
     font-weight: bold;
     color: white;
 }
+
+/* .collapse:not(.show) {
+    display: block !important;
+} */
+
+.collapse .show {
+    display: block !important;
+}
+
+.collapse {
+    visibility: visible !important;
+}

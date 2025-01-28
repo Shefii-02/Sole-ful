@@ -131,7 +131,7 @@
                                     <p>{{ $product->care_instruction }}</p>
                                     <div class="product__variations">
                                         <div class="size-tab round-radio">
-                                            @foreach (['37', '38', '39', '40', '41'] as $size)
+                                            @foreach ($all_sizes as $size)
                                                 <label
                                                     class="size-button {{ $sizes->contains('value', $size) ? '' : 'disabled' }}"
                                                     data-size-id="{{ $size }}">

@@ -68,7 +68,6 @@
                 <div class="col-12">
                     <div class="section-title text-center">
                         <h2 class="title">Featured Collections </h2>
-                        <p class="sub-title">Lorem ipsum dolor sit amet consectetur adipisicing</p>
                     </div>
                 </div>
             </div>
@@ -143,7 +142,6 @@
                 <div class="col-12">
                     <div class="section-title text-center">
                         <h2 class="title">Season’s Top Picks</h2>
-                        <p class="sub-title">Lorem ipsum dolor sit amet consectetur adipisicing</p>
                     </div>
                 </div>
             </div>

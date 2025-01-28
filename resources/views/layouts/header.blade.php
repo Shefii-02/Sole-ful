@@ -37,41 +37,57 @@
                                                     <a class="dropdown-item" href="/">Home</a>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank" href="{{ route('public.shop') }}">Shop</a>
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('public.shop') }}">Shop</a>
                                                 </li>
                                                 <hr class="border-2 mb-2" />
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['shoe_type[]'=>'Casual Slides']) }}">Casual Slides</a>
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slides']) }}">Casual
+                                                        Slides</a>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['shoe_type[]'=>'Ethnic Slides']) }}">Ethnic Slides</a>
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic Slides']) }}">Ethnic
+                                                        Slides</a>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['shoe_type[]'=>'Casual Slipons']) }}">Casual Slipons</a>
-                                                </li>
-                                          
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" ttarget="_blank"  href="{{ route('public.shop',['categories[]'=>'Party Wear']) }}">Party Wear</a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('public.shop',['categories[]'=>'Casual Wear']) }}">Casual Wear</a>
-                                                </li>
-                                                <hr class="border-2 mb-2" />
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('t-c') }}">Terms and Conditions</a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('refund_policy') }}">Refund Policy</a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('return_policy') }}">Returns & Exchanges</a>
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slipons']) }}">Casual
+                                                        Slipons</a>
                                                 </li>
 
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('shipping_policy') }}">Shipping & Delivery</a>
+                                                    <a class="dropdown-item" ttarget="_blank"
+                                                        href="{{ route('public.shop', ['categories[]' => 'Party Wear']) }}">Party
+                                                        Wear</a>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"  href="{{ route('privacy_policy') }}">Privacy Policy</a>
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('public.shop', ['categories[]' => 'Casual Wear']) }}">Casual
+                                                        Wear</a>
+                                                </li>
+                                                <hr class="border-2 mb-2" />
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('t-c') }}">Terms and Conditions</a>
+                                                </li>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('refund_policy') }}">Refund Policy</a>
+                                                </li>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('return_policy') }}">Returns & Exchanges</a>
+                                                </li>
+
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('shipping_policy') }}">Shipping & Delivery</a>
+                                                </li>
+                                                <li class="mb-2">
+                                                    <a class="dropdown-item" target="_blank"
+                                                        href="{{ route('privacy_policy') }}">Privacy Policy</a>
                                                 </li>
 
                                             </ul>
@@ -103,7 +119,7 @@
 
                 <div class="px-4">
                     <ul class="d-flex gap-3 align-items-end align-content-end m-1">
-                        <li>
+                        <li class="position-relative">
                             <div class="search" id="search-bar">
                                 <input type="search" placeholder="Type something..." name="q"
                                     class="search__input">
@@ -111,17 +127,51 @@
                                     <i class="ri-search-2-line bi bi-search text-theme"></i>
                                     <i class="ri-close-line bi bi-x"></i>
                                 </div>
+
+                            </div>
+                            <div class="bg-light shadow-lg position-absolute">
+                         
+                                    <ul id="suggestions-ul-search" class="list-none p-0 m-0 max-h-48 overflow-auto rounded-2xl">
+                                        
+                                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">
+                                            <a href="">
+                                                <div class="col-lg-12 my-2">
+                                                    <div class="row">
+                                                        <div class="col-2">
+                                                            <img src="http://127.0.0.1:8000/images/products/lsKLXeYOXisEshPJ9KWIQC8UuB10c3.png" class="w-20 rounded-2">
+                                                        </div>
+                                                        <div class="col-10">
+                                                            <span>
+                                                                Women lavender casual slides
+                                                            </span><br>
+                                                            <span>₹ 1,399.00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Goyal Orchid Salisbury,
+                                            RK Hegde Nagar, Bengaluru</li>
+                                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">SNN Estates Felicity,
+                                            Thanisandra, Bengaluru</li>
+                                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Casagrand Orlena, HBR
+                                            Layout, Bengaluru</li>
+                                        <li class="px-4 py-2 hover:bg-gray-200 cursor-pointer">Kolte Patil Raaga,
+                                            Kannuru, Bengaluru</li>
+                                    </ul>
+                       
                             </div>
                         </li>
                         <li class="cursor-pointer">
-                            <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Order Now</a>
+                            <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Order
+                                Now</a>
                         </li>
                         <li class="cursor-pointer">
                             <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
                         </li>
-                        <li >
+                        <li>
                             <a href="#" id="cartList-btn-view" data-bs-toggle="offcanvas"
-                            data-bs-target="#CartList" aria-controls="CartList">
+                                data-bs-target="#CartList" aria-controls="CartList">
                                 <div class="cart-icon text-center text-theme">
                                     <i class="bi bi-cart fs-5 fw-bold"></i>
                                     <span class="cart-count absolute count-rounded">{{ basketItems() }}</span>
