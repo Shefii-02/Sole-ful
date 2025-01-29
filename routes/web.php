@@ -73,6 +73,9 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     
     Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
+    Route::any('confirm', [OrderController::class, 'confirmPayment'])->name('confirm');
+    
+
 });
 
 Route::post('account/address/create', [AccountController::class, 'addressCreate'])->name('account.address.add');
