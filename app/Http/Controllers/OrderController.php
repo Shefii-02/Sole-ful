@@ -471,7 +471,7 @@ class OrderController extends Controller
                     $order->coupon      = $couponCode;
                     $order->remarks     = '';
                     $order->billed_at   = date('Y-m-d H:i:s');
-                    $order->statu       = 'SUCCESS';
+                    $order->status       = 'SUCCESS';
                     $order->paid        = 1;
                     $order->save();
 
