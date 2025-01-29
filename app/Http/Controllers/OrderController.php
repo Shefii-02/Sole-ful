@@ -458,22 +458,22 @@ class OrderController extends Controller
                     $payment->payment_status    = 'SUCCESS';
                     $payment->save();
 
-                    $order              = new Order();
-                    $order->user_id     = $user->id;
-                    $order->invoice_id  = $this->invoiceNumberGenerate();
-                    $order->basket_id   = $basket->id;
-                    $order->subtotal    = $subTotal;
-                    $order->discount    = $discount;
-                    $order->tax         = $tax_amount;
-                    $order->shipping_charge = $ship_charge;
-                    $order->grandtotal  = $grandTotal;
-                    $order->ipaddress   = request()->ip();
-                    $order->coupon      = $couponCode;
-                    $order->remarks     = '';
-                    $order->billed_at   = date('Y-m-d H:i:s');
-                    $order->status       = 'SUCCESS';
-                    $order->paid        = 1;
-                    $order->save();
+                    // $order              = new Order();
+                    // $order->user_id     = $user->id;
+                    // $order->invoice_id  = $this->invoiceNumberGenerate();
+                    // $order->basket_id   = $basket->id;
+                    // $order->subtotal    = $subTotal;
+                    // $order->discount    = $discount;
+                    // $order->tax         = $tax_amount;
+                    // $order->shipping_charge = $ship_charge;
+                    // $order->grandtotal  = $grandTotal;
+                    // $order->ipaddress   = request()->ip();
+                    // $order->coupon      = $couponCode;
+                    // $order->remarks     = '';
+                    // $order->billed_at   = date('Y-m-d H:i:s');
+                    // $order->status       = 'SUCCESS';
+                    // $order->paid        = 1;
+                    // $order->save();
 
                     OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' =>$order->id ]);
                 }
@@ -487,7 +487,7 @@ class OrderController extends Controller
     
             $invoice_id = $order->invoice_id;
 
-            return view('thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
+            return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
         } else {
 
             //HANDLE YOUR ERROR MESSAGE HERE
