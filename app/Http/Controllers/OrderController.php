@@ -484,16 +484,7 @@ class OrderController extends Controller
             //Transaction completed, You can add transaction details into database
 
 
-            $data = [
-                'providerReferenceId' => $providerReferenceId,
-                'checksum' => $checksum,
-
-            ];
-            if ($merchantOrderId != '') {
-                $data['merchantOrderId'] = $merchantOrderId;
-            }
-
-            Payment::where('transaction_id', $transactionId)->update($data);
+    
             $invoice_id = $order->invoice_id;
 
             return view('thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
