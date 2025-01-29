@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('layouts.app')
 @section('content')
     <section class="product-listing-banner">
         <div class="container">
