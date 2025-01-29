@@ -484,7 +484,7 @@ class OrderController extends Controller
             //Transaction completed, You can add transaction details into database
 
 
-    
+       
             $invoice_id = $order->invoice_id;
 
             return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
