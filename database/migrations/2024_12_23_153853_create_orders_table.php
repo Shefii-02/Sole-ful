@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_id')->unique();
-            $table->foreignId('customer_id')->nullable()->constrained('customers')->onUpdate('cascade')->onDelete('set null');
-            $table->foreignId('basket_id')->nullable()->constrained('baskets')->onUpdate('cascade')->onDelete('set null');
             $table->integer('user_id')->nullable();
+            $table->string('invoice_id')->unique();
+            $table->foreignId('basket_id')->nullable()->constrained('baskets')->onUpdate('cascade')->onDelete('set null');
             $table->decimal('subtotal', 10, 2)->nullable();
             $table->decimal('discount', 10, 2)->nullable();
             $table->decimal('tax', 10, 2)->nullable();
@@ -24,39 +23,21 @@ return new class extends Migration
             $table->decimal('grandtotal', 10, 2)->nullable();
             $table->ipAddress('ipaddress')->nullable();
             $table->string('coupon')->nullable();
-            $table->unsignedBigInteger('discount_id')->nullable();
-            $table->string('discount_type', 50)->nullable();
-            $table->unsignedBigInteger('address_id')->nullable();
             $table->text('remarks')->nullable();
             $table->dateTime('billed_at')->nullable();
-            $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
-            $table->decimal('tip', 10, 2)->nullable();
-            $table->decimal('balance', 10, 2)->nullable();
+            $table->enum('status', ['PENDING', 'SUCCESS', 'FAILED'])->default('PENDING')->nullable();
             $table->decimal('paid', 10, 2)->nullable();
-            $table->enum('order_type', ['online', 'offline', 'pickup'])->nullable();
-            $table->enum('order_source', ['web', 'mobile', 'in_store'])->nullable();
+            $table->enum('order_type', ['online', 'offline', 'pickup'])->default('online')->nullable();
+            $table->enum('order_source', ['web', 'mobile', 'in_store'])->default('web')->nullable();
             $table->dateTime('delivery_at')->nullable();
             $table->decimal('refund_amount', 10, 2)->nullable();
             $table->enum('refund_status', ['pending', 'completed', 'failed'])->nullable();
             $table->dateTime('refunded_at')->nullable();
-            $table->string('delivery_partner', 100)->nullable();
-            $table->unsignedBigInteger('delivery_partner_id')->nullable();
-            $table->boolean('store_email_delivery')->default(false);
-            $table->boolean('customer_email_delivery')->default(false);
-            $table->dateTime('picked_at')->nullable();
-            $table->unsignedBigInteger('picked_by')->nullable();
-            $table->unsignedBigInteger('picker_id')->nullable();
-            $table->text('pickup_notes')->nullable();
             $table->dateTime('verified_at')->nullable();
             $table->unsignedBigInteger('verified_by')->nullable();
-            $table->unsignedBigInteger('shipped_by')->nullable();
-            $table->unsignedBigInteger('shipper_id')->nullable();
             $table->dateTime('shipped_at')->nullable();
             $table->dateTime('delivered_at')->nullable();
-            $table->unsignedBigInteger('delivery_date')->nullable();
-            $table->string('payment_terms', 100)->nullable();
             $table->timestamps(); 
-            $table->softDeletes();
         });
     }
 

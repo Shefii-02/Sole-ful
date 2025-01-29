@@ -47,7 +47,6 @@ class BasketController extends Controller
             $basket->save();
         }
 
-
         $productVariation          = ProductVariant::with('product')->where('id', $request->variation_id)->first();
 
         if ($productVariation) {

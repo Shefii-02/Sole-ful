@@ -151,7 +151,7 @@
                                                         <small class="text-grey ms-2">1</small>
                                                     </div>
 
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-6 d-none">
                                                         <small class="mt-3 fw-bold">Available Sizes</small><br>
                                                         @foreach ($sizes ?? [] as $Asize)
                                                             <small
@@ -209,7 +209,7 @@
                                                 Other Details
                                             </button>
                                         </h2>
-                                        <div id="flush-OtherDetails" class="accordion-collapse collapse"
+                                        <div id="flush-OtherDetails" class="accordion-collapse collapse d-none"
                                             :class="{ 'show': open === 'OtherDetails' }"
                                             aria-labelledby="flush-OtherDetails">
                                             <div class="accordion-body">

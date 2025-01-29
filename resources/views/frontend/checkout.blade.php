@@ -198,25 +198,34 @@
                                                                     $nonBase = 1;
                                                                 }
                                                             @endphp
-                                                            <li class="list-group-item">
+                                                            <li class="list-group-item border py-2">
                                                                 <div class="form-check">
                                                                     <input class="form-check-input BillingAdress"
                                                                         type="radio" data-name="{{ $item->name }}"
                                                                         data-address="{{ $item->address }}"
-                                                                        data-postal="{{ $item->postalcode }}"
-                                                                        data-emailval="{{ auth()->user()->email }}"
-                                                                        data-phone="{{ auth()->user()->phone }}"
+                                                                        data-locality="{{ $item->locality }}"
+                                                                        data-landmark="{{ $item->landmark }}"
+                                                                        data-house_name="{{ $item->house_name }}"
+                                                                        data-house_no="{{ $item->house_no }}"
+                                                                        data-state="{{ $item->state }}"
+                                                                        data-postal="{{ $item->pincode }}"
+                                                                        data-emailval="{{ $item->email }}"
+                                                                        data-phone="{{ auth()->user()->mobile }}"
                                                                         name="billing_address" value="{{ $item->id }}"
                                                                         id="BillingRadioaddress{{ $item->id }}"
                                                                         @if ($item->base == 1) checked @endif>
                                                                     <p class="form-check-label"
                                                                         for="BillingRadioaddress{{ $item->id }}">
                                                                         <small
-                                                                            class="fw-bolder h6 text-capitalize">{{ $item->name }}</small>
+                                                                            class="fw-bolder h6 text-capitalize">{{ $item->name }}</small><br>
+                                                                        <small class="fw-bolder h6 ">{{ $item->email }} /
+                                                                            {{ $item->mobile }}</small><br>
+
                                                                         <small
-                                                                            class="fw-bolder h6 text-capitalize">{{ $item->address }},
-                                                                            {{ $item->postalcode . ', ' . $item->city }},
-                                                                            {{ $item->province . ', ' . $item->country }}</small>
+                                                                            class="fw-bolder h6 text-capitalize">{{ $item->address }},{{ $item->landmark }}
+                                                                            {{ $item->house_no, $item->house_name . ',' }}
+                                                                            {{ $item->pincode . ', ' . $item->locality . ', ' . $item->state }}.
+                                                                        </small>
                                                                     </p>
                                                                 </div>
                                                             </li>
@@ -227,62 +236,9 @@
                                                                     class="fa fa-plus me-2"></i>
                                                                 Add a new address</a></li>
                                                     </ul>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="row address-form">
-                                                <div class="col-lg-12 form-group mb-3">
-                                                    <label for="">First name</label>
-                                                    <input class="form-control" autocomplete="off" type="text"
-                                                        value="{{ old('b_firstname') ?? session()->has('billing_firstname') ? session('billing_firstname') : '' }}"
-                                                        id="b_name" name="b_name" placeholder="" required>
-                                                </div>
-
-                                                <div class="col-lg-6 form-group mb-3">
-                                                    <label for="">Email</label>
-                                                    <input class="form-control" type="email" id="b_email" name="b_email"
-                                                        placeholder="Enter your email"
-                                                        value="{{ old('b_email') ?? ($basket ? $basket->email : '') }}"
-                                                        required autocomplete="off">
-
-                                                </div>
-
-                                                <div class="col-lg-6 form-group mb-3">
-                                                    <label for="">Phone Number</label>
-                                                    <input class="form-control phone_field" autocomplete="off"
-                                                        type="text"
-                                                        value="{{ old('b_phone') ?? session()->has('billing_phone') ? session('billing_phone') : '' }}"
-                                                        name="b_phone" id="b_phone" placeholder="" maxlength="14"
-                                                        required>
-                                                </div>
-                                                <div class="col-lg-6 form-group mb-3">
-                                                    <label for="">Address</label>
-                                                    <input class="form-control address_fill" autocomplete="off"
-                                                        type="text"
-                                                        value="{{ old('b_address') ?? session()->has('billing_address') ? session('billing_address') : '' }}"
-                                                        name="b_address" id="b_address" placeholder="" required>
-                                                </div>
-                                                <div class="col-lg-6 form-group mb-3">
-                                                    <label for="">Postal Code</label>
-                                                    <input class="form-control postalCode_fill" autocomplete="off"
-                                                        type="text"
-                                                        value="{{ old('b_postal') ?? session()->has('billing_postalcode') ? session('billing_postalcode') : '' }}"
-                                                        name="b_postal" id="b_postal" placeholder="" maxlength="7"
-                                                        required>
-                                                </div>
-                                                <div class="col-lg-6 form-group mb-3">
-                                                    <label for="">City</label>
-                                                    <input class="form-control city_fill" autocomplete="off"
-                                                        type="text" name="b_city"
-                                                        value="{{ old('b_city') ?? session()->has('billing_city') ? session('billing_city') : '' }}"
-                                                        id="b_city" placeholder="" required>
-                                                </div>
-                                                <div class="col-lg-6 form-group mb-3">
-                                                    <label>State</label>
-                                                    <input class="form-control province_fill" autocomplete="off"
-                                                        type="text" name="b_province"
-                                                        value="{{ old('b_province') ?? session()->has('billing_province') ? session('billing_province') : '' }}"
-                                                        id="b_province" placeholder="" required>
+                                                    @error('billing_address')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         @endif
@@ -305,65 +261,119 @@
                                         <div class="card-header" id="shippingHeading">
                                             <h2 class="mb-0 fw-bold">Delivery Address</h2>
                                         </div>
-
                                         <div class="card-body">
                                             <div id="shippingCollapse">
-
                                                 <div class="row address-form">
                                                     <div class="col-lg-12 form-group mb-3">
-                                                        <label for="">First name</label>
-                                                        <input class="form-control" autocomplete="off" type="text"
-                                                            value="{{ old('s_firstname') }}" id="s_firstname"
+                                                        <label for="">Full name</label>
+                                                        <input class="form-control @error('s_name') is-invalid @enderror"
+                                                            autocomplete="off" type="text" id="s_name"
                                                             name="s_name" placeholder="">
+                                                        @error('s_name')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
+
                                                     <div class="col-lg-6 form-group mb-3">
                                                         <label for="">Email</label>
-                                                        <input class="form-control" autocomplete="off"
-                                                            value="{{ old('s_email') }}" type="email" name="s_email"
+                                                        <input class="form-control @error('s_email') is-invalid @enderror"
+                                                            autocomplete="off" type="email" name="s_email"
                                                             id="s_email" placeholder="">
+                                                        @error('s_email')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
 
                                                     <div class="col-lg-6 form-group mb-3">
                                                         <label for="">Phone Number</label>
-                                                        <input class="form-control phone_field" autocomplete="off"
-                                                            value="{{ old('s_phone') }}" type="text" name="s_phone"
+                                                        <input
+                                                            class="form-control phone_field @error('s_phone') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_phone"
                                                             id="s_phone" minlength="10" maxlength="10" placeholder="">
+                                                        @error('s_phone')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
-                                                    <div class="col-lg-6 form-group mb-3">
+
+                                                    <div class="col-lg-12 form-group mb-3">
                                                         <label for="">Address</label>
-                                                        <input class="form-control address_fill" autocomplete="off"
-                                                            type="text" value="{{ old('s_address') }}"
-                                                            name="s_address" id="s_address" placeholder="">
+                                                        <input
+                                                            class="form-control address_fill @error('s_address') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_address"
+                                                            id="s_address" placeholder="">
+                                                        @error('s_address')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="col-lg-6 form-group mb-3">
+                                                        <label for="">Locality</label>
+                                                        <input
+                                                            class="form-control address_fill @error('s_locality') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_locality"
+                                                            id="s_locality" placeholder="">
+                                                        @error('s_locality')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="col-lg-6 form-group mb-3">
+                                                        <label for="">Landmark</label>
+                                                        <input
+                                                            class="form-control address_fill @error('s_landmark') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_landmark"
+                                                            id="s_landmark" placeholder="">
+                                                        @error('s_landmark')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
 
 
 
+                                                    <div class="col-lg-6 form-group mb-3">
+                                                        <label for="">House Name</label>
+                                                        <input
+                                                            class="form-control @error('s_house_name') is-invalid @enderror"
+                                                            readonly autocomplete="off" type="text"
+                                                            name="s_house_name" id="s_house_name" placeholder="">
+                                                        @error('s_house_name')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="col-lg-6 form-group mb-3">
+                                                        <label>House Number</label>
+                                                        <input
+                                                            class="form-control house_no_fill @error('s_house_no') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_house_no"
+                                                            id="s_house_no" placeholder="" required>
+                                                        @error('s_house_no')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
                                                     <div class="col-lg-6 form-group mb-3">
                                                         <label for="">Postal Code</label>
-                                                        <input class="form-control postalCode_fill_delivery"
-                                                            autocomplete="off" type="text"
-                                                            value="{{ session()->has('postalcode') && strlen(session('postalcode')) >= 5 ? session('postalcode') : '' }}"
-                                                            name="s_postal" id="s_postal" maxlength="7"
-                                                            placeholder="">
-                                                        <span class="text-danger s_postalError"></span>
+                                                        <input
+                                                            class="form-control postal_fill @error('s_postal') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_postal"
+                                                            id="s_postal" maxlength="7" placeholder="">
+                                                        @error('s_postal')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
 
-                                                    <div class="col-lg-6 form-group mb-3">
-                                                        <label for="">City</label>
-                                                        <input class="form-control " readonly autocomplete="off"
-                                                            type="text" value="{{ session('city') }}" name="s_city"
-                                                            id="s_city" placeholder="">
-                                                        <span class="text-danger s_cityError"></span>
-                                                    </div>
                                                     <div class="col-lg-6 form-group mb-3">
                                                         <label>State</label>
-                                                        <input class="form-control province_fill" autocomplete="off"
-                                                            type="text" name="s_province"
-                                                            value="{{ old('s_province') ?? session()->has('billing_province') ? session('billing_province') : '' }}"
-                                                            id="s_province" placeholder="" required>
-
+                                                        <input
+                                                            class="form-control state_fill @error('s_state') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_state"
+                                                            id="s_state" placeholder="" required>
+                                                        @error('s_state')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -417,12 +427,13 @@
                                         </div>
                                     </div>
                                 @endforeach
-                   
+
                                 @php
-                                    if ($basket->coupon_id != null) {
-                                        $coupon_details = App\Models\Coupon::where('id', $basket->coupon_id)->first();
+                                    if ($basket->coupon != null) {
+                                        $coupon_details = App\Models\Coupon::where('id', $basket->coupon)->first();
                                     }
                                 @endphp
+
                                 <div class="gift-apply">
                                     <input type="text" name="gift_code"
                                         value="{{ isset($coupon_details) ? $coupon_details->code : '' }}"
@@ -463,7 +474,7 @@
         <!-- Modal -->
         <div class="modal fade checkout-modal" id="newAddressModal" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header justify-content-between">
                         <h5 class="modal-title fs-4 fw-bold my-2" id="new_ModalLabel">Add Address</h5>
@@ -480,26 +491,52 @@
                                 <input type="text" required autocomplete="off" form="add_address"
                                     class="form-control" name="name">
                             </div>
+                            <div class="col-lg-6 form-group mb-2">
+                                <label class="mb-2" for="email">Email Id</label>
+                                <input type="text" autocomplete="off" placeholder="" id="email"
+                                    class="form-control address_fill" form="add_address" name="email">
+                            </div>
+                            <div class="col-lg-6 form-group mb-2">
+                                <label class="mb-2" for="mobile">Mobile No</label>
+                                <input type="text" autocomplete="off" placeholder="" id="mobile"
+                                    class="form-control address_fill" form="add_address" name="mobile">
+                            </div>
                             <div class="col-lg-12 form-group mb-2">
-                                <label class="mb-2" for="">Address</label>
-                                <input type="text" autocomplete="off" placeholder=""
+                                <label class="mb-2" for="address">Address</label>
+                                <input type="text" autocomplete="off" placeholder="" id="address"
                                     class="form-control address_fill" form="add_address" name="address">
                             </div>
                             <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="">Postal Code</label>
-                                <input type="text" required autocomplete="off" form="add_address"
-                                    class="form-control postalCode_fill" name="postalcode">
+                                <label class="mb-2" for="locality">Locality</label>
+                                <input type="text" autocomplete="off" placeholder="" id="locality"
+                                    class="form-control localityfill" form="add_address" name="locality">
                             </div>
                             <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="">City</label>
-                                <input type="text" required autocomplete="off" form="add_address"
-                                    class="form-control city_fill" name="city">
+                                <label class="mb-2" for="landmark">Landmark</label>
+                                <input type="text" autocomplete="off" id="landmark" placeholder=""
+                                    class="form-control landmark_fill" form="add_address" name="landmark">
                             </div>
-                            <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="">State</label>
-                                <input form="add_address" class="form-control province_fill" autocomplete="off"
-                                    type="text" name="province" id="province" placeholder="" required>
 
+
+                            <div class="col-lg-6 form-group mb-2">
+                                <label class="mb-2" for="house_name">House Name</label>
+                                <input type="text" required autocomplete="off" id="house_name" form="add_address"
+                                    class="form-control house_name_fill" name="house_name">
+                            </div>
+                            <div class="col-lg-6 form-group mb-2">
+                                <label class="mb-2" for="house_no">House No</label>
+                                <input form="add_address" class="form-control house_no_fill" autocomplete="off"
+                                    type="text" name="house_no" id="house_no" placeholder="" required>
+                            </div>
+                            <div class="col-lg-6 form-group mb-2">
+                                <label class="mb-2" for="pincode">Postal Code</label>
+                                <input type="text" required autocomplete="off" id="pincode" form="add_address"
+                                    class="form-control pincode_fill" name="pincode">
+                            </div>
+                            <div class="col-lg-6 form-group mb-3">
+                                <label class="mb-2" for="state">State</label>
+                                <input class="form-control state_fill" form="add_address" autocomplete="off"
+                                    type="text" name="state" id="state" placeholder="" required>
                             </div>
                             <div class="col-lg-12 form-group mb-2">
                                 <div class="form-check form-switch">
@@ -562,7 +599,9 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                Don't have an account? <a  href="{{ route('register',['redirection_url'=>route('public.checkout')]) }}">Create new
+                                Don't have an account? <a
+                                    href="{{ route('register', ['redirection_url' => route('public.checkout')]) }}">Create
+                                    new
                                     account</a>
                             </div>
                         </form>
@@ -574,7 +613,6 @@
     @endif
 @endsection
 @push('footer')
-   
     <script>
         $('body').on('change', '#same_billing', function(e) {
 
@@ -582,28 +620,15 @@
                 var databilling = $("input[name='billing_address']:checked");
 
                 $('#s_name').val(databilling.data('name'));
-                // $('#s_phone').val(databilling.data('phone')); 
-                $('#s_email').val(databilling.data('emailval'));
-
                 $('#s_address').val(databilling.data('address'));
+                $('#s_locality').val(databilling.data('locality'));
+                $('#s_landmark').val(databilling.data('landmark'));
+                $('#s_house_name').val(databilling.data('house_name'));
+                $('#s_house_no').val(databilling.data('house_no'));
+                $('#s_state').val(databilling.data('state'));
                 $('#s_postal').val(databilling.data('postal'));
-
-                $('#s_postal').trigger('blur')
-            @else
-                if (this.checked) {
-                    $('#s_name').val($('#b_name').val());
-                    $('#s_email').val($('#b_email').val());
-                    $('#s_phone').val($('#b_phone').val());
-                    $('#s_address').val($('#b_address').val());
-                    $('#s_postal').val($('#b_postal').val());
-                } else {
-                    $('#s_name').val('');
-                    $('#s_lastname').val('');
-                    $('#s_email').val('');
-                    $('#s_phone').val('');
-                    $('#s_address').val('');
-                    $('#s_postal').val('');
-                }
+                $('#s_email').val(databilling.data('emailval'));
+                $('#s_phone').val(databilling.data('phone'));
             @endif
 
         });
@@ -667,29 +692,36 @@
         }
 
 
+  
 
         $('body').on('click', '.coupon_card_apply', function() {
             var gift_code = $('#coupon_code').val();
             $('.card-alert').show();
             $('.card-alert').html('');
-            $.ajax({
-                url: "{{ route('public.gift-code-apply') }}",
-                cache: false,
-                type: "GET",
-                data: {
-                    gift_code: gift_code
-                },
-                success: function(response) {
-                    $('.card-alert').html(response.msg);
-                    calculationPart();
-                }
-            });
+            if (gift_code.length > 1) {
+                $.ajax({
+                    url: "{{ route('public.gift-code-apply') }}",
+                    cache: false,
+                    type: "GET",
+                    data: {
+                        gift_code: gift_code
+                    },
+                    success: function(response) {
+                        $('.card-alert').html(response.msg);
+                        calculationPart();
+                    }
+                });
+            } else {
+                $('.card-alert').html('');
+            }
+
 
         });
 
 
 
-        @if ($basket->coupon_id != null)
+
+        @if ($basket->coupon != null)
             jQuery('.coupon_card_apply').trigger('click');
         @endif
     </script>

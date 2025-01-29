@@ -19,7 +19,7 @@ use App\Http\Controllers\SizeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('\home', 'App\Http\Controllers\FrontendController@home')->name('home');
+Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
 
     Route::get('T&C', function () { return view('frontend.documents.T-C');})->name('t-c');
     Route::get('refund_policy', function () {
@@ -75,6 +75,8 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
 
 });
 
+Route::post('account/address/create', [AccountController::class, 'addressCreate'])->name('account.address.add');
+
 Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account.','prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function (){
 
     Route::get('/', [AccountController::class, 'myaccount'])->name('home');
@@ -84,7 +86,7 @@ Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account
     Route::post('orders/track/{id}', [AccountController::class, 'ordersTrack'])->name('orders.track');
 
     Route::get('address', [AccountController::class, 'addressShow'])->name('address.show');
-    Route::post('address/create', [AccountController::class, 'addressCreate'])->name('address.add');
+  
     Route::post('address/update', [AccountController::class, 'addressUpdate'])->name('address.update');
     Route::delete('address/delete/{id}', [AccountController::class, 'addressDelete'])->name('address.delete');
 
@@ -118,8 +120,6 @@ Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'ad
     Route::any('/products/sku-check', [ProductController::class, 'skuCheck'])->name('products.sku-check');
     Route::any('/products/generate-autosku', [ProductController::class, 'generateAutosku'])->name('products.generate-autosku');
     
-    
-
     Route::resource('products', ProductController::class)->names('products');
     Route::resource('orders', OrderController::class)->names('orders');
 

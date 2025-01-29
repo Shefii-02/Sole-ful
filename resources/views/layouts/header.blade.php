@@ -206,7 +206,7 @@
                                             <i class="bi bi-person"></i> Dashboard
                                         </a>
                                     @else
-                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="">
+                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="{{ route('account.home') }}">
                                             <i class="bi bi-person"></i> My Account
                                         </a>
                                     @endif
@@ -410,37 +410,7 @@
     </div>
     <!-- main header start -->
 
-    <!-- mobile header start -->
-    <div class="mobile-header d-none d-lg-none d-md-block sticky">
-        <!--mobile header top start -->
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12">
-                    <div class="mobile-main-header">
-                        <div class="mobile-logo">
-                            <a href="/">
-                                <img src="{{ url('assets/img/logo/logo.png') }}" alt="Brand Logo">
-                            </a>
-                        </div>
-                        <div class="mobile-menu-toggler">
-                            <div class="mini-cart-wrap">
-                                <a href="cart.html">
-                                    <i class="ion-bag"></i>
-                                </a>
-                            </div>
-                            <div class="mobile-menu-btn">
-                                <div class="off-canvas-btn">
-                                    <i class="ion-navicon"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- mobile header top start -->
-    </div>
-    <!-- mobile header end -->
+   
 </header>
 <!-- end Header Area -->
 

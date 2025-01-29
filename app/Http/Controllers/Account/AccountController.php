@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Hash;
 class AccountController extends Controller
 {
     private $userId;
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('web');
-  
+
         $this->middleware(function ($request, $next) {
             $this->userId = auth()->user()->id;
             return $next($request);
@@ -70,26 +71,35 @@ class AccountController extends Controller
     }
     public function addressCreate(Request $request)
     {
+
+
         $myadd              = new MyAddress();
-        $myadd->user_id        = $this->userId;
-        $myadd->name   = $request->name;
+        $myadd->user_id    = auth()->user()->id;
+        $myadd->name        = $request->name;
+        $myadd->email       = $request->email;
+        $myadd->mobile      = $request->mobile;
         $myadd->address     = $request->address;
-        $myadd->postalcode  = $request->postalcode;
-        $myadd->city        = $request->city;
-        $myadd->province    = $request->province;
+        $myadd->locality    = $request->locality;
+        $myadd->landmark    = $request->landmark;
+        $myadd->pincode     = $request->pincode;
+        $myadd->house_name  = $request->house_name;
+        $myadd->house_no    = $request->house_no;
+        $myadd->state       = $request->state;
         $myadd->country     = 'India';
         $myadd->base        = $request->has('base') ? 1 : 0;
+
 
         try {
             $myadd->save();
 
             if ($myadd->base == 1) {
-               
+
                 Myaddress::where('base', 1)->whereUserId($this->userId)->where('id', '<>', $myadd->id)->update(['base' => 0]);
             }
             session()->flash('success', 'The address has been successfully created');
             return redirect()->back();
         } catch (Exception $e) {
+            dd($e->getMessage());
             session()->flash('failed', $e->getMessage());
             return redirect()->back();
         }
@@ -109,11 +119,11 @@ class AccountController extends Controller
         $myadd->base        = $request->has('base') ? 1 : 0;
 
         try {
-       
+
             $myadd->save();
 
- 
-   
+
+
             if ($myadd->base == 1) {
 
                 Myaddress::whereUserId($this->userId)->where('id', '<>', $myadd->id)->update(['base' => 0]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckoutFormRequest;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Basket;
@@ -9,9 +10,14 @@ use App\Models\CartItem;
 use App\Models\Coupon;
 use App\Models\Myaddress;
 use App\Models\Order;
+use App\Models\OrderAddress;
+use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Dipesh79\LaravelPhonePe\LaravelPhonePe;
+use PhpParser\Node\NullableType;
 
 class OrderController extends Controller
 {
@@ -31,219 +37,38 @@ class OrderController extends Controller
         //
     }
 
-    public function placeOrder(Request $request)
+    public function placeOrder(CheckoutFormRequest $request)
     {
 
+        $user           = User::where('id', auth()->user()->id)->first();
+        if (session()->has('session_string') && $user) {
 
-
-        $this->submitPaymentForm($request);
-
-        if (session()->has('session_string')) {
             $session_string = session('session_string');
-
-            $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
-
-            if ((env('APP_URL') == 'https://www.stage.mysweetiepie.ca')) {
-                if (($request->nameOnCard == 'Card Test') &&  ($request->cardNumber == 4111111111111111)) {
-                } else {
-                    return redirect('/checkout')->withInput($request->input())->with('error', 'Payment Failed' . '<br><span style="color:red;font-size:16px;font-weight:700;">Only accepted Test cards<span>');
-                }
-            }
-
-            if (!auth()->check()) {
-
-                $billing_data['firstname']   = $request->b_firstname;
-                $billing_data['lastname']    = $request->b_lastname;
-                $billing_data['address']     = $request->b_address;
-                $billing_data['postalcode']  = $request->b_postal;
-                $billing_data['city']        = $request->b_city;
-                $billing_data['province']    = $request->b_province;
-                $billing_data['phone']       = $request->b_phone;
-                $billing_data['email']       = $request->b_email;
-                $billing_data['password']     = $request->password;
-
-                $billing_add = json_decode(json_encode($billing_data));
-
-                ////////////////////////////////////////////////////////////
-                // if($request->has('same_billing')){
-                $shipping_add = array();
-
-                $shipping_add['firstname']   = $request->s_firstname;
-                $shipping_add['lastname']    = $request->s_lastname;
-                $shipping_add['address']     = $request->s_address;
-                $shipping_add['postalcode']  = $request->s_postal;
-                $shipping_add['city']        = $request->s_city;
-                $shipping_add['province']    = $request->s_province;
-                $shipping_add['phone']       = $request->s_phone;
-                $shipping_add['email']       = $request->s_email;
-
-
-                $shipping_data = json_decode(json_encode($shipping_add)); // convert array to collection
-                // }
-             
-            }
-
+            $basket = Basket::whereHas('items')->where('session', $session_string)->where('status', 0)->first();
             if ($basket) {
-                //calculation_part
-                $calculations  = $this->GrandTotalCalculation($basket);
 
+                OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->delete();
+
+                $calculations  = $this->GrandTotalCalculation($basket);
                 $calculations = json_decode($calculations);
 
-                $totalAmount = $calculations->subTotal;
-                $tax_amount  = $calculations->TotalTax;
-                $discount    = $calculations->Discount;
-                $couponCode  = $calculations->DiscountCode;
-                $ship_charge = $calculations->ShippingCharge;
-                $ship_tax    = $calculations->shippingTax;
-                $grand       = $calculations->grandTotal;
+                $grandTotal       = $calculations->grandTotal;
+                $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
 
-                DB::beginTransaction();
-
-                try {
-                    MyAddress::where('basket_id', $basket->id)->delete();
-
-                    //existing customer address details
-                    if (auth()->check()) {
-                        $billing_add  = MyAddress::where('id', $request->billing_address)->first();
-                        if (!$billing_add) {
-                            $billing_add = MyAddress::where('user_id', auth()->user()->id)->first();
-                        }
-
-                        $this->storeAddress($billing_add, $basket->id, 'billing');
-
-                        if ($basket->order_type == 'delivery') {
-                            // if(!$request->has('same_billing')){
-                            //     $this->storeAddress($billing_add,$basket->id,'delivery');
-                            // }
-                            // else
-                            // {
-                            $shipping_add = MyAddress::where('id', $request->shipping_address)->first();
-                            if (!$shipping_add && $shipping_data) {
-                                $shipping_add = $shipping_data;
-                            }
-                            $this->storeAddress($shipping_add, $basket->id, 'delivery');
-                            // }
-                        }
-
-                        $basket->email = auth()->check() ? auth()->user()->email : $billing_add->email;
-                        $basket->user_id = auth()->user()->id;
-                        $basket->save();
-                    } else {
-                        //gust customer address details
-
-                        $this->storeAddress($billing_add, $basket->id, 'billing');
-
-                        if ($basket->order_type == 'delivery') {
-                            // if(!$request->has('same_billing')){
-                            //     $this->storeAddress($billing_add,$basket->id,'delivery');
-                            // }
-                            // else
-                            // {
-                            $this->storeAddress($shipping_data, $basket->id, 'delivery');
-                            // }
-                        }
-                    }
-
-                
-
-                    ///////////////////////////////////////////////////Payment Integration////////////////////////////////////////////////////////////////////////////
-                    $now = \DateTime::createFromFormat('U.u', microtime(true));
-                    $paymeny_id = 'Soleful' . $now->format("YmdHis") . rand(0, 10);
-                  
-                    $pay = $this->makePayment($paymeny_id, $grand, $basket, $request);
-
-                    $refNum = $pay->getReferenceNum();
-                    $txnNum = $pay->getTxnNumber();
-                    $resCod = $pay->getResponseCode();
-
-                    // 
-                    if (($pay->getResponseCode() < 50 && strlen($refNum) > 5 && strlen($txnNum) > 5 && is_numeric($resCod)) || env('APP_URL') == 'https://www.stage.mysweetiepie.ca') {
-
-                        $order              = new Order();
-                        $order->basket_id   = $basket->id;
-                        $order->subtotal    = $totalAmount;
-                        $order->taxamount   = $tax_amount;
-                        $order->discount    = $discount;
-                        $order->coupon      = $couponCode;
-                        $order->shipping_charge = floatval($ship_charge);
-                        $order->grandtotal  = $grand;
-                        $order->user_id     = auth()->check() ? auth()->user()->id : NULL;
-                        $order->ipaddress   = request()->ip();
-                        $order->email       = auth()->check() ? auth()->user()->email : $billing_add->email;
-                        $order->status      = 0;
-                        $s_add = [];
-                        $order->payment_method = 'credit_card';
-                        $order->card_type   = $this->identifyCreditCard($request->cardNumber);
-
-                        $order->reference_num = $refNum;
-                        $order->transaction_id = $txnNum;
-                        $order->payment_status = 1;
-                        $order->status  = 1;
-                        $order->billed_at  = date('Y-m-d H:i:s');
-                        $inv_id = $this->invoiceNumberGenerate();
-                        $order->invoice_id  = $inv_id;
-                        $order->paymeny_id  = $paymeny_id;
-                        $order->affiliate_id = $basket->affiliate_id;
-                        $order->save();
-
-                        $basket->open   = 0;
-                        $basket->page = 'thankyou';
-                        $basket->save();
-
-                        if ($basket->discount > 0 && $basket->coupon) {
-                            Coupon::whereName($basket->coupon)->increment('usage');
-                        }
-
-                        if ($order->status == 1) {
-
-                            MyAddress::where('basket_id', $basket->id)->update(['order_id' => $order->id]);
-
-
-                            $basket->status = '1';
-                            $basket->marketing_campaign_id = session()->has('campId') ? session('campId') : null;
-                            $basket->save();
-                        }
-
-                        $invoice_id = $order->invoice_id;
-
-                        DB::commit();
-
-
-
-                        try {
-                            $this->SendDataTrait();
-                            // Dispatch the SendDataJob to the queue
-                            // SendDataJob::dispatch()->delay(now()->addSeconds(10)); // Delayed dispatch
-
-                        } catch (\Exception $e) {
-                        }
-
-                        if ($order->status == 1) {
-                            $randomString = Str::random(45);
-                            session(['session_string' => $randomString]);
-                        }
-
-                        if ($basket->special_campaign == 1) {
-                            session()->flush();
-                        }
-
-                        $string = base64_encode(serialize(array('order_id' => $order->id, 'basket_id' => $basket->id)));
-
-                        return redirect('/thankyou?order=' . $string);
-                    } else {
-                        $message_text = $pay->getMessage();
-                        MyAddress::where('basket_id', $basket->id)->delete();
-                        return redirect('/checkout')->withInput($request->input())->with('error', 'Payment Failed' . '<br><span style="color:red;font-size:16px;font-weight:700;">' . $message_text . '-' . $pay->getResponseCode() . '<span>'); //
-                    }
-                } catch (\Exception $e) {
-                    DB::rollback();
-                    MyAddress::where('basket_id', $basket->id)->delete();
+                $billingAddress = Myaddress::where('user_id',$user->id)->where('id',$request->billing_address)->first();
+                if(!$billingAddress){
+                    $billingAddress = Myaddress::where('user_id',$user->id)->first();
                 }
+                
+                $this->storeAddress($billingAddress, $basket->id, 'billing');
+                $this->storeAddress($billingAddress, $basket->id, 'delivery');
+
+                return $result;
             } else {
-                return redirect('/');
+                dd('your basket is empty');
             }
         } else {
-            return redirect('/');
+            dd('user access denied');
         }
     }
 
@@ -354,45 +179,46 @@ class OrderController extends Controller
     {
         $address = $data;
         try {
-            $save_add              = new Myaddress();
-            $save_add->order_id    = 0;
-            $save_add->name   = $address->name;
-            $save_add->address     = $address->address;
-            $save_add->postalcode  = $address->postalcode;
-            $save_add->city        = $address->city;
-            $save_add->province    = $address->province;
-            $save_add->country     = 'CA';
-            $save_add->phone       = auth()->check() ? auth()->user()->phone : $address->phone;
-            $save_add->email       = auth()->check() ? auth()->user()->email : $address->email;
-            $save_add->type        = $type;
+            $save_add              = new OrderAddress();
             $save_add->user_id     = auth()->check() ? auth()->user()->id : 0;
+            $save_add->order_id    = 0;
+            $save_add->name        = $address->name;
+            $save_add->email       = $address->email;
+            $save_add->mobile      = $address->mobile;
+            $save_add->address     = $address->address;
+            $save_add->locality    = $address->locality;
+            $save_add->landmark    = $address->landmark;
+            $save_add->pincode     = $address->pincode;
+            $save_add->house_name  = $address->house_name;
+            $save_add->house_no    = $address->house_no;
+            $save_add->state       = $address->state;
+            $save_add->country     = 'India';
+            $save_add->type        = $address->type;
             $save_add->basket_id   = $basket_id;
             $save_add->save();
+
             return 1;
         } catch (\Exception $e) {
             return 0;
         }
     }
 
-   
+
 
 
 
     function invoiceNumberGenerate()
     {
         $ordercount = Order::where('created_at', '>=', date('Y-m-d 00:00:00'))->where('created_at', '<=', date('Y-m-d 23:59:59'))->count();
-        return 'Soleful' . date('ymd') . sprintf('%04d', $ordercount + 1);
+        return 'SFA' . date('ymd') . sprintf('%04d', $ordercount + 1);
     }
     public function CheckOutCalculation()
     {
-
         $session_string = session('session_string');;
         $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
         $calculations  = $this->GrandTotalCalculation($basket);
         return view('frontend.checkout-calculation', compact('calculations', 'basket'))->render();
     }
-
-
 
     function GrandTotalCalculation($basket)
     {
@@ -420,8 +246,8 @@ class OrderController extends Controller
             $subTotal2      = $subTotal2 + $itemSubTtl2;
         }
 
-        $coupon_details = Coupon::where('id', $basket->coupon_id)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sale', '<=', $subTotal2)->first();
-        if ($coupon_details && $basket->coupon_id != '' && $basket->coupon_id != NULL) {
+        $coupon_details = Coupon::where('id', $basket->coupon)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sales', '<=', $subTotal2)->first();
+        if ($coupon_details && $basket->coupon != '' && $basket->coupon != NULL) {
             if ($coupon_details->value_type == 'amount') {
                 $discount = floatval($coupon_details->value);
                 $discount_amount = 0;
@@ -469,8 +295,6 @@ class OrderController extends Controller
         return json_encode($Calculation);
     }
 
-
-
     function CartRefresh()
     {
         if (session()->has('session_string')) {
@@ -497,33 +321,32 @@ class OrderController extends Controller
     }
 
 
-    public function submitPaymentForm(Request $request)
+    public function submitPaymentForm($grandTotal = 1, User $user, $basket)
     {
-        $amount = 2000;
-        $name   = 'shefii';
-
-        if ($name != '' && $amount != '') {
-
-            $merchantId = env('PhonePeMerchantId');
-            $apiKey = env('PhonePeApiKey');
+        $amount         = $grandTotal;
+        $user_name      =  $user->name;
+        $user_mobile    =  $user->mobile;
+        if ($user) {
+            $merchantId = env('PHONEPE_MERCHANT_ID');
+            $apiKey     = env('PHONEPE_SALT_KEY');
+            $url        = env('PHONEPE_URL');
 
             $redirectUrl = url('confirm');
-            $order_id = uniqid();
-
+            $transaction_id = $basket->id . $user->id . uniqid();
 
             $transaction_data = array(
                 'merchantId' => "$merchantId",
-                'merchantTransactionId' => "$order_id",
-                "merchantUserId" => $order_id,
+                'merchantTransactionId' => "$transaction_id",
+                "merchantUserId" => $basket->id . '-' . $user->id,
                 'amount' => $amount * 100,
                 'redirectUrl' => "$redirectUrl",
                 'redirectMode' => "POST",
                 'callbackUrl' => "$redirectUrl",
+                'mobileNumber' => "$user_mobile",
                 "paymentInstrument" => array(
                     "type" => "PAY_PAGE",
                 )
             );
-
 
             $encode = json_encode($transaction_data);
             $payloadMain = base64_encode($encode);
@@ -536,7 +359,7 @@ class OrderController extends Controller
             $curl = curl_init();
 
             curl_setopt_array($curl, [
-                CURLOPT_URL => "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay",
+                CURLOPT_URL => $url,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
@@ -551,6 +374,7 @@ class OrderController extends Controller
                 ],
             ]);
 
+
             $response = curl_exec($curl);
             $err = curl_error($curl);
 
@@ -564,24 +388,21 @@ class OrderController extends Controller
                 // Store information into database
 
                 $data = [
+                    'user_id'  => $user->id,
+                    'basket_id' => $basket->id,
+                    'transaction_id' => $transaction_id,
                     'amount' => $amount,
-                    'transaction_id' => $order_id,
-                    'payment_status' => 'PAYMENT_PENDING',
                     'response_msg' => $response,
-                    'providerReferenceId' => '',
-                    'merchantOrderId' => '',
-                    'checksum' => ''
+                    'merchantOrderId' => $basket->id . '-' . $user->id,
                 ];
 
+                Payment::where('basket_id', $basket->id)->where('user_id', $user->id)->delete();
 
-                dd($res, $data, 'Pending for Payment integration');
-
+                Payment::create($data);
                 // end database insert
 
                 if (isset($res->code) && ($res->code == 'PAYMENT_INITIATED')) {
-
                     $payUrl = $res->data->instrumentResponse->redirectInfo->url;
-
                     return redirect()->away($payUrl);
                 } else {
                     //HANDLE YOUR ERROR MESSAGE HERE
@@ -591,6 +412,96 @@ class OrderController extends Controller
         }
     }
 
+
+    public function confirmPayment(Request $request)
+    {
+
+        if ($request->code == 'PAYMENT_SUCCESS') {
+            $user           = User::where('id', auth()->user()->id)->first();
+            if (session()->has('session_string') && $user) {
+                $session_string = session('session_string');
+                $basket = Basket::whereHas('items')->where('session', $session_string)->where('status', 0)->first();
+                if ($basket) {
+                    $calculations  = $this->GrandTotalCalculation($basket);
+                    $calculations = json_decode($calculations);
+
+                    $subTotal    = $calculations->subTotal;
+                    $tax_amount  = $calculations->TotalTax;
+                    $discount    = $calculations->Discount;
+                    $couponCode  = $calculations->DiscountCode;
+                    $ship_charge = $calculations->ShippingCharge;
+                    // $ship_tax    = $calculations->shippingTax;
+                    $grandTotal  = $calculations->grandTotal;
+
+
+                    $transactionId = $request->transactionId;
+                    $merchantId = $request->merchantId;
+                    $providerReferenceId = $request->providerReferenceId;
+                    $merchantOrderId = $request->merchantOrderId;
+                    $checksum = $request->checksum;
+                    $status = $request->code;
+
+                    $paymentInstrument = $request->paymentInstrument;
+
+
+                    $payment                    = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
+                    $payment->checksum          = $checksum;
+                    $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
+                    $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
+                    $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
+                    $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
+                    $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
+                    $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
+                    $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
+                    $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
+                    $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
+                    $payment->payment_status    = 'SUCCESS';
+                    $payment->save();
+
+                    $order              = new Order();
+                    $order->user_id     = $user->id;
+                    $order->invoice_id  = $this->invoiceNumberGenerate();
+                    $order->basket_id   = $basket->id;
+                    $order->subtotal    = $subTotal;
+                    $order->discount    = $discount;
+                    $order->tax         = $tax_amount;
+                    $order->shipping_charge = $ship_charge;
+                    $order->grandtotal  = $grandTotal;
+                    $order->ipaddress   = request()->ip();
+                    $order->coupon      = $couponCode;
+                    $order->remarks     = '';
+                    $order->billed_at   = date('Y-m-d H:i:s');
+                    $order->statu       = 'SUCCESS';
+                    $order->paid        = 1;
+                    $order->save();
+
+                    OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' =>$order->id ]);
+                }
+            }
+
+
+
+            //Transaction completed, You can add transaction details into database
+
+
+            $data = [
+                'providerReferenceId' => $providerReferenceId,
+                'checksum' => $checksum,
+
+            ];
+            if ($merchantOrderId != '') {
+                $data['merchantOrderId'] = $merchantOrderId;
+            }
+
+            Payment::where('transaction_id', $transactionId)->update($data);
+
+            return view('confirm_payment', compact('providerReferenceId', 'transactionId'));
+        } else {
+
+            //HANDLE YOUR ERROR MESSAGE HERE
+            dd('ERROR : ' . $request->code . ', Please Try Again Later.');
+        }
+    }
 
     public function giftCodeApply(Request $request)
     {
@@ -606,7 +517,6 @@ class OrderController extends Controller
         $session_string = session('session_string');;
         $basket = Basket::where('session', $session_string)->where('status', 0)->first() ?? abort(404);
 
-
         $items = CartItem::where('basket_id', $basket->id)->get();
         foreach ($items as $listing) {
             $itemSubTtl      = floatval($listing->price_amount * $listing->quantity);
@@ -614,7 +524,8 @@ class OrderController extends Controller
             $subTotal      = $subTotal + $itemSubTtl;
         }
 
-        $coupon_details = Coupon::where('availability', '<>', 'in-store')->where('code', $request->gift_code)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sale', '<=', $subTotal)->first();
+
+        $coupon_details = Coupon::where('code', $request->gift_code)->where('start_time', '<=', $date_now)->where('end_time', '>=', $date_now)->where('min_sales', '<=', $subTotal)->first();
         if ($coupon_details && $coupon_details->value_type) {
             if ($coupon_details->value_type == 'percentage') {
                 $value = intval($coupon_details->value) . '% OFF';
@@ -622,6 +533,9 @@ class OrderController extends Controller
                 $value = '$' . $coupon_details->value . ' OFF';
             }
 
+            $basket->coupon = $coupon_details->id;
+            $basket->save();
+            
             $response['msg']      = '<span class="text-success">Coupon "' . $request->gift_code . '" Applied ' . $value . '</span>';
             $response['value']       = $coupon_details->value;
             $response['coupon_id']   = $coupon_details->id;
@@ -636,7 +550,15 @@ class OrderController extends Controller
             $response['value']       = 0;
             $response['value_type']  = '';
 
+            $basket->coupon = null;
+            $basket->save();
+
             return  response()->json($response);
         }
     }
+
+
+
+        
 }
+

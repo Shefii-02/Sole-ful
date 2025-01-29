@@ -426,7 +426,7 @@
                                             'description',
                                             isset($product)
                                                 ? $product->description
-                                                : '',
+                                                : 'Evolve your usual look with Soleful`s hand-picked casual flats sandals and sliders which are crafted with vegan materials for a sleek and durable finish. The embracing straps provide a feel of belonging and comfort, making them suitable for all day wear.',
                                         ) }}</textarea>
                                 </div>
                             </div>
@@ -467,7 +467,7 @@
                                             'marketed_by',
                                             isset($product)
                                                 ? $product->marketed_by
-                                                : 'Soleful #5 1 FLOOR GEDDALAHALLI,HENNUR BAGLUR MAIN ROAD KOTHALUR POST BLR.560077',
+                                                : 'SOLEFUL #5, 1st floor, Geddalahalli, Hennur Bagalur Main Road, Bangalore - 560077',
                                         ) }}</textarea>
                                 </div>
                             </div>

@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+            $table->integer('user_id')->nullable();
+            $table->integer('order_id')->nullable();
+            $table->integer('basket_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('type')->nullable();
             $table->text('address')->nullable();
             $table->string('locality')->nullable();
@@ -25,6 +29,8 @@ return new class extends Migration
             $table->string('long')->nullable();
             $table->string('house_name')->nullable();
             $table->string('house_no')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
