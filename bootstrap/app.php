@@ -16,7 +16,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.account.admin' => \App\Http\Middleware\CheckAccountAdmin::class,
             'check.account.user' => \App\Http\Middleware\CheckAccountUser::class,
         ]);
+        $middleware->validateCsrfTokens(except: [
+            'confirm',
+        ]);
+       
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
+        
+
     })->create();
