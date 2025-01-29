@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\Models\MyAddress;
+use App\Models\Myaddress;
 use App\Models\Order;
 use App\Models\User;
 use Carbon\Carbon;
@@ -66,14 +66,14 @@ class AccountController extends Controller
     public function ordersTrack(Request $request) {}
     public function addressShow(Request $request)
     {
-        $myadd = MyAddress::whereUserId($this->userId)->orderBy('base', 'DESC')->get();
+        $myadd = Myaddress::whereUserId($this->userId)->orderBy('base', 'DESC')->get();
         return view('frontend.account.my-address', compact('myadd'));
     }
     public function addressCreate(Request $request)
     {
 
 
-        $myadd              = new MyAddress();
+        $myadd              = new Myaddress();
         $myadd->user_id    = auth()->user()->id;
         $myadd->name        = $request->name;
         $myadd->email       = $request->email;
