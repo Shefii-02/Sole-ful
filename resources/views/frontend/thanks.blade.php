@@ -1,7 +1,6 @@
-
 @extends('layouts.frontend')
-    @section('content')
-        <section class="product-listing-banner">
+@section('content')
+    <section class="product-listing-banner">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -11,7 +10,7 @@
         </div>
     </section>
     <section class="">
-         <div class=" pb-3 pt-3  d-flex justify-content-center align-items-center for-t-h">
+        <div class=" pb-3 pt-3  d-flex justify-content-center align-items-center for-t-h">
             <div class="col-md-6">
                 <div class=""></div>
                 <div class=" bg-white p-3">
@@ -25,26 +24,22 @@
                     </div>
                     <div class="text-center">
                         <h1 style="font-weight: 800">Thank You!</h1>
-                        <p>Your order has been completed and placed successfully. <br> A confirmation email has been sent to the email address you provided. <br>  Your invoice number is #{{$invoice_id}} </p>
-                        @auth 
-                        <a href="/myaccount" style="padding: 10px 30px; color: #fff; border-radius: 30px; background: var(--primary); text-decoration: none;" class="">BACK TO MY ACCOUNT</a>
-                        
+                        <p>Your order has been completed and placed successfully.
+                            <br> A confirmation email has been sent to the email address you provided.
+                            <br> Your invoice number is #{{ $invoice_id }}
+                            <br> Your Transaction Id number is #{{ $transactionId }}
+                            <br> Your Reference Id number is #{{ $providerReferenceId }}
+                        </p>
+                        @auth
+                            <a href="/myaccount"
+                                style="padding: 10px 30px; color: #fff; border-radius: 30px; background: var(--primary); text-decoration: none;"
+                                class="">BACK TO MY ACCOUNT</a>
                         @else
-                        
-                        <a href="/" class="for-home-t">BACK TO HOME</a>
-                        
-                        @endif
+                            <a href="/" class="for-home-t">BACK TO HOME</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endsection
-    
-    
-    @section('scripts')
-       <script>
-            gtag("event", "purchase", {!! json_encode($googlecode) !!});
-        </script>
-    @endsection
-    

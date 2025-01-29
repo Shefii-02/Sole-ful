@@ -494,8 +494,9 @@ class OrderController extends Controller
             }
 
             Payment::where('transaction_id', $transactionId)->update($data);
+            $invoice_id = $order->invoice_id;
 
-            return view('confirm_payment', compact('providerReferenceId', 'transactionId'));
+            return view('thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
         } else {
 
             //HANDLE YOUR ERROR MESSAGE HERE
