@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Dipesh79\LaravelPhonePe\LaravelPhonePe;
+use Illuminate\Support\Facades\Http;
 use PhpParser\Node\NullableType;
 
 class OrderController extends Controller
@@ -27,6 +28,8 @@ class OrderController extends Controller
     public function index()
     {
         //
+        $transactionId = "133679a92a097b85";
+        dd($this->CheckApiStatus($transactionId));
     }
 
     /**
@@ -461,24 +464,10 @@ class OrderController extends Controller
                     $merchantOrderId = $request->merchantOrderId;
                     $checksum = $request->checksum;
                     $status = $request->code;
+                    $paymentInstrumentDetails       = $this->CheckApiStatus($transactionId);
 
-                    $paymentInstrument = $request->paymentInstrument;
-
-                    $payment                    = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
+                    $payment                = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
                     if ($payment) {
-                        $payment->checksum          = $checksum;
-                        $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
-                        $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
-                        $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
-                        $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
-                        $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
-                        $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
-                        $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
-                        $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
-                        $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
-                        $payment->payment_status    = 'SUCCESS';
-                        $payment->save();
-
                         $order              = new Order();
                         $order->user_id     = $user->id;
                         $order->invoice_id  = $this->invoiceNumberGenerate();
@@ -497,14 +486,33 @@ class OrderController extends Controller
                         $order->save();
 
                         OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
+                        Basket::where('id', $basket->id)->update(['status' => 1]);
+
+                        $paymentInstrument          = $paymentInstrumentDetails['data']['paymentInstrument'];
+                        $payment->checksum          = $checksum;
+                        $payment->reference_id      = $providerReferenceId;
+                        $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
+                        $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
+                        $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
+                        $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
+                        $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
+                        $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
+                        $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
+                        $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
+                        $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
+                        $payment->payment_status    = 'SUCCESS';
+                        $payment->response_msg      = json_encode($paymentInstrumentDetails);
+                        $payment->save();
+
+
                     } else {
-                        dd('access decided');
+                        dd('access decided,transaction_id doesn`t matched-userId : '.auth()->user()->id);
                     }
                 } else {
-                    dd('access decided');
+                    dd('access decided,basket doesn`t matched-userId : '.auth()->user()->id);
                 }
             } else {
-                dd('access decided');
+                dd('access decided,basket expired-userId : '.auth()->user()->id);
             }
 
             $invoice_id = $order->invoice_id;
@@ -513,8 +521,35 @@ class OrderController extends Controller
         } else {
 
             //HANDLE YOUR ERROR MESSAGE HERE
-            dd('ERROR : ' . $request->code . ', Please Try Again Later.');
+            dd('Failed : ' . $request->code . ', Please Try Again Later.');
         }
+    }
+
+
+
+    public function CheckApiStatus($transactionId)
+    {
+        $saltIndex = 1;
+        $merchantId = env('PHONEPE_MERCHANT_ID');
+        $saltKey     = env('PHONEPE_SALT_KEY');
+        $url        = env('PHONEPE_URL');
+
+        $finalXHeader = hash('sha256', '/pg/v1/status/' . $merchantId . '/' . $transactionId . $saltKey) . '###' . $saltIndex;
+
+        // API Endpoint
+        $url = "https://api.phonepe.com/apis/hermes/pg/v1/status/$merchantId/$transactionId";
+
+        // Send request to PhonePe
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'accept' => 'application/json',
+            'X-VERIFY' => $finalXHeader,
+            'X-MERCHANT-ID' => $merchantId,
+        ])->get($url);
+
+   
+
+        return $response->json();
     }
 
     public function giftCodeApply(Request $request)

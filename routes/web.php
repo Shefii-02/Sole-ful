@@ -60,6 +60,8 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::get('contact-us', function () { return view('frontend.contact-us');})->name('contact-us');
 
     
+    Route::get('/order-status', [OrderController::class, 'index']);
+    
     Route::post('/add-to-cart', [BasketController::class, 'store']);
     Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
     Route::post('place-order', 'OrderController@placeOrder')->name('place-order');
