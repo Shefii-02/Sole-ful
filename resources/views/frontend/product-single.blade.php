@@ -200,30 +200,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="flush-OtherDetails">
-                                            <button class="accordion-button text-dark fw-bold"
-                                                :class="{ 'collapsed': open !== 'OtherDetails' }" type="button"
-                                                @click="open === 'OtherDetails' ? open = '' : open = 'OtherDetails'"
-                                                aria-controls="flush-OtherDetails">
-                                                Other Details
-                                            </button>
-                                        </h2>
-                                        <div id="flush-OtherDetails" class="accordion-collapse collapse d-none"
-                                            :class="{ 'show': open === 'OtherDetails' }"
-                                            aria-labelledby="flush-OtherDetails">
-                                            <div class="accordion-body">
-                                                <h6 class="fw-bold mb-2">
-                                                    Manufactured By:
-                                                </h6>
-                                                <small>{{ $product->manufactured_by }}</small>
-                                                <h6 class="mt-3 fw-bold mb-2">
-                                                    Packed and Marketed By :
-                                                </h6>
-                                                <small>{{ $product->marketed_by }}</small>
-                                            </div>
-                                        </div>
-                                    </div>
+                                  
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-ConsumerComplaintContact">

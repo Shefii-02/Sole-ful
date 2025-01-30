@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "dipesh79/laravel-phonepe": "^1.0",
+        "dwivedianuj9118/phonepe-payment-gateway": "dev-main",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",

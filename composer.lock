@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cade067a808a1219048f57b31a09691a",
+    "content-hash": "d8863cfd239e7c10c845191677c789ce",
     "packages": [
         {
             "name": "brick/math",
@@ -494,6 +494,48 @@
                 }
             ],
             "time": "2024-10-09T13:47:03+00:00"
+        },
+        {
+            "name": "dwivedianuj9118/phonepe-payment-gateway",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dwivedianuj9118/phonepe-payment-gateway.git",
+                "reference": "c6d729d89e1514fc8ce22fd8e41790b7e1aeffe6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dwivedianuj9118/phonepe-payment-gateway/zipball/c6d729d89e1514fc8ce22fd8e41790b7e1aeffe6",
+                "reference": "c6d729d89e1514fc8ce22fd8e41790b7e1aeffe6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Dwivedianuj9118\\PhonePePaymentGateway\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anuj Dwivedi",
+                    "email": "dwivedianuj9118@gmail.com"
+                }
+            ],
+            "description": "PhonePe Payment Integration class for handling phonepe payment",
+            "support": {
+                "issues": "https://github.com/dwivedianuj9118/phonepe-payment-gateway/issues",
+                "source": "https://github.com/dwivedianuj9118/phonepe-payment-gateway/tree/main"
+            },
+            "time": "2024-09-01T23:05:00+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -9266,7 +9308,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "dwivedianuj9118/phonepe-payment-gateway": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

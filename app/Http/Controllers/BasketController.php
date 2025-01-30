@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class BasketController extends Controller
@@ -115,6 +116,53 @@ class BasketController extends Controller
      */
     public function cart(Basket $basket)
     {
+
+        $merchantId = 'M22ZUK6NQLM1Q';
+        $transactionId = '133679a92a097b85'; // Get transaction ID from request
+        $saltKey  = '8ef46188-f184-4b50-bb6f-8585dfb14608'; 
+        $saltIndex = 1;
+
+        // Generate X-VERIFY header
+        $stringToHash = "/pg/v1/status/$merchantId/$transactionId" . $saltKey;
+        $finalXHeader = hash('sha256', $stringToHash) . '###' . $saltIndex;
+
+        // API Endpoint
+        $url = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/$merchantId/$transactionId";
+
+        // Send request to PhonePe
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'accept' => 'application/json',
+            'X-VERIFY' => $finalXHeader,
+            'X-MERCHANT-ID' => $merchantId,
+        ])->get($url);
+
+        dd(json_encode($response->json()));
+
+        $merchantId = env('PHONEPE_MERCHANT_ID');
+        // $transactionId = 'T2501300212587508007957';
+        $transactionId = "133679a92a097b85"; // Replace with dynamic transaction ID
+        $saltKey = env('PHONEPE_SALT_KEY'); // Provided by PhonePe
+        $saltIndex = 1; // Provided by PhonePe
+        $baseUrl = "https://api.phonepe.com/apis/hermes";
+       
+        // Construct API request URL
+        $apiUrl = "https://api.phonepe.com/apis/hermes/pg/v1/status/{$merchantId}/{$transactionId}";
+
+        // Generate checksum
+        $stringToHash = "/v1/merchant/$merchantId/transaction/$transactionId/status" . $saltKey;
+        $checksum = hash('sha256', $saltKey) . '###' . $saltIndex;
+
+        // Make API request to PhonePe
+        $response = Http::withHeaders([
+                                'Content-Type' => 'application/json',
+                                'X-VERIFY' => $checksum,
+                            ])->get($apiUrl);
+
+        dd($response);
+
+
+
         $session_string = session('session_string');
         $basket = Basket::where('session', $session_string)->where('status', 0)->first();
 
@@ -237,7 +285,7 @@ class BasketController extends Controller
         }
         return redirect('/cart');
     }
- 
+
     function postSignin(Request $request)
     {
         $request->validate([
@@ -261,8 +309,6 @@ class BasketController extends Controller
 
             session()->flash('success', 'You have successfully logged in.');
             return redirect()->back();
-    
-
         } else {
             session()->flash('failed', 'Invalid login attempt');
 
