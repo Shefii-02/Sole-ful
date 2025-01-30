@@ -462,100 +462,6 @@ class OrderController extends Controller
     }
 
 
-    public function confirmPayment(Request $request)
-    {
-        Log::info('****************');
-        Log::info($request->all());
-        Log::info(auth()->user());
-        Log::info(session()->has('session_string'));
-        Log::info('----------------');
-
-        if ($request->code == 'PAYMENT_SUCCESS') {
-            $user           = User::where('id', auth()->user()->id)->first();
-            if (session()->has('session_string') && $user) {
-                $session_string = session('session_string');
-                $basket = Basket::whereHas('items')->where('session', $session_string)->where('status', 0)->first();
-                if ($basket) {
-                    $calculations  = $this->GrandTotalCalculation($basket);
-                    $calculations = json_decode($calculations);
-
-                    $subTotal    = $calculations->subTotal;
-                    $tax_amount  = $calculations->TotalTax;
-                    $discount    = $calculations->Discount;
-                    $couponCode  = $calculations->DiscountCode;
-                    $ship_charge = $calculations->ShippingCharge;
-                    // $ship_tax    = $calculations->shippingTax;
-                    $grandTotal  = $calculations->grandTotal;
-
-
-                    $transactionId = $request->transactionId;
-                    $merchantId = $request->merchantId;
-                    $providerReferenceId = $request->providerReferenceId;
-                    $merchantOrderId = $request->merchantOrderId;
-                    $checksum = $request->checksum;
-                    $status = $request->code;
-                    $paymentInstrumentDetails       = $this->CheckApiStatus($transactionId);
-
-                    $payment                = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
-                    if ($payment) {
-                        $order              = new Order();
-                        $order->user_id     = $user->id;
-                        $order->invoice_id  = $this->invoiceNumberGenerate();
-                        $order->basket_id   = $basket->id;
-                        $order->subtotal    = $subTotal;
-                        $order->discount    = $discount;
-                        $order->tax         = $tax_amount;
-                        $order->shipping_charge = $ship_charge;
-                        $order->grandtotal  = $grandTotal;
-                        $order->ipaddress   = request()->ip();
-                        $order->coupon      = $couponCode;
-                        $order->remarks     = '';
-                        $order->billed_at   = date('Y-m-d H:i:s');
-                        $order->status       = 'SUCCESS';
-                        $order->paid        = 1;
-                        $order->save();
-
-                        OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
-                        Basket::where('id', $basket->id)->update(['status' => 1]);
-
-                        $paymentInstrument          = $paymentInstrumentDetails['data']['paymentInstrument'];
-                        $payment->checksum          = $checksum;
-                        $payment->reference_id      = $providerReferenceId;
-                        $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
-                        $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
-                        $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
-                        $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
-                        $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
-                        $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
-                        $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
-                        $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
-                        $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
-                        $payment->payment_status    = 'SUCCESS';
-                        $payment->response_msg      = json_encode($paymentInstrumentDetails);
-                        $payment->save();
-
-                        $this->stockDecrease($basket->id);
-
-                    } else {
-                        dd('access decided,transaction_id doesn`t matched-userId : '.auth()->user()->id);
-                    }
-                } else {
-                    dd('access decided,basket doesn`t matched-userId : '.auth()->user()->id);
-                }
-            } else {
-                dd('access decided,basket expired-userId : '.auth()->user()->id);
-            }
-
-            $invoice_id = $order->invoice_id;
-
-            return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
-        } else {
-
-            //HANDLE YOUR ERROR MESSAGE HERE
-            dd('Failed : ' . $request->code . ', Please Try Again Later.');
-        }
-    }
-
     // public function confirmPayment(Request $request)
     // {
     //     Log::info('****************');
@@ -565,21 +471,10 @@ class OrderController extends Controller
     //     Log::info('----------------');
 
     //     if ($request->code == 'PAYMENT_SUCCESS') {
-
-    //         $transactionId = $request->transactionId;
-    //         $merchantId = $request->merchantId;
-    //         $providerReferenceId = $request->providerReferenceId;
-    //         $merchantOrderId = $request->merchantOrderId;
-    //         $checksum = $request->checksum;
-    //         $status = $request->code;
-    //         $payment                = Payment::where('transaction_id', $transactionId)->first();
-
-
-    //         $user           = User::where('id', $payment->user_id)->first();
-    //         // session()->has('session_string') &&
-    //         if ( $user) {
+    //         $user           = User::where('id', auth()->user()->id)->first();
+    //         if (session()->has('session_string') && $user) {
     //             $session_string = session('session_string');
-    //             $basket = Basket::whereHas('items')->where('user_id', $payment->user_id)->where('status', 0)->first();
+    //             $basket = Basket::whereHas('items')->where('session', $session_string)->where('status', 0)->first();
     //             if ($basket) {
     //                 $calculations  = $this->GrandTotalCalculation($basket);
     //                 $calculations = json_decode($calculations);
@@ -593,9 +488,15 @@ class OrderController extends Controller
     //                 $grandTotal  = $calculations->grandTotal;
 
 
-                   
+    //                 $transactionId = $request->transactionId;
+    //                 $merchantId = $request->merchantId;
+    //                 $providerReferenceId = $request->providerReferenceId;
+    //                 $merchantOrderId = $request->merchantOrderId;
+    //                 $checksum = $request->checksum;
+    //                 $status = $request->code;
     //                 $paymentInstrumentDetails       = $this->CheckApiStatus($transactionId);
 
+    //                 $payment                = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
     //                 if ($payment) {
     //                     $order              = new Order();
     //                     $order->user_id     = $user->id;
@@ -654,6 +555,105 @@ class OrderController extends Controller
     //         dd('Failed : ' . $request->code . ', Please Try Again Later.');
     //     }
     // }
+
+    public function confirmPayment(Request $request)
+    {
+        Log::info('****************');
+        Log::info($request->all());
+        Log::info(auth()->user());
+        Log::info(session()->has('session_string'));
+        Log::info('----------------');
+
+        if ($request->code == 'PAYMENT_SUCCESS') {
+
+            $transactionId = $request->transactionId;
+            $merchantId = $request->merchantId;
+            $providerReferenceId = $request->providerReferenceId;
+            $merchantOrderId = $request->merchantOrderId;
+            $checksum = $request->checksum;
+            $status = $request->code;
+            $payment                = Payment::where('transaction_id', $transactionId)->first();
+
+
+            $user           = User::where('id', $payment->user_id)->first();
+            // session()->has('session_string') &&
+            if ( $user) {
+                $session_string = session('session_string');
+                $basket = Basket::whereHas('items')->where('user_id', $payment->user_id)->where('status', 0)->first();
+                if ($basket) {
+                    $calculations  = $this->GrandTotalCalculation($basket);
+                    $calculations = json_decode($calculations);
+
+                    $subTotal    = $calculations->subTotal;
+                    $tax_amount  = $calculations->TotalTax;
+                    $discount    = $calculations->Discount;
+                    $couponCode  = $calculations->DiscountCode;
+                    $ship_charge = $calculations->ShippingCharge;
+                    // $ship_tax    = $calculations->shippingTax;
+                    $grandTotal  = $calculations->grandTotal;
+
+
+                   
+                    $paymentInstrumentDetails       = $this->CheckApiStatus($transactionId);
+
+                    if ($payment) {
+                        $order              = new Order();
+                        $order->user_id     = $user->id;
+                        $order->invoice_id  = $this->invoiceNumberGenerate();
+                        $order->basket_id   = $basket->id;
+                        $order->subtotal    = $subTotal;
+                        $order->discount    = $discount;
+                        $order->tax         = $tax_amount;
+                        $order->shipping_charge = $ship_charge;
+                        $order->grandtotal  = $grandTotal;
+                        $order->ipaddress   = request()->ip();
+                        $order->coupon      = $couponCode;
+                        $order->remarks     = '';
+                        $order->billed_at   = date('Y-m-d H:i:s');
+                        $order->status       = 'SUCCESS';
+                        $order->paid        = 1;
+                        $order->save();
+
+                        OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
+                        Basket::where('id', $basket->id)->update(['status' => 1]);
+
+                        $paymentInstrument          = $paymentInstrumentDetails['data']['paymentInstrument'];
+                        $payment->checksum          = $checksum;
+                        $payment->reference_id      = $providerReferenceId;
+                        $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
+                        $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
+                        $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
+                        $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
+                        $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
+                        $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
+                        $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
+                        $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
+                        $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
+                        $payment->payment_status    = 'SUCCESS';
+                        $payment->response_msg      = json_encode($paymentInstrumentDetails);
+                        $payment->save();
+
+                        $this->stockDecrease($basket->id);
+
+                    } else {
+                        dd('access decided,transaction_id doesn`t matched-userId : '.auth()->user()->id);
+                    }
+                } else {
+                    dd('access decided,basket doesn`t matched-userId : '.auth()->user()->id);
+                }
+            } else {
+                dd('access decided,basket expired-userId : '.auth()->user()->id);
+            }
+
+            $invoice_id = $order->invoice_id;
+
+            return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
+        } else {
+
+            //HANDLE YOUR ERROR MESSAGE HERE
+            dd('Failed : ' . $request->code . ', Please Try Again Later.');
+        }
+    }
 
 
 
