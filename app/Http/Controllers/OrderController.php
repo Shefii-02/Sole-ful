@@ -370,7 +370,7 @@ class OrderController extends Controller
     }
 
 
-    public function submitPaymentForm($grandTotal = 1, $user, $basket)
+    public function submitPaymentForm($grandTotal = 1, User $user, $basket)
     {
         $amount         = $grandTotal;
         $user_name      =  $user->name;
@@ -471,6 +471,7 @@ class OrderController extends Controller
         Log::info('----------------');
 
         if ($request->code == 'PAYMENT_SUCCESS') {
+            
             $user           = User::where('id', auth()->user()->id)->first();
             if (session()->has('session_string') && $user) {
                 $session_string = session('session_string');
