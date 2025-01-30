@@ -745,7 +745,7 @@ class OrderController extends Controller
             foreach($basket->items ?? [] as $item){
                 $product = ProductVariant::where('id',$item->product_variation_id)->first();
                 if($product){
-                    $product->stock = ($product->in_stock - $item->quantity ?? 0);
+                    $product->in_stock = ($product->in_stock - $item->quantity ?? 0);
                     $product->save();
                 }
             }
