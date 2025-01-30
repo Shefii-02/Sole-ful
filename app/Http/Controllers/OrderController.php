@@ -471,11 +471,21 @@ class OrderController extends Controller
         Log::info('----------------');
 
         if ($request->code == 'PAYMENT_SUCCESS') {
-            
-            $user           = User::where('id', auth()->user()->id)->first();
-            if (session()->has('session_string') && $user) {
+
+            $transactionId = $request->transactionId;
+            $merchantId = $request->merchantId;
+            $providerReferenceId = $request->providerReferenceId;
+            $merchantOrderId = $request->merchantOrderId;
+            $checksum = $request->checksum;
+            $status = $request->code;
+            $payment                = Payment::where('transaction_id', $transactionId)->first();
+
+
+            $user           = User::where('id', $payment->user_id)->first();
+            // session()->has('session_string') &&
+            if ( $user) {
                 $session_string = session('session_string');
-                $basket = Basket::whereHas('items')->where('session', $session_string)->where('status', 0)->first();
+                $basket = Basket::whereHas('items')->where('user_id', $payment->user_id)->where('status', 0)->first();
                 if ($basket) {
                     $calculations  = $this->GrandTotalCalculation($basket);
                     $calculations = json_decode($calculations);
@@ -489,15 +499,9 @@ class OrderController extends Controller
                     $grandTotal  = $calculations->grandTotal;
 
 
-                    $transactionId = $request->transactionId;
-                    $merchantId = $request->merchantId;
-                    $providerReferenceId = $request->providerReferenceId;
-                    $merchantOrderId = $request->merchantOrderId;
-                    $checksum = $request->checksum;
-                    $status = $request->code;
+                   
                     $paymentInstrumentDetails       = $this->CheckApiStatus($transactionId);
 
-                    $payment                = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
                     if ($payment) {
                         $order              = new Order();
                         $order->user_id     = $user->id;
