@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Dipesh79\LaravelPhonePe\LaravelPhonePe;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\NullableType;
 
@@ -463,6 +464,11 @@ class OrderController extends Controller
 
     public function confirmPayment(Request $request)
     {
+        Log::info('****************');
+        Log::info($request->all());
+        Log::info(auth()->user());
+        Log::info(session()->has('session_string'));
+        Log::info('----------------');
 
         if ($request->code == 'PAYMENT_SUCCESS') {
             $user           = User::where('id', auth()->user()->id)->first();

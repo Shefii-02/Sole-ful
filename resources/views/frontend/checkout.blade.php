@@ -334,7 +334,7 @@
                                                         <label for="">House Name</label>
                                                         <input
                                                             class="form-control @error('s_house_name') is-invalid @enderror"
-                                                            readonly autocomplete="off" type="text"
+                                                             autocomplete="off" type="text"
                                                             name="s_house_name" id="s_house_name" placeholder="">
                                                         @error('s_house_name')
                                                             <span class="text-danger">{{ $message }}</span>
