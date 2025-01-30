@@ -76,7 +76,7 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     
     Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
-    Route::any('confirm', [OrderController::class, 'confirmPayment'])->name('confirm');
+    Route::get('confirm', [OrderController::class, 'confirmPayment'])->name('confirm');
     
 
 });

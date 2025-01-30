@@ -370,7 +370,7 @@ class OrderController extends Controller
     }
 
 
-    public function submitPaymentForm($grandTotal = 1, User $user, $basket)
+    public function submitPaymentForm($grandTotal = 1, $user, $basket)
     {
         $amount         = $grandTotal;
         $user_name      =  $user->name;

@@ -17,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.account.user' => \App\Http\Middleware\CheckAccountUser::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            'confirm',
+            // 'confirm',
         ]);
        
     })
