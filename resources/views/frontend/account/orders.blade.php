@@ -43,7 +43,7 @@
                                 <ul class="nav_booter list-unstyled  pe-md-5 m-0 d-flex justify-content-between flex-wrap">
                                     <li class="d-flex flex-column">
                                         <small>Order Placed</small>
-                                        <small class="fw-bolder">{{dateOnly($item->created_at)}}</small>
+                                        <small class="fw-bolder">{{dateFormat($item->created_at)}}</small>
                                     </li>
                                     
                                     <li>
@@ -55,7 +55,7 @@
                                               
                                                 <div class="hidden-div  fw-bolder mb-5 p-3 rounded shadow-lg">
                                                     <div class="d-flex flex-column">
-                                                        <small>{{$add_billing->firstname .' '. $add_billing->lastname}}</small>
+                                                        <small>{{$add_billing->name}}</small>
                                                         <small>{{$add_billing->address}}</small>
                                                         <small>{{$add_billing->city.','.$add_billing->postalcode}}</small>
                                                         <small>{{$add_billing->province.','.$add_billing->country}}</small>
@@ -150,22 +150,13 @@
                                                         {{getPrice($item->shipping_charge)}}
                                                     </span> 
                                                 </div> 
+                                               
                                                 <div class="col-7 mb-3">
-                                                    <p class="mb-0" >
-                                                        Tax:
-                                                    </p> 
-                                                </div> 
-                                                <div class="col-5 text-end mb-3">
-                                                    <span class="text-end">
-                                                        {{getPrice($item->taxamount)}}
-                                                    </span>
-                                                </div> 
-                                                <div class="col-7 mb-5">
                                                     <p class="mb-0">
                                                         Discount:
                                                     </p> 
                                                 </div> 
-                                                <div class="col-5 text-end mb-5">
+                                                <div class="col-5 text-end mb-3">
                                                     <span class="text-end">
                                                         {{getPrice($item->discount)}}
                                                     </span>

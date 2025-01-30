@@ -12,4 +12,16 @@ class Order extends Model
     use HasFactory;
 
 
+    public function address()
+    {
+        return $this->hasMany(OrderAddress::class);
+    }
+
+
+    public function basket()
+    {
+        return $this->hasOne('App\Models\Basket','id','basket_id');
+    }
+    
+
 }

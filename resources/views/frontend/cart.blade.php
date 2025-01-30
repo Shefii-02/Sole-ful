@@ -415,7 +415,7 @@
             var amount = price * quantity;
 
 
-            item.find('.Item_total').text('$' + amount.toFixed(2));
+            item.find('.Item_total').text('₹' + amount.toFixed(2));
             if (quantity <= 0) {
                 item.remove();
                 if ($('.cart-item').length === 0) {
@@ -424,10 +424,10 @@
             }
             var totalAmount = 0;
             $('.Item_total').each(function() {
-                totalAmount += parseFloat($(this).text().replace('$', ''));
+                totalAmount += parseFloat($(this).text().replace('₹', ''));
             });
-            $('#total-amount').text('Total: $' + totalAmount.toFixed(2));
-            $('.addon_grandtotal').text('$' + totalAmount.toFixed(2))
+            $('#total-amount').text('Total: ₹' + totalAmount.toFixed(2));
+            $('.addon_grandtotal').text('₹' + totalAmount.toFixed(2))
 
         });
 
@@ -447,11 +447,11 @@
             var totalAmount = 0;
 
             $('.Item_total').each(function() {
-                totalAmount += parseFloat($(this).text().replace('$', ''));
+                totalAmount += parseFloat($(this).text().replace('₹', ''));
             });
 
-            $('#total-amount').text('Total: $' + totalAmount.toFixed(2));
-            $('.addon_grandtotal').text('$' + totalAmount.toFixed(2));
+            $('#total-amount').text('Total: ₹' + totalAmount.toFixed(2));
+            $('.addon_grandtotal').text('₹' + totalAmount.toFixed(2));
 
             if ($('.cart-item').length === 0 || preorder == 1) {
                 location.reload();

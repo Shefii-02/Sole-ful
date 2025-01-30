@@ -55,15 +55,36 @@ class OrderController extends Controller
                 $grandTotal       = $calculations->grandTotal;
                 $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
 
-                $billingAddress = Myaddress::where('user_id',$user->id)->where('id',$request->billing_address)->first();
-                if(!$billingAddress){
-                    $billingAddress = Myaddress::where('user_id',$user->id)->first();
+                $billingAddress = Myaddress::where('user_id', $user->id)->where('id', $request->billing_address)->first();
+                if (!$billingAddress) {
+                    $billingAddress = Myaddress::where('user_id', $user->id)->first();
                 }
-                
+
                 $this->storeAddress($billingAddress, $basket->id, 'billing');
                 $this->storeAddress($billingAddress, $basket->id, 'delivery');
 
-                return $result;
+
+                if (env('APP_ENV') == 'local') {
+                    $transaction_id = $basket->id . $user->id . uniqid();
+                    $amount = $grandTotal * 100;
+                    // Store information into database
+
+                    $data = [
+                        'user_id'  => $user->id,
+                        'basket_id' => $basket->id,
+                        'transaction_id' => $transaction_id,
+                        'amount' => $amount,
+                        'merchantOrderId' => $basket->id . '-' . $user->id,
+                    ];
+
+                    Payment::where('basket_id', $basket->id)->where('user_id', $user->id)->delete();
+
+                    Payment::create($data);
+
+                    return redirect(url("/confirm?code=PAYMENT_SUCCESS&merchantId=M22ZUK6NQLM1Q&transactionId={$transaction_id}&amount={$amount}&providerReferenceId=T2501300212587508007957&merchantOrderId={$transaction_id}&param1=na&param2=na&param3=na&param4=na&param5=na&param6=na&param7=na&param8=na&param9=na&param10=na&param11=na&param12=na&param13=na&param14=na&param15=na&param16=na&param17=na&param18=na&param19=na&param20=na&checksum=991751a08c2893e455985046d17c3a586b79af7bd4686027e4c7ebf45e1d9d07###1"));
+                } else {
+                    return $result;
+                }
             } else {
                 dd('your basket is empty');
             }
@@ -443,48 +464,49 @@ class OrderController extends Controller
 
                     $paymentInstrument = $request->paymentInstrument;
 
-
                     $payment                    = Payment::where('transaction_id', $transactionId)->where('user_id', $user->id)->first();
-                    $payment->checksum          = $checksum;
-                    $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
-                    $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
-                    $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
-                    $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
-                    $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
-                    $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
-                    $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
-                    $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
-                    $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
-                    $payment->payment_status    = 'SUCCESS';
-                    $payment->save();
+                    if ($payment) {
+                        $payment->checksum          = $checksum;
+                        $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
+                        $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
+                        $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
+                        $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
+                        $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
+                        $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
+                        $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
+                        $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
+                        $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
+                        $payment->payment_status    = 'SUCCESS';
+                        $payment->save();
 
-                    $order              = new Order();
-                    $order->user_id     = $user->id;
-                    $order->invoice_id  = $this->invoiceNumberGenerate();
-                    $order->basket_id   = $basket->id;
-                    $order->subtotal    = $subTotal;
-                    $order->discount    = $discount;
-                    $order->tax         = $tax_amount;
-                    $order->shipping_charge = $ship_charge;
-                    $order->grandtotal  = $grandTotal;
-                    $order->ipaddress   = request()->ip();
-                    $order->coupon      = $couponCode;
-                    $order->remarks     = '';
-                    $order->billed_at   = date('Y-m-d H:i:s');
-                    $order->status       = 'SUCCESS';
-                    $order->paid        = 1;
-                    $order->save();
-   
-                    OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' =>$order->id ]);
+                        $order              = new Order();
+                        $order->user_id     = $user->id;
+                        $order->invoice_id  = $this->invoiceNumberGenerate();
+                        $order->basket_id   = $basket->id;
+                        $order->subtotal    = $subTotal;
+                        $order->discount    = $discount;
+                        $order->tax         = $tax_amount;
+                        $order->shipping_charge = $ship_charge;
+                        $order->grandtotal  = $grandTotal;
+                        $order->ipaddress   = request()->ip();
+                        $order->coupon      = $couponCode;
+                        $order->remarks     = '';
+                        $order->billed_at   = date('Y-m-d H:i:s');
+                        $order->status       = 'SUCCESS';
+                        $order->paid        = 1;
+                        $order->save();
+
+                        OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
+                    } else {
+                        dd('access decided');
+                    }
+                } else {
+                    dd('access decided');
                 }
+            } else {
+                dd('access decided');
             }
 
-
-
-            //Transaction completed, You can add transaction details into database
-
-
-       
             $invoice_id = $order->invoice_id;
 
             return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
@@ -527,7 +549,7 @@ class OrderController extends Controller
 
             $basket->coupon = $coupon_details->id;
             $basket->save();
-            
+
             $response['msg']      = '<span class="text-success">Coupon "' . $request->gift_code . '" Applied ' . $value . '</span>';
             $response['value']       = $coupon_details->value;
             $response['coupon_id']   = $coupon_details->id;
@@ -548,9 +570,4 @@ class OrderController extends Controller
             return  response()->json($response);
         }
     }
-     
-
-
-        
 }
-

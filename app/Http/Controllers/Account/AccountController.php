@@ -49,15 +49,11 @@ class AccountController extends Controller
 
         $user_id = $this->userId;
 
-        $orders = Order::with(['basket.items', 'address'])
-            ->leftJoin('baskets', 'baskets.id', '=', 'orders.basket_id')
-            ->where('orders.user_id', $user_id)
-            // ->whereBetween('orders.created_at', [$startDay, $endDay])
-            ->where('orders.status', 1)
-            ->select('orders.*')
-            ->orderBy('id', 'desc')
-            ->get();
-
+        $orders = Order::where('orders.user_id', $user_id)
+                        // ->whereBetween('orders.created_at', [$startDay, $endDay])
+                        ->orderBy('id', 'desc')
+                        ->get();
+      
 
         return view('frontend.account.orders', compact('orders'));
     }

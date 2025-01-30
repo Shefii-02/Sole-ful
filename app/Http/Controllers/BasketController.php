@@ -118,13 +118,11 @@ class BasketController extends Controller
     {
 
         // $merchantId = 'M22ZUK6NQLM1Q';
-        // $transactionId = '133679a92a097b85'; // Get transaction ID from request
+        // $transactionId = 'T2501300212587508007957'; // Get transaction ID from request
         // $saltKey  = '8ef46188-f184-4b50-bb6f-8585dfb14608'; 
         // $saltIndex = 1;
 
-        // // Generate X-VERIFY header
-        // $stringToHash = "/pg/v1/status/$merchantId/$transactionId" . $saltKey;
-        // $finalXHeader = hash('sha256', $stringToHash) . '###' . $saltIndex;
+        // $finalXHeader = hash('sha256','/pg/v1/status/'.$merchantId.'/'.$transactionId.$saltKey).'###'.$saltIndex;
 
         // // API Endpoint
         // $url = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/$merchantId/$transactionId";
