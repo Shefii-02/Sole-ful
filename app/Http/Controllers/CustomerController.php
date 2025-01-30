@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
+use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -14,6 +15,8 @@ class CustomerController extends Controller
     public function index()
     {
         //
+        $users = User::where('type','user')->orderBy('created_at', 'desc')->get();
+        return view('admin.customers.index', compact('users'));
     }
 
     /**

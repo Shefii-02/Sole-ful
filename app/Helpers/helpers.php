@@ -164,6 +164,15 @@ if (!function_exists('dateTimeFormat')) {
     }
 }
 
+if (!function_exists('TimeFormat')) {
+
+    function TimeFormat($date)
+    {
+        $time = date('h:i a', strtotime($date));
+        return  $time;
+    }
+}
+
 if (!function_exists('dateFormat')) {
 
     function dateFormat($date)

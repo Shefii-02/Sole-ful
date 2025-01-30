@@ -3,6 +3,7 @@
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AdvertisementController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BasketController;
@@ -102,7 +103,11 @@ Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account
 
 });
 
-Auth::routes();
+// Auth::routes();
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout'); 
+
+Auth::routes(['logout' => false,]);
 
 Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers'], function () {
     // Route::get('dashboard', function () {
@@ -126,7 +131,19 @@ Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'ad
     Route::any('/products/generate-autosku', [ProductController::class, 'generateAutosku'])->name('products.generate-autosku');
     
     Route::resource('products', ProductController::class)->names('products');
-    Route::resource('orders', OrderController::class)->names('orders');
+    
+    Route::get('orders', [OrderController::class,'index'])->name('orders.index');
+    Route::post('orders/{invoice_id}/update', [OrderController::class,'update'])->name('orders.update');
+    Route::get('orders/{invoice_id}/print', [OrderController::class,'printInvoice'])->name('orders.print');
+    Route::get('orders/{invoice_id}', [OrderController::class,'show'])->name('orders.show');
+
+
+    // Route::resource('orders', OrderController::class)->names('orders');
+    
+    Route::get('profile', [ProfileController::class,'index'])->name('profile');
+    Route::post('profile/update', 'ProfileController@updateProfile')->name('profile.update');
+    Route::post('profile/update-password', 'ProfileController@changePassword')->name('profile.changePassword');
+    
 
     Route::get('/subscribers', [CustomerController::class, 'subscribers'])->name('subscribers.index');
     Route::resource('customers', CustomerController::class)->names('customers');
@@ -137,7 +154,7 @@ Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'ad
     Route::resource('sizes', SizeController::class)->names('sizes');
     Route::resource('colors', ColorController::class)->names('colors');
     Route::resource('activity', ActivityLogsController::class)->names('activity');
-    Route::resource('profile', ProfileController::class)->names('profile');
+
     Route::resource('blogs', BlogPostController::class)->names('blogs');
     Route::resource('blog-category', BlogCategoryController::class)->names('blogs-category');
 });

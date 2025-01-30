@@ -17,6 +17,23 @@ class Order extends Model
         return $this->hasMany(OrderAddress::class);
     }
 
+    public function billingAddress()
+    {
+        return $this->hasOne(OrderAddress::class)->where('type','billing');
+    }
+
+    public function deliveryAddress()
+    {
+        return $this->hasOne(OrderAddress::class)->where('type','delivery');
+    }
+
+
+
+    
+    public function payments()
+    {
+        return $this->hasOne(Payment::class);
+    }
 
     public function basket()
     {

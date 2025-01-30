@@ -12,12 +12,14 @@ use App\Models\Myaddress;
 use App\Models\Order;
 use App\Models\OrderAddress;
 use App\Models\Payment;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Dipesh79\LaravelPhonePe\LaravelPhonePe;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 use PhpParser\Node\NullableType;
 
 class OrderController extends Controller
@@ -28,17 +30,44 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $transactionId = "133679a92a097b85";
-        dd($this->CheckApiStatus($transactionId));
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.orders.index', compact('orders'));
     }
+
+    public function show($id){
+        $order = Order::where('invoice_id', $id)->first() ?? abort(404);
+        return view('admin.orders.show', compact('order'));
+    }
+
+    public function printInvoice($invoice_id){
+        $order = Order::where('invoice_id', $invoice_id)->first() ?? abort(404);
+        $print = true;
+        return view('admin.orders.print', compact('order','print'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function update(Request $request,$id)
     {
-        //
+        $order = Order::where('id', $id)->first() ?? abort(404);
+        if($request->verified_at == 'Verified'){
+            $order->verified_at = date('Y-m-d H:i:s');
+        }
+        else{
+            $order->verified_at = null;
+        }
+        
+        $order->save();
+
+        Session::flash('success_msg', "Order updated successfully");
+        return redirect()->back();
     }
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////
 
     public function placeOrder(CheckoutFormRequest $request)
     {
@@ -65,7 +94,6 @@ class OrderController extends Controller
 
                 $this->storeAddress($billingAddress, $basket->id, 'billing');
                 $this->storeAddress($billingAddress, $basket->id, 'delivery');
-
 
                 if (env('APP_ENV') == 'local') {
                     $transaction_id = $basket->id . $user->id . uniqid();
@@ -217,7 +245,7 @@ class OrderController extends Controller
             $save_add->house_no    = $address->house_no;
             $save_add->state       = $address->state;
             $save_add->country     = 'India';
-            $save_add->type        = $address->type;
+            $save_add->type        = $type;
             $save_add->basket_id   = $basket_id;
             $save_add->save();
 
@@ -226,10 +254,6 @@ class OrderController extends Controller
             return 0;
         }
     }
-
-
-
-
 
     function invoiceNumberGenerate()
     {
@@ -504,6 +528,7 @@ class OrderController extends Controller
                         $payment->response_msg      = json_encode($paymentInstrumentDetails);
                         $payment->save();
 
+                        $this->stockDecrease($basket->id);
 
                     } else {
                         dd('access decided,transaction_id doesn`t matched-userId : '.auth()->user()->id);
@@ -604,5 +629,22 @@ class OrderController extends Controller
 
             return  response()->json($response);
         }
+    }
+
+
+
+    public function stockDecrease($basket_id){
+        $basket = Basket::with('items')->whereId($basket_id)->first();
+        if ($basket) {
+            foreach($basket->items ?? [] as $item){
+                $product = ProductVariant::where('id',$item->product_variation_id)->first();
+                if($product){
+                    $product->stock = ($product->in_stock - $item->quantity ?? 0);
+                    $product->save();
+                }
+            }
+        }
+
+        return 1;
     }
 }

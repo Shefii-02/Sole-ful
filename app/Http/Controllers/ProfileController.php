@@ -24,8 +24,6 @@ class ProfileController extends Controller
     
         // Validate incoming data
         $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . auth()->id(), // Ignore current user's email
             'name' => 'required|string|max:255',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -34,17 +32,16 @@ class ProfileController extends Controller
         $user = User::where('id', auth()->id())->first() ?? abort(404); // Fetch the authenticated user
 
         // Update fields
-        $user->first_name = $request->input('first_name');
-        $user->last_name = $request->input('last_name');
+  
         $user->email = $request->input('email');
         $user->name = $request->input('name');
 
         // Handle avatar upload
-        if ($request->hasFile('avatar')) {
-            deleteFilefromMedia($user->avatar_id);
-            $result = uploadFiletoMedia($request->file('avatar'), 'users');
-            $user->avatar_id = isset($result['media_id']) ? $result['media_id'] : null;
-        }
+        // if ($request->hasFile('avatar')) {
+        //     deleteFilefromMedia($user->avatar_id);
+        //     $result = uploadFiletoMedia($request->file('avatar'), 'users');
+        //     $user->avatar_id = isset($result['media_id']) ? $result['media_id'] : null;
+        // }
 
         $user->save();
 

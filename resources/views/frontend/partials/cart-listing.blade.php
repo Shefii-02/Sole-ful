@@ -4,7 +4,7 @@
     @endphp
     <div class="side-cart-product">
         @foreach ($products ?? [] as $cItem)
-            <div class="cart-item ps-1 pe-1">
+            <div class="cart-item ps-1 pe-1 mb-3">
                 <div class="row">
                     <div class="col-2 cart-item-image position-relative d-flex align-items-center">
                         <img src="{{ asset('images/products/' . $cItem->picture) }}" class="rounded-3 w-20"

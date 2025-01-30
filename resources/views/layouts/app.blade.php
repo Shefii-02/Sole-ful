@@ -143,6 +143,19 @@
             border-radius: 100%;
         }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QQTEYFCNM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0QQTEYFCNM');
+    </script>
 </head>
 
 <body>
@@ -830,7 +843,7 @@
                     asNavFor: '.product-large-slider',
                     arrows: false,
                     focusOnSelect: true
-                });    
+                });
 
                 // Image zoom effect for the newly added images
                 $('.img-zoom').zoom();
@@ -887,8 +900,49 @@
                     }
                 });
             });
+
+
+
+            $('body').on('click', '.delete-btn', async function() {
+
+                var item = $(this).closest('.cart-item');
+                var quantity = $(this).val();
+                var product_sku = $(this).data('psku');
+                var product_id = $(this).data('pid');
+                var product_price = $(this).data('price');
+                var preorder = $(this).data('preorder')
+
+                item.remove();
+                await $.ajax({
+                    url: `{{ route('public.product-add') }}`,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'product_sku': product_sku,
+                        'product_id': product_id,
+                        'quantity': 0,
+                        'price': product_price
+                    },
+                    success: function(response) {
+                        location.reload();
+
+                    },
+                    error: function(xhr, status, error) {
+
+                        alertJsFunction(status, 'error');
+                        //  alert('something went wrong please try again')
+                        // body.find('.product-loading').remove();
+                    }
+                });
+                location.reload();
+
+            })
         });
     </script>
+
 </body>
 
 </html>

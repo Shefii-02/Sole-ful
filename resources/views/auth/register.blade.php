@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @push('header')
-    <link href="{{ asset('assets/admin/style.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('assets/admin/style.css') }}" rel="stylesheet"> --}}
 @endpush
 @section('content')
     <div class="container" style="padding-top: 5.5rem;">

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @push('header')
-    <link href="{{ asset('assets/admin/style.css') }}" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 @endpush
 @section('content')
     <div class="container" style="padding-top: 5.5rem;">
@@ -17,10 +16,7 @@
                                     <img class="dark:hidden w-75" src="/assets/img/logo/logo.png" alt="Logo">
                                 </a>
 
-                                <p class="font-medium 2xl:px-20">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                                    suspendisse.
-                                </p>
+                                
 
                                 <span class="mt-4 inline-block flex justify-center">
                                     <img src="assets/img/login-img.png" class="w-50" alt="#">

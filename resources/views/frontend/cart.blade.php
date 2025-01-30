@@ -258,7 +258,7 @@
                                     </div>
                                 </div>
                                 @php
-                                    $totalAmount = $listing->price_amount * $listing->quantity;
+                                    $totalAmount = $totalAmount + ($listing->price_amount * $listing->quantity);
                                 @endphp
                             @endforeach
                         </div>

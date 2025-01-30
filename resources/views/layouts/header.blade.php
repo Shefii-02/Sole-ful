@@ -118,7 +118,7 @@
                 </div>
 
                 <div class="px-4">
-                    <ul class="d-flex gap-3 align-items-end align-content-end m-1">
+                    <ul class="d-flex gap-4 align-items-end align-content-end m-1">
                         <li class="position-relative">
                             <div class="search" id="search-bar" x-data="{
                                 placeholders: ['Type something...','Just type if you want Shoe type', 'Just type if you want Category', 'Just type if you want Color', 'Just type if you want Size', 'Just type if you want Product name'],
@@ -163,8 +163,8 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="me-0 ms-2 wishlist-section d-none d-md-block" style="display: none">
-                            <a href="#" class="d-inline " id="wishlist-btn-view" data-bs-toggle="offcanvas"
+                        <li class="me-0 ms-2 wishlist-section " style="display: none">
+                            <a href="#" class="d-inline d-none d-md-block" id="wishlist-btn-view" data-bs-toggle="offcanvas"
                                 data-bs-target="#Wishlist" aria-controls="Wishlist">
                                 <div class="cart-icon text-center text-theme relative">
                                     <i class="bi bi-heart-fill fs-5"></i>
@@ -236,180 +236,6 @@
 
         </div>
     </div>
-    <!-- main header start -->
-    <div class="main-header d-none">
-
-
-        <!-- header middle area start -->
-        <div class="header-main-area sticky">
-            <div class="container">
-                <div class="row align-items-center position-relative">
-                    <!-- start logo area -->
-                    <div class="col-lg-2">
-                        <div class="logo">
-                            <a href="/">
-                                <img src="{{ url('assets/img/logo/logo.png') }}" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <!-- start logo area -->
-
-                    <!-- main menu area start -->
-                    <div class="col-lg-8 position-static">
-                        <div class="main-menu-area">
-                            <div class="main-menu">
-                                <!-- main menu navbar start -->
-                                <nav class="desktop-menu">
-                                    <ul>
-                                        <li class="active"><a href="index.html">Home <i
-                                                    class="fa fa-angle-down"></i></a>
-                                            <ul class="dropdown">
-                                                <li><a href="index.html">Home version 01</a></li>
-                                                <li><a href="index-2.html">Home version 02</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="static"><a href="#">pages <i
-                                                    class="fa fa-angle-down"></i></a>
-                                            <ul class="megamenu dropdown">
-                                                <li class="mega-title"><a href="#">column 01</a>
-                                                    <ul>
-                                                        <li><a href="shop.html">shop grid left
-                                                                sidebar</a></li>
-                                                        <li><a href="shop-grid-right-sidebar.html">shop grid right
-                                                                sidebar</a></li>
-                                                        <li><a href="shop-list-left-sidebar.html">shop list left
-                                                                sidebar</a></li>
-                                                        <li><a href="shop-list-right-sidebar.html">shop list right
-                                                                sidebar</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="mega-title"><a href="#">column 02</a>
-                                                    <ul>
-                                                        <li><a href="product-details.html">product details</a></li>
-                                                        <li><a href="product-details-affiliate.html">product
-                                                                details affiliate</a></li>
-                                                        <li><a href="product-details-variable.html">product details
-                                                                variable</a></li>
-                                                        <li><a href="product-details-group.html">product details
-                                                                group</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="mega-title"><a href="#">column 03</a>
-                                                    <ul>
-                                                        <li><a href="cart.html">cart</a></li>
-                                                        <li><a href="checkout.html">checkout</a></li>
-                                                        <li><a href="compare.html">compare</a></li>
-                                                        <li><a href="wishlist.html">wishlist</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="mega-title"><a href="#">column 04</a>
-                                                    <ul>
-                                                        <li><a href="my-account.html">my-account</a></li>
-                                                        <li><a href="login-register.html">login-register</a></li>
-                                                        <li><a href="contact-us.html">contact us</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="shop.html">shop <i class="fa fa-angle-down"></i></a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">shop grid layout <i
-                                                            class="fa fa-angle-right"></i></a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="shop.html">shop grid left sidebar</a></li>
-                                                        <li><a href="shop-grid-right-sidebar.html">shop grid right
-                                                                sidebar</a></li>
-                                                        <li><a href="shop-grid-full-3-col.html">shop grid full 3
-                                                                col</a></li>
-                                                        <li><a href="shop-grid-full-4-col.html">shop grid full 4
-                                                                col</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">shop list layout <i
-                                                            class="fa fa-angle-right"></i></a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="shop-list-left-sidebar.html">shop list left
-                                                                sidebar</a></li>
-                                                        <li><a href="shop-list-right-sidebar.html">shop list right
-                                                                sidebar</a></li>
-                                                        <li><a href="shop-list-full-width.html">shop list full
-                                                                width</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">products details <i
-                                                            class="fa fa-angle-right"></i></a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="product-details.html">product details</a></li>
-                                                        <li><a href="product-details-affiliate.html">product
-                                                                details affiliate</a></li>
-                                                        <li><a href="product-details-variable.html">product details
-                                                                variable</a></li>
-                                                        <li><a href="product-details-group.html">product details
-                                                                group</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="blog-left-sidebar.html">Blog <i class="fa fa-angle-down"></i></a>
-                                            <ul class="dropdown">
-                                                <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
-                                                <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
-                                                <li><a href="blog-grid-full-width.html">blog grid no sidebar</a>
-                                                </li>
-                                                <li><a href="blog-details.html">blog details</a></li>
-                                                <li><a href="blog-details-audio.html">blog details audio</a></li>
-                                                <li><a href="blog-details-video.html">blog details video</a></li>
-                                                <li><a href="blog-details-left-sidebar.html">blog details left
-                                                        sidebar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact-us.html">Contact us</a></li>
-                                    </ul>
-                                </nav>
-                                <!-- main menu navbar end -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- main menu area end -->
-
-                    <!-- mini cart area start -->
-                    <div class="col-lg-2">
-                        <div class="header-configure-wrapper">
-                            <div class="header-configure-area">
-                                <ul class="nav justify-content-end">
-                                    <li>
-                                        <a href="#" class="offcanvas-btn">
-                                            <i class="ion-ios-search-strong"></i>
-                                        </a>
-                                    </li>
-                                    <li class="user-hover">
-                                        <a href="#">
-                                            <i class="ion-ios-gear-outline"></i>
-                                        </a>
-                                        <ul class="dropdown-list">
-                                            <li><a href="login-register.html">login</a></li>
-                                            <li><a href="login-register.html">register</a></li>
-                                            <li><a href="my-account.html">my account</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="minicart-btn">
-                                            <i class="ion-bag"></i>
-                                            <div class="notification">2</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- mini cart area end -->
-                </div>
-            </div>
-        </div>
-        <!-- header middle area end -->
-    </div>
-    <!-- main header start -->
-
    
 </header>
 <!-- end Header Area -->
