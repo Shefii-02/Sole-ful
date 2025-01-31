@@ -452,7 +452,7 @@ class OrderController extends Controller
 
                 if (isset($res->code) && ($res->code == 'PAYMENT_INITIATED')) {
                     $payUrl = $res->data->instrumentResponse->redirectInfo->url;
-                    return redirect()->away($payUrl);
+                    return redirect()->to($payUrl);
                 } else {
                     //HANDLE YOUR ERROR MESSAGE HERE
                     dd('ERROR : ' . $res);
