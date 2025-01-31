@@ -115,7 +115,8 @@ class OrderController extends Controller
 
                     return redirect(url("/confirm?code=PAYMENT_SUCCESS&merchantId=M22ZUK6NQLM1Q&transactionId={$transaction_id}&amount={$amount}&providerReferenceId=T2501300212587508007957&merchantOrderId={$transaction_id}&param1=na&param2=na&param3=na&param4=na&param5=na&param6=na&param7=na&param8=na&param9=na&param10=na&param11=na&param12=na&param13=na&param14=na&param15=na&param16=na&param17=na&param18=na&param19=na&param20=na&checksum=991751a08c2893e455985046d17c3a586b79af7bd4686027e4c7ebf45e1d9d07###1"));
                 } else {
-                    return $result;
+                    return redirect()->to($result);
+                    // return $result;
                 }
             } else {
                 dd('your basket is empty');
@@ -452,7 +453,7 @@ class OrderController extends Controller
 
                 if (isset($res->code) && ($res->code == 'PAYMENT_INITIATED')) {
                     $payUrl = $res->data->instrumentResponse->redirectInfo->url;
-                    return redirect()->to($payUrl);
+                    return $payUrl;
                 } else {
                     //HANDLE YOUR ERROR MESSAGE HERE
                     dd('ERROR : ' . $res);
