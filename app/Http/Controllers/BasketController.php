@@ -206,45 +206,37 @@ class BasketController extends Controller
         return  response()->json($response);
     }
 
-    // public function checkout(Request $request)
-    // {
-    //     $this->CartRefresh();
+    public function checkout(Request $request)
+    {
+        $this->CartRefresh();
 
-    //     if (session()->has('session_string')) {
+        if (session()->has('session_string')) {
 
 
-    //         $session_string = session('session_string');
+            $session_string = session('session_string');
 
-    //         $basket = Basket::where('session', $session_string)->where('status', 0)->first();
+            $basket = Basket::where('session', $session_string)->where('status', 0)->first();
 
-    //         if ($basket) {
-    //             if ($request->all() != null && $basket->special_campaign == 0) {
-    //                 if ($basket->order_type == 'pickup') {
-    //                     $basket->serve_date = $request->pickup_date;
-    //                     $basket->serve_time = $request->pickup_time;
-    //                 } else {
-    //                     $basket->serve_date = $request->shipping_date;
-    //                 }
-    //                 $basket->remarks = $request->remark;
-    //             }
+            if ($basket) {
+                
 
-    //             $basket->save();
-    //             $items = CartItem::where('basket_id', $basket->id)
-    //                 ->where(function ($query) {
-    //                     $query->whereNull('parent')
-    //                         ->orWhere('parent', '=', 0); // Add this line to include items with parent = 0 if applicable
-    //                 })
-    //                 ->get();
+                $basket->save();
+                $items = CartItem::where('basket_id', $basket->id)
+                    ->where(function ($query) {
+                        $query->whereNull('parent')
+                            ->orWhere('parent', '=', 0); // Add this line to include items with parent = 0 if applicable
+                    })
+                    ->get();
 
-    //             if ($items->count() > 0) {
-    //                 return view('frontend.checkout', compact('items', 'basket'));
-    //             } else {
-    //                 return redirect('/cart');
-    //             }
-    //         }
-    //     }
-    //     return redirect('/cart');
-    // }
+                if ($items->count() > 0) {
+                    return view('frontend.checkout', compact('items', 'basket'));
+                } else {
+                    return redirect('/cart');
+                }
+            }
+        }
+        return redirect('/cart');
+    }
 
     function postSignin(Request $request)
     {
