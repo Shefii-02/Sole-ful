@@ -3,11 +3,11 @@
     <table width="100%">
 	<tbody>
 		<tr>
-			<td style="padding-bottom: 15px; text-align: center;"><img style="width: 100px; height: auto; vertical-align: middle;" src="{{url('assets/images/mail-logo.png')}}" /><br /><br /><span style="color: #F993C3;">MySweetiePie.ca</span></td>
+			<td style="padding-bottom: 15px; text-align: center;"><img style="width: 100px; height: auto; vertical-align: middle;" src="{{url('assets/images/mail-logo.png')}}" /><br /><br /><span style="color: #F993C3;">MySoleful.ca</span></td>
 		</tr>
 		<tr>
 			<td>
-				<h3>Thank you for registered at MySweetiepie!. </h3>
+				<h3>Thank you for registered at MySoleful!. </h3>
                 <p>
                 	Name: {{$register['firstname'] }} {{ $register['lastname'] }}
                 </p>

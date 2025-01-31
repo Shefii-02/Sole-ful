@@ -385,129 +385,7 @@
         </div>
         <div class="offcanvas-body wishlistBody">
             <div class="col-12 h-100 overflow-hidden">
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
-
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
-
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                @include('frontend.partials.loader')
             </div>
         </div>
     </div>
@@ -520,129 +398,7 @@
         </div>
         <div class="offcanvas-body cartlistBody">
             <div class="col-12 h-100 overflow-hidden">
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                            <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                            <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mb-4">
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
-
-                            </div>
-                        </div>
-                        <div class="col-8">
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
-
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100 ">
-
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 mb-4">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="col-lg-12 rounded-5 h-100 bg-gray-100  ">
-
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <div class="col-12 h-5 mb-2 bg-gray-100  text-light shimmer-bar"></div>
-                                <div class="col-11 h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                                <div class="col-10 h-5 mb-2 bg-gray-100 shimmer-bar text-light"></div>
-                                <div class="col-11  h-5 mb-2 bg-gray-100  text-light shimmer-bar2"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+                @include('frontend.partials.loader')
             </div>
         </div>
     </div>
@@ -717,8 +473,14 @@
     @stack('footer')
     <script>
         $(document).ready(function() {
-            // Set first size button as checked by default
-            $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked', true);
+            let selectedSize = "{{ request()->get('size') }}";
+            if (selectedSize) {
+                $(".size-tab .size-button input[value='" + selectedSize + "']").prop("checked", true);
+            } else {
+                // Set first size button as checked by default
+                $('.size-tab .size-button').not('.disabled').first().find('input[type="radio"]').prop('checked',
+                    true);
+            }
 
             // Function to handle active class toggle
             $('body').on('change', '.variSize_checkbox', function(e) {
@@ -742,10 +504,16 @@
                     },
                     success: function(response) {
                         $('.color-tab').html(response);
-
+                        let selectedColor = "{{ request()->get('color') }}";
                         // Set first color button as checked by default in the color-tab
-                        $('.color-tab .color-button').not('.disabled').first().find(
-                            'input[type="radio"]').prop('checked', true);
+                        if (selectedColor) {
+                            // Find the radio button with the matching value and check it
+                            $(".color-tab .color-button input[value='" + selectedColor + "']")
+                                .prop("checked", true);
+                        } else {
+                            // If no color is selected, check the first available color option
+                            $(".color-tab .color-button input").first().prop("checked", true);
+                        }
                         // Trigger change event on the first color option
                         $('.variColor_checkbox:checked').trigger('change');
                     }
@@ -778,10 +546,14 @@
                 $('.stockStatus').text(stock);
                 $('.product-title').text(pName);
                 if (stock == 'in-stock') {
+                    $('.add-to-cart').attr('id', 'addToCartBtn').removeAttr('disabled1'); // Set correct ID
+          
                     $('.stockStatus').addClass('text-success').removeClass('text-danger');
                 } else {
+                    $('.add-to-cart').attr('id', 'inStock').attr('disabled1', 'disabled'); // Set different ID when out of stock
                     $('.stockStatus').addClass('text-danger').removeClass('text-success');
                 }
+
 
                 // Hide all previous images
                 $('.imgshowing').hide();
@@ -890,7 +662,7 @@
                             toastr.success(response.message, "Success");
 
                         } else {
-                            toastr.success(response.message, "Error");
+                            toastr.error(response.message, "Error");
 
                         }
                         $('.cart-count').text(response.cart_count)
@@ -901,6 +673,13 @@
                 });
             });
 
+
+            $('body').on('click', 'button#inStock', function(e) {
+
+                toastr.error('This Product Out of Stock, please try later', "Out of Stock");
+
+            });
+            
 
 
             $('body').on('click', '.delete-btn', async function() {

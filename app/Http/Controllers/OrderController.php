@@ -161,7 +161,7 @@ class OrderController extends Controller
                     "affiliation" => $basket ? $basket->city ?? "" : '',
                     "coupon" => "",
                     "index" => $key,
-                    "item_brand" => "Sweetiepie",
+                    "item_brand" => "Soleful",
                     "item_category" => "Products",
                     "item_variant" => $item->variation,
                     "location_id" => "Toronto",
@@ -200,7 +200,7 @@ class OrderController extends Controller
             $temptot = $order->grandtotal ?? 0;
             $ggtrans = 'pageTracker._addTrans(';
             $ggtrans .= '"' . $basket_id . '",';
-            $ggtrans .= '"Sweetiepie",';
+            $ggtrans .= '"Soleful",';
             $ggtrans .= '"' . $temptot . '",';
             $ggtrans .= '"' . $basket->taxamount . '",';
             $ggtrans .= '"' . $basket->shipping_charge . '",';
@@ -272,6 +272,9 @@ class OrderController extends Controller
 
     function GrandTotalCalculation($basket)
     {
+
+        $this->CartRefresh();
+
         $Calculation['subTotal']       = 0;
         $Calculation['Discount']       = 0;
         $Calculation['ShippingCharge'] = 0;
@@ -354,14 +357,7 @@ class OrderController extends Controller
                 $items = CartItem::where('basket_id', $basket->id)->get();
                 if ($items) {
                     foreach ($items as $listing) {
-                        if ($listing->product_variation) {
-                            if ($listing->has_special_price == 1) {
-                                $checkSpecialPrice    = $listing->product->has_special_price == 1 && $listing->product->special_price_from <= date('Y-m-d') && $listing->product->special_price_to >= date('Y-m-d');
-                                if (!$checkSpecialPrice && $listing->product->has_special_price == 1) {
-                                    CartItem::where('id', $listing->id)->update(['has_special_price' => 0, 'price_amount' => $listing->product->price, 'special_price_from' => null, 'special_price_to' => null]);
-                                }
-                            }
-                        } else {
+                        if (!$listing->product_variation || $listing->product_variation->in_stock < $listing->quantity) {
                             CartItem::where('id', $listing->id)->delete();
                         }
                     }
@@ -647,6 +643,8 @@ class OrderController extends Controller
             }
 
             $invoice_id = $order->invoice_id;
+          
+            $this->sendOrderNotification($order);
 
             return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
         } else {

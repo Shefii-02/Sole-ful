@@ -26,150 +26,156 @@
             <div class="row">
                 <!-- sidebar area start -->
                 <div class="col-lg-3 order-2 order-lg-1">
-                    <div class="sidebar-wrapper">
-                        <!-- single sidebar start -->
-                        <div class="sidebar-single">
-                            <div class="sidebar-title">
-                                <h3 class="text-theme">Categories</h3>
-                            </div>
-                            <div class="sidebar-body">
-                                <ul class="color-list">
+                    <div class="sidebar-wrapper position-sticky absolute top-20">
+                        <div class="pe-3" style="height: 70vh;overflow: auto;">
 
-                                    @foreach ($categories ?? [] as $item)
+                            <!-- single sidebar start -->
+                            <div class="sidebar-single">
+                                <div class="sidebar-title">
+                                    <h3 class="text-theme">Categories</h3>
+                                </div>
+                                <div class="sidebar-body">
+                                    <ul class="color-list">
+
+                                        @foreach ($categories ?? [] as $item)
+                                            <li role="button" class="d-flex justify-between">
+                                                <label for="{{ 'category-' . $item->id }}">
+
+                                                    <span class="text-capitalize">{{ $item->name }}
+                                                        <span>({{ $item->products_count }})</span></span></label>
+                                                <input
+                                                    {{ in_array(trim($item->name), request()->categories ?? []) ? 'checked' : '' }}
+                                                    form="filter" type="checkbox" name="categories[]"
+                                                    value="{{ trim($item->name) }}" class="checkbox"
+                                                    id="{{ 'category-' . $item->id }}">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- single sidebar end -->
+                            <!-- single sidebar start -->
+                            <div class="sidebar-single">
+                                <div class="sidebar-title">
+                                    <h3 class="text-theme">Shoe Type</h3>
+                                </div>
+                                <div class="sidebar-body">
+                                    <ul class="color-list">
                                         <li role="button" class="d-flex justify-between">
-                                            <label for="{{ 'category-' . $item->id }}">
-
-                                                <span class="text-capitalize">{{ $item->name }}
-                                                    <span>({{ $item->products_count }})</span></span></label>
+                                            <label for="CasualSlides"><span class="text-capitalize">Casual
+                                                    Slides</span></label>
                                             <input
-                                                {{ in_array(trim($item->name), request()->categories ?? []) ? 'checked' : '' }}
-                                                form="filter" type="checkbox" name="categories[]"
-                                                value="{{ trim($item->name) }}" class="checkbox"
-                                                id="{{ 'category-' . $item->id }}">
+                                                {{ in_array(trim('Casual Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
+                                                form="filter" type="checkbox" name="shoe_type[]" value="Casual Slides"
+                                                class="checkbox" id="CasualSlides">
                                         </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- single sidebar end -->
-                        <!-- single sidebar start -->
-                        <div class="sidebar-single">
-                            <div class="sidebar-title">
-                                <h3 class="text-theme">Shoe Type</h3>
-                            </div>
-                            <div class="sidebar-body">
-                                <ul class="color-list">
-                                    <li role="button" class="d-flex justify-between">
-                                        <label for="CasualSlides"><span class="text-capitalize">Casual Slides</span></label>
-                                        <input
-                                            {{ in_array(trim('Casual Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="shoe_type[]"
-                                            value="Casual Slides" class="checkbox"
-                                            id="CasualSlides">
-                                    </li>
-                                    <li role="button" class="d-flex justify-between">
-                                        <label for="EthnicSlides">
-                                            <span class="text-capitalize">Ethnic Slides</span></label>
-                                        <input
-                                            {{ in_array(trim('Ethnic Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="shoe_type[]"
-                                            value="{{ trim('Ethnic Slides') }}" class="checkbox"
-                                            id="EthnicSlides">
-                                    </li>
-                                    <li role="button" class="d-flex justify-between">
-                                        <label for="CasualSlipons">
+                                        <li role="button" class="d-flex justify-between">
+                                            <label for="EthnicSlides">
+                                                <span class="text-capitalize">Ethnic Slides</span></label>
+                                            <input
+                                                {{ in_array(trim('Ethnic Slides'), request()->shoe_type ?? []) ? 'checked' : '' }}
+                                                form="filter" type="checkbox" name="shoe_type[]"
+                                                value="{{ trim('Ethnic Slides') }}" class="checkbox" id="EthnicSlides">
+                                        </li>
+                                        <li role="button" class="d-flex justify-between">
+                                            <label for="CasualSlipons">
 
-                                            <span class="text-capitalize">{{ $item->name }}</label>
-                                        <input {{ in_array(trim('Casual Slipons'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="shoe_type[]"
-                                            value="Casual Slipons" class="checkbox"
-                                            id="CasualSlipons">
-                                    </li>
-                             
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- single sidebar end -->
+                                                <span class="text-capitalize">{{ $item->name }}</label>
+                                            <input
+                                                {{ in_array(trim('Casual Slipons'), request()->shoe_type ?? []) ? 'checked' : '' }}
+                                                form="filter" type="checkbox" name="shoe_type[]" value="Casual Slipons"
+                                                class="checkbox" id="CasualSlipons">
+                                        </li>
 
-                        <!-- single sidebar start -->
-                        <div class="sidebar-single">
-                            <div class="sidebar-title">
-                                <h3>Filter by Price</h3>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="sidebar-body">
-                                <div class="price-range-wrap">
-                                    <div class="price-range" data-min="500" data-max="5000"></div>
-                                    <div class="range-slider">
-                                        <form action="" id="filter"> </form>
-                                        <div class="price-input">
-                                            <label for="amount">Price: </label>
-                                            <input type="text" id="amount" name="amount"
-                                                value="{{ request('amount') }}">
-                                            <input form="filter" type="hidden" id="minAmount" name="price_min"
-                                                value="{{ request('price_min') ?? '500' }}">
-                                            <input form="filter" type="hidden" id="maxAmount" name="price_max"
-                                                value="{{ request('price_max') ?? '5000' }}">
+                            <!-- single sidebar end -->
+
+                            <!-- single sidebar start -->
+                            <div class="sidebar-single">
+                                <div class="sidebar-title">
+                                    <h3>Filter by Price</h3>
+                                </div>
+                                <div class="sidebar-body">
+                                    <div class="price-range-wrap">
+                                        <div class="price-range" data-min="500" data-max="5000"></div>
+                                        <div class="range-slider">
+                                            <form action="" id="filter"> </form>
+                                            <div class="price-input">
+                                                <label for="amount">Price: </label>
+                                                <input type="text" id="amount" name="amount"
+                                                    value="{{ request('amount') }}">
+                                                <input form="filter" type="hidden" id="minAmount" name="price_min"
+                                                    value="{{ request('price_min') ?? '500' }}">
+                                                <input form="filter" type="hidden" id="maxAmount" name="price_max"
+                                                    value="{{ request('price_max') ?? '5000' }}">
+                                            </div>
+                                            <button form="filter" class="filter-btn">Filter</button>
+
                                         </div>
-                                        <button form="filter" class="filter-btn">Filter</button>
-
                                     </div>
                                 </div>
                             </div>
+                            <!-- single sidebar end -->
+
+                            <!-- single sidebar start -->
+                            <div class="sidebar-single">
+                                <div class="sidebar-title">
+                                    <h3>Available Colors</h3>
+                                </div>
+                                <div class="sidebar-body">
+                                    <ul class="color-list">
+                                        @foreach ($available_colors->unique('value') ?? [] as $key => $color)
+                                            <li role="button" class="d-flex justify-between">
+                                                <label for="{{ 'color-' . $key }}">
+                                                    <span class="text-capitalize">{{ $color->value }}
+                                                        <span>({{ $color->product_count }})</span></span></label>
+                                                <input
+                                                    {{ in_array($color->value, request()->colors ?? []) ? 'checked' : '' }}
+                                                    form="filter" type="checkbox" name="colors[]"
+                                                    value="{{ $color->value }}" class="checkbox"
+                                                    id="{{ 'color-' . $key }}">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- single sidebar end -->
+
+                            <!-- single sidebar start -->
+                            <div class="sidebar-single">
+                                <div class="sidebar-title">
+                                    <h3>Size</h3>
+                                </div>
+                                <div class="sidebar-body">
+                                    <ul class="size-list">
+
+                                        @foreach ($available_sizes->unique('value') ?? [] as $key => $size)
+                                            <li role="button" class="d-flex justify-between">
+                                                <label for="{{ 'size-' . $key }}">
+                                                    <span class="text-capitalize">{{ $size->value }}
+                                                        <span>({{ $size->product_count }})</span></span></label>
+                                                <input
+                                                    {{ in_array($size->value, request()->sizes ?? []) ? 'checked' : '' }}
+                                                    form="filter" type="checkbox" name="sizes[]"
+                                                    value="{{ $size->value }}" class="checkbox"
+                                                    id="{{ 'size-' . $key }}">
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- single sidebar end -->
+
                         </div>
-                        <!-- single sidebar end -->
-
-                        <!-- single sidebar start -->
-                        <div class="sidebar-single">
-                            <div class="sidebar-title">
-                                <h3>Available Colors</h3>
-                            </div>
-                            <div class="sidebar-body">
-                                <ul class="color-list">
-                                    @foreach ($available_colors->unique('value') ?? [] as $key => $color)
-                                        <li role="button" class="d-flex justify-between">
-                                            <label for="{{ 'color-' . $key }}">
-                                                <span class="text-capitalize">{{ $color->value }}
-                                                    <span>({{ $color->product_count }})</span></span></label>
-                                            <input {{ in_array($color->value, request()->colors ?? []) ? 'checked' : '' }}
-                                                form="filter" type="checkbox" name="colors[]" value="{{ $color->value }}"
-                                                class="checkbox" id="{{ 'color-' . $key }}">
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- single sidebar end -->
-
-                        <!-- single sidebar start -->
-                        <div class="sidebar-single">
-                            <div class="sidebar-title">
-                                <h3>Size</h3>
-                            </div>
-                            <div class="sidebar-body">
-                                <ul class="size-list">
-
-                                    @foreach ($available_sizes->unique('value') ?? [] as $key => $size)
-                                        <li role="button" class="d-flex justify-between">
-                                            <label for="{{ 'size-' . $key }}">
-                                                <span class="text-capitalize">{{ $size->value }}
-                                                    <span>({{ $size->product_count }})</span></span></label>
-                                            <input {{ in_array($size->value, request()->sizes ?? []) ? 'checked' : '' }}
-                                                form="filter" type="checkbox" name="sizes[]" value="{{ $size->value }}"
-                                                class="checkbox" id="{{ 'size-' . $key }}">
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- single sidebar end -->
-
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-banner">
-                                @if($productOffer)
-                                <a href="{{ $productOffer->redirection }}" target="_blank">
-                                    <img src="{{ asset('images/' . $productOffer->image) }}" alt="product banner">
-                                </a>
+                                @if ($productOffer)
+                                    <a href="{{ $productOffer->redirection }}" target="_blank">
+                                        <img src="{{ asset('images/' . $productOffer->image) }}" alt="product banner">
+                                    </a>
                                 @endif
                             </div>
                         </div>

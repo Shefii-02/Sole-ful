@@ -2,7 +2,6 @@
 
 namespace App;
 use App\Jobs\Email;
-use App\Models\{Account, User, Ad, Property, SubscriptionOrder, Ticket};
 use Illuminate\Http\Request;
 
 trait Emails{
@@ -18,10 +17,29 @@ trait Emails{
     }
 
 
-    /**
-     * Dispatch email job
-     * @param Email $mail
-     */
+    public static function sendOrderNotification($order){
+        self::email(new Email([
+            'emailClass' => 'DefaultMail',
+            'to' => $order->billingAddress->email,
+            'bccStatus' => false,
+            'subject' => 'Thank you for Order',
+            'contents' => view('email.customerOrderNotification')->withContent($order)->render(),
+        ]));
+
+        self::email(new Email([
+            'emailClass' => 'DefaultMail',
+            'to' => env('DEV_EMAIL'),
+            'bccStatus' => false,
+            'subject' => 'Received new Order',
+            'contents' => view('email.adminOrderNotification')->withContent($order)->render(),
+        ]));
+    }
+
+
+    // /**
+    //  * Dispatch email job
+    //  * @param Email $mail
+    //  */
     public static function email(Email $mail){
         !ENV('EMAIL', false) OR dispatch($mail);
     }

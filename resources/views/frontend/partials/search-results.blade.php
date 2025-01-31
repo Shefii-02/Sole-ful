@@ -1,7 +1,7 @@
     @forelse ($products ?? [] as $product)
         <li class="px-4 {{ $loop->first ? "mt-10" : '' }} py-2 hover:bg-gray-200 cursor-pointer rounded-2xl text-capitalize">
             <a target="_blank"
-                href="{{ route('public.product', ['uid' => $product->product->unique_value, 'slug' => $product->product->slug]) }}">
+                href="{{ route('public.product', ['uid' => $product->product->unique_value, 'slug' => $product->product->slug, 'color' =>$product->color_name ]) }}">
                 <div class="row">
                     <div class="col-2 d-flex align-items-center">
                         <img onerror="this.onerror=null;this.src='/images/default.jpg';"

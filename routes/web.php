@@ -17,8 +17,21 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SizeController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+// Route::get('customerOrderNotification', function () { 
+//     $order = Order::orderBy('id','desc')->first();
+//     return view('email.customerOrderNotification',compact('order'));
+// });
+// Route::get('adminOrderNotification', function () { 
+//     $order = Order::orderBy('id','desc')->first();
+//    return view('email.adminOrderNotification',compact('order'));
+// });
+
+
 
 Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
 

@@ -210,17 +210,18 @@
 
                                     </div>
                                     <div class="col-md-5 column product_name text-start">
-                                        <a href="#" class="fw-semibold d-flex flex-column gap-1">
+                                       
+                                        <span class="fw-semibold d-flex flex-column gap-1">
                                             <strong class="text-capitalize">{{ $listing->variation }} </strong>
                                             <sub class="my-2">{{ $listing->product_name }}</sub>
                                             <sub class="my-2">SKU : {{ $listing->product_sku }}</sub>
                                             <sub class="my-2 text-capitalize">{{ $listing->special_note }}</sub>
-                                        </a>
+                                        </span>
 
 
                                         <div class="cart-action">
                                             <a
-                                                href="{{ route('public.product', ['uid' => $listing->product->unique_value, 'slug' => $listing->product->slug]) }}"><i
+                                                href="{{ route('public.product', ['uid' => $listing->product->unique_value, 'slug' => $listing->product->slug,'color'=>$listing->product_variation->color_name,'size'=>$listing->product_variation->size_name]) }}"><i
                                                     class="bi bi-eye"></i> View</a> |
                                             <a href="#" class="item_remove" data-pname="{{ $listing->variation }}"
                                                 data-psku="{{ $listing->product_sku }}"

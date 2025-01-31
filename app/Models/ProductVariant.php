@@ -32,6 +32,13 @@ class ProductVariant extends Model
         return $this->belongsTo(VariationImage::class);
     }
 
+    public function getMainThumbImageAttribute()
+    {
+        return $this->images->where('type', 'Thumbnail')->first() 
+            ?? $this->images->where('type', 'Main Image')->first() 
+            ?? $this->images->where('type', 'Extra Image')->first();
+    }
+
     public function getVNameAttribute()
     {
         // Fetch the first color variation key
@@ -42,5 +49,18 @@ class ProductVariant extends Model
             ? productVariationName($this->product->product_name, $variantColor->value) 
             : $this->product->product_name;
     }
+
+    public function getColorNameAttribute(){
+        $variantColor = $this->variationkey()->where('type', 'color')->first()->value;
+    
+        return $variantColor;
+    }
+    public function getSizeNameAttribute(){
+        $variantSize= $this->variationkey()->where('type', 'size')->first()->value;
+    
+        return $variantSize;
+    }
+
+    
     
 }

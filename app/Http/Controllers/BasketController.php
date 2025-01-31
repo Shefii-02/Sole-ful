@@ -51,43 +51,49 @@ class BasketController extends Controller
         $productVariation          = ProductVariant::with('product')->where('id', $request->variation_id)->first();
 
         if ($productVariation) {
-            $items = CartItem::where('product_sku', $productVariation->sku)->where('basket_id', $basket->id)->first();
-            if (!$items) {
-                $items                   = new CartItem();
-                $items->basket_id         = $basket->id;
-                $items->product_id       = $productVariation->product->id;
-                $items->product_variation_id = $productVariation->id;
-                $items->parent           = null;
-                $items->product_sku      = $productVariation->sku;
-                $items->product_name     = $productVariation->product->product_name;
-                $items->variation        = $request->product_name ?? $productVariation->variation_name;
-                $items->prev_quantity    = 0;
-                $items->quantity         = $request->quantity;
-                $items->price_amount     = $productVariation->price;
-                $items->picture          = $productVariation->images->first()->image;
-                $items->special_note     = $productVariation->variation;
-            } else {
-                $items->quantity        = $items->quantity + $request->quantity;
-            }
-
-            try {
-                if ($request->quantity >= 1) {
-                    $items->save();
+            if ($productVariation->in_stock > $request->quantity) {
+                $items = CartItem::where('product_sku', $productVariation->sku)->where('basket_id', $basket->id)->first();
+                if (!$items) {
+                    $items                   = new CartItem();
+                    $items->basket_id         = $basket->id;
+                    $items->product_id       = $productVariation->product->id;
+                    $items->product_variation_id = $productVariation->id;
+                    $items->parent           = null;
+                    $items->product_sku      = $productVariation->sku;
+                    $items->product_name     = $productVariation->product->product_name;
+                    $items->variation        = $request->product_name ?? $productVariation->variation_name;
+                    $items->prev_quantity    = 0;
+                    $items->quantity         = $request->quantity;
+                    $items->price_amount     = $productVariation->price;
+                    $items->picture          = $productVariation->images->first()->image;
+                    $items->special_note     = $productVariation->variation;
                 } else {
-                    $items->delete();
+                    $items->quantity        = $items->quantity + $request->quantity;
                 }
 
-                $itemsCounts = CartItem::where('basket_id', $basket->id)->count();
-                $response['result'] = true;
-                $response['cart_count'] = $itemsCounts;
-                $response['message'] = 'Product Added to your cart <a href="/cart" target="_blank" class="my-3 btn btn-theme">View Cart</a>';
-                DB::commit();
-            } catch (Exception $e) {
-                dd($e);
-                DB::rollBack();
+                try {
+                    if ($request->quantity >= 1) {
+                        $items->save();
+                    } else {
+                        $items->delete();
+                    }
+
+                    $itemsCounts = CartItem::where('basket_id', $basket->id)->count();
+                    $response['result'] = true;
+                    $response['cart_count'] = $itemsCounts;
+                    $response['message'] = 'Product Added to your cart <a href="/cart" target="_blank" class="my-3 btn btn-theme">View Cart</a>';
+                    DB::commit();
+                } catch (Exception $e) {
+                    dd($e);
+                    DB::rollBack();
+                    $response['result'] = false;
+                    $response['cart_count'] = CartItem::where('basket_id', $basket->id)->count();
+                    $response['message'] = 'Product Can`t be added, some issue please try again ';
+                }
+            } else {
                 $response['result'] = false;
                 $response['cart_count'] = CartItem::where('basket_id', $basket->id)->count();
-                $response['message'] = 'Product Can`t be added, some issue please try again ';
+                $response['message'] = "You have requested {$request->quantity} units, but we currently have only {$productVariation->in_stock} in stock. Please adjust your order quantity. or contact our customer care";
             }
         } else {
             $response['result'] = false;
@@ -120,7 +126,7 @@ class BasketController extends Controller
         $session_string = session('session_string');
         $basket = Basket::where('session', $session_string)->where('status', 0)->first();
 
-
+        $this->CartRefresh();
         if ($basket) {
             $items = CartItem::where('basket_id', $basket->id)->get();
             return view('frontend.cart', compact('items', 'basket'));
@@ -143,7 +149,6 @@ class BasketController extends Controller
             if ($basket) {
                 $pdct_vari        = ProductVariant::where('id', $request->product_id)->first();
 
-
                 if ($pdct_vari) {
                     $psku  = $pdct_vari->sku;
                 } else {
@@ -152,6 +157,7 @@ class BasketController extends Controller
                 $items            = CartItem::where('product_sku', $psku)->where('basket_id', $basket->id)->first();
 
                 $items->quantity =  $request->quantity;
+
                 try {
                     if ($request->quantity >= 1) {
                         $items->save();
@@ -176,9 +182,9 @@ class BasketController extends Controller
                         "item_name"   => $items->product_name,
                         "affiliation" => $basket ? $basket->city ?? "" : '',
                         "index"       => 0,
-                        "item_brand"  => "Sweetiepie",
+                        "item_brand"  => "Soleful",
                         "item_variant" => $items->variation,
-                        "location_id" => "Toronto",
+                        "location_id" => "Banguluru",
                         "price"       => $items->price_amount,
                         "quantity"    => $items->quantity
                     ];
@@ -200,45 +206,45 @@ class BasketController extends Controller
         return  response()->json($response);
     }
 
-    public function checkout(Request $request)
-    {
-        $this->CartRefresh();
+    // public function checkout(Request $request)
+    // {
+    //     $this->CartRefresh();
 
-        if (session()->has('session_string')) {
+    //     if (session()->has('session_string')) {
 
 
-            $session_string = session('session_string');
+    //         $session_string = session('session_string');
 
-            $basket = Basket::where('session', $session_string)->where('status', 0)->first();
+    //         $basket = Basket::where('session', $session_string)->where('status', 0)->first();
 
-            if ($basket) {
-                if ($request->all() != null && $basket->special_campaign == 0) {
-                    if ($basket->order_type == 'pickup') {
-                        $basket->serve_date = $request->pickup_date;
-                        $basket->serve_time = $request->pickup_time;
-                    } else {
-                        $basket->serve_date = $request->shipping_date;
-                    }
-                    $basket->remarks = $request->remark;
-                }
+    //         if ($basket) {
+    //             if ($request->all() != null && $basket->special_campaign == 0) {
+    //                 if ($basket->order_type == 'pickup') {
+    //                     $basket->serve_date = $request->pickup_date;
+    //                     $basket->serve_time = $request->pickup_time;
+    //                 } else {
+    //                     $basket->serve_date = $request->shipping_date;
+    //                 }
+    //                 $basket->remarks = $request->remark;
+    //             }
 
-                $basket->save();
-                $items = CartItem::where('basket_id', $basket->id)
-                    ->where(function ($query) {
-                        $query->whereNull('parent')
-                            ->orWhere('parent', '=', 0); // Add this line to include items with parent = 0 if applicable
-                    })
-                    ->get();
+    //             $basket->save();
+    //             $items = CartItem::where('basket_id', $basket->id)
+    //                 ->where(function ($query) {
+    //                     $query->whereNull('parent')
+    //                         ->orWhere('parent', '=', 0); // Add this line to include items with parent = 0 if applicable
+    //                 })
+    //                 ->get();
 
-                if ($items->count() > 0) {
-                    return view('frontend.checkout', compact('items', 'basket'));
-                } else {
-                    return redirect('/cart');
-                }
-            }
-        }
-        return redirect('/cart');
-    }
+    //             if ($items->count() > 0) {
+    //                 return view('frontend.checkout', compact('items', 'basket'));
+    //             } else {
+    //                 return redirect('/cart');
+    //             }
+    //         }
+    //     }
+    //     return redirect('/cart');
+    // }
 
     function postSignin(Request $request)
     {
@@ -282,7 +288,7 @@ class BasketController extends Controller
                 $items = CartItem::where('basket_id', $basket->id)->get();
                 if ($items) {
                     foreach ($items as $listing) {
-                        if (!$listing->product_variation) {
+                        if (!$listing->product_variation || $listing->product_variation->in_stock < $listing->quantity) {
                             CartItem::where('id', $listing->id)->delete();
                         }
                     }

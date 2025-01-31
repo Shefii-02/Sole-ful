@@ -108,7 +108,7 @@
                                     </div>
 
                                     <span class="price-regular small fw-semibold">
-                                         {{ getPrice($featuredPdct->product->minPrice) }}
+                                        {{ getPrice($featuredPdct->product->minPrice) }}
                                     </span>
                                 </div>
                                 <div class="product-action-link">
@@ -192,35 +192,37 @@
                                     </a>
                                 </div>
                                 <div class="pro-small-content">
-                                    <h6 class="product-name">
-                                        <a target="_blank"
-                                            href="{{ route('public.product', ['uid' => $bestPRoduct->product->unique_value, 'slug' => $bestPRoduct->product->slug]) }}">{{ $bestPRoduct->product->product_name }}</a>
-                                    </h6>
-                                    <div class="price-box">
-                                        <div class="">
-                                            <small>Sizes :
-                                                @foreach ($bestPRoduct->product->variationSizes->unique('value')->pluck('value') ?? [] as $abSize)
-                                                    <i class="text-grey">{{ $abSize }},</i>
-                                                @endforeach
-                                            </small>
+                                    <a target="_blank"
+                                        href="{{ route('public.product', ['uid' => $bestPRoduct->product->unique_value, 'slug' => $bestPRoduct->product->slug]) }}">
+                                        <h6 class="product-name">
+                                            {{ $bestPRoduct->product->product_name }}
+                                        </h6>
+                                        <div class="price-box">
+                                            <div class="">
+                                                <small>Sizes :
+                                                    @foreach ($bestPRoduct->product->variationSizes->unique('value')->pluck('value') ?? [] as $abSize)
+                                                        <i class="text-grey">{{ $abSize }},</i>
+                                                    @endforeach
+                                                </small>
+                                            </div>
+                                            <div class="my-2">
+                                                <small>Colors :
+                                                    @foreach ($bestPRoduct->product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
+                                                        <i class="text-grey">{{ $abColor }},</i>
+                                                    @endforeach
+                                                </small>
+                                            </div>
+                                            <span class="price-regular">
+                                                {{ getPrice($bestPRoduct->product->minPrice) }}</span>
                                         </div>
-                                        <div class="my-2">
-                                            <small>Colors :
-                                                @foreach ($bestPRoduct->product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
-                                                    <i class="text-grey">{{ $abColor }},</i>
-                                                @endforeach
-                                            </small>
-                                        </div>
-                                        <span class="price-regular">
-                                            {{ getPrice($bestPRoduct->product->minPrice) }}</span>
-                                    </div>
-                                    <div class="ratings">
+                                    </a>
+                                    {{-- <div class="ratings">
                                         <span><i class="ion-android-star"></i></span>
                                         <span><i class="ion-android-star"></i></span>
                                         <span><i class="ion-android-star"></i></span>
                                         <span><i class="ion-android-star"></i></span>
                                         <span><i class="ion-android-star"></i></span>
-                                    </div>
+                                    </div> --}}
                                     <div class="product-link-2">
                                         <a href="#" id="wishlist-btn-{{ $bestPRoduct->product->id }}"
                                             class="wishlist-btn" data-product-id="{{ $bestPRoduct->product->id }}"
@@ -236,6 +238,7 @@
                                             <span data-bs-toggle="tooltip" title="Quick View"><i
                                                     class="ion-ios-eye-outline"></i></span> </a>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

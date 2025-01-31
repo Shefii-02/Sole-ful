@@ -76,54 +76,72 @@ class FrontendController extends Controller
 
     public function shop(Request $request)
     {
-        $productOffer           = Advertisement::where('text', 'product')->inRandomOrder()->limit(1)->first();
-
-        $query = Product::where('status', 1);
-
+        $productOffer = Advertisement::where('text', 'product')->inRandomOrder()->limit(1)->first();
+    
+        // Base query from ProductVariation instead of Product
+        $query = ProductVariant::whereHas('product', function ($q) {
+            $q->where('status', 1);
+        });
+    
         // Filter by price range
         if ($request->has('price_min') && $request->has('price_max')) {
-            $query->whereHas('product_variation', function ($q) use ($request) {
-                $q->whereBetween('price', [$request->price_min, $request->price_max]);
-            });
+            $query->whereBetween('price', [$request->price_min, $request->price_max]);
         }
-
+    
         // Filter by color
         if ($request->has('colors')) {
-
-            $query->whereHas('variationKeys', function ($q) use ($request) {
+            $query->whereHas('variationkey', function ($q) use ($request) {
                 $q->where('type', 'color')->whereIn('value', $request->colors);
             });
         }
-
+    
         // Filter by size
         if ($request->has('sizes')) {
-            $query->whereHas('variationKeys', function ($q) use ($request) {
+            $query->whereHas('variationkey', function ($q) use ($request) {
                 $q->where('type', 'size')->whereIn('value', $request->sizes);
             });
         }
-
+    
+        // Filter by category
         if ($request->has('categories')) {
-            $query->whereHas('categories', function ($q) use ($request) {
+            $query->whereHas('product.categories', function ($q) use ($request) {
                 $q->whereIn('name', $request->categories);
             });
         }
-
+    
+        // Filter by shoe type
         if ($request->has('shoe_type')) {
-            $query->whereIn('shoe_type', $request->shoe_type);
+            $query->whereHas('product', function ($q) use ($request) {
+                $q->whereIn('shoe_type', $request->shoe_type);
+            });
         }
+    
+        // Get products with variations
+        $productVariations = $query->with(['product', 'variationkey' => function ($q) {
+            $q->where('type', 'color');
+        }])->get();
+        // ->inRandomOrder()
 
-        $products = $query->get();
+        // dd($productVariations);
+        $uniqueVariations = $productVariations->unique(function ($variant) {
+            return $variant->product_id . '-' . optional($variant->variationkey->first())->value;
+        });
+      
+        // dd($uniqueVariations);
 
+        // Get unique products from variations
+        // $products = $productVariations->map->product->unique();
+        $products = $uniqueVariations;
+    // dd($products);
         // Get available colors with unique product counts
-        $available_colors =  VariationKey::where('type', 'color')
+        $available_colors = VariationKey::where('type', 'color')
             ->whereHas('product', function ($q) {
                 $q->where('status', 1);
             })
             ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
             ->groupBy('value')
             ->get();
-
-
+    
         // Get available sizes with unique product counts
         $available_sizes = VariationKey::where('type', 'size')
             ->whereHas('product', function ($q) {
@@ -132,23 +150,23 @@ class FrontendController extends Controller
             ->select('value', DB::raw('COUNT(DISTINCT product_id) as product_count'))
             ->groupBy('value')
             ->get();
-        // Categories with product counts
-        $categories = Category::with('products')->withCount([
-            'products' => function ($query) {
-                $query->where('status', 1);
+    
+        // Get categories with product counts
+        $categories = Category::withCount([
+            'products' => function ($q) {
+                $q->where('status', 1);
             }
-        ])->orderby('created_at', 'desc')->get();
-
-
+        ])->orderBy('created_at', 'desc')->get();
+    
         if ($request->ajax()) {
             // Render product list view and return as JSON for AJAX
             $html = view('frontend.partials.product_list', compact('products'))->render();
             return response()->json(['html' => $html]);
         }
-
+    
         return view('frontend.shop', compact('products', 'available_colors', 'available_sizes', 'categories', 'productOffer'));
     }
-
+    
 
     public function product($uid, $slug)
     {
