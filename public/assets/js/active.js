@@ -351,7 +351,7 @@
 			}
 		});
 
-		$('body').on('click', '#wishlist-btn-view', function (e) {
+		$('body').on('click', '.wishlist-btn-view', function (e) {
 			$.ajax({
 				url: '/wishlist',
 				method: 'GET',
@@ -362,7 +362,7 @@
 			});
 		});
 
-		$('body').on('click', '#cartList-btn-view', function (e) {
+		$('body').on('click', '.cartList-btn-view', function (e) {
 			$.ajax({
 				url: '/cart-list',
 				method: 'GET',

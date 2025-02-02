@@ -119,7 +119,7 @@
 
                 <div class="px-4">
                     <ul class="d-flex gap-4 align-items-end align-content-end m-1">
-                        <li class="position-relative">
+                        <li class="position-relative d-none d-md-block">
                             <div class="search" id="search-bar" x-data="{
                                 placeholders: ['Type something...','Just type if you want Shoe type', 'Just type if you want Category', 'Just type if you want Color', 'Just type if you want Size', 'Just type if you want Product name'],
                                 currentIndex: 0,
@@ -151,11 +151,11 @@
                             <a href="{{ route('public.shop') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Order
                                 Now</a>
                         </li>
-                        <li class="cursor-pointer d-none d-md-block">
+                        <li class="cursor-pointer ">
                             <a href="{{ route('account.orders.show') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
                         </li>
                         <li class="d-none d-md-block">
-                            <a href="#" id="cartList-btn-view" data-bs-toggle="offcanvas"
+                            <a href="#" class="cartList-btn-view" data-bs-toggle="offcanvas"
                                 data-bs-target="#CartList" aria-controls="CartList">
                                 <div class="cart-icon text-center text-theme">
                                     <i class="bi bi-cart fs-5 fw-bold"></i>
@@ -164,7 +164,7 @@
                             </a>
                         </li>
                         <li class="me-0 ms-2 wishlist-section " style="display: none">
-                            <a href="#" class="d-inline d-none d-md-block" id="wishlist-btn-view" data-bs-toggle="offcanvas"
+                            <a href="#" class="d-inline d-none d-md-block wishlist-btn-view" data-bs-toggle="offcanvas"
                                 data-bs-target="#Wishlist" aria-controls="Wishlist">
                                 <div class="cart-icon text-center text-theme relative">
                                     <i class="bi bi-heart-fill fs-5"></i>
@@ -172,14 +172,7 @@
                                 </div>
                             </a>
                         </li>
-                        {{-- <li class="d-md-none d-flex me-0 ms-2">
-                            <a href="/cart" class="d-md-none d-inline">
-                                <div class="cart-icon text-theme">
-                                    <i class="bi bi-cart fs-5"></i>
-                                    <span class="cart-count">0</span>
-                                </div>
-                            </a>
-                        </li> --}}
+                        
                         @guest
                             @if (Route::has('login'))
                                 <li class="last-one d-none d-md-block">

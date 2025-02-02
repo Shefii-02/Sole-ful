@@ -146,8 +146,8 @@
         .pac-logo {
             z-index: 99999999 !important;
         }
-   
-        .toast-container{
+
+        .toast-container {
             z-index: 999999999 !important;
         }
     </style>
@@ -172,7 +172,55 @@
         <main class="py-4">
             @yield('content')
         </main>
+        @detect
+            <div class="bg-white bottom-0  position-fixed  px-3 rounded-2xl shadow-lg">
+                <div class="flex">
+                    <div class="flex-auto ">
+                        <a href="#" class="text-center  mx-auto px-4 py-2  ">
+                            <span class="block px-1 py-1">
+                                <span class="bi bi-house"></span>
+                                <span class="ml-3 text-sm align-bottom pb-1">Home</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="flex-auto ">
+                        <a href="{{ route('public.shop') }}" class="text-center  mx-auto px-4 py-2  ">
+                            <span class="block px-1 py-1">
+                                <span class="bi bi-shop"></span>
+                                <span class="ml-3 text-sm  align-bottom pb-1">Shop</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="flex-auto ">
+                        <a href="#" data-bs-toggle="offcanvas" data-bs-target="#Wishlist" aria-controls="Wishlist"
+                            class="text-center wishlist-btn-view mx-auto px-4 py-2  ">
+                            <span class="block px-1 py-1">
+                                <span class="bi bi-heart"></span>
+                                <span class="ml-3 text-sm  align-bottom pb-1">Whishlist</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="flex-auto ">
+                        <a href="#" data-bs-toggle="offcanvas" data-bs-target="#CartList" aria-controls="CartList"
+                            class="text-center mx-auto px-4 py-2 cartList-btn-view ">
+                            <span class="block px-1 py-1">
+                                <span class="bi bi-cart-check"></span>
+                                <span class="ml-3  text-sm  align-bottom pb-1">Cart</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="flex-auto ">
+                        <a href="#" class="items-center justify-center text-center mx-auto px-4 py-2  ">
+                            <span class="block px-1 py-1">
+                                <span class="bi bi-person"></span>
+                                <span class="ml-3 text-sm  align-bottom pb-1">Account</span>
+                            </span>
+                        </a>
+                    </div>
 
+                </div>
+            </div>
+        @enddetect
         <!-- Start Footer Area Wrapper -->
         <footer class="footer-wrapper">
             <!-- footer main area start -->
@@ -251,8 +299,10 @@
                                 <div class="widget-body">
                                     <ul class="useful-link">
                                         <li><a target="_blank" href="{{ url('/') }}">Home</a></li>
-                                        <li><a target="_blank" href="{{ url('T&C') }}">Terms and Conditions</a></li>
-                                        <li><a target="_blank" href="{{ url('refund_policy') }}">Refund Policy</a></li>
+                                        <li><a target="_blank" href="{{ url('T&C') }}">Terms and Conditions</a>
+                                        </li>
+                                        <li><a target="_blank" href="{{ url('refund_policy') }}">Refund Policy</a>
+                                        </li>
                                         <li><a target="_blank" href="{{ url('return_policy') }}">Returns &
                                                 Exchanges</a>
                                         </li>
@@ -336,7 +386,7 @@
 
 
         <!-- Scroll to top start -->
-        <div class="scroll-top not-visible">
+        <div class="scroll-top not-visible mb-50">
             <i class="fa fa-angle-up"></i>
         </div>
         <!-- Scroll to Top End -->
