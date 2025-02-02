@@ -31,14 +31,16 @@
                     <div class="product-details-inner">
                         <div class="row">
                             <div class="col-lg-5">
-                                
-                                <div class="product-large-slider mb-4">
+                                <div class="position-sticky top-0">
+                                    <div class="product-large-slider mb-4">
                                   
+                                    </div>
+    
+                                    <div class="pro-nav slick-row-5">
+                                       
+                                    </div>
                                 </div>
-
-                                <div class="pro-nav slick-row-5">
-                                   
-                                </div>
+                                
 
                             </div>
                             <div class="col-lg-7">
