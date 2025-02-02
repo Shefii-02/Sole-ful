@@ -206,7 +206,6 @@
                                                                         data-locality="{{ $item->locality }}"
                                                                         data-landmark="{{ $item->landmark }}"
                                                                         data-house_name="{{ $item->house_name }}"
-                                                                        data-house_no="{{ $item->house_no }}"
                                                                         data-state="{{ $item->state }}"
                                                                         data-postal="{{ $item->pincode }}"
                                                                         data-emailval="{{ $item->email }}"
@@ -223,7 +222,7 @@
 
                                                                         <small
                                                                             class="fw-bolder h6 text-capitalize">{{ $item->address }},{{ $item->landmark }}
-                                                                            {{ $item->house_no, $item->house_name . ',' }}
+                                                                            {{ $item->house_name . ',' }}
                                                                             {{ $item->pincode . ', ' . $item->locality . ', ' . $item->state }}.
                                                                         </small>
                                                                     </p>
@@ -306,13 +305,14 @@
                                                         @enderror
                                                     </div>
 
+
                                                     <div class="col-lg-6 form-group mb-3">
-                                                        <label for="">Locality</label>
+                                                        <label for="">Building/Flat Name/No</label>
                                                         <input
-                                                            class="form-control address_fill @error('s_locality') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_locality"
-                                                            id="s_locality" placeholder="">
-                                                        @error('s_locality')
+                                                            class="form-control @error('s_house_name') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_house_name"
+                                                            id="s_house_name" placeholder="">
+                                                        @error('s_house_name')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
@@ -327,30 +327,6 @@
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-
-
-
-                                                    <div class="col-lg-6 form-group mb-3">
-                                                        <label for="">House Name</label>
-                                                        <input
-                                                            class="form-control @error('s_house_name') is-invalid @enderror"
-                                                             autocomplete="off" type="text"
-                                                            name="s_house_name" id="s_house_name" placeholder="">
-                                                        @error('s_house_name')
-                                                            <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
-
-                                                    <div class="col-lg-6 form-group mb-3">
-                                                        <label>House Number</label>
-                                                        <input
-                                                            class="form-control house_no_fill @error('s_house_no') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_house_no"
-                                                            id="s_house_no" placeholder="" required>
-                                                        @error('s_house_no')
-                                                            <span class="text-danger">{{ $message }}</span>
-                                                        @enderror
-                                                    </div>
                                                     <div class="col-lg-6 form-group mb-3">
                                                         <label for="">Postal Code</label>
                                                         <input
@@ -361,6 +337,17 @@
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
+                                                    <div class="col-lg-6 form-group mb-3">
+                                                        <label for="">Locality</label>
+                                                        <input
+                                                            class="form-control address_fill @error('s_locality') is-invalid @enderror"
+                                                            autocomplete="off" type="text" name="s_locality"
+                                                            id="s_locality" placeholder="">
+                                                        @error('s_locality')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+
 
                                                     <div class="col-lg-6 form-group mb-3">
                                                         <label>State</label>
@@ -503,13 +490,14 @@
                             </div>
                             <div class="col-lg-12 form-group mb-2">
                                 <label class="mb-2" for="address">Address</label>
-                                <input type="text" autocomplete="off" placeholder="" id="address"
+                                <input type="text" autocomplete="off" placeholder="" id="newAddress"
                                     class="form-control address_fill" form="add_address" name="address">
                             </div>
-                            <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="locality">Locality</label>
-                                <input type="text" autocomplete="off" placeholder="" id="locality"
-                                    class="form-control localityfill" form="add_address" name="locality">
+
+                            <div class="col-lg-12 form-group mb-2">
+                                <label class="mb-2" for="house_name">Building/Flat Name/No</label>
+                                <input type="text" required autocomplete="off" id="house_name" form="add_address"
+                                    class="form-control house_name_fill" name="house_name">
                             </div>
                             <div class="col-lg-6 form-group mb-2">
                                 <label class="mb-2" for="landmark">Landmark</label>
@@ -517,22 +505,19 @@
                                     class="form-control landmark_fill" form="add_address" name="landmark">
                             </div>
 
-
-                            <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="house_name">House Name</label>
-                                <input type="text" required autocomplete="off" id="house_name" form="add_address"
-                                    class="form-control house_name_fill" name="house_name">
-                            </div>
-                            <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="house_no">House No</label>
-                                <input form="add_address" class="form-control house_no_fill" autocomplete="off"
-                                    type="text" name="house_no" id="house_no" placeholder="" required>
-                            </div>
                             <div class="col-lg-6 form-group mb-2">
                                 <label class="mb-2" for="pincode">Postal Code</label>
                                 <input type="text" required autocomplete="off" id="pincode" form="add_address"
                                     class="form-control pincode_fill" name="pincode">
                             </div>
+
+
+                            <div class="col-lg-6 form-group mb-2">
+                                <label class="mb-2" for="locality">Locality</label>
+                                <input type="text" autocomplete="off" placeholder="" id="locality"
+                                    class="form-control localityfill" form="add_address" name="locality">
+                            </div>
+
                             <div class="col-lg-6 form-group mb-3">
                                 <label class="mb-2" for="state">State</label>
                                 <input class="form-control state_fill" form="add_address" autocomplete="off"
@@ -624,7 +609,6 @@
                 $('#s_locality').val(databilling.data('locality'));
                 $('#s_landmark').val(databilling.data('landmark'));
                 $('#s_house_name').val(databilling.data('house_name'));
-                $('#s_house_no').val(databilling.data('house_no'));
                 $('#s_state').val(databilling.data('state'));
                 $('#s_postal').val(databilling.data('postal'));
                 $('#s_email').val(databilling.data('emailval'));
@@ -692,7 +676,7 @@
         }
 
 
-  
+
 
         $('body').on('click', '.coupon_card_apply', function() {
             var gift_code = $('#coupon_code').val();
@@ -726,163 +710,163 @@
         @endif
     </script>
     <script>
-        function toggleShippingAddress() {
-            var checkbox = document.getElementById("same-address-checkbox");
-            var shippingDiv = document.getElementById("shipping-address-div");
+        // function toggleShippingAddress() {
+        //     var checkbox = document.getElementById("same-address-checkbox");
+        //     var shippingDiv = document.getElementById("shipping-address-div");
 
-            if (checkbox.checked) {
-                shippingDiv.style.display = "block";
-            } else {
-                shippingDiv.style.display = "none";
-            }
-        }
+        //     if (checkbox.checked) {
+        //         shippingDiv.style.display = "block";
+        //     } else {
+        //         shippingDiv.style.display = "none";
+        //     }
+        // }
 
-        function validateCardNo() {
-            var input = document.getElementById("cardNumber");
-            var value = input.value.trim();
+        // function validateCardNo() {
+        //     var input = document.getElementById("cardNumber");
+        //     var value = input.value.trim();
 
-            // Remove non-digit characters
-            value = value.replace(/\D/g, '');
+        //     // Remove non-digit characters
+        //     value = value.replace(/\D/g, '');
 
-            // Restrict to a maximum of 16 digits
-            if (value.length > 16) {
-                value = value.slice(0, 16);
-            }
+        //     // Restrict to a maximum of 16 digits
+        //     if (value.length > 16) {
+        //         value = value.slice(0, 16);
+        //     }
 
-            // Update the input value
-            input.value = value;
-        }
+        //     // Update the input value
+        //     input.value = value;
+        // }
 
-        function ValidatecardName() {
-            var input = document.getElementById("nameOnCard");
-            var name = input.value;
+        // function ValidatecardName() {
+        //     var input = document.getElementById("nameOnCard");
+        //     var name = input.value;
 
-            // Remove special characters using regex
-            var sanitized = name.replace(/[^A-Za-z\s]/g, '');
+        //     // Remove special characters using regex
+        //     var sanitized = name.replace(/[^A-Za-z\s]/g, '');
 
-            // Update the input value with the sanitized name
-            input.value = sanitized;
+        //     // Update the input value with the sanitized name
+        //     input.value = sanitized;
 
-        }
+        // }
 
-        function validateExpiryDate() {
-            var input = document.getElementById("expirationDate");
-            var value = input.value;
+        // function validateExpiryDate() {
+        //     var input = document.getElementById("expirationDate");
+        //     var value = input.value;
 
-            // Remove non-digit characters
-            value = value.replace(/\D/g, '');
+        //     // Remove non-digit characters
+        //     value = value.replace(/\D/g, '');
 
-            // Get the first two digits
-            var firstTwoDigits = value.slice(0, 2);
+        //     // Get the first two digits
+        //     var firstTwoDigits = value.slice(0, 2);
 
-            var lastTwoDigit = value.slice(2, 4);
-
-
-            // Check if the first two digits exceed 12
-            if (parseInt(firstTwoDigits) > 12) {
-                // Adjust the value to maximum valid month
-                value = '12' + value.slice(2);
-            }
+        //     var lastTwoDigit = value.slice(2, 4);
 
 
-
-            // Format the value with a slash
-            if (value.length > 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2, 4);
-            }
-
-            // Update the input value
-            input.value = value;
-        }
+        //     // Check if the first two digits exceed 12
+        //     if (parseInt(firstTwoDigits) > 12) {
+        //         // Adjust the value to maximum valid month
+        //         value = '12' + value.slice(2);
+        //     }
 
 
-        $('.greeting_card').click(async function() {
-            $('.greeting-card').html('');
-            var ttl_prices = 0;
-            var totalTax = 0;
-            var price = $(this).attr('data-price');
-            var pdct_id = $(this).attr('data-id');
 
-            var flavor = '';
-            var color = '';
-            var message = '';
-            var border_color = '';
-            var text_color = '';
-            var customized = 0;
+        //     // Format the value with a slash
+        //     if (value.length > 2) {
+        //         value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        //     }
 
-            if ($(this).is(':checked')) {
-                var quantity = 1;
-
-            } else {
-                var quantity = 0;
-            }
-
-            await $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                url: '{{ url('basket/add') }}',
-                type: 'POST',
-                data: {
-                    price: price,
-                    pdct_id: pdct_id,
-                    quantity: quantity,
-                    flavor: flavor,
-                    color: color,
-                    message: message,
-                    border_color: border_color,
-                    text_color: text_color,
-                    customized: customized
-                },
-                success: function(response) {
-                    console.log('added');
-                    calculationPart();
-                }
-            });
-
-            $('.greeting_card:checked').each(function() {
-                var pdct_price = $(this).data('price');
-                var pdct_sku = $(this).data('sku');
-                var pdct_name = $(this).data('name');
-                var pdct_img = $(this).data('image');
-                var pdct_tax = $(this).data('taxAmt');
-                var value = $(this).val();
-                ttl_prices = parseFloat(ttl_prices + pdct_price);
-                var productAmount = '';
-                var taxRatePercentage = '';
-                var taxAmount = '';
-
-                var greeting_card = `<div class="products-checkout col-12 mb-3 products-cart">
-                                            <div class="p-c"> 
-                                                <img src="` + pdct_img + `" alt="">
-                                                <div class="i-content">
-                                                    <p class="f-h">` + pdct_name + `</p>
-                                                    <p>Qty: ` + 1 + ` </p>
-                                                </div>
-                                            </div>
-                                            <div class="val">
-                                                <p>$` + (parseFloat(pdct_price) * 1).toFixed(2) + `</p>
-                                            </div>
-                                        </div>`;
-
-                // productAmount     = parseFloat(pdct_price) * 1;
-                // taxRatePercentage = pdct_tax;
-
-                // taxAmount = (productAmount * taxRatePercentage) / 100;
+        //     // Update the input value
+        //     input.value = value;
+        // }
 
 
-                $('.greeting-card').append(greeting_card);
+        // $('.greeting_card').click(async function() {
+        //     $('.greeting-card').html('');
+        //     var ttl_prices = 0;
+        //     var totalTax = 0;
+        //     var price = $(this).attr('data-price');
+        //     var pdct_id = $(this).attr('data-id');
 
-            });
+        //     var flavor = '';
+        //     var color = '';
+        //     var message = '';
+        //     var border_color = '';
+        //     var text_color = '';
+        //     var customized = 0;
 
-            // var subTotal = parseFloat($('.sub_total').data('price'));
+        //     if ($(this).is(':checked')) {
+        //         var quantity = 1;
 
-            // subTotal = parseFloat(subTotal + ttl_prices).toFixed(2);
-            // $('.sub_total').text('$'+subTotal)
+        //     } else {
+        //         var quantity = 0;
+        //     }
 
-            // calculate_ttl(); 
+        //     await $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        //         },
+        //         url: '{{ url('basket/add') }}',
+        //         type: 'POST',
+        //         data: {
+        //             price: price,
+        //             pdct_id: pdct_id,
+        //             quantity: quantity,
+        //             flavor: flavor,
+        //             color: color,
+        //             message: message,
+        //             border_color: border_color,
+        //             text_color: text_color,
+        //             customized: customized
+        //         },
+        //         success: function(response) {
+        //             console.log('added');
+        //             calculationPart();
+        //         }
+        //     });
 
-        });
+        //     $('.greeting_card:checked').each(function() {
+        //         var pdct_price = $(this).data('price');
+        //         var pdct_sku = $(this).data('sku');
+        //         var pdct_name = $(this).data('name');
+        //         var pdct_img = $(this).data('image');
+        //         var pdct_tax = $(this).data('taxAmt');
+        //         var value = $(this).val();
+        //         ttl_prices = parseFloat(ttl_prices + pdct_price);
+        //         var productAmount = '';
+        //         var taxRatePercentage = '';
+        //         var taxAmount = '';
+
+        //         var greeting_card = `<div class="products-checkout col-12 mb-3 products-cart">
+    //                                     <div class="p-c"> 
+    //                                         <img src="` + pdct_img + `" alt="">
+    //                                         <div class="i-content">
+    //                                             <p class="f-h">` + pdct_name + `</p>
+    //                                             <p>Qty: ` + 1 + ` </p>
+    //                                         </div>
+    //                                     </div>
+    //                                     <div class="val">
+    //                                         <p>$` + (parseFloat(pdct_price) * 1).toFixed(2) + `</p>
+    //                                     </div>
+    //                                 </div>`;
+
+        //         // productAmount     = parseFloat(pdct_price) * 1;
+        //         // taxRatePercentage = pdct_tax;
+
+        //         // taxAmount = (productAmount * taxRatePercentage) / 100;
+
+
+        //         $('.greeting-card').append(greeting_card);
+
+        //     });
+
+        //     // var subTotal = parseFloat($('.sub_total').data('price'));
+
+        //     // subTotal = parseFloat(subTotal + ttl_prices).toFixed(2);
+        //     // $('.sub_total').text('$'+subTotal)
+
+        //     // calculate_ttl(); 
+
+        // });
 
 
         function calculate_ttl() {
@@ -898,5 +882,97 @@
             $('.total_price').text('$' + ttl_prices)
 
         }
+    </script>
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initAutocomplete&libraries=places,geometry&v=weekly"
+        defer loading=async></script>
+
+    <script>
+        function initAutocomplete() {
+            const input = document.getElementById("newAddress");
+            const options = {
+                strictBounds: false,
+                types: ['establishment'],
+                componentRestrictions: {
+                    country: 'IN', // Restrict to India
+                }
+            };
+
+            const autocomplete = new google.maps.places.Autocomplete(input, options);
+
+            autocomplete.addListener("place_changed", () => {
+
+                const place = autocomplete.getPlace();
+
+                if (!place.geometry || !place.geometry.location) {
+
+                    window.alert("No details available for input: '" + place.name + "'");
+                    return;
+                }
+                // Get city, postal code, and country from the place details
+                // Variables to store details
+                let city = '';
+                let locality = '';
+                let subLocality = '';
+                let landmark = '';
+                let latitude = '';
+                let longitude = '';
+
+                // Extract latitude and longitude
+                latitude = place.geometry.location.lat();
+                longitude = place.geometry.location.lng();
+
+                // Loop through address components
+                place.address_components.forEach(component => {
+                    const componentType = component.types[0];
+
+                    // Fetch city
+                    if (componentType === 'locality') {
+                        city = component.long_name;
+                    }
+
+                    // Fetch locality (level 2 or 3)
+                    if (componentType === 'sublocality_level_1') {
+                        locality = component.long_name;
+                    }
+
+                    // Fetch sub-locality (level 2 or deeper)
+                    if (componentType === 'sublocality_level_2' || componentType === 'sublocality') {
+                        subLocality = component.long_name;
+                    }
+
+                    // Fetch landmark (route or point of interest)
+                    if (componentType === 'route') {
+                        landmark = component.long_name;
+                    }
+                });
+
+                // Log the extracted values
+                console.log({
+                    city,
+                    locality,
+                    subLocality,
+                    landmark,
+                    latitude,
+                    longitude
+                });
+
+                // Set values in respective fields if needed
+                document.getElementById('auto_city').value = city;
+                document.getElementById('auto_locality').value = locality;
+                document.getElementById('auto_subLocality').value = subLocality;
+                document.getElementById('auto_landmark').value = landmark;
+                document.getElementById('auto_latitude').value = latitude;
+                document.getElementById('auto_longitude').value = longitude;
+            });
+        }
+
+        // Initialize Google Maps Autocomplete
+        // document.addEventListener("DOMContentLoaded", () => {
+        //     if (typeof google !== "undefined") {
+        //         initAutocomplete();
+        //     }
+        // });
     </script>
 @endpush

@@ -43,7 +43,7 @@
                                             <label
                                                 class="size-button {{ $sizes->contains('value', $size) ? '' : 'disabled' }}"
                                                 data-size-id="{{ $size }}">
-                                                <input type="radio" class="hidden variSize_checkbox"
+                                                <input type="radio" class="hidden {{ $sizes->contains('value', $size) ? 'variSize_checkbox' : 'disabled' }}"
                                                     data-product="{{ $product->id }}" name="size"
                                                     value="{{ $size }}">
                                                 <span>{{ $size }}</span>

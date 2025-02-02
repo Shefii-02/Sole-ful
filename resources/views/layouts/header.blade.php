@@ -152,7 +152,7 @@
                                 Now</a>
                         </li>
                         <li class="cursor-pointer d-none d-md-block">
-                            <a href="menu" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
+                            <a href="{{ route('account.orders.show') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
                         </li>
                         <li class="d-none d-md-block">
                             <a href="#" id="cartList-btn-view" data-bs-toggle="offcanvas"

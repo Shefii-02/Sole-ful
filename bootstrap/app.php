@@ -7,6 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
+        api: __DIR__.'/../routes/api.php',
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
@@ -26,6 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('analytics:fetch-top-devices')->dailyAt('01:00');
         $schedule->command('analytics:fetch-top-referrers')->dailyAt('01:00');
         $schedule->command('analytics:fetch-top-landing-pages')->dailyAt('01:00');
+        $schedule->command('api:delivery-refresh-api-token')->everyMinute();
+        $schedule->command('api:delivery-partner-order-push')->everyMinute();
         $schedule->command('queue:work --stop-when-empty')
             ->everyMinute()
             ->withoutOverlapping();

@@ -28,6 +28,9 @@ class Order extends Model
     }
 
 
+    public function DeliveryPartnerResponse(){
+        return $this->hasOne(DeliveryPartnerResponse::class);
+    }
 
     
     public function payments()

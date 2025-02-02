@@ -1,7 +1,13 @@
-
 @extends('layouts.app')
+@push('header')
+    <style>
+        ol i {
+            font-size: 10px;
+            font-weight: 800;
+        }
+    </style>
+@endpush
 @section('content')
-      
     <section class="product-listing-banner">
         <!-- breadcrumb area start -->
         <div class="breadcrumb-area bg-img" data-bg="assets/img/breadcrumb-banner.webp">
@@ -24,216 +30,160 @@
         </div>
         <!-- breadcrumb area end -->
     </section>
-    
-    <section class="page_section">
-        <div class="container">
-           
-            <div class="row justify-content-center">
-                <div class="col-md-10 ">
-                               
-                  
-        
-                    
-                    @if($orders->count() > 0 )
-                    
-                        @foreach($orders as $item)
-                        <div class="card mb-3">
 
-                            <div class="card-header" data-bs-toggle="collapse" data-bs-target="#{{$item->id}}" aria-expanded="false" aria-controls="{{$item->id}}" role="button">
-                                <ul class="nav_booter list-unstyled  pe-md-5 m-0 d-flex justify-content-between flex-wrap">
-                                    <li class="d-flex flex-column">
-                                        <small>Order Placed</small>
-                                        <small class="fw-bolder">{{dateFormat($item->created_at)}}</small>
-                                    </li>
-                                    
-                                    <li>
-                                        <small class="fw-bolder">Total :{{getPrice($item->grandtotal)}}</small>
-                                    </li>
-                                    <li>
-                                        @if($add_billing = $item->address->where('type','billing')->first())
-                                            <small class="hover-container">Billing To <i class="fa fa-angle-down"></i>
-                                              
-                                                <div class="hidden-div  fw-bolder mb-5 p-3 rounded shadow-lg">
-                                                    <div class="d-flex flex-column">
-                                                        <small>{{$add_billing->name}}</small>
-                                                        <small>{{$add_billing->address}}</small>
-                                                        <small>{{$add_billing->city.','.$add_billing->postalcode}}</small>
-                                                        <small>{{$add_billing->province.','.$add_billing->country}}</small>
-                                                    </div>
-                                                </div>
-                                            </small>
-                                        @endif
-                                          
-                                    </li>
-                                    @if($item->order_type == 'delivery')
-                                    <li>
-                                        @if($add_delivery = $item->address->where('type','delivery')->first())
-                                            <small class="hover-container">Ship/Pickup To <i class="fa fa-angle-down"></i>
-                                              
-                                            <div class="hidden-div  fw-bolder mb-5 p-3 rounded shadow-lg">
-                                                <div class="d-flex flex-column">
-                                                    <small>{{$add_delivery->firstname .' '. $add_delivery->lastname}}</small>
-                                                    <small>{{$add_delivery->address}}</small>
-                                                    <small>{{$add_delivery->city.','.$add_delivery->postalcode}}</small>
-                                                    <small>{{$add_delivery->province.','.$add_delivery->country}}</small>
-                                                </div>
-                                            </div>
-                                            </small>
-                                        @endif
-                                    </li>
-                                    @endif
-                                    
-                                    <li class="d-flex flex-column">
-                                        <small class="fw-bolder">Order No:#{{$item->invoice_id}}</small>
-                                        <!--<small class="float-end cursor-pointer">Invoice <i class="fa fa-download"></i></small>-->
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body collapse" id="{{$item->id}}">
-                                
-                                <div class="row g-0">
-                                    <div class="col-md-8 card-body pe-3">
-                                        <div class=""  >
-                                            @foreach($item->basket->items as  $listing_item)
-                        
-                                                <div class="col-md-12">
-                                                    <div class="row g-0">
-                                                        <div class="col-md-2">
-                                                          <img onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';" src="{{asset('images/products/'.$listing_item->picture)}}"  class="img-fluid rounded " alt="...">
-                                                        </div>
-                                                        <div class="col-md-10">
-                                                          <div class="card-body">
-                                                            <h5 class="card-title">{{$listing_item->product_name}}</h5>
-                                                            @if($listing_item->bundle_product == '1')
-                                                            <table>
-                                                                @foreach($listing_item->bundle_items as $itm)
-                                                                <tr>
-                                                                    <td class="p-0">
-                                                                         <div class="fw-normal p-0 border-1 border border-gray  smaller mb-1 rounded-1"><i class="bi bi-check text-success"></i>{{ $itm->product_name }}</div>
-                                                                        </td>
-                                                                </tr>
-                                                                @endforeach
-                                                            </table>
-                                                                
-                                                            @endif
-                                                            <p class="card-text">{{$listing_item->variation}}</p>
-                                                            <p class="card-text">{{getPrice($listing_item->price_amount * $listing_item->quantity)}}</p>
-                                                            
-                                                          </div>
-                                                        </div>
-                                                    </div> 
-                                                </div>
-                                                <hr>
-                                            @endforeach
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 order-page-s">
-                                        <h5 class="mb-3">Order Summary</h5>
-                                        <div id="od-subtotals" class="col-12 a-fixed-right-grid-col a-col-right">
-                                            <div class="row fw-bolder">
-                                                <div class="col-7 mb-3">
-                                                    <p class="mb-0">Item(s) Subtotal:</p>
-                                                </div> 
-                                                <div class="col-5 text-end mb-3">
-                                                    <span class="text-end">
-                                                        {{getPrice($item->subtotal)}}
-                                                    </span> 
-                                                </div>
-                                                <div class="col-7 mb-3">
-                                                    <p class="mb-0">
-                                                        Shipping:
-                                                    </p> 
-                                                </div> 
-                                                <div class="col-5 text-end mb-3">
-                                                    <span  class="text-end">
-                                                        {{getPrice($item->shipping_charge)}}
-                                                    </span> 
-                                                </div> 
-                                               
-                                                <div class="col-7 mb-3">
-                                                    <p class="mb-0">
-                                                        Discount:
-                                                    </p> 
-                                                </div> 
-                                                <div class="col-5 text-end mb-3">
-                                                    <span class="text-end">
-                                                        {{getPrice($item->discount)}}
-                                                    </span>
-                                                </div>
-                                                <div class="col-12 order-page-ss" >
-                                                    <div class="row">
-                                                        <hr>
-                                                <div class="col-7">
-                                                    <p class="mb-0">
-                                                        Grand Total:
-                                                    </p> 
-                                                </div> 
-                                                <div class="col-5 text-end">
-                                                    <span class="text-end">
-                                                        {{getPrice($item->grandtotal)}}
-                                                    </span>
-                                                </div> 
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    </div>
+    <section class="py-10">
+        <div class="container mx-auto max-w-4xl">
+            @if ($orders->count() > 0)
+                @foreach ($orders as $order)
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden mb-6">
+                        <div class="p-4 bg-gray-100 cursor-pointer" data-bs-toggle="collapse"
+                            data-bs-target="#order-{{ $order->id }}">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-sm text-gray-600">Order Placed</p>
+                                    <p class="font-semibold text-sm ">{{ dateFormat($order->created_at) }}</p>
                                 </div>
-                                
+                                <div>
+                                    <p class="text-sm text-gray-600 text-sm ">Expecting Delivery</p>
+                                    <p class="font-semibold text-sm ">{{ dateFormat($order->created_at) }}</p>
+                                </div>
+                                <div class="font-semibold text-lg text-sm ">
+                                    <p class="text-sm text-gray-600 text-sm ">Amount</p>
+                                    <p class="font-semibold text-sm ">{{ getPrice($order->grandtotal) }}</p>
+                                </div>
+                                <div class="text-sm font-semibold text-sm ">
+                                    <p class="text-sm text-gray-600 text-sm ">Order No:</p>
+                                    <p class="font-semibold text-sm ">#{{ $order->invoice_id }}</p>
+
+                                </div>
+                            </div>
+                            <div class=" mt-3">
+                                <!-- Add class 'active' to progress -->
+                                <ol
+                                    class="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+                                    <li
+                                        class="flex md:w-full items-center text-blue-600 dark:text-blue-500 sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-blue after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+                                        <span
+                                            class="flex flex-column items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                                            <img class="mx-auto w-50"
+                                                src="{{ asset('assets/img/icon/order-processed.png') }}">
+                                            <i>Processing</i>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 ">
+                                        <span
+                                            class="flex flex-column items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                                            <span class="me-2">
+                                                <img class="mx-auto w-50"
+                                                    src="{{ asset('assets/img/icon/order-shipped.png') }}">
+                                                <i>Shipped</i>
+
+                                            </span>
+                                        </span>
+                                    </li>
+                                    <li
+                                        class="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 ">
+                                        <span
+                                            class="flex flex-column items-center after:content-['/'] sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                                            <img class="mx-auto w-50"
+                                                src="{{ asset('assets/img/icon/order-en-route.gif') }}">
+                                            <i>InRoute</i>
+                                        </span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <span class="me-2">
+                                            <img class="mx-auto w-50"
+                                                src="{{ asset('assets/img/icon/order-arrived.png') }}">
+                                            <i> Delivered</i>
+                                        </span>
+                                    </li>
+                                </ol>
+
                             </div>
                         </div>
-                        @endforeach
-                    @else
-                            <div class="mt-5 d-flex justify-content-center align-items-center">
-                                <div class="col-md-6">
-                                    <div class="border border-3 border-dark"></div>
-                                    <div class="card  bg-white shadow p-5">
-                                        <div class="mb-4 mx-auto">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
-                                              <circle cx="60" cy="60" r="52" fill="#F5F6F8" stroke="#E2E4E8" stroke-width="4" />
-                                              <path d="M32 40L88 40" stroke="#A0AEC0" stroke-width="8" stroke-linecap="round" />
-                                              <path d="M32 60L88 60" stroke="#A0AEC0" stroke-width="8" stroke-linecap="round" />
-                                              <path d="M32 80L88 80" stroke="#A0AEC0" stroke-width="8" stroke-linecap="round" />
-                                              <circle cx="60" cy="60" r="10" fill="#A0AEC0" />
-                                            </svg>
 
+                        <div class="collapse" id="order-{{ $order->id }}">
+                            <div class="p-5">
+                                <h2 class="text-lg font-semibold mb-3">Order Details</h2>
+                                @foreach ($order->basket->items as $listing_item)
+                                    <div class="flex items-center gap-4 border-b pb-3 mb-3">
+                                        <img src="{{ asset('images/products/' . $listing_item->picture) }}"
+                                            class="h-16 object-cover rounded-md w-20"
+                                            onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';">
+                                        <div>
+                                            <h3 class="text-sm font-semibold">{{ $listing_item->product_name }}</h3>
+                                            <p class="text-xs text-gray-500">{{ $listing_item->variation }}</p>
+                                            <p class="font-semibold">
+                                                {{ getPrice($listing_item->price_amount * $listing_item->quantity) }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
 
-                                        </div>
-                                        <div class="text-center">
-                                            <h1 class="fs-2 fw-bold">No Orders Found !</h1>
-                                        </div>
+                                <div class="grid grid-cols-2 gap-6 mt-5">
+                                    <div class="bg-gray-50 p-4 rounded-md">
+                                        <h3 class="text-md font-semibold">Billing Address</h3>
+                                        @if ($order->billingAddress)
+                                            <p class="text-sm text-gray-700">
+                                                <strong>{{ $order->billingAddress->name }}</strong><br>
+                                                {{ $order->billingAddress->address }}<br>
+                                                {{ $order->billingAddress->locality }},
+                                                {{ $order->billingAddress->state }},
+                                                {{ $order->billingAddress->pincode }}<br>
+                                                Phone: <a href="tel:{{ $order->billingAddress->mobile }}"
+                                                    class="text-blue-600">{{ $order->billingAddress->mobile }}</a><br>
+                                                Email: {{ $order->billingAddress->email }}
+                                            </p>
+                                        @else
+                                            <p class="text-sm text-gray-500">No billing address available.</p>
+                                        @endif
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-md">
+                                        <h3 class="text-md font-semibold">Delivery Address</h3>
+                                        @if ($order->deliveryAddress)
+                                            <p class="text-sm text-gray-700">
+                                                <strong>{{ $order->deliveryAddress->name }}</strong><br>
+                                                {{ $order->deliveryAddress->address }}<br>
+                                                {{ $order->deliveryAddress->locality }},
+                                                {{ $order->deliveryAddress->state }},
+                                                {{ $order->deliveryAddress->pincode }}<br>
+                                                Phone: <a href="tel:{{ $order->deliveryAddress->mobile }}"
+                                                    class="text-blue-600">{{ $order->deliveryAddress->mobile }}</a><br>
+                                                Email: {{ $order->deliveryAddress->email }}
+                                            </p>
+                                        @else
+                                            <p class="text-sm text-gray-500">No delivery address available.</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                    @endif
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="mt-5 d-flex justify-content-center align-items-center">
+                    <div class="col-md-6">
+                        <div class="border border-3 border-dark"></div>
+                        <div class="card  bg-white shadow p-5">
+                            <div class="mb-4 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+                                    <circle cx="60" cy="60" r="52" fill="#F5F6F8" stroke="#E2E4E8"
+                                        stroke-width="4" />
+                                    <path d="M32 40L88 40" stroke="#A0AEC0" stroke-width="8" stroke-linecap="round" />
+                                    <path d="M32 60L88 60" stroke="#A0AEC0" stroke-width="8" stroke-linecap="round" />
+                                    <path d="M32 80L88 80" stroke="#A0AEC0" stroke-width="8" stroke-linecap="round" />
+                                    <circle cx="60" cy="60" r="10" fill="#A0AEC0" />
+                                </svg>
+
+
+                            </div>
+                            <div class="text-center">
+                                <h1 class="fs-2 fw-bold">No Orders Found !</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </section>
-@endsection    
-
-
-@section('scripts')
-<script>
-$(document).ready(function() {
-  $('.hover-container').mousemove(function(e) {
-    const x = e.pageX - $(this).offset().left;
-    const y = e.pageY - $(this).offset().top;
-
-    $(this).find('.hidden-div').css({
-      display: 'block',
-    });
-  });
-
-  $('.hover-container').mouseleave(function() {
-    $(this).find('.hidden-div').css('display', 'none');
-  });
-   $('#yearSelect').change(function() {
-        $('#filter_order').submit();
-    });
-});
-
-</script>
 @endsection
-                 

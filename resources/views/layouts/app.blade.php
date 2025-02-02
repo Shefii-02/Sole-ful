@@ -142,6 +142,9 @@
             border: 1px solid #a1a1a1;
             border-radius: 100%;
         }
+        .pac-logo {
+            z-index: 99999999 !important;
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -547,10 +550,11 @@
                 $('.product-title').text(pName);
                 if (stock == 'in-stock') {
                     $('.add-to-cart').attr('id', 'addToCartBtn').removeAttr('disabled1'); // Set correct ID
-          
+
                     $('.stockStatus').addClass('text-success').removeClass('text-danger');
                 } else {
-                    $('.add-to-cart').attr('id', 'inStock').attr('disabled1', 'disabled'); // Set different ID when out of stock
+                    $('.add-to-cart').attr('id', 'inStock').attr('disabled1',
+                    'disabled'); // Set different ID when out of stock
                     $('.stockStatus').addClass('text-danger').removeClass('text-success');
                 }
 
@@ -679,7 +683,7 @@
                 toastr.error('This Product Out of Stock, please try later', "Out of Stock");
 
             });
-            
+
 
 
             $('body').on('click', '.delete-btn', async function() {
@@ -722,6 +726,7 @@
         });
     </script>
 
+   
 </body>
 
 </html>

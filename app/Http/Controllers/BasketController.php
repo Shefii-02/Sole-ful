@@ -51,7 +51,7 @@ class BasketController extends Controller
         $productVariation          = ProductVariant::with('product')->where('id', $request->variation_id)->first();
 
         if ($productVariation) {
-            if ($productVariation->in_stock > $request->quantity) {
+            if ($productVariation->in_stock >= $request->quantity) {
                 $items = CartItem::where('product_sku', $productVariation->sku)->where('basket_id', $basket->id)->first();
                 if (!$items) {
                     $items                   = new CartItem();

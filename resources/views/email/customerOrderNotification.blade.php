@@ -57,7 +57,7 @@
                             @if ($order->billingAddress)
                                 <strong>{{ $order->billingAddress->name }}</strong><br />
                                 {{ $order->billingAddress->address }}<br />
-                                Building No/Name: #{{ $order->billingAddress->house_no }}, {{ $order->billingAddress->house_name }}<br />
+                                Building No/Name:{{ $order->billingAddress->house_name }}<br />
                                 Landmark: {{ $order->billingAddress->landmark }}<br>
                                 {{ $order->billingAddress->pincode }}, {{ $order->billingAddress->locality }}, {{ $order->billingAddress->state }}<br>
                                 <span style="font-weight: bold;">Phone: <a href="tel:{{ $order->billingAddress->mobile }}" style="color: #333; text-decoration: none;">{{ $order->billingAddress->mobile }}</a></span><br />
@@ -70,7 +70,7 @@
                             @if ($order->deliveryAddress)
                                 <strong>{{ $order->deliveryAddress->name }}</strong><br />
                                 {{ $order->deliveryAddress->address }}<br />
-                                House No/Name: #{{ $order->deliveryAddress->house_no }}, {{ $order->deliveryAddress->house_name }}<br />
+                                House No/Name: {{ $order->deliveryAddress->house_name }}<br />
                                 Landmark: {{ $order->deliveryAddress->landmark }}<br>
                                 {{ $order->deliveryAddress->locality }}, {{ $order->deliveryAddress->pincode }}, {{ $order->deliveryAddress->state }}<br>
                                 <span style="font-weight: bold;">Phone: <a href="tel:{{ $order->deliveryAddress->mobile }}" style="color: #333; text-decoration: none;">{{ $order->deliveryAddress->mobile }}</a></span><br />

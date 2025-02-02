@@ -13,6 +13,7 @@
         "dipesh79/laravel-phonepe": "^1.0",
         "dwivedianuj9118/phonepe-payment-gateway": "dev-main",
         "laravel/framework": "^11.31",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.6",
         "riverskies/laravel-mobile-detect": "^1.3",
