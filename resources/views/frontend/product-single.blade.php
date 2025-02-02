@@ -201,7 +201,25 @@
                                         </div>
                                     </div>
 
-                                  
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-OtherDetails">
+                                            <button class="accordion-button text-dark fw-bold"
+                                                :class="{ 'collapsed': open !== 'OtherDetails' }" type="button"
+                                                @click="open === 'OtherDetails' ? open = '' : open = 'OtherDetails'"
+                                                aria-controls="flush-OtherDetails">
+                                                Packed and Marketed By
+                                            </button>
+                                        </h2>
+                                        <div id="flush-OtherDetails" class="accordion-collapse collapse"
+                                            :class="{ 'show': open === 'OtherDetails' }"
+                                            aria-labelledby="flush-OtherDetails">
+                                            <div class="accordion-body">
+                                                <small>{{ $product->marketed_by }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-ConsumerComplaintContact">
