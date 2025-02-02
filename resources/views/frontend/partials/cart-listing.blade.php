@@ -40,12 +40,12 @@
 
     <!-- Fixed Bottom Subtotal and Buttons -->
     <div class="bg-white bottom-0 position-fixed p-3 shadow-lg w-100">
-        <div class="d-flex gap-3 align-items-center ">
-            <div class="">
+        <div class="d-flex gap-3 flex-column ">
+            <div class="float-end">
                 <span class="fw-bold">Subtotal:</span>
                 <span id="total-amount" class="fw-bold">{{ getPrice($totalAmount) }}</span>
             </div>
-            <a class="btn-theme flot-end btn" href="{{ route('public.cart-list') }}">View Cart</a>
+            <a class="btn-theme w-25 flot-end btn" href="{{ route('public.cart-list') }}">View Cart</a>
          
         </div>
     </div>

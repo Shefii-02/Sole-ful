@@ -58,7 +58,7 @@
             <div class="product-thumb">
                 <a target="_blank"
                     href="{{ route('public.product', ['uid' => $product->product->unique_value, 'slug' => $product->product->slug,'color' => $product->color_name]) }}">
-                    <img ssrc="{{ isset($product->MainThumbImage) && $product->MainThumbImage->image ? asset('images/products/' . $product->MainThumbImage->image) : asset('images/default.jpg') }}"
+                    <img src="{{ isset($product->MainThumbImage) && $product->MainThumbImage->image ? asset('images/products/' . $product->MainThumbImage->image) : asset('images/default.jpg') }}"
                         alt="product thumb">
                 </a>
             </div>
@@ -71,6 +71,7 @@
                         <span class="price-regular">
                             {{ getPrice($product->price) }}</span>
                     </div>
+                </a>
                     <p>{{ $product->product->description }}</p>
                     <div class="product-link-2 position-static">
                         <a href="#" id="wishlist-btn-{{ $product->product->id }}" class="wishlist-btn"
@@ -86,7 +87,7 @@
                             </span>
                         </a>
                     </div>
-                </a>
+             
             </div>
         </div>
         <!-- product list item start -->

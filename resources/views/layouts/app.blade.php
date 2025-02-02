@@ -150,6 +150,13 @@
         .toast-container {
             z-index: 999999999 !important;
         }
+
+        @media only screen and (max-width: 600px) {
+
+            .offcanvas {
+                width: 60% !important;
+            }
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -460,6 +467,10 @@
             </div>
         </div>
     </div>
+
+
+
+
 
     <!--=======================Javascript============================-->
     <!--=== All Vendor Js ===-->
