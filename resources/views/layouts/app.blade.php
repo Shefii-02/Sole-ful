@@ -142,8 +142,13 @@
             border: 1px solid #a1a1a1;
             border-radius: 100%;
         }
+
         .pac-logo {
             z-index: 99999999 !important;
+        }
+   
+        .toast-container{
+            z-index: 999999999 !important;
         }
     </style>
 
@@ -437,27 +442,18 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/toastr.css') }}">
 
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+
     <script type="text/javascript">
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
             "preventDuplicates": false,
-            "positionClass": "toast-top-right", // Toast position
-            "timeOut": "5000", // Timeout duration
-            "extendedTimeOut": "5000",
-        };
-    </script>
-    <script type="text/javascript">
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "preventDuplicates": false,
-            "positionClass": "toast-top-right", // Toast position
+            "positionClass": "toast-bottom-center", // Toast position toast-top-right
             "timeOut": "5000", // Timeout duration
             "extendedTimeOut": "5000",
         };
@@ -475,6 +471,7 @@
 
     @stack('footer')
     <script>
+        var defaultSize = false;
         $(document).ready(function() {
             let selectedSize = "{{ request()->get('size') }}";
             if (selectedSize) {
@@ -517,8 +514,24 @@
                             // If no color is selected, check the first available color option
                             $(".color-tab .color-button input").first().prop("checked", true);
                         }
+
+
                         // Trigger change event on the first color option
                         $('.variColor_checkbox:checked').trigger('change');
+
+                        if (!selectedSize && !defaultSize) {
+                            $('.size-tab .size-button').not('.disabled').find(
+                                'input[type="radio"]').prop('checked',
+                                false);
+                            $('.size-button').removeClass('active');
+
+                            defaultSize = true;
+                        }
+
+                        if (defaultSize && !QuickView) {
+                            updateUrlWithSizeAndColor();
+                        }
+
                     }
                 });
             });
@@ -554,7 +567,7 @@
                     $('.stockStatus').addClass('text-success').removeClass('text-danger');
                 } else {
                     $('.add-to-cart').attr('id', 'inStock').attr('disabled1',
-                    'disabled'); // Set different ID when out of stock
+                        'disabled'); // Set different ID when out of stock
                     $('.stockStatus').addClass('text-danger').removeClass('text-success');
                 }
 
@@ -623,6 +636,11 @@
 
                 // Image zoom effect for the newly added images
                 $('.img-zoom').zoom();
+
+                if (defaultSize && !QuickView) {
+                    updateUrlWithSizeAndColor();
+                }
+
             });
 
 
@@ -630,8 +648,17 @@
                 // Get the selected color radio input
                 const selectedColorInput = $('.variColor_checkbox:checked');
 
+                // Check if a size is selected
+                const selectedSizeInput = $('.variSize_checkbox:checked');
+
+                if (!selectedSizeInput.length) {
+                    toastr.error('Please select a size first', "Size not selected");
+                    return; // Prevent further execution if no size is selected
+                }
+
+
                 if (!selectedColorInput.length) {
-                    alert('Please select a color.');
+                    toastr.error('Please select a color', "Color not selected");
                     return;
                 }
 
@@ -723,10 +750,34 @@
                 location.reload();
 
             })
+
+
+            // Function to update the URL with selected size and color
+            function updateUrlWithSizeAndColor() {
+                let selectedSize = $('.variSize_checkbox:checked').val();
+                let selectedColor = $('.variColor_checkbox:checked').val();
+
+                // Construct the base URL (without parameters)
+                let baseUrl = window.location.origin + window.location.pathname;
+
+                // If a size is selected, add it to the URL
+                if (selectedSize) {
+                    baseUrl += "?size=" + selectedSize;
+                }
+
+                // If a color is selected, add it to the URL (appending & if size already exists)
+                if (selectedColor) {
+                    baseUrl += (selectedSize ? "&" : "?") + "color=" + selectedColor;
+                }
+
+                // Update the browser URL without reloading the page
+                window.history.pushState({}, "", baseUrl);
+            }
+
         });
     </script>
 
-   
+
 </body>
 
 </html>

@@ -203,14 +203,14 @@
                                 </div>
                             </div>
                             @foreach ($items ?? [] as $listing)
-                                <div class="row cart-item shadow-sm">
+                                <div class="row cart-item cart-itemPage shadow-sm">
                                     <div class="col-md-2 column product_image">
                                         <img src="{{ asset('images/products/' . $listing->picture) }}" class="rounded-3"
                                             onerror="this.onerror=null;this.src='/images/default.jpg';" alt="">
 
                                     </div>
                                     <div class="col-md-5 column product_name text-start">
-                                       
+
                                         <span class="fw-semibold d-flex flex-column gap-1">
                                             <strong class="text-capitalize">{{ $listing->variation }} </strong>
                                             <sub class="my-2">{{ $listing->product_name }}</sub>
@@ -221,7 +221,7 @@
 
                                         <div class="cart-action">
                                             <a
-                                                href="{{ route('public.product', ['uid' => $listing->product->unique_value, 'slug' => $listing->product->slug,'color'=>$listing->product_variation->color_name,'size'=>$listing->product_variation->size_name]) }}"><i
+                                                href="{{ route('public.product', ['uid' => $listing->product->unique_value, 'slug' => $listing->product->slug, 'color' => $listing->product_variation->color_name, 'size' => $listing->product_variation->size_name]) }}"><i
                                                     class="bi bi-eye"></i> View</a> |
                                             <a href="#" class="item_remove" data-pname="{{ $listing->variation }}"
                                                 data-psku="{{ $listing->product_sku }}"
@@ -259,7 +259,7 @@
                                     </div>
                                 </div>
                                 @php
-                                    $totalAmount = $totalAmount + ($listing->price_amount * $listing->quantity);
+                                    $totalAmount = $totalAmount + $listing->price_amount * $listing->quantity;
                                 @endphp
                             @endforeach
                         </div>
@@ -281,11 +281,10 @@
 
 
                                             <a href="{{ route('public.shop') }}"
-                                                class="btn btn-dark text-white secondary-btn w-50 px-3"
-                                            >Continue Shopping
+                                                class="btn btn-dark text-white secondary-btn w-50 px-3">Continue Shopping
                                             </a>
-                                            <a href="{{ route('public.checkout') }}" class="btn primary-btn btn-theme px-3  w-50 checkout_btn"
-                                                >Checkout</a>
+                                            <a href="{{ route('public.checkout') }}"
+                                                class="btn primary-btn btn-theme px-3  w-50 checkout_btn">Checkout</a>
                                         </div>
                                     </div>
 
@@ -392,7 +391,8 @@
                 }
 
                 $input.val(qty);
-                $('.item-quantity').trigger('change');
+                $input.trigger('change');
+                // $('.item-quantity').trigger('change');
             });
         })();
 
@@ -404,7 +404,7 @@
 
         $('body').on('change', '.item-quantity', async function() {
 
-            var item = $(this).closest('.cart-item');
+            var item = $(this).closest('.cart-itemPage');
             var quantity = $(this).val();
             var product_sku = $(this).data('psku');
             var product_id = $(this).data('pid');
@@ -419,7 +419,7 @@
             item.find('.Item_total').text('₹' + amount.toFixed(2));
             if (quantity <= 0) {
                 item.remove();
-                if ($('.cart-item').length === 0) {
+                if ($('.cart-itemPage').length === 0) {
                     location.reload();
                 }
             }
@@ -434,7 +434,7 @@
 
 
         $('body').on('click', '.item_remove', async function() {
-            var item = $(this).closest('.cart-item');
+            var item = $(this).closest('.cart-itemPage');
             var quantity = $(this).val();
             var product_sku = $(this).data('psku');
             var product_id = $(this).data('pid');
@@ -454,7 +454,7 @@
             $('#total-amount').text('Total: ₹' + totalAmount.toFixed(2));
             $('.addon_grandtotal').text('₹' + totalAmount.toFixed(2));
 
-            if ($('.cart-item').length === 0 || preorder == 1) {
+            if ($('.cart-itemPage').length === 0 || preorder == 1) {
                 location.reload();
             }
         });
@@ -462,6 +462,8 @@
 
         const body = $('body');
         async function update_products(product_sku, product_id, product_price, quantity) {
+            console.log(1)
+            var alerting = true;
             body.append(`<div class="product-loading"><i class="bi bi-arrow-clockwise"></i></div>`);
             await $.ajax({
                 url: `{{ route('public.product-add') }}`,
@@ -477,26 +479,29 @@
                     'price': product_price
                 },
                 success: function(response) {
-
                     $('.cart-icon .cart-count').html(response.cart_count)
                     body.find('.product-loading').remove();
-
-
                     var addToCartData = response.addToCartData;
-               
-                  
+                    if (alerting) {
+                        if (response.result != 1) {
+                            toastr.error(response.message, "Error");
+
+                        } else {
+                            toastr.success(response.message, "Success");
+                        }
+                        alerting = false;
+                    }
+
+
                 },
                 error: function(xhr, status, error) {
-
-                    alertJsFunction(status, 'error');
+                    toastr.error(status, "Error");
+                    // alertJsFunction(status, 'error');
                     //  alert('something went wrong please try again')
                     // body.find('.product-loading').remove();
                 }
             });
             return true;
         }
-
-
     </script>
-
 @endpush

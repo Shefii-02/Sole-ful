@@ -311,3 +311,12 @@
     <!-- product details wrapper end -->
 @endsection
 
+
+
+@push('footer')
+
+<script>
+    QuickView = false;
+</script>
+@endpush
+

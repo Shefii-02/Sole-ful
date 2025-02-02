@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class BasketController extends Controller
@@ -67,8 +68,17 @@ class BasketController extends Controller
                     $items->price_amount     = $productVariation->price;
                     $items->picture          = $productVariation->images->first()->image;
                     $items->special_note     = $productVariation->variation;
+                    $response['message'] = 'Product Added to your cart <a href="/cart" target="_blank" class="my-3 btn btn-theme">View Cart</a>';
+                    $response['result'] = true;
                 } else {
-                    $items->quantity        = $items->quantity + $request->quantity;
+                    if ($productVariation->in_stock >= $items->quantity + $request->quantity) {
+                        $items->quantity        = $items->quantity + $request->quantity;
+                        $response['message'] = 'Product Added to your cart <a href="/cart" target="_blank" class="my-3 btn btn-theme">View Cart</a>';
+                        $response['result'] = true;
+                    } else {
+                        $response['result'] = false;
+                        $response['message'] = "You have already this product added total you have requested {($items->quantity + $request->quantity)} units, but we currently have only {$productVariation->in_stock} in stock. Please adjust your order quantity. or contact our customer care";
+                    }
                 }
 
                 try {
@@ -79,12 +89,13 @@ class BasketController extends Controller
                     }
 
                     $itemsCounts = CartItem::where('basket_id', $basket->id)->count();
-                    $response['result'] = true;
+                 
                     $response['cart_count'] = $itemsCounts;
-                    $response['message'] = 'Product Added to your cart <a href="/cart" target="_blank" class="my-3 btn btn-theme">View Cart</a>';
                     DB::commit();
                 } catch (Exception $e) {
-                    dd($e);
+                    
+                    Log::info("ProductError :" . $e);
+
                     DB::rollBack();
                     $response['result'] = false;
                     $response['cart_count'] = CartItem::where('basket_id', $basket->id)->count();
@@ -156,24 +167,29 @@ class BasketController extends Controller
                 }
                 $items            = CartItem::where('product_sku', $psku)->where('basket_id', $basket->id)->first();
 
-                $items->quantity =  $request->quantity;
-
                 try {
+                  
                     if ($request->quantity >= 1) {
-                        $items->save();
+                        if ($pdct_vari->in_stock >= $request->quantity) {
+                            $items->quantity =  $request->quantity;
+                            $items->save();
+                            $response['result'] = 1;
+                        }
+                        else{
+                            $response['message'] = "You have requested {$request->quantity} units, but we currently have only {$pdct_vari->in_stock} in stock. Please adjust your order quantity. or contact our customer care";
+                        }
+                        
+                     
                     } else {
                         $items->delete();
+                        $response['result'] = 1;
+                        $response['message'] = "Product Removed Successfully";
                     }
 
                     $itemsCounts = CartItem::where('basket_id', $basket->id)->count();
 
-                    if ($itemsCounts == 0) {
-                        $basket->special_campaign = 0;
-                        $basket->serve_date = NULL;
-                        $basket->serve_time = NULL;
-                        $basket->save();
-                    }
-                    $response['result'] = 1;
+                    
+                    // $response['result'] = 1;
                     $response['cart_count'] = $itemsCounts;
 
 
@@ -189,13 +205,15 @@ class BasketController extends Controller
                         "quantity"    => $items->quantity
                     ];
 
-                    $response['addToCartData'] = [
-                        "currency" => "CAD",
+                    $response['addToCartData'] = [                        
+                        "currency" => "INR",
                         "value" => $items->price_amount,
                         "items" =>  $items_val
                     ];
                     return  response()->json($response);
                 } catch (Exception $e) {
+                    Log::error('Something Faced Error,please try again:'.$e);
+                    $response['message'] = "Something Faced Error,please try again";
                     $response['cart_count'] = CartItem::where('basket_id', $basket->id)->count();
                     return  response()->json($response);
                 }
@@ -218,7 +236,7 @@ class BasketController extends Controller
             $basket = Basket::where('session', $session_string)->where('status', 0)->first();
 
             if ($basket) {
-                
+
 
                 $basket->save();
                 $items = CartItem::where('basket_id', $basket->id)

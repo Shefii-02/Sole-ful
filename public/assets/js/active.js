@@ -396,8 +396,13 @@
 		});
 
 
+		var QuickView = false;
+
+
 		$('body').on('click', '.quick_view-btn', function (e) {
 			e.preventDefault();
+			QuickView =true;
+			defaultSize = false;
 			var Id = $(this).data('product-id');
 			$.ajax({
 				url: '/quick-view',
@@ -408,7 +413,7 @@
 					var firstAvailableSize = $('.size-tab .size-button')
 						.not('.disabled')
 						.first();
-
+				
 					if (firstAvailableSize.length > 0) {
 						firstAvailableSize.find('input[type="radio"]').prop('checked', true).trigger('change');
 					}
