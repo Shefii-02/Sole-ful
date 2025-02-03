@@ -92,7 +92,7 @@
                 
                                 <!-- Products Count -->
                                 <div class="w-1/12 text-center">
-                                    <span class="small">{{ $order->basket->items->count() }}</span>
+                                    <span class="small">{{ $order->basket->items ? $order->basket->items->count() : 0 }}</span>
                                 </div>
                 
                                 <!-- Grand Total -->
