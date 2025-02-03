@@ -2987,7 +2987,8 @@ only screen and (max-width: 767.98px) {
 
 @media only screen and (max-width: 767.98px) {
   .breadcrumb-wrap {
-    padding: 28px 0 35px;
+    padding: 100px 0 35px;
+    
   }
 }
 
@@ -2996,6 +2997,7 @@ only screen and (max-width: 767.98px) {
   padding-bottom: 15px;
   text-transform: uppercase;
   font-weight: 800;
+  color: #fff;
 }
 
 .breadcrumb-wrap nav h2 {
@@ -3039,7 +3041,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item a {
-  color: #333333;
+  color: #ffffff;
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item a:hover {
@@ -3047,7 +3049,8 @@ only screen and (max-width: 767.98px) {
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item.active {
-  color: #df9b19;
+  color: #ffffff;
+  font-weight: 900;
 }
 
 .breadcrumb-wrap nav .breadcrumb .breadcrumb-item:first-child::before {

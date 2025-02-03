@@ -217,7 +217,7 @@
                         </a>
                     </div>
                     <div class="flex-auto ">
-                        <a href="#" class="items-center justify-center text-center mx-auto px-4 py-2  ">
+                        <a href="{{ route('account.home') }}" class="items-center justify-center text-center mx-auto px-4 py-2  ">
                             <span class="block px-1 py-1">
                                 <span class="bi bi-person"></span>
                                 <span class="ml-3 text-sm  align-bottom pb-1">Account</span>
