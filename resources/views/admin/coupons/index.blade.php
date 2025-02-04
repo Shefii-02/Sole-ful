@@ -81,7 +81,7 @@
                                 <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->value }}</span></div>
                                 <div class="w-2/12 text-center text-capitalize"><span class="font-medium">{{ $coupon->value_type }}</span></div>
                                 <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->max_count }}</span></div>
-                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->cur_count }}</span></div>
+                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->orders ? $coupon->orders->count() : 0 }}</span></div>
                                 <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->min_sales }}</span></div>
                                 <div class="w-2/12 text-center"><span class="font-medium">{!! dateFormat($coupon->start_time) .'<br>'. dateFormat($coupon->end_time) !!}</span></div>
                                 <div class=" w-1/12 text-end">

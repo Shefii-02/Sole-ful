@@ -16,4 +16,11 @@ class Coupon extends Model
     protected $fillable = ['code','value','value_type','max_count','cur_count','min_sales','start_time','end_time','availability','min_sale','status'];
 
     
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Basket','coupon','id')->where('status',1);
+    }
+
+    
+
 }
