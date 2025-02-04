@@ -1,45 +1,61 @@
 @extends('layouts.app')
+
 @section('content')
-    <section class="product-listing-banner">
+    <!-- Breadcrumb Area -->
+    <div class="breadcrumb-area bg-img" data-bg="/assets/img/breadcrumb-banner.webp">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h1>Order Complete</h1>
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">Order Completed</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('account.home') }}">My Account</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Order Completed</li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="">
-        <div class=" pb-3 pt-3  d-flex justify-content-center align-items-center for-t-h">
-            <div class="col-md-6">
-                <div class=""></div>
-                <div class=" bg-white p-3">
-                    <div class="mb-4 text-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="text-theme" width="75" height="75"
-                            fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+    </div>
+
+    <!-- Order Confirmation Section -->
+    <section class="d-flex justify-content-center align-items-center min-vh-80 py-5">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body text-center p-4">
+                    <div class="icon-box mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
+                            class="bi bi-check-circle text-success" viewBox="0 0 16 16">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                             <path
                                 d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
                         </svg>
                     </div>
-                    <div class="text-center">
-                        <h1 style="font-weight: 800">Thank You!</h1>
-                        <p>Your order has been completed and placed successfully.
-                            <br> A confirmation email has been sent to the email address you provided.
-                            <br> Your invoice number is #{{ $invoice_id }}
-                            <br> Your Transaction Id number is #{{ $transactionId }}
-                            <br> Your Reference Id number is #{{ $providerReferenceId }}
-                        </p>
+                    <h2 class="font-weight-bold text-dark">Thank You!</h2>
+                    <p class="text-muted">
+                        Your order has been placed successfully.
+                        <br> A confirmation email has been sent to your email.
+                        <br> <strong>Invoice Number:</strong> #{{ $invoice_id }}
+                        <br> <strong>Transaction ID:</strong> #{{ $transactionId }}
+                        <br> <strong>Reference ID:</strong> #{{ $providerReferenceId }}
+                    </p>
+                    <div class="mt-4">
                         @auth
-                            <a href="/myaccount"
-                                style="padding: 10px 30px; color: #fff; border-radius: 30px; background: var(--primary); text-decoration: none;"
-                                class="">BACK TO MY ACCOUNT</a>
+                            <a href="{{ route('account.home') }}" class="btn btn-primary px-4 py-2 rounded-pill">
+                                Back to My Account
+                            </a>
                         @else
-                            <a href="/" class="for-home-t">BACK TO HOME</a>
-                            @endif
-                        </div>
+                            <a href="/" class="btn btn-outline-dark px-4 py-2 rounded-pill">
+                                Back to Home
+                            </a>
+                        @endauth
                     </div>
                 </div>
             </div>
-        </section>
-    @endsection
+        </div>
+    </section>
+
+@endsection

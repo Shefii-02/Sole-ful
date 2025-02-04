@@ -141,20 +141,9 @@
     </section>
 
 
-    <section class="page_section checkout-overlay">
+    <section class="page_section checkout-overlay mt-5">
 
         <div class="container-lg">
-
-            @if (session()->has('error'))
-                <div class="alert alert-danger" style="font-size:110%;"><strong>Unfortunately, we were unable to process
-                        your credit card,
-                        please contact your financial institution or try again later.
-                        <u><a href="/contact?err=payment_failed" style="font-weight:bold;">Contact Us here</a></u> if you
-                        are facing issues</strong>
-                </div>
-            @endif
-
-
             <div class="main-content checkout-main-content">
 
                 @if (auth()->check() || !empty($basket->email))

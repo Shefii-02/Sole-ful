@@ -533,7 +533,8 @@ class OrderController extends Controller
                         $payment->save();
 
                         $this->stockDecrease($basket->id);
-
+                        OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
+                        Basket::where('id', $basket->id)->update(['status' => 1]);
                     } else {
                         dd('access decided,transaction_id doesn`t matched-userId : '.auth()->user()->id);
                     }
