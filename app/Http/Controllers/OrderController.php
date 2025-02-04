@@ -25,6 +25,7 @@ use PhpParser\Node\NullableType;
 
 class OrderController extends Controller
 {
+    use \App\Emails;
     /**
      * Display a listing of the resource.
      */
