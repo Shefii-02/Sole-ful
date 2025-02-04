@@ -355,6 +355,12 @@ class OrderController extends Controller
             $session_string = session('session_string');
             $basket = Basket::where('session', $session_string)->where('status', 0)->first();
             if ($basket) {
+               
+                if(auth()->check()){
+                    $basket->user_id = auth()->user()->id;
+                    $basket->save();
+                }
+                
                 $items = CartItem::where('basket_id', $basket->id)->get();
                 if ($items) {
                     foreach ($items as $listing) {

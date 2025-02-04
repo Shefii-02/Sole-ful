@@ -48,6 +48,10 @@ class BasketController extends Controller
             $basket->session = $session_string;
             $basket->save();
         }
+        if(auth()->check()){
+            $basket->user_id = auth()->user()->id;
+            $basket->save();
+        }
 
         $productVariation          = ProductVariant::with('product')->where('id', $request->variation_id)->first();
 
