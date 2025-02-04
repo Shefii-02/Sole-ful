@@ -355,12 +355,12 @@ class OrderController extends Controller
             $session_string = session('session_string');
             $basket = Basket::where('session', $session_string)->where('status', 0)->first();
             if ($basket) {
-               
-                if(auth()->check()){
+
+                if (auth()->check()) {
                     $basket->user_id = auth()->user()->id;
                     $basket->save();
                 }
-                
+
                 $items = CartItem::where('basket_id', $basket->id)->get();
                 if ($items) {
                     foreach ($items as $listing) {
@@ -522,36 +522,43 @@ class OrderController extends Controller
                         OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
                         Basket::where('id', $basket->id)->update(['status' => 1]);
 
-                        $paymentInstrument          = $paymentInstrumentDetails['data']['paymentInstrument'];
-                        $payment->checksum          = $checksum;
-                        $payment->reference_id      = $providerReferenceId;
-                        $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
-                        $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
-                        $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
-                        $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
-                        $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
-                        $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
-                        $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
-                        $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
-                        $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
-                        $payment->payment_status    = 'SUCCESS';
-                        $payment->response_msg      = json_encode($paymentInstrumentDetails);
+                        if (isset($paymentInstrumentDetails['data']['paymentInstrument'])) {
+                            $paymentInstrument          = $paymentInstrumentDetails['data']['paymentInstrument'];
+
+                            $payment->checksum          = $checksum;
+                            $payment->reference_id      = $providerReferenceId;
+                            $payment->payment_method    = isset($paymentInstrument['type']) ? $paymentInstrument['type'] : null;
+                            $payment->utr               = isset($paymentInstrument['utr']) ? $paymentInstrument['utr'] : null;
+                            $payment->card_type         = isset($paymentInstrument['cardType']) ? $paymentInstrument['cardType'] : null;
+                            $payment->arn               = isset($paymentInstrument['arn']) ? $paymentInstrument['arn'] : null;
+                            $payment->pg_authorization_code = isset($paymentInstrument['pgAuthorizationCode']) ? $paymentInstrument['pgAuthorizationCode'] : null;
+                            $payment->pg_transaction_id = isset($paymentInstrument['pgTransactionId']) ? $paymentInstrument['pgTransactionId'] : null;
+                            $payment->bank_transaction_id = isset($paymentInstrument['bankTransactionId']) ? $paymentInstrument['bankTransactionId'] : null;
+                            $payment->bank_id           = isset($paymentInstrument['bankId']) ? $paymentInstrument['bankId'] : null;
+                            $payment->pg_service_transaction_id = isset($paymentInstrument['pgServiceTransactionId']) ? $paymentInstrument['pgServiceTransactionId'] : null;
+                            $payment->payment_status    = 'SUCCESS';
+                            $payment->response_msg      = json_encode($paymentInstrumentDetails);
+                        }
+
+                        $payment->order_id = $order->id;
                         $payment->save();
 
                         $this->stockDecrease($basket->id);
                         OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
                         Basket::where('id', $basket->id)->update(['status' => 1]);
                     } else {
-                        dd('access decided,transaction_id doesn`t matched-userId : '.auth()->user()->id);
+                        dd('access decided,transaction_id doesn`t matched-userId : ' . auth()->user()->id);
                     }
                 } else {
-                    dd('access decided,basket doesn`t matched-userId : '.auth()->user()->id);
+                    dd('access decided,basket doesn`t matched-userId : ' . auth()->user()->id);
                 }
             } else {
-                dd('access decided,basket expired-userId : '.auth()->user()->id);
+                dd('access decided,basket expired-userId : ' . auth()->user()->id);
             }
 
             $invoice_id = $order->invoice_id;
+
+            $this->sendOrderNotification($order);
 
             return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
         } else {
@@ -619,7 +626,7 @@ class OrderController extends Controller
     //                     $order->paid        = 1;
     //                     $order->save();
 
-               
+
     //                     if (isset($paymentInstrumentDetails['data']['paymentInstrument'])) {
 
     //                         $paymentInstrument          = $paymentInstrumentDetails['data']['paymentInstrument'];
