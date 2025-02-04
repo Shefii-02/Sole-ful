@@ -23,7 +23,7 @@ trait Emails{
             'to' => $order->billingAddress->email,
             'bccStatus' => false,
             'subject' => 'Thank you for Order',
-            'contents' => view('email.customerOrderNotification')->withContent($order)->render(),
+            'contents' => view('email.customerOrderNotification')->withOrder($order)->render(),
         ]));
 
         self::email(new Email([
@@ -31,7 +31,7 @@ trait Emails{
             'to' => env('DEV_EMAIL'),
             'bccStatus' => false,
             'subject' => 'Received new Order',
-            'contents' => view('email.adminOrderNotification')->withContent($order)->render(),
+            'contents' => view('email.adminOrderNotification')->withOrder($order)->render(),
         ]));
     }
 
