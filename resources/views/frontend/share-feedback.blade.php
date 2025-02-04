@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
     
-<section class="product-listing-banner pt-5">
+<section class="product-listing-banner">
     <div class="container">
         <div class="row">
             <div class="col-12">

@@ -23,7 +23,7 @@
     <!-- breadcrumb area end -->
 
     <!-- product details wrapper start -->
-    <div class="product-details-wrapper section-padding">
+    <div class="product-details-wrapper section-padding  py-5">
         <div class="container custom-container">
             <div class="row">
                 <div class="col-12">

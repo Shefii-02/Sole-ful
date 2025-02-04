@@ -2,7 +2,7 @@
 @push('header')
 @endpush
 @section('content')
-    <section class="product-listing-banner pt-5">
+    <section class="product-listing-banner">
         <!-- breadcrumb area start -->
         <div class="breadcrumb-area bg-img" data-bg="/assets/img/breadcrumb-banner.webp">
             <div class="container">
@@ -25,7 +25,7 @@
         <!-- breadcrumb area end -->
     </section>
 
-    <section class="page_section">
+    <section class="page_section  py-5">
         <div class="container">
             <div class="row justify-center">
              

@@ -22,7 +22,7 @@
     <!-- breadcrumb area end -->
 
     <!-- contact wrapper area start -->
-    <div class="contact-area section-padding">
+    <div class="contact-area section-padding  py-5">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">

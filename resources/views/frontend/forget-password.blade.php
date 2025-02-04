@@ -2,7 +2,7 @@
 
 @section('content')
     
-    <section class="product-listing-banner pt-5">
+    <section class="product-listing-banner">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
@@ -12,7 +12,7 @@
         </div> 
     </section>
     
-    <section class="page_section">
+    <section class="page_section  py-5">
         <div class="container">
             <div class="row justify-content-center w-100 m-0">
                 

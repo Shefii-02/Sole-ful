@@ -21,7 +21,7 @@
     <!-- breadcrumb area end -->
 
     <!-- page main wrapper start -->
-    <div class="shop-main-wrapper section-padding">
+    <div class="shop-main-wrapper section-padding  py-5">
         <div class="container">
             <div class="row">
                 <!-- sidebar area start -->

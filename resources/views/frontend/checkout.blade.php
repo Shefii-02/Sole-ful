@@ -116,7 +116,7 @@
         <div class="loader"></div>
     </div>
 
-    <section class="product-listing-banner pt-5">
+    <section class="product-listing-banner">
         <!-- breadcrumb area start -->
         <div class="breadcrumb-area bg-img" data-bg="assets/img/breadcrumb-banner.webp">
             <div class="container">
@@ -141,7 +141,7 @@
     </section>
 
 
-    <section class="page_section checkout-overlay mt-5">
+    <section class="page_section checkout-overlay  py-5">
 
         <div class="container-lg">
             <div class="main-content checkout-main-content">
