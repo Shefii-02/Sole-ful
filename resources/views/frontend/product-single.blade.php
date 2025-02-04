@@ -240,9 +240,7 @@
                                                 <small>Email: <a
                                                         href="mailto:relationship@soleful.in">relationship@soleful.in</a><br></small>
                                                 <small>Phone: <a href="tel:+91 79966 66225">+91 79966 66225</a></small>
-                                                <br>
-                                                <small class="fw-bold">Please contact us at the marketer's address for any
-                                                    customer complaints.</small>
+                                           
                                             </div>
                                         </div>
                                     </div>

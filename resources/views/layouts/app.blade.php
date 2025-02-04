@@ -241,12 +241,12 @@
                                 <div class="widget-body">
                                     <ul class="location-wrap">
                                         <li><i class="ion-ios-location-outline"></i>
-                                            <a href="https://maps.app.goo.gl/MtY4isgHncwS6jfB8" target="_blank">
-                                                SOLEFUL<br>
+                                            
+                                                Soleful Ahdhia<br>
                                                 #5, 1st floor, Geddalahalli,<br>
                                                 Hennur Bagalur Main Road,<br>
                                                 Bangalore - 560077.
-                                            </a>
+                                           
                                         </li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
@@ -354,7 +354,7 @@
                     <div class="row">
                         <div class="col-md-6 order-2 order-md-1">
                             <div class="copyright-text text-center text-md-start">
-                                <p>&copy; {{ date('Y') }} <b>Soleful</b> Made with <i
+                                <p>&copy; {{ date('Y') }} <b>Soleful Ahdhia</b> Made with <i
                                         class="fa fa-heart text-danger"></i> by <a target="_blank"
                                         href="https://whizcreativetech.com/"><b>Whiz Creative Tech</b></a></p>
                             </div>

@@ -20,12 +20,18 @@ use App\Http\Controllers\SizeController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestEmail;
 
+use App\Emails;
 
-// Route::get('customerOrderNotification', function () { 
-//     $order = Order::orderBy('id','desc')->first();
-//     return view('email.customerOrderNotification',compact('order'));
-// });
+Route::get('customerOrderNotification', function () { 
+    $order = Order::orderBy('id','desc')->first();
+
+    Mail::to('shefii.indigital@gmail.com')->send(new TestEmail());
+dd(1);
+    return view('email.customerOrderNotification123',compact('order'));
+});
 // Route::get('adminOrderNotification', function () { 
 //     $order = Order::orderBy('id','desc')->first();
 //    return view('email.adminOrderNotification',compact('order'));

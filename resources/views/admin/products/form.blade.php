@@ -467,7 +467,7 @@
                                             'marketed_by',
                                             isset($product)
                                                 ? $product->marketed_by
-                                                : 'SOLEFUL #5, 1st floor, Geddalahalli, Hennur Bagalur Main Road, Bangalore - 560077',
+                                                : 'Voche The Interior Studio \n #5, 1st floor, Geddalahalli, Hennur Bagalur Main Road, Bangalore - 560077',
                                         ) }}</textarea>
                                 </div>
                             </div>
