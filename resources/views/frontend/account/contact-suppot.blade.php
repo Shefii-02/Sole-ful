@@ -2,7 +2,7 @@
 @section('styles')
 @endsection
 @section('content')
-    <section class="product-listing-banner">
+    <section class="product-listing-banner pt-5">
         <!-- breadcrumb area start -->
         <div class="breadcrumb-area bg-img" data-bg="/assets/img/breadcrumb-banner.webp">
             <div class="container">

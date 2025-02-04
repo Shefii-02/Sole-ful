@@ -2,7 +2,7 @@
 
 @section('content')
     
-    <section class="product-listing-banner">
+    <section class="product-listing-banner pt-5">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
