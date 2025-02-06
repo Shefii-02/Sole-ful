@@ -37,6 +37,7 @@ class DeliveryPartnerApi
         $tokenData = DB::table('api_tokens')->where('type', 'Delivery Partner')->latest()->first();
 
         if ($tokenData && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
+            Log::info('never expired token');
             return $tokenData->access_token;
         }
         Log::info('new token');
