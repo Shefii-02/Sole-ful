@@ -126,7 +126,7 @@ class DeliveryPartnerApi
 
         $responseData = $response->json();
 
-        if (($responseData['status'] == 200 || $responseData['status'] == 400) && $responseData['data']) {
+        if ($responseData['status'] == 400) {
 
             DeliveryPartnerResponse::updateOrCreate(
                 ['order_id' => $responseData['data']['orderId'] ?? null], // Condition to check existing record
