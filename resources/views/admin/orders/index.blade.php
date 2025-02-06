@@ -118,7 +118,7 @@
                                 <div class="w-1/12 text-end">
                                     <div class="btn-group">
                                         
-                                        <a href="{{ route('admin.orders.show', $order->invoice_id) }}" target="_blank"
+                                        <a title="View order"  href="{{ route('admin.orders.show', $order->invoice_id) }}" target="_blank"
                                             class="mx-auto block hover:text-meta-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -128,18 +128,15 @@
                                                     d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                                             </svg>
                                         </a>
-                                        <a download="{{ 'Shipping-Label-'.$order->invoice_id.'.pdf' }}"  target="_new"
+                                        <a title="Shipping Label" download="{{ 'Shipping-Label-'.$order->invoice_id.'.pdf' }}"  target="_new"
                                             href="{{ $order->DeliveryPartnerResponse ? $order->DeliveryPartnerResponse->shipping_label_url : '#' }}" 
                                             class="mx-auto block hover:text-meta-1 ms-2">
-                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                 fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                                                 <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
-                                                 <path
-                                                     d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
-                                             </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-break" viewBox="0 0 16 16">
+                                                <path d="M14 4.5V9h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v7H2V2a2 2 0 0 1 2-2h5.5zM13 12h1v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1z"/>
+                                              </svg>
                                          </a>
                                          
-                                        <a href="{{ route('admin.orders.print', $order->invoice_id) }}" target="_new"
+                                        <a title="Invoice"  href="{{ route('admin.orders.print', $order->invoice_id) }}" target="_new"
                                             class="mx-auto block hover:text-meta-1 ms-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
