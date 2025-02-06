@@ -214,7 +214,7 @@
             will-change: auto;
             overflow: hidden;
 
-            background: #df9b19;
+            background: #fff;
         }
 
 
