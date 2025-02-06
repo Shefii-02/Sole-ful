@@ -128,15 +128,16 @@ class DeliveryPartnerApi
 
         if ($responseData['status'] == 200) {
             Log::info($responseData['data']);
-            DeliveryPartnerResponse::create([
-                'invoice_id'       => $order->id, // Add value if needed
-                'order_id'         => $responseData['data']['orderId'] ?? null,
-                'dp_order_id'      => $orderData['orderId'] ?? null,
-                'shipper_order_id' => $responseData['data']['shipperOrderId'] ?? null,
-                'awb_number'       => $responseData['data']['awbNumber'] ?? null,
-                'c_awb_number'     => $responseData['data']['cAwbNumber'] ?? null,
-                'status'           => 0,
-            ]);
+            $resp = new DeliveryPartnerResponse();
+
+            $resp->invoice_id       = $order->id;
+            $resp->order_id         = $responseData['data']['orderId'] ?? null;
+            $resp->dp_order_id      = $orderData['orderId'] ?? null;
+            $resp->shipper_order_id = $responseData['data']['shipperOrderId'] ?? null;
+            $resp->awb_number       = $responseData['data']['awbNumber'] ?? null;
+            $resp->c_awb_number     = $responseData['data']['cAwbNumber'] ?? null;
+            $resp->status           = 0;
+            $resp->save();
         }
         return $responseData;
     }
