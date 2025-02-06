@@ -10,16 +10,25 @@
                 <div class="product-details-inner">
                     <div class="row">
                         <div class="col-lg-5">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="pro-nav slick-row-5 slick-arrow-style d-none">
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="product-large-slider slick-arrow-style mb-4">
+
+                                    </div>
+                                    
+                                </div>
+                            </div>
                             @php
                                 $images = product_images($product->id);
                             @endphp
-                            <div class="product-large-slider mb-4">
+                            
 
-                            </div>
-
-                            <div class="pro-nav slick-row-5">
-
-                            </div>
+                            
 
                         </div>
                         <div class="col-lg-7">
