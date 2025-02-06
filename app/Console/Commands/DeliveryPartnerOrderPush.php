@@ -71,7 +71,7 @@ class DeliveryPartnerOrderPush extends Command
         }
 
 
-    }
+    }    
 
     private function orderPushDataFormat($order)
     {
