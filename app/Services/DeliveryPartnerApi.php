@@ -143,11 +143,15 @@ class DeliveryPartnerApi
 
     public function labelAndInvoiceStore($order)
     {
-
-        $response = Http::get($this->labelOrder, [
+        $accessToken = $this->getAccessToken();
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type' => 'application/json',
+        ])->post($this->labelOrder, [
             "awbNumber" => $order->invoice_id,
             "cAwbNumber" => $order->invoice_id,
         ]);
+
         $responseData = $response->json();
         if ($responseData['status'] == 200) {
             $resp = DeliveryPartnerResponse::where('order_id', $order->order_id)->frist();
