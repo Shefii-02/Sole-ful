@@ -34,7 +34,7 @@
                                 <div class="position-sticky top-10">
                                     <div class="row">
                                         <div class="col-lg-2">
-                                            <div class="pro-nav slick-arrow-style">
+                                            <div class="pro-nav slick-arrow-style d-none d-lg-block">
 
                                             </div>
                                         </div>
