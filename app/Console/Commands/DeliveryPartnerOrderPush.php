@@ -59,13 +59,12 @@ class DeliveryPartnerOrderPush extends Command
         foreach ($ordersLabels ?? [] as $order) {
             try {
                 $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
-                Log::info($orderLabelData);
                 
 
                 if (isset($orderLabelData['status']) && $orderLabelData['status'] == 200) {
                     Log::info("Order {$order->order_id} label updated successfully.");
                 } else {
-                    Log::error("Failed to label updated Order {$order->order_id}. Response: " . json_encode($response));
+                    Log::error("Failed to label updated Order {$order->order_id}. Response: " . json_encode($orderLabelData));
                 }
             } catch (\Exception $e) {
                 Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
