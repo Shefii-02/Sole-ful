@@ -82,7 +82,7 @@ class DeliveryPartnerOrderPush extends Command
             "readyToPick" => false,
             "orderCreatedAt" => $order->billed_at,
             "currency" => "INR",
-            "amount" => intval($order->grandtotal),
+            "amount" => floatval($order->grandtotal),
             "weight" => 300*$order->basket->items->count(),
             "lineItems" => $this->formatLineItems($order),
             "paymentType" => "ONLINE",
@@ -108,23 +108,25 @@ class DeliveryPartnerOrderPush extends Command
             "gst" => 13,
             "deliveryPromise" => "AIR",
             "discountUnit" => "RUPEES",
-            "discount" => intval($order->discount),
-            "length" => 100,
-            "height" => 100,
-            "width" => 100
+            "discount" => floatval($order->discount),
+            "length" => 112,
+            "height" => 303,
+            "width" => 126
         ];
     }
+
+
 
     private function formatLineItems($order)
     {
         return $order->basket->items->map(function ($item) {
             return [
                 "name" => $item->variation,
-                "price" => intval($item->price_amount * $item->quantity),
+                "price" => floatval($item->price_amount * $item->quantity),
                 "weight" => 300,
                 "quantity" => $item->quantity,
                 "sku" => $item->product_sku,
-                "unitPrice" => intval($item->price_amount)
+                "unitPrice" => floatval($item->price_amount)
             ];
         })->toArray();
     }

@@ -64,7 +64,7 @@
                         <div class="w-1/12 text-end"><span class="small">Actions</span></div>
                     </div>
                 </div>
-                
+
                 <div class="p-4 md:p-6 xl:p-7.5">
                     <div class="flex flex-col gap-y-4">
                         @forelse ($orders as $key => $order)
@@ -75,59 +75,79 @@
                                         <span class="small">{{ $order->invoice_id }}</span>
                                     </span>
                                 </div>
-                
+
                                 <!-- Transaction ID -->
                                 <div class="w-2/12 text-center">
                                     <span class="small">
                                         {{ $order->payments ? $order->payments->transaction_id : '' }}
                                     </span>
                                 </div>
-                
+
                                 <!-- Customer Details -->
                                 <div class="w-2/12 text-left">
                                     <span class="small">{{ $order->billingAddress->name }}</span><br>
                                     <span class="small">{{ $order->billingAddress->mobile }}</span><br>
                                     <span class="small">{{ $order->billingAddress->email }}</span>
                                 </div>
-                
+
                                 <!-- Products Count -->
                                 <div class="w-1/12 text-center">
-                                    <span class="small">{{ $order->basket->items ? $order->basket->items->count() : 0 }}</span>
+                                    <span
+                                        class="small">{{ $order->basket->items ? $order->basket->items->count() : 0 }}</span>
                                 </div>
-                
+
                                 <!-- Grand Total -->
                                 <div class="w-1/12 text-center">
                                     <span class="small fw-bold">{{ getPrice($order->grandtotal) }}</span>
                                 </div>
-                
+
                                 <!-- Created At -->
                                 <div class="w-2/12 text-center">
                                     <span class="small">{!! dateTimeFormat($order->billed_at) !!}</span>
                                 </div>
-                
+
                                 <!-- Status -->
                                 <div class="w-1/12 text-center">
-                                    <span class="small fw-bolder {{ $order->verified_at ? 'text-success' : 'text-danger' }}">
+                                    <span
+                                        class="small fw-bolder {{ $order->verified_at ? 'text-success' : 'text-danger' }}">
                                         {!! $order->verified_at ? 'Verified' : 'Not verified' !!}
                                     </span>
                                 </div>
-                
+
                                 <!-- Actions -->
                                 <div class="w-1/12 text-end">
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.orders.show',$order->invoice_id) }}" target="_blank" class="mx-auto block hover:text-meta-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                        
+                                        <a href="{{ route('admin.orders.show', $order->invoice_id) }}" target="_blank"
+                                            class="mx-auto block hover:text-meta-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                <path
+                                                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                                             </svg>
                                         </a>
+                                        <a download="{{ 'Shipping-Label-'.$order->invoice_id.'.pdf' }}"  target="_new"
+                                            href="{{ $order->DeliveryPartnerResponse ? $order->DeliveryPartnerResponse->shipping_label_url : '#' }}" 
+                                            class="mx-auto block hover:text-meta-1 ms-2">
+                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                                                 <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+                                                 <path
+                                                     d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
+                                             </svg>
+                                         </a>
+                                         
                                         <a href="{{ route('admin.orders.print', $order->invoice_id) }}" target="_new"
                                             class="mx-auto block hover:text-meta-1 ms-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
-                                                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
-                                                <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1"/>
-                                              </svg>
-                                            </a>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+                                                <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+                                                <path
+                                                    d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
+                                            </svg>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
