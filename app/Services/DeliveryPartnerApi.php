@@ -36,11 +36,11 @@ class DeliveryPartnerApi
     {
         $tokenData = DB::table('api_tokens')->where('type', 'Delivery Partner')->latest()->first();
 
-        if ($tokenData && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
-            Log::info('never expired token');
+        if ($tokenData && Carbon::parse($tokenData->refresh_expired_at)->gt(now()) && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
             return $tokenData->access_token;
+            Log::info('1');
         }
-        Log::info('new token');
+        Log::info('2');
         return $this->refreshOrLoginToken();
     }
 
@@ -54,7 +54,7 @@ class DeliveryPartnerApi
             "password" => $this->clientSecret,
             "vendorType" => "SELLER"
         ]);
-
+        Log::info('3');
         return $response->json()['data'] ?? null;
     }
 
@@ -75,9 +75,10 @@ class DeliveryPartnerApi
     {
         $tokenData = DB::table('api_tokens')->where('type', 'Delivery Partner')->latest()->first();
 
-        if ($tokenData && Carbon::parse($tokenData->refresh_expired_at)->gt(now())) {
+        if ($tokenData && Carbon::parse($tokenData->refresh_expired_at)->gt(now()) && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
             // Refresh Token is still valid
             $response = $this->refreshToken($tokenData->refresh_token);
+            Log::info($response);
         } else {
             // Refresh Token Expired → Call Auth API
             $response = $this->authenticateUser();
