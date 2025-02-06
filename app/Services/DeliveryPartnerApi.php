@@ -126,19 +126,11 @@ class DeliveryPartnerApi
 
         $responseData = $response->json();
 
-        if ($responseData['status'] == 200) {
+        // if ($responseData['status'] == 200) {
+
+        //     Log::info($responseData['data']);
             
-            Log::info($responseData['data']);
-            $resp = new DeliveryPartnerResponse();
-            $resp->invoice_id       = $order->id;
-            $resp->order_id         = $responseData['data']['orderId'] ?? null;
-            $resp->dp_order_id      = $orderData['orderId'] ?? null;
-            $resp->shipper_order_id = $responseData['data']['shipperOrderId'] ?? null;
-            $resp->awb_number       = $responseData['data']['awbNumber'] ?? null;
-            $resp->c_awb_number     = $responseData['data']['cAwbNumber'] ?? null;
-            $resp->status           = 0;
-            $resp->save();
-        }
+        // }
         return $responseData;
     }
 
@@ -152,16 +144,9 @@ class DeliveryPartnerApi
 
         $response    = Http::get($this->labelOrder, $orderData);
         $responseData = $response->json();
-        if ($responseData['status'] == 200) {
-            DeliveryPartnerResponse::where('order_id', $order->order_id)->update([
-                'invoice_url'        => $responseData['data']['invoiceUrl'] ?? null,
-                'shipping_label_url' => $responseData['data']['shippingLabelUrl'] ?? null,
-                'org_order_no'       => $responseData['data']['originalOrderNumber'] ?? null,
-                'org_order_id'       => $responseData['data']['originalOrderId'] ?? null,
-                'order_status'       => null,
-                'status'             => 1,
-            ]);
-        }
+        // if ($responseData['status'] == 200) {
+           
+        // }
 
         return $responseData;
     }

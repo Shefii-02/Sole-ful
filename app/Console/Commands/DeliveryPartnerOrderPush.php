@@ -41,9 +41,18 @@ class DeliveryPartnerOrderPush extends Command
         foreach ($orders ?? [] as $orderData) {
             try {
                 $orderPayload = $this->orderPushDataFormat($orderData);
-                $response = $this->apiService->pushOrder($orderPayload,$orderData);
+                $response = $this->apiService->pushOrder($orderPayload, $orderData);
 
                 if (isset($response['status']) && $response['status'] == 200) {
+                    $resp = new DeliveryPartnerResponse();
+                    $resp->invoice_id       = $orderData->id;
+                    $resp->order_id         = $response['data']['orderId'] ?? null;
+                    $resp->dp_order_id      = $orderData['orderId'] ?? null;
+                    $resp->shipper_order_id = $response['data']['shipperOrderId'] ?? null;
+                    $resp->awb_number       = $response['data']['awbNumber'] ?? null;
+                    $resp->c_awb_number     = $response['data']['cAwbNumber'] ?? null;
+                    $resp->status           = 0;
+                    $resp->save();
                     Log::info("Order {$orderData->id} pushed successfully.");
                 } else {
                     Log::error("Failed to push Order {$orderData->id}. Response: " . json_encode($response));
@@ -53,14 +62,23 @@ class DeliveryPartnerOrderPush extends Command
             }
         }
 
-        $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
+        $ordersLabels = DeliveryPartnerResponse::where('status', 0)->get();
         foreach ($ordersLabels ?? [] as $order) {
             try {
                 $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
                 Log::info($orderLabelData);
-                
+
 
                 if (isset($orderLabelData['status']) && $orderLabelData['status'] == 200) {
+                    DeliveryPartnerResponse::where('order_id', $order->order_id)->update([
+                        'invoice_url'        => $orderLabelData['data']['invoiceUrl'] ?? null,
+                        'shipping_label_url' => $orderLabelData['data']['shippingLabelUrl'] ?? null,
+                        'org_order_no'       => $orderLabelData['data']['originalOrderNumber'] ?? null,
+                        'org_order_id'       => $orderLabelData['data']['originalOrderId'] ?? null,
+                        'order_status'       => null,
+                        'status'             => 1,
+                    ]);
+                   
                     Log::info("Order {$order->order_id} label updated successfully.");
                 } else {
                     Log::error("Failed to label updated Order {$order->order_id}. Response: " . json_encode($response));
@@ -69,20 +87,18 @@ class DeliveryPartnerOrderPush extends Command
                 Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
             }
         }
-
-
-    }    
-
+    }
+ 
     private function orderPushDataFormat($order)
     {
         return [
-            "orderId" => $order->invoice_id.'6',
+            "orderId" => $order->invoice_id . '7',
             "orderSubtype" => "FORWARD",
             "readyToPick" => false,
             "orderCreatedAt" => $order->billed_at,
             "currency" => "INR",
             "amount" => intval($order->grandtotal),
-            "weight" => 300*$order->basket->items->count(),
+            "weight" => 300 * $order->basket->items->count(),
             "lineItems" => $this->formatLineItems($order),
             "paymentType" => "ONLINE",
             "paymentStatus" => "SUCCESS",
