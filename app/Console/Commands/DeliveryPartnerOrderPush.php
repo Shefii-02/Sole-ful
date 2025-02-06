@@ -37,38 +37,39 @@ class DeliveryPartnerOrderPush extends Command
             $this->info("No pending orders to push.");
             return;
         }
+        Log::info($orders);
 
-        foreach ($orders ?? [] as $orderData) {
-            try {
-                $orderPayload = $this->orderPushDataFormat($orderData);
-                $response = $this->apiService->pushOrder($orderPayload,$orderData);
+        // foreach ($orders ?? [] as $orderData) {
+        //     try {
+        //         $orderPayload = $this->orderPushDataFormat($orderData);
+        //         $response = $this->apiService->pushOrder($orderPayload,$orderData);
 
-                if (isset($response['status']) && $response['status'] == 200) {
-                    Log::info("Order {$orderData->id} pushed successfully.");
-                } else {
-                    Log::error("Failed to push Order {$orderData->id}. Response: " . json_encode($response));
-                }
-            } catch (\Exception $e) {
-                Log::error("Error processing Order {$orderData->id}: " . $e->getMessage());
-            }
-        }
+        //         if (isset($response['status']) && $response['status'] == 200) {
+        //             Log::info("Order {$orderData->id} pushed successfully.");
+        //         } else {
+        //             Log::error("Failed to push Order {$orderData->id}. Response: " . json_encode($response));
+        //         }
+        //     } catch (\Exception $e) {
+        //         Log::error("Error processing Order {$orderData->id}: " . $e->getMessage());
+        //     }
+        // }
 
-        $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
-        foreach ($ordersLabels ?? [] as $order) {
-            try {
-                $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
-                Log::info($orderLabelData);
+        // $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
+        // foreach ($ordersLabels ?? [] as $order) {
+        //     try {
+        //         $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
+        //         Log::info($orderLabelData);
                 
 
-                if (isset($orderLabelData['status']) && $orderLabelData['status'] == 200) {
-                    Log::info("Order {$order->order_id} label updated successfully.");
-                } else {
-                    Log::error("Failed to label updated Order {$order->order_id}. Response: " . json_encode($response));
-                }
-            } catch (\Exception $e) {
-                Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
-            }
-        }
+        //         if (isset($orderLabelData['status']) && $orderLabelData['status'] == 200) {
+        //             Log::info("Order {$order->order_id} label updated successfully.");
+        //         } else {
+        //             Log::error("Failed to label updated Order {$order->order_id}. Response: " . json_encode($response));
+        //         }
+        //     } catch (\Exception $e) {
+        //         Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
+        //     }
+        // }
 
 
     }    
