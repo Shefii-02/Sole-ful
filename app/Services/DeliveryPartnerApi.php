@@ -39,7 +39,7 @@ class DeliveryPartnerApi
         if ($tokenData && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
             return $tokenData->access_token;
         }
-        dd(1);
+        Log::info('new token');
         return $this->refreshOrLoginToken();
     }
 
