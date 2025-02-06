@@ -55,6 +55,7 @@ class DeliveryPartnerOrderPush extends Command
         }
 
         $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
+        Log::info($ordersLabels);
         foreach ($ordersLabels ?? [] as $order) {
             try {
                 $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
