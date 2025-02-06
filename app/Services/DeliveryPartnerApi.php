@@ -146,7 +146,7 @@ class DeliveryPartnerApi
         $accessToken = $this->getAccessToken();
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
-        ])->post($this->labelOrder, [
+        ])->get($this->labelOrder, [
             "awbNumber" => $order->awb_number,
             "cAwbNumber" => $order->c_awb_number,
         ]);
