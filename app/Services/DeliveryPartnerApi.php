@@ -75,7 +75,7 @@ class DeliveryPartnerApi
     {
         $tokenData = DB::table('api_tokens')->where('type', 'Delivery Partner')->latest()->first();
 
-        if ($tokenData && Carbon::parse($tokenData->refresh_expired_at)->gt(now()) && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
+        if ($tokenData && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
             // Refresh Token is still valid
             $response = $this->refreshToken($tokenData->refresh_token);
             Log::info($response);
@@ -116,7 +116,7 @@ class DeliveryPartnerApi
     }
 
 
-    public function pushOrder($orderData)
+    public function pushOrder($orderData,$order)
     {
         $accessToken = $this->getAccessToken();
         $response    = Http::withHeaders([
@@ -129,7 +129,7 @@ class DeliveryPartnerApi
         if ($responseData['status'] == 200) {
 
             DeliveryPartnerResponse::create([
-                'invoice_id'       => $orderData->id, // Add value if needed
+                'invoice_id'       => $order->id, // Add value if needed
                 'order_id'         => $responseData['data']['orderId'] ?? null,
                 'dp_order_id'      => $orderData['orderId'] ?? null,
                 'shipper_order_id' => $responseData['data']['shipperOrderId'] ?? null,

@@ -41,7 +41,7 @@ class DeliveryPartnerOrderPush extends Command
         foreach ($orders ?? [] as $orderData) {
             try {
                 $orderPayload = $this->orderPushDataFormat($orderData);
-                $response = $this->apiService->pushOrder($orderPayload);
+                $response = $this->apiService->pushOrder($orderPayload,$orderData);
 
                 if (isset($response['status']) && $response['status'] == 200) {
                     Log::info("Order {$orderData->id} pushed successfully.");
