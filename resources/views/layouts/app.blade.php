@@ -201,19 +201,19 @@
         }
 
         .lg-outer {
-            width: 70% !important;
+            width: 60% !important;
             height: 70% !important;
             position: fixed;
             top: 50px !important;
             margin: 0 auto;
-            left: 15% !important;
+            left: 22% !important;
             z-index: 1050;
             text-align: left;
             opacity: 0.001;
             outline: none;
             will-change: auto;
             overflow: hidden;
-
+            border-radius: 25px;
             background: #fff;
         }
 
