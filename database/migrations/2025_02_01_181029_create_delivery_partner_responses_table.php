@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('shipper_order_id')->nullable();
             $table->string('awb_number')->nullable();
             $table->string('c_awb_number')->nullable();
-            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
