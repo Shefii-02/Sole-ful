@@ -143,27 +143,32 @@ class DeliveryPartnerApi
 
     public function labelAndInvoiceStore($order)
     {
-        // $accessToken = $this->getAccessToken();
         $response = Http::get($this->labelOrder, [
             "awbNumber" => $order->awb_number,
             "cAwbNumber" => $order->c_awb_number,
         ]);
-        Log::info($response);
-
+    
+     
+    
         $responseData = $response->json();
+    
         if ($responseData['status'] == 200) {
-
-            $resp2 = DeliveryPartnerResponse::where('order_id', $order->order_id)->first();
-
-            $resp2->invoice_url = $responseData['data']['invoiceUrl'] ?? null;
-            $resp2->shipping_label_url = $responseData['data']['shippingLabelUrl'] ?? null;
-            $resp2->org_order_no = $responseData['data']['originalOrderNumber'] ?? null;
-            $resp2->org_order_id = $responseData['data']['originalOrderId'] ?? null;
-            $resp2->order_status = null;
-            $resp2->status = 1;
-            $resp2->save();
-        } 
-  
+            $data = $responseData['data'][0] ?? [];
+    
+            DeliveryPartnerResponse::updateOrCreate(
+                ['order_id' => $order->order_id], // Condition to find an existing record
+                [
+                    'invoice_url'       => $data['invoiceUrl'] ?? null,
+                    'shipping_label_url' => $data['shippingLabelUrl'] ?? null,
+                    'org_order_no'      => $data['originalOrderNumber'] ?? null,
+                    'org_order_id'      => $data['originalOrderId'] ?? null,
+                    'order_status'      => null,
+                    'status'            => 1,
+                ]
+            );
+        }
+    
         return $responseData;
     }
+    
 }
