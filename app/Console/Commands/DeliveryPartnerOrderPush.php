@@ -41,7 +41,6 @@ class DeliveryPartnerOrderPush extends Command
         foreach ($orders ?? [] as $orderData) {
             try {
                 $orderPayload = $this->orderPushDataFormat($orderData);
-                Log::info($orderPayload);
                 $response = $this->apiService->pushOrder($orderPayload);
 
                 if (isset($response['status']) && $response['status'] == 200) {
@@ -57,8 +56,6 @@ class DeliveryPartnerOrderPush extends Command
         $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
         foreach ($ordersLabels ?? [] as $order) {
             try {
-             
-
                 $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
                 Log::info($orderLabelData);
                 

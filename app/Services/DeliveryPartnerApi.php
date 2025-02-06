@@ -136,8 +136,6 @@ class DeliveryPartnerApi
                 'status'           => 0,
             ]);
         }
-
-        Log::info($responseData);
         return $responseData;
     }
 
@@ -162,7 +160,6 @@ class DeliveryPartnerApi
             ]);
         }
 
-        Log::info($responseData);
         return $responseData;
     }
 }
