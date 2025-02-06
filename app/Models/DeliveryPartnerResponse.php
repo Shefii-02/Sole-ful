@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeliveryPartnerResponse extends Model
 {
+    protected $table = 'delivery_partner_responses';
+
     //
     use HasFactory;
 

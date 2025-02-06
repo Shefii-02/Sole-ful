@@ -127,9 +127,9 @@ class DeliveryPartnerApi
         $responseData = $response->json();
 
         if ($responseData['status'] == 200) {
+            
             Log::info($responseData['data']);
             $resp = new DeliveryPartnerResponse();
-
             $resp->invoice_id       = $order->id;
             $resp->order_id         = $responseData['data']['orderId'] ?? null;
             $resp->dp_order_id      = $orderData['orderId'] ?? null;
