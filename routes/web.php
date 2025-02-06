@@ -90,7 +90,7 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::post('/add-to-cart', [BasketController::class, 'store']);
     Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
     Route::post('place-order', 'OrderController@placeOrder')->name('place-order');
-
+    Route::get('pincode/check', [BasketController::class, 'pincodeCheck'])->name('pincode.check');
 
     Route::get('blogs', 'FrontendController@blogs')->name('blogs');
     Route::get('blogs/category/{slug}', 'FrontendController@blogCategory')->name('blog-category');
@@ -169,6 +169,8 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
     Route::get('pincodes', [DeliveryPincodeController::class, 'index'])->name('pincodes.index');
     Route::post('pincodes', [DeliveryPincodeController::class, 'importPincodes'])->name('pincodes.post');
     Route::post('pincodes/download', [DeliveryPincodeController::class, 'importPincodes'])->name('pincodes.download');
+
+    
 
 
 

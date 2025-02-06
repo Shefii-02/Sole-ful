@@ -6,6 +6,7 @@ use App\Http\Requests\StoreBasketRequest;
 use App\Http\Requests\UpdateBasketRequest;
 use App\Models\Basket;
 use App\Models\CartItem;
+use App\Models\DeliveryPincode;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Exception;
@@ -310,4 +311,26 @@ class BasketController extends Controller
             }
         }
     }
+
+    function pincodeCheck(Request $request){
+        $pincode = $request->pin_code;
+        $responsePincode  = DeliveryPincode::where('pincode',$pincode)->first();
+
+        if($responsePincode){
+            $result['message'] = 'Your order will be delivered within 4-7 days.';
+            $result['result']  = true;
+            $result['state']   = $responsePincode->state;
+            $result['city']    = $responsePincode->city;
+        }
+        else{
+            $result['message'] = 'Sorry, we are unable to deliver to this pincode at the moment.';
+            $result['result']  = false;
+            $result['state']   = '';
+            $result['city']    = '';
+        }
+
+        return  response()->json($result);
+
+    }
+
 }

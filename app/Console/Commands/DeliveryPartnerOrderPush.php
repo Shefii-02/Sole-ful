@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\DeliveryPartnerResponse;
 use App\Models\Order;
 use App\Services\DeliveryPartnerApi;
 use Illuminate\Console\Command;
@@ -37,7 +38,7 @@ class DeliveryPartnerOrderPush extends Command
             return;
         }
 
-        foreach ($orders as $orderData) {
+        foreach ($orders ?? [] as $orderData) {
             try {
                 $orderPayload = $this->orderPushDataFormat($orderData);
                 Log::info($orderPayload);
@@ -52,6 +53,27 @@ class DeliveryPartnerOrderPush extends Command
                 Log::error("Error processing Order {$orderData->id}: " . $e->getMessage());
             }
         }
+
+        $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
+        foreach ($ordersLabels ?? [] as $order) {
+            try {
+             
+
+                $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
+                Log::info($orderLabelData);
+                
+
+                if (isset($orderLabelData['status']) && $orderLabelData['status'] == 200) {
+                    Log::info("Order {$order->order_id} label updated successfully.");
+                } else {
+                    Log::error("Failed to label updated Order {$order->order_id}. Response: " . json_encode($response));
+                }
+            } catch (\Exception $e) {
+                Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
+            }
+        }
+
+
     }
 
     private function orderPushDataFormat($order)

@@ -11,7 +11,8 @@ class DeliveryPincodeController extends Controller
 {
     public function index()
     {
-        return view('admin.pincodes.index');
+        $pincodes = DeliveryPincode::get();
+        return view('admin.pincodes.index',compact('pincodes'));
     }
 
     public function importPincodes(Request $request)

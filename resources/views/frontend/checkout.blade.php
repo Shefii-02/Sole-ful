@@ -242,8 +242,8 @@
                                 <label class="form-check-label" role="button" for="same_billing">Shipping same as
                                     billing address?</label>
                             </div>
-
-                            <div id="shipping-address-div" class="mb-3" style="">
+                          
+                            <div id="shipping-address-div" class="mb-2" style="">
                                 <div class="card-body">
                                     <div class="card">
                                         <div class="card-header" id="shippingHeading">
@@ -252,42 +252,42 @@
                                         <div class="card-body">
                                             <div id="shippingCollapse">
                                                 <div class="row address-form">
-                                                    <div class="col-lg-12 form-group mb-3">
+                                                    <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Full name</label>
                                                         <input class="form-control @error('s_name') is-invalid @enderror"
-                                                            autocomplete="off" type="text" id="s_name"
-                                                            name="s_name" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_name') }}" type="text" id="s_name" name="s_name"
+                                                            placeholder="">
                                                         @error('s_name')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-lg-6 form-group mb-3">
+                                                    <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Email</label>
                                                         <input class="form-control @error('s_email') is-invalid @enderror"
-                                                            autocomplete="off" type="email" name="s_email"
+                                                            autocomplete="off" value="{{ old('s_email') }}"type="email" name="s_email"
                                                             id="s_email" placeholder="">
                                                         @error('s_email')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-lg-6 form-group mb-3">
+                                                    <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Phone Number</label>
                                                         <input
                                                             class="form-control phone_field @error('s_phone') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_phone"
+                                                            autocomplete="off"  value="{{ old('s_phone') }}" type="text" name="s_phone"
                                                             id="s_phone" minlength="10" maxlength="10" placeholder="">
                                                         @error('s_phone')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-lg-12 form-group mb-3">
+                                                    <div class="col-lg-12 form-group mb-2">
                                                         <label for="">Address</label>
                                                         <input
                                                             class="form-control address_fill @error('s_address') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_address"
+                                                            autocomplete="off" value="{{ old('s_address') }}" type="text" name="s_address"
                                                             id="s_address" placeholder="">
                                                         @error('s_address')
                                                             <span class="text-danger">{{ $message }}</span>
@@ -295,54 +295,55 @@
                                                     </div>
 
 
-                                                    <div class="col-lg-6 form-group mb-3">
+                                                    <div class="col-lg-6 form-group mb-2">
                                                         <label for="">Building/Flat Name/No</label>
                                                         <input
                                                             class="form-control @error('s_house_name') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_house_name"
+                                                            autocomplete="off" value="{{ old('s_house_name') }}"  type="text" name="s_house_name"
                                                             id="s_house_name" placeholder="">
                                                         @error('s_house_name')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
 
-                                                    <div class="col-lg-6 form-group mb-3">
+                                                    <div class="col-lg-6 form-group mb-2">
                                                         <label for="">Landmark</label>
                                                         <input
                                                             class="form-control address_fill @error('s_landmark') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_landmark"
+                                                            autocomplete="off" value="{{ old('s_landmark') }}" type="text" name="s_landmark"
                                                             id="s_landmark" placeholder="">
                                                         @error('s_landmark')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-                                                    <div class="col-lg-6 form-group mb-3">
+                                                    <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Postal Code</label>
-                                                        <input
-                                                            class="form-control postal_fill @error('s_postal') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_postal"
-                                                            id="s_postal" maxlength="7" placeholder="">
+                                                        <input data-state="s_state" data-city="s_locality"
+                                                            data-msg="s_msg"
+                                                            class="form-control postal_fill postal mb-2 @error('s_postal') is-invalid @enderror"
+                                                            autocomplete="off" value="{{ old('s_postal') }}" type="text" name="s_postal"
+                                                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                                                            id="s_postal" maxlength="6" placeholder="">
+                                                        <span class="" id="s_msg"></span>
                                                         @error('s_postal')
-                                                            <span class="text-danger">{{ $message }}</span>
+                                                            <span class="text-danger" id="s_postalErro">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-                                                    <div class="col-lg-6 form-group mb-3">
-                                                        <label for="">Locality</label>
+                                                    <div class="col-lg-4 form-group mb-2">
+                                                        <label for="">Locality/City</label>
                                                         <input
-                                                            class="form-control address_fill @error('s_locality') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_locality"
+                                                            class="form-control locality_fill @error('s_locality') is-invalid @enderror"
+                                                            autocomplete="off" value="{{ old('s_locality') }}" type="text" name="s_locality"
                                                             id="s_locality" placeholder="">
                                                         @error('s_locality')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-
-
-                                                    <div class="col-lg-6 form-group mb-3">
+                                                    <div class="col-lg-4 form-group mb-2">
                                                         <label>State</label>
                                                         <input
                                                             class="form-control state_fill @error('s_state') is-invalid @enderror"
-                                                            autocomplete="off" type="text" name="s_state"
+                                                            autocomplete="off" value="{{ old('s_state') }}"  type="text" name="s_state"
                                                             id="s_state" placeholder="" required>
                                                         @error('s_state')
                                                             <span class="text-danger">{{ $message }}</span>
@@ -384,7 +385,7 @@
 
                                     @endphp
 
-                                    <div class="products-checkout col-12 mb-3 products-cart">
+                                    <div class="products-checkout col-12 mb-2 products-cart">
                                         <div class="p-c">
                                             <img src="{{ asset('images/products/' . $listing->picture) }}"
                                                 onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
@@ -431,7 +432,7 @@
                         @endif
                         <div class="col-md-8 mt-2">
 
-                            <div class="text-start mb-3 mt-3 text-end">
+                            <div class="text-start mb-2 mt-3 text-end">
                                 <span class="col-lg-12 p-0 g-captcha-error text-danger small"></span><br>
                                 <button class="g-recaptcha btn  btn-sm btn-theme py-2"
                                     data-sitekey="{{ config('services.recaptcha_v3.siteKey') }}" data-callback="onSubmit"
@@ -497,17 +498,18 @@
                             <div class="col-lg-6 form-group mb-2">
                                 <label class="mb-2" for="pincode">Postal Code</label>
                                 <input type="text" required autocomplete="off" id="pincode" form="add_address"
-                                    class="form-control pincode_fill" name="pincode">
+                                    class="form-control pincode_fill" name="pincode"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');">
                             </div>
 
 
                             <div class="col-lg-6 form-group mb-2">
-                                <label class="mb-2" for="locality">Locality</label>
+                                <label class="mb-2" for="locality">Locality/City</label>
                                 <input type="text" autocomplete="off" placeholder="" id="locality"
                                     class="form-control localityfill" form="add_address" name="locality">
                             </div>
 
-                            <div class="col-lg-6 form-group mb-3">
+                            <div class="col-lg-6 form-group mb-2">
                                 <label class="mb-2" for="state">State</label>
                                 <input class="form-control state_fill" form="add_address" autocomplete="off"
                                     type="text" name="state" id="state" placeholder="" required>
@@ -543,12 +545,12 @@
                         <form method="post" id="existingCustomer" action="{{ route('public.signIn') }}" novalidate>
                             @csrf()
                             <!-- Existing Customer Login Form -->
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label for="username" class="form-label">Email</label>
                                 <input type="email" required class="form-control rounded-pill" id="email"
                                     name="email">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-2">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" required autocomplete="new-password"
                                     class="form-control rounded-pill" id="password" name="password">
@@ -569,7 +571,7 @@
                             </div>
                             <div class="text-center ">
                                 <button type="submit"
-                                    class="btn text-white btn-theme rounded-pill mt-3 mb-3 pe-4 ps-4">Sign In</button>
+                                    class="btn text-white btn-theme rounded-pill mt-3 mb-2 pe-4 ps-4">Sign In</button>
                             </div>
 
                             <div class="text-center mt-3">
@@ -637,18 +639,37 @@
             createAccountSwitch();
         });
 
-        $('body').on('change', '.shipping_method', function() {
-            var selectedOption = $(this).find(':selected');
-            var dataVal = parseFloat(selectedOption.data('val'));
 
-            var price = parseFloat($('.sub_total').data('price'));
-            var amount = price + dataVal;
-            $('.shipping_pickup_charge').text('$' + dataVal)
-            // $('.total_price').text('$'+amount)
-            //  $('#total_price').val('$'+amount)
-            calculate_ttl()
+        $('body').on('input', '.postal', function() {
+            var pin_code = $(this).val();
+            var Idstate = $(this).data('state');
+            var Idcity = $(this).data('city');
+            var Idmsg = $(this).data('msg')
+            $('#s_postalErro').text('');
+
+            if (pin_code.length == 6) {
+                $.ajax({
+                    url: "{{ route('public.pincode.check') }}",
+                    cache: false,
+                    type: "GET",
+                    data: {
+                        pin_code: pin_code
+                    },
+                    success: function(response) {
+                        $('#' + Idmsg).attr('class', '');
+                        if (response.result) {
+                            $('#' + Idmsg).addClass('text-success');
+                        } else {
+                            $('#' + Idmsg).addClass('text-danger');
+                        }
+
+                        $('#' + Idstate).val(response.state)
+                        $('#' + Idcity).val(response.city)
+                        $('#' + Idmsg).text(response.message)
+                    }
+                });
+            }
         });
-
 
         calculationPart();
 
@@ -663,9 +684,6 @@
                 }
             });
         }
-
-
-
 
         $('body').on('click', '.coupon_card_apply', function() {
             var gift_code = $('#coupon_code').val();
@@ -687,177 +705,13 @@
             } else {
                 $('.card-alert').html('');
             }
-
-
         });
-
-
-
 
         @if ($basket->coupon != null)
             jQuery('.coupon_card_apply').trigger('click');
         @endif
     </script>
     <script>
-        // function toggleShippingAddress() {
-        //     var checkbox = document.getElementById("same-address-checkbox");
-        //     var shippingDiv = document.getElementById("shipping-address-div");
-
-        //     if (checkbox.checked) {
-        //         shippingDiv.style.display = "block";
-        //     } else {
-        //         shippingDiv.style.display = "none";
-        //     }
-        // }
-
-        // function validateCardNo() {
-        //     var input = document.getElementById("cardNumber");
-        //     var value = input.value.trim();
-
-        //     // Remove non-digit characters
-        //     value = value.replace(/\D/g, '');
-
-        //     // Restrict to a maximum of 16 digits
-        //     if (value.length > 16) {
-        //         value = value.slice(0, 16);
-        //     }
-
-        //     // Update the input value
-        //     input.value = value;
-        // }
-
-        // function ValidatecardName() {
-        //     var input = document.getElementById("nameOnCard");
-        //     var name = input.value;
-
-        //     // Remove special characters using regex
-        //     var sanitized = name.replace(/[^A-Za-z\s]/g, '');
-
-        //     // Update the input value with the sanitized name
-        //     input.value = sanitized;
-
-        // }
-
-        // function validateExpiryDate() {
-        //     var input = document.getElementById("expirationDate");
-        //     var value = input.value;
-
-        //     // Remove non-digit characters
-        //     value = value.replace(/\D/g, '');
-
-        //     // Get the first two digits
-        //     var firstTwoDigits = value.slice(0, 2);
-
-        //     var lastTwoDigit = value.slice(2, 4);
-
-
-        //     // Check if the first two digits exceed 12
-        //     if (parseInt(firstTwoDigits) > 12) {
-        //         // Adjust the value to maximum valid month
-        //         value = '12' + value.slice(2);
-        //     }
-
-
-
-        //     // Format the value with a slash
-        //     if (value.length > 2) {
-        //         value = value.slice(0, 2) + '/' + value.slice(2, 4);
-        //     }
-
-        //     // Update the input value
-        //     input.value = value;
-        // }
-
-
-        // $('.greeting_card').click(async function() {
-        //     $('.greeting-card').html('');
-        //     var ttl_prices = 0;
-        //     var totalTax = 0;
-        //     var price = $(this).attr('data-price');
-        //     var pdct_id = $(this).attr('data-id');
-
-        //     var flavor = '';
-        //     var color = '';
-        //     var message = '';
-        //     var border_color = '';
-        //     var text_color = '';
-        //     var customized = 0;
-
-        //     if ($(this).is(':checked')) {
-        //         var quantity = 1;
-
-        //     } else {
-        //         var quantity = 0;
-        //     }
-
-        //     await $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        //         },
-        //         url: '{{ url('basket/add') }}',
-        //         type: 'POST',
-        //         data: {
-        //             price: price,
-        //             pdct_id: pdct_id,
-        //             quantity: quantity,
-        //             flavor: flavor,
-        //             color: color,
-        //             message: message,
-        //             border_color: border_color,
-        //             text_color: text_color,
-        //             customized: customized
-        //         },
-        //         success: function(response) {
-        //             console.log('added');
-        //             calculationPart();
-        //         }
-        //     });
-
-        //     $('.greeting_card:checked').each(function() {
-        //         var pdct_price = $(this).data('price');
-        //         var pdct_sku = $(this).data('sku');
-        //         var pdct_name = $(this).data('name');
-        //         var pdct_img = $(this).data('image');
-        //         var pdct_tax = $(this).data('taxAmt');
-        //         var value = $(this).val();
-        //         ttl_prices = parseFloat(ttl_prices + pdct_price);
-        //         var productAmount = '';
-        //         var taxRatePercentage = '';
-        //         var taxAmount = '';
-
-        //         var greeting_card = `<div class="products-checkout col-12 mb-3 products-cart">
-    //                                     <div class="p-c"> 
-    //                                         <img src="` + pdct_img + `" alt="">
-    //                                         <div class="i-content">
-    //                                             <p class="f-h">` + pdct_name + `</p>
-    //                                             <p>Qty: ` + 1 + ` </p>
-    //                                         </div>
-    //                                     </div>
-    //                                     <div class="val">
-    //                                         <p>$` + (parseFloat(pdct_price) * 1).toFixed(2) + `</p>
-    //                                     </div>
-    //                                 </div>`;
-
-        //         // productAmount     = parseFloat(pdct_price) * 1;
-        //         // taxRatePercentage = pdct_tax;
-
-        //         // taxAmount = (productAmount * taxRatePercentage) / 100;
-
-
-        //         $('.greeting-card').append(greeting_card);
-
-        //     });
-
-        //     // var subTotal = parseFloat($('.sub_total').data('price'));
-
-        //     // subTotal = parseFloat(subTotal + ttl_prices).toFixed(2);
-        //     // $('.sub_total').text('$'+subTotal)
-
-        //     // calculate_ttl(); 
-
-        // });
-
-
         function calculate_ttl() {
             var sub_ttl = $('.sub_total').text().replace('$', '');
             var shipping_charge = $('.shipping_pickup_charge').text().replace('$', '');
@@ -873,7 +727,7 @@
         }
     </script>
 
-    <script
+    {{-- <script
         src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initAutocomplete&libraries=places,geometry&v=weekly"
         defer loading=async></script>
 
@@ -899,69 +753,10 @@
                     window.alert("No details available for input: '" + place.name + "'");
                     return;
                 }
-                // Get city, postal code, and country from the place details
-                // Variables to store details
-                let city = '';
-                let locality = '';
-                let subLocality = '';
-                let landmark = '';
-                let latitude = '';
-                let longitude = '';
-
-                // Extract latitude and longitude
-                latitude = place.geometry.location.lat();
-                longitude = place.geometry.location.lng();
-
-                // Loop through address components
-                place.address_components.forEach(component => {
-                    const componentType = component.types[0];
-
-                    // Fetch city
-                    if (componentType === 'locality') {
-                        city = component.long_name;
-                    }
-
-                    // Fetch locality (level 2 or 3)
-                    if (componentType === 'sublocality_level_1') {
-                        locality = component.long_name;
-                    }
-
-                    // Fetch sub-locality (level 2 or deeper)
-                    if (componentType === 'sublocality_level_2' || componentType === 'sublocality') {
-                        subLocality = component.long_name;
-                    }
-
-                    // Fetch landmark (route or point of interest)
-                    if (componentType === 'route') {
-                        landmark = component.long_name;
-                    }
-                });
-
-                // Log the extracted values
-                console.log({
-                    city,
-                    locality,
-                    subLocality,
-                    landmark,
-                    latitude,
-                    longitude
-                });
-
-                // Set values in respective fields if needed
-                document.getElementById('auto_city').value = city;
-                document.getElementById('auto_locality').value = locality;
-                document.getElementById('auto_subLocality').value = subLocality;
-                document.getElementById('auto_landmark').value = landmark;
-                document.getElementById('auto_latitude').value = latitude;
-                document.getElementById('auto_longitude').value = longitude;
+               
+              
             });
         }
 
-        // Initialize Google Maps Autocomplete
-        // document.addEventListener("DOMContentLoaded", () => {
-        //     if (typeof google !== "undefined") {
-        //         initAutocomplete();
-        //     }
-        // });
-    </script>
+    </script> --}}
 @endpush

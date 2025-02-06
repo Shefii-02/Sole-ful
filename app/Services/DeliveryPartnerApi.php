@@ -16,6 +16,7 @@ class DeliveryPartnerApi
     protected $authUrl;
     protected $refreshUrl;
     protected $pushOrder;
+    protected $labelOrder;
 
     public function __construct()
     {
@@ -26,6 +27,7 @@ class DeliveryPartnerApi
         $this->authUrl    = env('DELIVERY_PARTNER_URL') . '/auth/login';
         $this->refreshUrl = env('DELIVERY_PARTNER_URL') . '/auth/refresh-token';
         $this->pushOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/ecomm/push-order';
+        $this->labelOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/download/label-invoice';
     }
 
 
@@ -125,12 +127,38 @@ class DeliveryPartnerApi
         if ($responseData['status'] == 200) {
 
             DeliveryPartnerResponse::create([
-                'invoice_id'       => null, // Add value if needed
+                'invoice_id'       => $orderData->id, // Add value if needed
                 'order_id'         => $responseData['data']['orderId'] ?? null,
                 'dp_order_id'      => $orderData['orderId'] ?? null,
                 'shipper_order_id' => $responseData['data']['shipperOrderId'] ?? null,
                 'awb_number'       => $responseData['data']['awbNumber'] ?? null,
                 'c_awb_number'     => $responseData['data']['cAwbNumber'] ?? null,
+                'status'           => 0,
+            ]);
+        }
+
+        Log::info($responseData);
+        return $responseData;
+    }
+
+    public function labelAndInvoiceStore($order)
+    {
+
+        $orderData =    [
+            "awbNumber" => $order->invoice_id,
+            "cAwbNumber" => $order->invoice_id,
+        ];
+
+        $response    = Http::get($this->labelOrder, $orderData);
+        $responseData = $response->json();
+        if ($responseData['status'] == 200) {
+            DeliveryPartnerResponse::where('order_id', $order->order_id)->update([
+                'invoice_url'        => $responseData['data']['invoiceUrl'] ?? null,
+                'shipping_label_url' => $responseData['data']['shippingLabelUrl'] ?? null,
+                'org_order_no'       => $responseData['data']['originalOrderNumber'] ?? null,
+                'org_order_id'       => $responseData['data']['originalOrderId'] ?? null,
+                'order_status'       => null,
+                'status'             => 1,
             ]);
         }
 

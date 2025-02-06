@@ -2,6 +2,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\DeliveryPincode; // Import your model
 
 class CheckoutFormRequest extends FormRequest
 {
@@ -15,8 +16,6 @@ class CheckoutFormRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -24,7 +23,7 @@ class CheckoutFormRequest extends FormRequest
             'billing_address' => 'required|string',
         ];
 
-        if ($this->input('same_billing') == false) { // When different shipping address is provided
+        // if ($this->input('same_billing') == false) { // If different shipping address is provided
             $rules += [
                 'shipping_address' => 'required|string',
                 's_name' => 'required|string',
@@ -33,12 +32,26 @@ class CheckoutFormRequest extends FormRequest
                 's_address' => 'required|string',
                 's_locality' => 'required|string',
                 's_landmark' => 'nullable|string',
-                's_postal' => 'required|string',
-                's_house_name' => 'nullable|string',
-                's_house_no' => 'nullable|string',
+                's_postal' => [
+                    'required',
+                    'string',
+                    function ($attribute, $value, $fail) {
+                        // Fetch the DeliveryPincode record
+                        $record = DeliveryPincode::where('pincode', $value)->first();
+                        if (!$record) {
+                            return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
+                        }
+                        // Check if the provided state matches the one in the database
+                        if ($record->state !== $this->input('s_state')) {
+                            return $fail('The provided state does not match the postal code.');
+                        }
+                    },
+                ],
+                's_house_name' => 'nullable',
+                's_house_no' => 'nullable',
                 's_state' => 'required|string',
             ];
-        }
+        // }
 
         return $rules;
     }
