@@ -230,13 +230,15 @@
             width: 100%;
         }
 
-        .lg-counter,
-        .lg-toolbar .lg-icon,
+      
         .lg-next,
         .lg-prev {
             color: #fff !important
         }
-
+        .lg-counter,
+        .lg-toolbar .lg-icon{
+            color: #000000 !important
+        }
         
     </style>
 
