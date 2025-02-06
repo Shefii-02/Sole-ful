@@ -157,6 +157,87 @@
                 width: 60% !important;
             }
         }
+
+        /* .pro-nav {
+            height: 100%;
+   
+            overflow-y: auto;
+     
+        } */
+
+        .pro-nav-thumb .slick-slide {
+            min-height: 100px !important;
+            transform: none !important;
+        }
+
+        .pro-nav .slick-list {
+            height: 100% !important;
+            /* Ensure the list takes full height */
+        }
+
+        /* .pro-nav .slick-track {
+            display: flex;
+            flex-direction: column;
+            
+        } */
+
+        .pro-nav .slick-slide {
+            margin: 5px 0;
+            /* Adjust spacing between thumbnails */
+        }
+
+        .product-large-slider {
+            width: 100%;
+            /* Ensure main slider takes full width */
+        }
+
+        #st-1 {
+
+            z-index: 1 !important;
+        }
+
+        .lg-backdrop.in {
+            opacity: 0.5 !important;
+        }
+
+        .lg-outer {
+            width: 70% !important;
+            height: 70% !important;
+            position: fixed;
+            top: 50px !important;
+            margin: 0 auto;
+            left: 15% !important;
+            z-index: 1050;
+            text-align: left;
+            opacity: 0.001;
+            outline: none;
+            will-change: auto;
+            overflow: hidden;
+
+            background: #df9b19;
+        }
+
+
+        .lg-outer .lg-inner {
+            bottom: 40px !important;
+        }
+
+        .lg-item {
+            display: inline-block;
+            height: 100%;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+        }
+
+        .lg-counter,
+        .lg-toolbar .lg-icon,
+        .lg-next,
+        .lg-prev {
+            color: #fff !important
+        }
+
+        
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -217,7 +298,8 @@
                         </a>
                     </div>
                     <div class="flex-auto ">
-                        <a href="{{ route('account.home') }}" class="items-center justify-center text-center mx-auto px-4 py-2  ">
+                        <a href="{{ route('account.home') }}"
+                            class="items-center justify-center text-center mx-auto px-4 py-2  ">
                             <span class="block px-1 py-1">
                                 <span class="bi bi-person"></span>
                                 <span class="ml-3 text-sm  align-bottom pb-1">Account</span>
@@ -241,12 +323,12 @@
                                 <div class="widget-body">
                                     <ul class="location-wrap">
                                         <li><i class="ion-ios-location-outline"></i>
-                                            
-                                                Soleful Ahdhia<br>
-                                                #5, 1st floor, Geddalahalli,<br>
-                                                Hennur Bagalur Main Road,<br>
-                                                Bangalore - 560077.
-                                           
+
+                                            Soleful Ahdhia<br>
+                                            #5, 1st floor, Geddalahalli,<br>
+                                            Hennur Bagalur Main Road,<br>
+                                            Bangalore - 560077.
+
                                         </li>
                                         <li><i class="ion-ios-email-outline"></i>Mail Us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
@@ -531,6 +613,16 @@
     </script>
 
     @stack('footer')
+
+    <!-- LightGallery CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery.css">
+
+    <!-- LightGallery JS (Latest) -->
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script>
+
+
     <script>
         var defaultSize = false;
         $(document).ready(function() {
@@ -600,7 +692,7 @@
             // Trigger change event on the initially checked size radio input
             $('.variSize_checkbox:checked').trigger('change');
 
-
+            var slideIndex = 0;
             // Function to handle color change
             $('body').on('change', '.variColor_checkbox', function(e) {
                 // Remove 'active' class from all labels
@@ -634,37 +726,12 @@
 
 
                 // Hide all previous images
-                $('.imgshowing').hide();
+                // $('.imgshowing').remove();
 
                 var images = JSON.parse($(this).attr(
                     'data-image')); // Get the image array from the selected color
                 var mainSlider = $('.product-large-slider'); // The main image slider container
                 var thumbSlider = $('.pro-nav'); // The thumbnail slider container
-
-                // Clear the existing images in the main slider and the thumbnail slider
-                mainSlider.empty();
-                thumbSlider.empty();
-
-
-                // Add the new images to the main image slider dynamically
-                $.each(images, function(index, image) {
-                    mainSlider.append(`
-                        <div class="pro-large-img img-zoom imgshowing">
-                            <img src="{{ asset('images/products/') }}/${image}" 
-                                onerror="this.onerror=null;this.src='/images/default.png';"
-                                alt="Product Image ${index + 1}">
-                        </div>
-                    `);
-
-                    // Add corresponding thumbnails to the thumbnail slider
-                    thumbSlider.append(`
-                        <div class="pro-nav-thumb imgshowing">
-                            <img src="{{ asset('images/products/') }}/${image}" 
-                                onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
-                                alt="Thumbnail ${index + 1}" />
-                        </div>
-                    `);
-                });
 
 
                 // Try to unslick existing sliders if initialized
@@ -680,27 +747,100 @@
                     console.log('Error while unslicking: ', error);
                 }
 
+
                 // Initialize the product details slider
+
                 mainSlider.slick({
+                    infinite: true,
+                    arrow: false,
                     fade: true,
-                    arrows: false,
+                    prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
                     asNavFor: '.pro-nav'
                 });
 
-                // Initialize the thumbnail slider nav
+                // // Initialize the thumbnail slider nav
                 thumbSlider.slick({
-                    slidesToShow: 4,
+                    infinite: true,
+                    slidesToShow: 6,
+                    vertical: true,
+                    // verticalSwiping: false,
                     asNavFor: '.product-large-slider',
-                    arrows: false,
+                    // arrows: false,
+                    prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+                    nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
                     focusOnSelect: true
                 });
 
-                // Image zoom effect for the newly added images
-                $('.img-zoom').zoom();
 
+                // Remove all slides dynamically using slickRemove
+                // var totalSlides = mainSlider.slick('getSlick').slideCount;
+                for (var i = slideIndex - 1; i >= 0; i--) {
+                    mainSlider.slick('slickRemove', i);
+                    thumbSlider.slick('slickRemove', i);
+                }
+
+                slideIndex = 0;
+
+
+                // Clear the existing images in the main slider and the thumbnail slider
+                mainSlider.html('');
+                thumbSlider.html('');
+
+                // Add the new images to the main image slider dynamically
+                $.each(images, function(index, image) {
+                    // if (index < 2) {
+                    slideIndex++;
+
+                    mainSlider.slick('slickAdd', `
+                        <div class="pro-large-img  imgshowing" >
+                           
+                                <img src="{{ asset('images/products/') }}/${image}"  data-src="{{ asset('images/products/') }}/${image}"
+                                    onerror="this.onerror=null;this.src='/images/default.png';"
+                                    alt="Product Image ${index + 1}">
+                     
+                        </div>
+                    `);
+
+                    // Add corresponding thumbnails to the thumbnail slider
+                    thumbSlider.slick('slickAdd', `
+                        <div class="pro-nav-thumb imgshowing">
+                            <img src="{{ asset('images/products/') }}/${image}" 
+                                onerror="this.onerror=null;this.src='/assets/images/dummy-product.jpg';"
+                                alt="Thumbnail ${index + 1}" />
+                        </div>
+                    `);
+                    // }
+                });
+
+                mainSlider.slick('refresh');
+                thumbSlider.slick('refresh');
+
+                // Image zoom effect for the newly added images
                 if (defaultSize && !QuickView) {
                     updateUrlWithSizeAndColor();
+
                 }
+
+                var galleryElement = document.getElementById('lightgallery');
+
+                // Debugging
+                // console.log(typeof lightGallery); // Should NOT be "undefined"
+                // console.log(galleryElement); // Should NOT be null
+
+                // Destroy LightGallery if already initialized
+                if (galleryElement.lg) {
+                    galleryElement.lg.destroy(true);
+                }
+
+                // Initialize LightGallery
+                lightGallery(galleryElement, {
+                    selector: '.pro-large-img img',
+                    download: false,
+                    share: false
+                });
+
+                $('#lightgallery').addClass('lg-initialized')
 
             });
 
@@ -830,14 +970,12 @@
                 if (selectedColor) {
                     baseUrl += (selectedSize ? "&" : "?") + "color=" + selectedColor;
                 }
-
                 // Update the browser URL without reloading the page
                 window.history.pushState({}, "", baseUrl);
             }
 
         });
     </script>
-
 
 </body>
 

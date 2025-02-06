@@ -249,6 +249,14 @@
                                       </a>
                                   </li>
 
+                                  <li>
+                                    <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+                                        href="{{ route('admin.pincodes.index') }}"
+                                        @click="page = (page === 'Pincodes' ? '' : 'Pincodes')"
+                                        :class="page === 'Pincodes' && '!text-white'">Pincodes
+                                    </a>
+                                </li>
+
                               </ul>
                           </div>
                           <!-- Dropdown Menu End -->

@@ -171,7 +171,7 @@ class FrontendController extends Controller
     public function product($uid, $slug)
     {
         $product = Product::where('unique_value', $uid)->where('slug', $slug)->first() ?? abort(404);
-        $similarProducts = Product::limit(10)->get();
+        $similarProducts = Product::limit(10)->inRandomOrder()->get();
         $all_sizes   =  Size::query()->pluck('size_value');
         $sizes = $product->variationKeys->where('type', 'size')->unique('value');
         $colors = $product->variationKeys->where('type', 'color')->unique('value');

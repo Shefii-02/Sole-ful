@@ -22,15 +22,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestEmail;
+use App\Http\Controllers\DeliveryPincodeController;
 
 use App\Emails;
 
-Route::get('customerOrderNotification', function () { 
-    $order = Order::orderBy('id','desc')->first();
+Route::get('customerOrderNotification', function () {
+    $order = Order::orderBy('id', 'desc')->first();
 
     Mail::to('shefii.indigital@gmail.com')->send(new TestEmail());
-dd(1);
-    return view('email.customerOrderNotification123',compact('order'));
+    dd(1);
+    return view('email.customerOrderNotification123', compact('order'));
 });
 // Route::get('adminOrderNotification', function () { 
 //     $order = Order::orderBy('id','desc')->first();
@@ -41,23 +42,25 @@ dd(1);
 
 Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
 
-    Route::get('T&C', function () { return view('frontend.documents.T-C');})->name('t-c');
-    Route::get('refund_policy', function () {
-        return view('frontend.documents.refund_policy');
-    })->name('refund_policy');
-    Route::get('privacy_policy', function () {
-        return view('frontend.documents.privacy_policy');
-    })->name('privacy_policy');
-    Route::get('return_policy', function () {
-        return view('frontend.documents.return_policy');
-    })->name('return_policy');
-    Route::get('shipping_policy', function () {
-        return view('frontend.documents.shipping_policy');
-    })->name('shipping_policy');
+Route::get('T&C', function () {
+    return view('frontend.documents.T-C');
+})->name('t-c');
+Route::get('refund_policy', function () {
+    return view('frontend.documents.refund_policy');
+})->name('refund_policy');
+Route::get('privacy_policy', function () {
+    return view('frontend.documents.privacy_policy');
+})->name('privacy_policy');
+Route::get('return_policy', function () {
+    return view('frontend.documents.return_policy');
+})->name('return_policy');
+Route::get('shipping_policy', function () {
+    return view('frontend.documents.shipping_policy');
+})->name('shipping_policy');
 
 
-   
-    
+
+
 
 Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], function () {
     Route::get('/', 'FrontendController@index')->name('index');
@@ -74,35 +77,35 @@ Route::group(['as' => 'public.', 'namespace' => 'App\Http\Controllers'], functio
     Route::get('gift-code-apply', 'OrderController@giftCodeApply')->name('gift-code-apply');
 
     Route::get('checkout/calculation', 'OrderController@checkoutCalculation')->name('checkout.calculation');
-    
+
     Route::post('sign-in', 'BasketController@postSignin')->name('signIn');
 
-    Route::get('contact-us', function () { return view('frontend.contact-us');})->name('contact-us');
+    Route::get('contact-us', function () {
+        return view('frontend.contact-us');
+    })->name('contact-us');
 
-    
+
     Route::get('/order-status', [OrderController::class, 'index']);
-    
+
     Route::post('/add-to-cart', [BasketController::class, 'store']);
     Route::get('product/{uid}/{slug}', 'FrontendController@product')->name('product');
     Route::post('place-order', 'OrderController@placeOrder')->name('place-order');
-    
-    
+
+
     Route::get('blogs', 'FrontendController@blogs')->name('blogs');
     Route::get('blogs/category/{slug}', 'FrontendController@blogCategory')->name('blog-category');
     Route::get('blogs/{slug}', 'FrontendController@blogSingle')->name('blog-single');
     Route::post('contact-us', 'FrontendController@contactSend')->name('contact-send');
     Route::get('about-us', 'FrontendController@about')->name('about');
-    
+
     Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
     Route::any('confirm', [OrderController::class, 'confirmPayment'])->name('confirm');
-    
-
 });
 
 Route::post('account/address/create', [AccountController::class, 'addressCreate'])->name('account.address.add');
 
-Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account.','prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function (){
+Route::group(['middleware' => ['auth:web', 'check.account.user'], 'as' => 'account.', 'prefix' => 'account', 'namespace' => 'App\Http\Controllers\Account'], function () {
 
     Route::get('/', [AccountController::class, 'myaccount'])->name('home');
     Route::get('orders', [AccountController::class, 'ordersShow'])->name('orders.show');
@@ -111,7 +114,7 @@ Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account
     Route::post('orders/track/{id}', [AccountController::class, 'ordersTrack'])->name('orders.track');
 
     Route::get('address', [AccountController::class, 'addressShow'])->name('address.show');
-  
+
     Route::post('address/update', [AccountController::class, 'addressUpdate'])->name('address.update');
     Route::delete('address/delete/{id}', [AccountController::class, 'addressDelete'])->name('address.delete');
 
@@ -119,23 +122,22 @@ Route::group(['middleware' => ['auth:web','check.account.user'],'as' => 'account
     Route::post('profile', [AccountController::class, 'profileUpdate'])->name('profile.update');
     Route::post('reset-password', [AccountController::class, 'resetPassword'])->name('profile.reset-password');
     Route::get('support-center', [AccountController::class, 'supportCenter'])->name('support-center');
-
 });
 
 // Auth::routes();
 
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout'); 
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Auth::routes(['logout' => false,]);
 
-Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers'], function () {
+Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Controllers'], function () {
     // Route::get('dashboard', function () {
     //     // $averageSessionDuration = Analytics::averageSessionDuration(Period::days(7));
 
     //     // dd($averageSessionDuration);
     //     return view('admin.dashboard.index');
     // })->name('dashboard');
-    
+
     Route::get('/', 'DashboardController@index')->name('index');
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('/products/best-selling', [ProductController::class, 'bestSelling'])->name('best-selling.index');
@@ -148,21 +150,27 @@ Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'ad
     Route::any('/products/product_no-check', [ProductController::class, 'productNoCheck'])->name('products.product_no-check');
     Route::any('/products/sku-check', [ProductController::class, 'skuCheck'])->name('products.sku-check');
     Route::any('/products/generate-autosku', [ProductController::class, 'generateAutosku'])->name('products.generate-autosku');
-    
+
     Route::resource('products', ProductController::class)->names('products');
-    
-    Route::get('orders', [OrderController::class,'index'])->name('orders.index');
-    Route::post('orders/{invoice_id}/update', [OrderController::class,'update'])->name('orders.update');
-    Route::get('orders/{invoice_id}/print', [OrderController::class,'printInvoice'])->name('orders.print');
-    Route::get('orders/{invoice_id}', [OrderController::class,'show'])->name('orders.show');
+
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('orders/{invoice_id}/update', [OrderController::class, 'update'])->name('orders.update');
+    Route::get('orders/{invoice_id}/print', [OrderController::class, 'printInvoice'])->name('orders.print');
+    Route::get('orders/{invoice_id}', [OrderController::class, 'show'])->name('orders.show');
 
 
     // Route::resource('orders', OrderController::class)->names('orders');
-    
-    Route::get('profile', [ProfileController::class,'index'])->name('profile');
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('profile/update', 'ProfileController@updateProfile')->name('profile.update');
     Route::post('profile/update-password', 'ProfileController@changePassword')->name('profile.changePassword');
-    
+
+
+    Route::get('pincodes', [DeliveryPincodeController::class, 'index'])->name('pincodes.index');
+    Route::post('pincodes', [DeliveryPincodeController::class, 'importPincodes'])->name('pincodes.post');
+    Route::post('pincodes/download', [DeliveryPincodeController::class, 'importPincodes'])->name('pincodes.download');
+
+
 
     Route::get('/subscribers', [CustomerController::class, 'subscribers'])->name('subscribers.index');
     Route::resource('customers', CustomerController::class)->names('customers');
@@ -177,10 +185,3 @@ Route::group(['middleware' => ['auth:web','check.account.admin'],'prefix' => 'ad
     Route::resource('blogs', BlogPostController::class)->names('blogs');
     Route::resource('blog-category', BlogCategoryController::class)->names('blogs-category');
 });
-
-
-
-
-
-
-

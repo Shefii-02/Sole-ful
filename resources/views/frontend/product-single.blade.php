@@ -31,16 +31,22 @@
                     <div class="product-details-inner">
                         <div class="row">
                             <div class="col-lg-5">
-                                <div class="position-sticky top-0">
-                                    <div class="product-large-slider mb-4">
-                                  
-                                    </div>
-    
-                                    <div class="pro-nav slick-row-5">
-                                       
+                                <div class="position-sticky top-10">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <div class="pro-nav slick-arrow-style">
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-10">
+                                            <div class="product-large-slider mb-4 slick-arrow-style" id="lightgallery">
+
+                                            </div> 
+                                            
+                                        </div>
                                     </div>
                                 </div>
-                                
+
 
                             </div>
                             <div class="col-lg-7">
@@ -66,7 +72,8 @@
                                                 <label
                                                     class="size-button {{ $sizes->contains('value', $size) ? '' : 'disabled' }}"
                                                     data-size-id="{{ $size }}">
-                                                    <input type="radio" class="hidden {{ $sizes->contains('value', $size) ? 'variSize_checkbox' : 'disabled' }} "
+                                                    <input type="radio"
+                                                        class="hidden {{ $sizes->contains('value', $size) ? 'variSize_checkbox' : 'disabled' }} "
                                                         data-product="{{ $product->id }}" name="size"
                                                         value="{{ $size }}">
                                                     <span>{{ $size }}</span>
@@ -101,7 +108,7 @@
                                         </div>
                                         <button id="addToCartBtn" class="btn btn-dark add-to-cart">Add To Cart</button>
                                     </div>
-                                 
+
                                     <div class="share-icon">
                                         <h5 class="cat-title">Share:</h5>
                                         <div class="sharethis-inline-share-buttons"></div>
@@ -221,7 +228,7 @@
                                         </div>
                                     </div>
 
-                                
+
 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="flush-ConsumerComplaintContact">
@@ -240,7 +247,7 @@
                                                 <small>Email: <a
                                                         href="mailto:relationship@soleful.in">relationship@soleful.in</a><br></small>
                                                 <small>Phone: <a href="tel:+91 79966 66225">+91 79966 66225</a></small>
-                                           
+
                                             </div>
                                         </div>
                                     </div>
@@ -256,7 +263,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="section-title text-center">
-                                        <h2 class="title fw-bold">Similar Products</h2>
+                                        <h2 class="title fw-bold">Recommended Products</h2>
                                     </div>
                                 </div>
                             </div>
@@ -332,9 +339,7 @@
 
 
 @push('footer')
-
-<script>
-    QuickView = false;
-</script>
+    <script>
+        QuickView = false;
+    </script>
 @endpush
-

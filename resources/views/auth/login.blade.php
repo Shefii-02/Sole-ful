@@ -6,28 +6,32 @@
     <div class="container" style="padding-top: 5.5rem;">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div
-                    class="rounded-sm rounded-r-full border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                    <div class="flex flex-wrap items-center">
-                        <div class="hidden w-full xl:block xl:w-1/2">
+                <div class="rounded-sm  border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div class="flex flex-wrap items-center justify-center">
+                        {{-- <div class="hidden w-full xl:block xl:w-1/2">
                             <div class="px-3 py-8 text-center">
-                                <a class="mb-5.5 inline-block" href="index.html">
+                                <a class="mb-5.5 inline-block" href="/">
                                     <img class="hidden dark:block w-75" src="/assets/img/logo/logo.png" alt="Logo">
                                     <img class="dark:hidden w-75" src="/assets/img/logo/logo.png" alt="Logo">
                                 </a>
-
-                                
 
                                 <span class="mt-4 inline-block flex justify-center">
                                     <img src="assets/img/login-img.png" class="w-50" alt="#">
                                 </span>
                             </div>
-                        </div>
-                        <div class="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+                        </div> --}}
+                        <div class="w-full  xl:w-1/2 ">
                             <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
-                                <h2 class="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                                    Start for free
-                                </h2>
+                                {{-- <div class="w-full mx-auto">
+                                    <a class="mb-5.5 inline-block" href="/">
+                                        <img class="hidden dark:block w-75 mx-auto" src="/assets/img/logo/logo.png"
+                                            alt="Logo">
+                                        <img class="dark:hidden w-75 mx-auto" src="/assets/img/logo/logo.png"
+                                            alt="Logo">
+                                    </a>
+                                </div> --}}
+
+
 
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
@@ -71,7 +75,8 @@
                                                     </g>
                                                 </svg>
                                             </span>
-                                            <input type="password" placeholder="6+ Characters, 1 Capital letter" name="password"
+                                            <input type="password" placeholder="6+ Characters, 1 Capital letter"
+                                                name="password"
                                                 class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                         </div>
                                         @error('password')
