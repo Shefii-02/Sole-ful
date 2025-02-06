@@ -147,10 +147,7 @@ class DeliveryPartnerApi
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
-        ])->get($this->labelOrder, [
-            "awbNumber" => $order->invoice_id,
-            "cAwbNumber" => $order->invoice_id,
-        ]);
+        ])->get($this->baseUrl."/fulfillment/public/seller/order/download/label-invoice?awbNumber=17048036716881&cAwbNumber=TEST20000926");
 
         $responseData = $response->json();
         if ($responseData['status'] == 200) {
