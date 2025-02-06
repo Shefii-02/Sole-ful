@@ -33,10 +33,10 @@ class DeliveryPartnerOrderPush extends Command
     {
         $orders = Order::whereDoesntHave('DeliveryPartnerResponse')->get();
 
-        if ($orders->isEmpty()) {
-            $this->info("No pending orders to push.");
-            return;
-        }
+        // if ($orders->isEmpty() ) {
+        //     $this->info("No pending orders to push.");
+        //     return;
+        // }
        
 
         foreach ($orders ?? [] as $orderData) {
