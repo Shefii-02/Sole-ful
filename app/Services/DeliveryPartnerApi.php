@@ -127,11 +127,11 @@ class DeliveryPartnerApi
         $responseData = $response->json();
 
         if ($responseData['status'] == 200) {
-            Log::info($responseData['data']);
+           
             $resp = new DeliveryPartnerResponse();
-            $resp->invoice_id       = $order->id;
-            $resp->order_id         = $responseData['data']['orderId'] ?? null;
-            $resp->dp_order_id      = $orderData['orderId'] ?? null;
+            $resp->invoice_id       = $order->invoice_id;
+            $resp->order_id         = $order->id ?? null;
+            $resp->dp_order_id      =  null;
             $resp->shipper_order_id = $responseData['data']['shipperOrderId'] ?? null;
             $resp->awb_number       = $responseData['data']['awbNumber'] ?? null;
             $resp->c_awb_number     = $responseData['data']['cAwbNumber'] ?? null;
