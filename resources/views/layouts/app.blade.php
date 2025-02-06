@@ -230,16 +230,74 @@
             width: 100%;
         }
 
-      
+
         .lg-next,
         .lg-prev {
             color: #fff !important
         }
+
         .lg-counter,
-        .lg-toolbar .lg-icon{
+        .lg-toolbar .lg-icon {
             color: #000000 !important
         }
-        
+
+
+        .product-large-slider .slick-dots {
+            display: none !important;
+            bottom: -25px;
+            display: block;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+        }
+
+        .product-large-slider .slick-dots li,
+        .product-large-slider .slick-dots li button {
+            cursor: pointer;
+            height: 10px;
+            width: 10px;
+        }
+
+        .product-large-slider .slick-dots li {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 0;
+            position: relative;
+        }
+
+        .product-large-slider .slick-dots li button {
+            background: #000000;
+            border: 0;
+            color: #000000;
+            display: block;
+            font-size: 0;
+            line-height: 0;
+            outline: none;
+            padding: 5px;
+        }
+
+        .product-large-slider li.slick-active button
+        {
+            background: #df9b19 !important;
+        }
+
+        .product-large-slider .slick-dots li,
+        .product-large-slider .slick-dots li button {
+            cursor: pointer;
+            border-radius: 25px;
+        }
+
+
+        @media only screen and (max-width: 600px) {
+            .product-large-slider .slick-dots {
+                display: block !important;
+                margin-top: 5px;
+                position: static !important;
+            }
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -755,6 +813,7 @@
                 mainSlider.slick({
                     infinite: true,
                     arrow: false,
+                    dots: true,
                     fade: true,
                     prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
                     nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
