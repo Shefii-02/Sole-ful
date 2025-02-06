@@ -164,7 +164,7 @@ class DeliveryPartnerApi
             $resp2->status = 1;
             $resp2->save();
         }
-
+  
         return $responseData;
     }
 }
