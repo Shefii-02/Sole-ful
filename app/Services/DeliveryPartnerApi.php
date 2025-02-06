@@ -153,15 +153,16 @@ class DeliveryPartnerApi
 
         $responseData = $response->json();
         if ($responseData['status'] == 200) {
-            $resp = DeliveryPartnerResponse::where('order_id', $order->order_id)->first();
+            Log::info($responseData['data']);
+            $resp2 = DeliveryPartnerResponse::where('order_id', $order->order_id)->first();
 
-            $resp->invoice_url = $responseData['data']['invoiceUrl'] ?? null;
-            $resp->shipping_label_url = $responseData['data']['shippingLabelUrl'] ?? null;
-            $resp->org_order_no = $responseData['data']['originalOrderNumber'] ?? null;
-            $resp->org_order_id = $responseData['data']['originalOrderId'] ?? null;
-            $resp->order_status = null;
-            $resp->status = 1;
-            $resp->save();
+            $resp2->invoice_url = $responseData['data']['invoiceUrl'] ?? null;
+            $resp2->shipping_label_url = $responseData['data']['shippingLabelUrl'] ?? null;
+            $resp2->org_order_no = $responseData['data']['originalOrderNumber'] ?? null;
+            $resp2->org_order_id = $responseData['data']['originalOrderId'] ?? null;
+            $resp2->order_status = null;
+            $resp2->status = 1;
+            $resp2->save();
         }
 
         return $responseData;
