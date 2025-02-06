@@ -148,10 +148,11 @@ class DeliveryPartnerApi
             "awbNumber" => $order->awb_number,
             "cAwbNumber" => $order->c_awb_number,
         ]);
+        Log::info($response);
 
         $responseData = $response->json();
         if ($responseData['status'] == 200) {
-            Log::info($responseData['data']);
+
             $resp2 = DeliveryPartnerResponse::where('order_id', $order->order_id)->first();
 
             $resp2->invoice_url = $responseData['data']['invoiceUrl'] ?? null;
@@ -161,7 +162,7 @@ class DeliveryPartnerApi
             $resp2->order_status = null;
             $resp2->status = 1;
             $resp2->save();
-        }
+        } 
   
         return $responseData;
     }
