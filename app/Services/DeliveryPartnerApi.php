@@ -143,10 +143,8 @@ class DeliveryPartnerApi
 
     public function labelAndInvoiceStore($order)
     {
-        $accessToken = $this->getAccessToken();
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-        ])->get($this->labelOrder, [
+        // $accessToken = $this->getAccessToken();
+        $response = Http::get($this->labelOrder, [
             "awbNumber" => $order->awb_number,
             "cAwbNumber" => $order->c_awb_number,
         ]);
