@@ -147,7 +147,7 @@ class DeliveryPartnerApi
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type' => 'application/json',
-        ])->post($this->labelOrder, [
+        ])->get($this->labelOrder, [
             "awbNumber" => $order->invoice_id,
             "cAwbNumber" => $order->invoice_id,
         ]);
