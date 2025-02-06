@@ -756,7 +756,7 @@
                     fade: true,
                     prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
                     nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
-                    asNavFor: '.pro-nav'
+                    // asNavFor: '.pro-nav'
                 });
 
                 // // Initialize the thumbnail slider nav
@@ -766,7 +766,7 @@
                     vertical: true,
                     // verticalSwiping: false,
                     asNavFor: '.product-large-slider',
-                    // arrows: false,
+                    arrows: false,
                     prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
                     nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
                     focusOnSelect: true
