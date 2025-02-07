@@ -27,7 +27,7 @@
                 <!-- sidebar area start -->
                 <div class="col-lg-3 order-2 order-lg-1 d-none d-lg-block">
                     <div class="sidebar-wrapper position-sticky absolute top-20">
-                        <div class="pe-3" style="height: 70vh;overflow: auto;">
+                        <div class="pe-3 pb-3" style="height: 70vh;overflow: auto;">
 
                             <!-- single sidebar start -->
                             <div class="sidebar-single">
@@ -55,7 +55,7 @@
                             </div>
                             <!-- single sidebar end -->
                             <!-- single sidebar start -->
-                            <div class="sidebar-single">
+                            {{-- <div class="sidebar-single">
                                 <div class="sidebar-title">
                                     <h3 class="text-theme">Shoe Type</h3>
                                 </div>
@@ -79,7 +79,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- single sidebar end -->
 
                             <!-- single sidebar start -->
@@ -134,7 +134,7 @@
                             <!-- single sidebar end -->
 
                             <!-- single sidebar start -->
-                            <div class="sidebar-single">
+                            <div class="sidebar-single ">
                                 <div class="sidebar-title">
                                     <h3>Size</h3>
                                 </div>
@@ -160,7 +160,7 @@
 
                         </div>
                         <!-- single sidebar start -->
-                        <div class="sidebar-single">
+                        <div class="sidebar-single ">
                             <div class="sidebar-banner">
                                 @if ($productOffer)
                                     <a href="{{ $productOffer->redirection }}" target="_blank">
@@ -254,7 +254,7 @@
                         </div>
                         <!-- single sidebar end -->
                         <!-- single sidebar start -->
-                        <div class="sidebar-single">
+                        {{-- <div class="sidebar-single">
                             <div class="sidebar-title">
                                 <h3 class="text-theme">Shoe Type</h3>
                             </div>
@@ -278,7 +278,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- single sidebar end -->
 
                         <!-- single sidebar start -->
