@@ -32,7 +32,7 @@
                             <!-- single sidebar start -->
                             <div class="sidebar-single">
                                 <div class="sidebar-title">
-                                    <h3 class="text-theme">Categories</h3>
+                                    <h3 class="text-theme">Occasion</h3>
                                 </div>
                                 <div class="sidebar-body">
                                     <ul class="color-list">
@@ -77,16 +77,6 @@
                                                 form="filter" type="checkbox" name="shoe_type[]"
                                                 value="{{ trim('Ethnic Slides') }}" class="checkbox" id="EthnicSlides">
                                         </li>
-                                        <li role="button" class="d-flex justify-between">
-                                            <label for="CasualSlipons">
-
-                                                <span class="text-capitalize">{{ $item->name }}</label>
-                                            <input
-                                                {{ in_array(trim('Casual Slipons'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                                form="filter" type="checkbox" name="shoe_type[]" value="Casual Slipons"
-                                                class="checkbox" id="CasualSlipons">
-                                        </li>
-
                                     </ul>
                                 </div>
                             </div>
@@ -241,7 +231,7 @@
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-title">
-                                <h3 class="text-theme">Categories</h3>
+                                <h3 class="text-theme">Occasion</h3>
                             </div>
                             <div class="sidebar-body">
                                 <ul class="color-list">
@@ -286,16 +276,6 @@
                                             form="filter" type="checkbox" name="shoe_type[]"
                                             value="{{ trim('Ethnic Slides') }}" class="checkbox" id="EthnicSlides">
                                     </li>
-                                    <li role="button" class="d-flex justify-between">
-                                        <label for="CasualSlipons">
-
-                                            <span class="text-capitalize">{{ $item->name }}</label>
-                                        <input
-                                            {{ in_array(trim('Casual Slipons'), request()->shoe_type ?? []) ? 'checked' : '' }}
-                                            form="filter" type="checkbox" name="shoe_type[]" value="Casual Slipons"
-                                            class="checkbox" id="CasualSlipons">
-                                    </li>
-
                                 </ul>
                             </div>
                         </div>

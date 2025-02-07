@@ -17,6 +17,7 @@ class DeliveryPartnerApi
     protected $refreshUrl;
     protected $pushOrder;
     protected $labelOrder;
+    protected $trackOrder;
 
     public function __construct()
     {
@@ -28,6 +29,7 @@ class DeliveryPartnerApi
         $this->refreshUrl = env('DELIVERY_PARTNER_URL') . '/auth/refresh-token';
         $this->pushOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/ecomm/push-order';
         $this->labelOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/download/label-invoice';
+        $this->trackOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/order-tracking/';
     }
 
 
@@ -38,9 +40,8 @@ class DeliveryPartnerApi
 
         if ($tokenData && Carbon::parse($tokenData->refresh_expired_at)->gt(now()) && Carbon::parse($tokenData->token_expired_at)->gt(now())) {
             return $tokenData->access_token;
-            Log::info('1');
         }
-        Log::info('2');
+
         return $this->refreshOrLoginToken();
     }
 
@@ -148,8 +149,6 @@ class DeliveryPartnerApi
             "cAwbNumber" => $order->c_awb_number,
         ]);
     
-     
-    
         $responseData = $response->json();
     
         if ($responseData['status'] == 200) {
@@ -171,4 +170,34 @@ class DeliveryPartnerApi
         return $responseData;
     }
     
+    public function orderTrack($order)
+    {
+        $accessToken = $this->getAccessToken();
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type'  => 'application/json',
+        ])->get($this->trackOrder.$order->awb_number);
+    
+        $responseData = $response->json();
+    
+        if ($responseData['status'] == 200) {
+            $data = $responseData['data'][0] ?? [];
+    
+            if($data['paymentStatus'] == 'NEW' || $data['paymentStatus'] == 'IN_PROCESS'){
+                $status = 'IN_PROCESS';
+            }
+            else{
+                $status = $data['paymentStatus'];
+            }
+            
+            DeliveryPartnerResponse::updateOrCreate(
+                ['order_id' => $order->order_id], // Condition to find an existing record
+                [
+                    'dp_order_id'      => $status ?? null,
+                    'order_status'      => $data['orderStateInfo'] ?? null,
+                ]
+            );
+        }
+        return $responseData;
+    }
 }
