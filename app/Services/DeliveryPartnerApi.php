@@ -117,7 +117,7 @@ class DeliveryPartnerApi
     }
 
 
-    public function pushOrder($orderData,$order)
+    public function pushOrder($orderData, $order)
     {
         $accessToken = $this->getAccessToken();
         $response    = Http::withHeaders([
@@ -128,7 +128,7 @@ class DeliveryPartnerApi
         $responseData = $response->json();
 
         if ($responseData['status'] == 200) {
-           
+
             $resp = new DeliveryPartnerResponse();
             $resp->invoice_id       = $order->invoice_id;
             $resp->order_id         = $order->id ?? null;
@@ -148,12 +148,18 @@ class DeliveryPartnerApi
             "awbNumber" => $order->awb_number,
             "cAwbNumber" => $order->c_awb_number,
         ]);
-    
+
         $responseData = $response->json();
-    
+
         if ($responseData['status'] == 200) {
             $data = $responseData['data'][0] ?? [];
-    
+
+            if ($data['invoiceUrl'] == '' || $data['shippingLabelUrl'] == '') {
+                $status = 0;
+            } else {
+                $status = 1;
+            }
+
             DeliveryPartnerResponse::updateOrCreate(
                 ['order_id' => $order->order_id], // Condition to find an existing record
                 [
@@ -161,35 +167,33 @@ class DeliveryPartnerApi
                     'shipping_label_url' => $data['shippingLabelUrl'] ?? null,
                     'org_order_no'      => $data['originalOrderNumber'] ?? null,
                     'org_order_id'      => $data['originalOrderId'] ?? null,
-                    'order_status'      => null,
-                    'status'            => 1,
+                    'status'            => $status,
                 ]
             );
         }
-    
+
         return $responseData;
     }
-    
+
     public function orderTrack($order)
     {
         $accessToken = $this->getAccessToken();
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $accessToken,
             'Content-Type'  => 'application/json',
-        ])->get($this->trackOrder.$order->awb_number);
-    
+        ])->get($this->trackOrder . $order->awb_number);
+
         $responseData = $response->json();
-    
+
         if ($responseData['status'] == 200) {
             $data = $responseData['data'][0] ?? [];
-    
-            if($data['paymentStatus'] == 'NEW' || $data['paymentStatus'] == 'IN_PROCESS'){
+
+            if ($data['paymentStatus'] == 'NEW' || $data['paymentStatus'] == 'IN_PROCESS') {
                 $status = 'IN_PROCESS';
-            }
-            else{
+            } else {
                 $status = $data['paymentStatus'];
             }
-            
+
             DeliveryPartnerResponse::updateOrCreate(
                 ['order_id' => $order->order_id], // Condition to find an existing record
                 [

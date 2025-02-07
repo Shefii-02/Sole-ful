@@ -8,7 +8,7 @@ use App\Services\DeliveryPartnerApi;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class DeliveryPartnerOrderPush extends Command
+class DeliveryOrderTrack extends Command
 {
     /**
      * The name and signature of the console command.

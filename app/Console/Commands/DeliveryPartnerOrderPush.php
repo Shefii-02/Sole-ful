@@ -16,7 +16,7 @@ class DeliveryPartnerOrderPush extends Command
      * @var string
      */
     protected $signature = 'api:delivery-partner-order-push';
-
+    
     /**
      * The console command description.
      *
