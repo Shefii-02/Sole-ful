@@ -12,9 +12,11 @@ use Throwable;
 
 class WebhookResponse extends Controller
 {
-    public function __construct(private DeliveryPartnerApi $apiService)
+    protected DeliveryPartnerApi $apiService;
+
+    public function __construct(DeliveryPartnerApi $apiService)
     {
-        parent::__construct();
+        $this->apiService = $apiService;
     }
 
     public function resposeDataCal(Request $request)
