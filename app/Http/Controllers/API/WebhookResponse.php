@@ -18,7 +18,7 @@ class WebhookResponse extends Controller
         $this->apiService = $apiService;
     }
 
-    public function resposeDataCal(Request $request)
+    public function resposeDataCall(Request $request)
     {
         // Log headers for debugging
         Log::info('Signature Header: ' . $request->header('signature'));
