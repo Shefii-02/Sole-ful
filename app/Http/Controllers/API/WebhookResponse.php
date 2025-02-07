@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\AccountActivityLog;
 use App\Models\DeliveryPartnerResponse;
 use Illuminate\Http\Request;
 use App\Services\DeliveryPartnerApi;
-use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class WebhookResponse extends Controller
 {
-
     public function __construct(private DeliveryPartnerApi $apiService)
     {
         parent::__construct();
@@ -20,24 +19,32 @@ class WebhookResponse extends Controller
 
     public function resposeDataCal(Request $request)
     {
+        Log::info('Received Webhook Headers:', $request->headers->all());
+        Log::info('Received Webhook Payload:', $request->all());
 
-        Log::info($request->header('signature'));
-        Log::info($request->headers->all());
         try {
-            $order = DeliveryPartnerResponse::where('invoice_id', $request->data['orderId'])->first();
-    
-            if (!$order) {
-                return response()->json(['status' => 404, 'message' => 'Order not found']);
+            // Validate request
+            if (!isset($request->data['orderId'])) {
+                return response()->json(['status' => 400, 'message' => 'Invalid request: Missing orderId'], 400);
             }
-    
+
+            // Fetch the order
+            $order = DeliveryPartnerResponse::where('invoice_id', $request->data['orderId'])->firstOrFail();
+
+            // Call external tracking API
             $orderTrackData = $this->apiService->orderTrack($order);
-    
-            return response()->json(['status' => 200, 'data' => $orderTrackData]);
-        } catch (Exception $e) {
-            Log::error('Error processing order status: ' . $e->getMessage());
-            return response()->json(['status' => 500, 'message' => 'Internal Server Error']);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Order status updated successfully',
+                'data' => $orderTrackData ?? null
+            ]);
+        } catch (QueryException $e) {
+            Log::error('Database error: ' . $e->getMessage());
+            return response()->json(['status' => 500, 'message' => 'Database error'], 500);
+        } catch (Throwable $e) {
+            Log::error('Unexpected error: ' . $e->getMessage());
+            return response()->json(['status' => 500, 'message' => 'Something went wrong'], 500);
         }
     }
-    
-
 }

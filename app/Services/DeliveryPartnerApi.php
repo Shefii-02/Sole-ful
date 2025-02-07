@@ -154,11 +154,7 @@ class DeliveryPartnerApi
         if ($responseData['status'] == 200) {
             $data = $responseData['data'][0] ?? [];
 
-            if ($data['invoiceUrl'] == '' || $data['shippingLabelUrl'] == '') {
-                $status = 0;
-            } else {
-                $status = 1;
-            }
+            $status = (!empty($data['invoiceUrl']) && !empty($data['shippingLabelUrl'])) ? 1 : 0;
 
             DeliveryPartnerResponse::updateOrCreate(
                 ['order_id' => $order->order_id], // Condition to find an existing record
