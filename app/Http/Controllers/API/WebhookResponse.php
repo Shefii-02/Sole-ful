@@ -20,6 +20,9 @@ class WebhookResponse extends Controller
 
     public function resposeDataCal(Request $request)
     {
+
+        Log::info($request->header('signature'));
+        Log::info($request->headers->all());
         try {
             $order = DeliveryPartnerResponse::where('invoice_id', $request->data['orderId'])->first();
     
