@@ -163,11 +163,12 @@
                                                         </g>
                                                     </svg>
                                                 </span>
-                                                <input type="text" maxlength="6"  @error('postalcode') is-invalid @enderror" data-state="state" data-city="locality"
+                                                <input type="text" maxlength="6"  @error('postalcode') is-invalid @enderror" data-state="state" data-city="locality" data-msg="s_msg"
                                                     name="postalcode" value="{{ old('postalcode') }}"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
                                                     autocomplete="postalcode" placeholder="Enter your postal code"
                                                     class="w-10/12 postal rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             </div>
+                                            <span class="" id="s_msg"></span>
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label class="mb-2.5 block fs-6 text-black dark:text-white">City</label>
@@ -233,7 +234,6 @@
     </div>
 @endsection
 
-
 @push('footer')
     <script>
         $('body').on('input', '.postal', function() {
@@ -241,7 +241,7 @@
             var Idstate = $(this).data('state');
             var Idcity = $(this).data('city');
             var Idmsg = $(this).data('msg')
-            $('#s_postalErro').text('');
+
 
             if (pin_code.length == 6) {
                 $.ajax({
@@ -255,13 +255,18 @@
                         $('#' + Idmsg).attr('class', '');
                         if (response.result) {
                             $('#' + Idmsg).addClass('text-success');
+                            $('#' + Idmsg).text('')
                         } else {
                             $('#' + Idmsg).addClass('text-danger');
+                            $('#' + Idmsg).text('Sorry, we are unable to deliver to this pincode at the moment.')
+
                         }
+
+                        
 
                         $('#' + Idstate).val(response.state)
                         $('#' + Idcity).val(response.city)
-                        $('#' + Idmsg).text(response.message)
+                       
                     }
                 });
             }
