@@ -148,6 +148,27 @@
                                                     class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             </div>
                                         </div>
+                                        
+                                        <div class="mb-3 col-lg-6">
+                                            <label class="mb-2.5 block fs-6 text-black dark:text-white">Pincode</label>
+                                            <div class="relative">
+                                                <span class="absolute left-4 top-3.5">
+                                                    <svg class="fill-current" width="15" height="15"
+                                                        viewBox="0 0 22 22" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <g opacity="0.5">
+                                                            <path
+                                                                d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7563 10.9672 11.7563C11.2422 11.7563 11.5172 11.6875 11.7578 11.5157L19.8016 6.35942V16.5688C19.8703 16.9125 19.5953 17.1532 19.2516 17.1532Z"
+                                                                fill=""></path>
+                                                        </g>
+                                                    </svg>
+                                                </span>
+                                                <input type="text" maxlength="6"  @error('postalcode') is-invalid @enderror" data-state="state" data-city="locality"
+                                                    name="postalcode" value="{{ old('postalcode') }}"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                                                    autocomplete="postalcode" placeholder="Enter your postal code"
+                                                    class="w-10/12 postal rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                                            </div>
+                                        </div>
                                         <div class="mb-3 col-lg-6">
                                             <label class="mb-2.5 block fs-6 text-black dark:text-white">City</label>
                                             <div class="relative">
@@ -164,27 +185,7 @@
                                                 </span>
                                                 <input type="text" @error('city') is-invalid @enderror" name="city"
                                                     value="{{ old('city') }}" autocomplete="city"
-                                                    placeholder="Enter your city"
-                                                    class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label class="mb-2.5 block fs-6 text-black dark:text-white">Pincode</label>
-                                            <div class="relative">
-                                                <span class="absolute left-4 top-3.5">
-                                                    <svg class="fill-current" width="15" height="15"
-                                                        viewBox="0 0 22 22" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <g opacity="0.5">
-                                                            <path
-                                                                d="M19.2516 3.30005H2.75156C1.58281 3.30005 0.585938 4.26255 0.585938 5.46567V16.6032C0.585938 17.7719 1.54844 18.7688 2.75156 18.7688H19.2516C20.4203 18.7688 21.4172 17.8063 21.4172 16.6032V5.4313C21.4172 4.26255 20.4203 3.30005 19.2516 3.30005ZM19.2516 4.84692C19.2859 4.84692 19.3203 4.84692 19.3547 4.84692L11.0016 10.2094L2.64844 4.84692C2.68281 4.84692 2.71719 4.84692 2.75156 4.84692H19.2516ZM19.2516 17.1532H2.75156C2.40781 17.1532 2.13281 16.8782 2.13281 16.5344V6.35942L10.1766 11.5157C10.4172 11.6875 10.6922 11.7563 10.9672 11.7563C11.2422 11.7563 11.5172 11.6875 11.7578 11.5157L19.8016 6.35942V16.5688C19.8703 16.9125 19.5953 17.1532 19.2516 17.1532Z"
-                                                                fill=""></path>
-                                                        </g>
-                                                    </svg>
-                                                </span>
-                                                <input type="text" @error('postalcode') is-invalid @enderror"
-                                                    name="postalcode" value="{{ old('postalcode') }}"
-                                                    autocomplete="postalcode" placeholder="Enter your postal code"
+                                                    placeholder="Enter your city" id="locality"
                                                     class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             </div>
                                         </div>
@@ -203,7 +204,7 @@
                                                     </svg>
                                                 </span>
                                                 <input type="text" @error('state') is-invalid @enderror" name="state"
-                                                    value="{{ old('state') }}" autocomplete="state"
+                                                    value="{{ old('state') }}" autocomplete="state" id="state"
                                                     placeholder="Enter your  state"
                                                     class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             </div>
@@ -231,3 +232,39 @@
         </div>
     </div>
 @endsection
+
+
+@push('footer')
+    <script>
+        $('body').on('input', '.postal', function() {
+            var pin_code = $(this).val();
+            var Idstate = $(this).data('state');
+            var Idcity = $(this).data('city');
+            var Idmsg = $(this).data('msg')
+            $('#s_postalErro').text('');
+
+            if (pin_code.length == 6) {
+                $.ajax({
+                    url: "{{ route('public.pincode.check') }}",
+                    cache: false,
+                    type: "GET",
+                    data: {
+                        pin_code: pin_code
+                    },
+                    success: function(response) {
+                        $('#' + Idmsg).attr('class', '');
+                        if (response.result) {
+                            $('#' + Idmsg).addClass('text-success');
+                        } else {
+                            $('#' + Idmsg).addClass('text-danger');
+                        }
+
+                        $('#' + Idstate).val(response.state)
+                        $('#' + Idcity).val(response.city)
+                        $('#' + Idmsg).text(response.message)
+                    }
+                });
+            }
+        });
+    </script>
+@endpush
