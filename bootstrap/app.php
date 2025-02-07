@@ -29,6 +29,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('analytics:fetch-top-landing-pages')->dailyAt('01:00');
         $schedule->command('api:delivery-refresh-api-token')->everyMinute();
         $schedule->command('api:delivery-partner-order-push')->everyMinute();
+        $schedule->command('api:delivery-order-track')->everyMinute();
+        
         $schedule->command('queue:work --stop-when-empty')
             ->everyMinute()
             ->withoutOverlapping();
