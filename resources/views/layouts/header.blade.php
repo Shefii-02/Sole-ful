@@ -42,31 +42,26 @@
                                                 </li>
                                                 <hr class="border-2 mb-2" />
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slides']) }}">Casual
-                                                        Slides</a>
+                                                    <a class="dropdown-item" ttarget="_blank"
+                                                        href="{{ route('public.shop', ['categories[]' => 'Ethnic']) }}">Ethnic</a>
                                                 </li>
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic Slides']) }}">Ethnic
-                                                        Slides</a>
+                                                        href="{{ route('public.shop', ['categories[]' => 'Casual']) }}">Casual
+                                                        </a>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slipons']) }}">Casual
-                                                        Slipons</a>
+                                                    <a class="dropdown-item" ttarget="_blank"
+                                                        href="{{ route('public.shop', ['categories[]' => 'Party']) }}">Party</a>
                                                 </li>
 
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" ttarget="_blank"
-                                                        href="{{ route('public.shop', ['categories[]' => 'Party Wear']) }}">Party
-                                                        Wear</a>
-                                                </li>
-                                                <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('public.shop', ['categories[]' => 'Casual Wear']) }}">Casual
-                                                        Wear</a>
+                                                        href="{{ route('public.shop', ['categories[]' => 'Formal']) }}">Formal
+                                                        </a>
                                                 </li>
+                                               
+                                                
                                                 <hr class="border-2 mb-2" />
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
