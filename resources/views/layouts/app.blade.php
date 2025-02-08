@@ -318,6 +318,10 @@
 
       
         }
+
+        .pro-large-img img{
+            border: 0 !important;
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -831,7 +835,7 @@
                 // Initialize the product details slider
 
                 mainSlider.slick({
-                    infinite: true,
+                    infinite: false,
                     arrow: false,
                     dots: true,
                     // fade: true,
@@ -842,7 +846,7 @@
 
                 // // Initialize the thumbnail slider nav
                 thumbSlider.slick({
-                    infinite: true,
+                    infinite: false,
                     slidesToShow: 6,
                     vertical: true,
                     // verticalSwiping: false,
@@ -867,6 +871,8 @@
                 // Clear the existing images in the main slider and the thumbnail slider
                 mainSlider.html('');
                 thumbSlider.html('');
+                mainSlider.slick('refresh');
+                thumbSlider.slick('refresh');
 
                 // Add the new images to the main image slider dynamically
                 $.each(images, function(index, image) {
@@ -874,7 +880,7 @@
                     slideIndex++;
 
                     mainSlider.slick('slickAdd', `
-                        <div class="pro-large-img  imgshowing" >
+                        <div class="pro-large-img  imgshowing " >
                            
                                 <img src="{{ asset('images/products/') }}/${image}"  data-src="{{ asset('images/products/') }}/${image}"
                                     onerror="this.onerror=null;this.src='/images/default.png';"
@@ -894,8 +900,7 @@
                     // }
                 });
 
-                mainSlider.slick('refresh');
-                thumbSlider.slick('refresh');
+             
 
                 // Image zoom effect for the newly added images
                 if (defaultSize && !QuickView) {
