@@ -151,12 +151,7 @@
             z-index: 999999999 !important;
         }
 
-        @media only screen and (max-width: 600px) {
 
-            .offcanvas {
-                width: 60% !important;
-            }
-        }
 
         /* .pro-nav {
             height: 100%;
@@ -233,12 +228,14 @@
 
         .lg-next,
         .lg-prev {
-            color: #fff !important
+            color: #fff !important;
         }
 
         .lg-counter,
         .lg-toolbar .lg-icon {
-            color: #000000 !important
+            color: #000000 !important;
+            display: block !important;
+            
         }
 
 
@@ -279,8 +276,7 @@
             padding: 5px;
         }
 
-        .product-large-slider li.slick-active button
-        {
+        .product-large-slider li.slick-active button {
             background: #df9b19 !important;
         }
 
@@ -297,6 +293,30 @@
                 margin-top: 5px;
                 position: static !important;
             }
+
+
+            .offcanvas {
+                width: 60% !important;
+            }
+
+            .lg-outer {
+                width: 100% !important;
+                height: 85% !important;
+                position: fixed;
+                top: 50px !important;
+                margin: 0 auto;
+                left: 0% !important;
+                z-index: 1050;
+                text-align: left;
+                opacity: 0.001;
+                outline: none;
+                will-change: auto;
+                overflow: hidden;
+                border-radius: 25px;
+                background: #fff;
+            }
+
+      
         }
     </style>
 
@@ -678,9 +698,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery.css">
 
     <!-- LightGallery JS (Latest) -->
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script>
+    <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js') }}"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script> --}}
 
 
     <script>
