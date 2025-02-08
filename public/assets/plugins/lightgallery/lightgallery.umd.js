@@ -7,9 +7,10 @@
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.lightGallery = factory());
-}(this, (function () { 'use strict';
+        typeof define === 'function' && define.amd ? define(factory) :
+            (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.lightGallery = factory());
+}(this, (function () {
+    'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -26,7 +27,7 @@
     PERFORMANCE OF THIS SOFTWARE.
     ***************************************************************************** */
 
-    var __assign = function() {
+    var __assign = function () {
         __assign = Object.assign || function __assign(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
@@ -143,8 +144,8 @@
         exThumbImage: '',
         isMobile: undefined,
         mobileSettings: {
-            controls: false,
-            showCloseIcon: false,
+            controls: true,
+            showCloseIcon: true,
             download: false,
         },
         plugins: [],
@@ -179,7 +180,7 @@
             if (!Element.prototype.matches) {
                 Element.prototype.matches =
                     Element.prototype.msMatchesSelector ||
-                        Element.prototype.webkitMatchesSelector;
+                    Element.prototype.webkitMatchesSelector;
             }
         })();
     }
@@ -257,8 +258,8 @@
                 .split('.')
                 .filter(function (e) { return e; })
                 .every(function (e) {
-                return eventNamespace.indexOf(e) !== -1;
-            });
+                    return eventNamespace.indexOf(e) !== -1;
+                });
         };
         lgQuery.prototype.attr = function (attr, value) {
             if (value === undefined) {
@@ -419,8 +420,8 @@
             fetch(url)
                 .then(function (res) { return res.text(); })
                 .then(function (html) {
-                _this.selector.innerHTML = html;
-            });
+                    _this.selector.innerHTML = html;
+                });
             return this;
         };
         lgQuery.prototype.html = function (html) {
@@ -589,14 +590,14 @@
             fetch(url)
                 .then(function (response) { return response.text(); })
                 .then(function (htmlContent) {
-                if (insertMethod === 'append') {
-                    var contentDiv = "<div class=\"lg-sub-html\">" + htmlContent + "</div>";
-                    element.append(contentDiv);
-                }
-                else {
-                    element.html(htmlContent);
-                }
-            });
+                    if (insertMethod === 'append') {
+                        var contentDiv = "<div class=\"lg-sub-html\">" + htmlContent + "</div>";
+                        element.append(contentDiv);
+                    }
+                    else {
+                        element.html(htmlContent);
+                    }
+                });
         },
         /**
          * get possible width and height from the lgSize attribute. Used for ZoomFromOrigin option
@@ -976,10 +977,10 @@
                 $element
                     .attr('data-lg-id', uuid)
                     .on("click.lgcustom-item-" + uuid, function (e) {
-                    e.preventDefault();
-                    var currentItemIndex = _this.settings.index || index;
-                    _this.openGallery(currentItemIndex, element);
-                });
+                        e.preventDefault();
+                        var currentItemIndex = _this.settings.index || index;
+                        _this.openGallery(currentItemIndex, element);
+                    });
             };
             var this_1 = this;
             // Using for loop instead of using bubbling as the items can be any html element.
@@ -1064,8 +1065,8 @@
             var template = "\n        <div class=\"" + containerClassName + "\" id=\"" + this.getIdName('lg-container') + "\" tabindex=\"-1\" aria-modal=\"true\" " + ariaLabelledby + " " + ariaDescribedby + " role=\"dialog\"\n        >\n            <div id=\"" + this.getIdName('lg-backdrop') + "\" class=\"lg-backdrop\"></div>\n\n            <div id=\"" + this.getIdName('lg-outer') + "\" class=\"lg-outer lg-use-css3 lg-css3 lg-hide-items " + addClasses + " \">\n\n              <div id=\"" + this.getIdName('lg-content') + "\" class=\"lg-content\">\n                <div id=\"" + this.getIdName('lg-inner') + "\" class=\"lg-inner\">\n                </div>\n                " + controls + "\n              </div>\n                <div id=\"" + this.getIdName('lg-toolbar') + "\" class=\"lg-toolbar lg-group\">\n                    " + maximizeIcon + "\n                    " + closeIcon + "\n                    </div>\n                    " + (this.settings.appendSubHtmlTo === '.lg-outer'
                 ? subHtmlCont
                 : '') + "\n                <div id=\"" + this.getIdName('lg-components') + "\" class=\"lg-components\">\n                    " + (this.settings.appendSubHtmlTo === '.lg-sub-html'
-                ? subHtmlCont
-                : '') + "\n                </div>\n            </div>\n        </div>\n        ";
+                    ? subHtmlCont
+                    : '') + "\n                </div>\n            </div>\n        </div>\n        ";
             $LG(this.settings.container).append(template);
             if (document.body !== this.settings.container) {
                 $LG(this.settings.container).css('position', 'relative');
@@ -1794,8 +1795,8 @@
                         .find('.lg-object')
                         .first()
                         .on('load.lg error.lg', function () {
-                        _this.preload(index);
-                    });
+                            _this.preload(index);
+                        });
                 }
                 else {
                     this.preload(index);

@@ -713,7 +713,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery.css">
 
     <!-- LightGallery JS (Latest) -->
-    <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js') }}"></script>
+    <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js?v=1') }}"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script> --}}
 
