@@ -447,28 +447,21 @@
                                         </li>
                                         <li class="mb-3">
                                             <a target="_blank"
-                                                href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slides']) }}">Casual
-                                                Slides</a>
+                                                href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic']) }}">Ethnic</a>
                                         </li>
                                         <li class="mb-3">
                                             <a target="_blank"
-                                                href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic Slides']) }}">Ethnic
-                                                Slides</a>
+                                                href="{{ route('public.shop', ['shoe_type[]' => 'Casual']) }}">Casual</a>
+                                        </li>
+                                       
+                                        <li class="mb-3">
+                                            <a target="_blank"
+                                                href="{{ route('public.shop', ['categories[]' => 'Party']) }}">Party
+                                                </a>
                                         </li>
                                         <li class="mb-3">
                                             <a target="_blank"
-                                                href="{{ route('public.shop', ['shoe_type[]' => 'Casual Slipons']) }}">Casual
-                                                Slipons</a>
-                                        </li>
-                                        <li class="mb-3">
-                                            <a target="_blank"
-                                                href="{{ route('public.shop', ['categories[]' => 'Party Wear']) }}">Party
-                                                Wear</a>
-                                        </li>
-                                        <li class="mb-3">
-                                            <a target="_blank"
-                                                href="{{ route('public.shop', ['categories[]' => 'Casual Wear']) }}">Casual
-                                                Wear</a>
+                                                href="{{ route('public.shop', ['categories[]' => 'Formal']) }}">Formal</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -482,7 +475,6 @@
                                 <h5 class="widget-title">Information</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li><a target="_blank" href="{{ url('/') }}">Home</a></li>
                                         <li><a target="_blank" href="{{ url('T&C') }}">Terms and Conditions</a>
                                         </li>
                                         <li><a target="_blank" href="{{ url('refund_policy') }}">Refund Policy</a>
