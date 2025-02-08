@@ -328,8 +328,8 @@ fieldset legend {
   transform: translateY(-50%);
   background-color: #f5f5f5;
   line-height: 46px;
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
 }
 
 .slick-arrow-style.slick-slider .slick-arrow.slick-prev {
