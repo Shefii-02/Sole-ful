@@ -235,7 +235,7 @@
         .lg-toolbar .lg-icon {
             color: #000000 !important;
             display: block !important;
-            
+
         }
 
 
@@ -316,11 +316,22 @@
                 background: #fff;
             }
 
-      
+
         }
 
-        .pro-large-img img{
+        .pro-large-img img {
             border: 0 !important;
+        }
+
+        @media screen and (max-width:640px) {
+            .gallery-lightbox-controls {
+                display: flex !important;
+
+            }
+
+            .gallery-lightbox-control-btn .gallery-lightbox-control-btn-icon svg * {
+                stroke: white;
+            }
         }
     </style>
 
@@ -900,7 +911,7 @@
                     // }
                 });
 
-             
+
 
                 // Image zoom effect for the newly added images
                 if (defaultSize && !QuickView) {
