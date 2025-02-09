@@ -453,11 +453,11 @@
                                             <a target="_blank"
                                                 href="{{ route('public.shop', ['shoe_type[]' => 'Casual']) }}">Casual</a>
                                         </li>
-                                       
+
                                         <li class="mb-3">
                                             <a target="_blank"
                                                 href="{{ route('public.shop', ['categories[]' => 'Party']) }}">Party
-                                                </a>
+                                            </a>
                                         </li>
                                         <li class="mb-3">
                                             <a target="_blank"
@@ -696,6 +696,12 @@
             toastr.info("{{ session('info') }}", "Info");
         @elseif (session('warning'))
             toastr.warning("{{ session('warning') }}", "Warning");
+        @endif
+
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr.error("{{ $error }}", "Error");
+            @endforeach
         @endif
     </script>
 
