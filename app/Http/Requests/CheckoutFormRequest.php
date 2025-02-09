@@ -25,7 +25,7 @@ class CheckoutFormRequest extends FormRequest
 
         // if ($this->input('same_billing') == false) { // If different shipping address is provided
             $rules += [
-                'shipping_address' => 'required|string',
+               
                 's_name' => 'required|string',
                 's_email' => 'required|email',
                 's_phone' => 'required|string',
