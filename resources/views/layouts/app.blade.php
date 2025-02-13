@@ -960,7 +960,7 @@
                     showZoomInOutIcons: true,
                     zoom: true, // Enable zoom
                     actualSize: false, // Show actual image size on double click
-                    scale: 0, // Default scale level
+                    scale: 0.1, // Default scale level
                     enableZoomAfter: 100, // Delay zoom activation after opening
                     gestureZoom: false,
                     mobileSettings: {
