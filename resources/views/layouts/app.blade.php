@@ -641,13 +641,6 @@
 
 
 
-    <!--=======================Javascript============================-->
-    <!--=== All Vendor Js ===-->
-    <script src="/assets/js/vendor.js"></script>
-    <!--=== All Plugins Js ===-->
-    <script src="/assets/js/plugins.js"></script>
-    <!--=== Active Js ===-->
-    <script src="/assets/js/active.js"></script>
 
     <script>
         const toggleSearch = (search, button) => {
@@ -704,6 +697,13 @@
             @endforeach
         @endif
     </script>
+    <!--=======================Javascript============================-->
+    <!--=== All Vendor Js ===-->
+    <script src="/assets/js/vendor.js"></script>
+    <!--=== All Plugins Js ===-->
+    <script src="/assets/js/plugins.js"></script>
+    <!--=== Active Js ===-->
+    <script src="/assets/js/active.js?v=1"></script>
 
     @stack('footer')
 
