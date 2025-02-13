@@ -339,6 +339,22 @@
             --tw-bg-opacity: 1;
             background-color: rgb(223 155 25);
         }
+
+        .lg-outer .lg-item:before, .lg-outer .lg-img-wrap:before {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: text-top !important; 
+        }
+        .lg-outer .lg-item, .lg-outer .lg-img-wrap {
+            text-align: left !important;
+            width: 100%;
+        }
+        picture.lg-img-wrap{
+            display: flex !important;
+            justify-content: center;
+        }
+       
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -946,6 +962,7 @@
                     actualSize: false, // Show actual image size on double click
                     scale: 0.5, // Default scale level
                     enableZoomAfter: 100, // Delay zoom activation after opening
+                    gestureZoom: true,
                     mobileSettings: {
                         controls: true,
                         showCloseIcon: true,
