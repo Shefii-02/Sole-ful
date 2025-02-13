@@ -83,7 +83,7 @@ class DeliveryPartnerOrderPush extends Command
             "amount" => floatval($order->grandtotal),
             "weight" => 300 * $order->basket->items->count(),
             "lineItems" => $this->formatLineItems($order),
-            "paymentType" => "ONLINE",
+            "paymentType" => $order->payment_method,
             "paymentStatus" => "SUCCESS",
             "subTotal" => $order->subtotal,
             "remarks" => $order->remarks,
