@@ -38,9 +38,11 @@
                     <p class="text-muted">
                         Your order has been placed successfully.
                         <br> A confirmation email has been sent to your email.
-                        <br> <strong>Invoice Number:</strong> #{{ $invoice_id }}
-                        <br> <strong>Transaction ID:</strong> #{{ $transactionId }}
-                        <br> <strong>Reference ID:</strong> #{{ $providerReferenceId }}
+                        <br> <strong>Invoice Number:</strong> #{{ $order->invoice_id }}
+                        <br> <strong>Payment Method:</strong> #{{ $order->payment_method }}
+                        <br> <strong>Transaction ID:</strong>
+                        #{{ $order->payments ? $order->payments->transaction_id : '---' }}
+                        <br> <strong>Reference ID:</strong> #{{ $order->payments ? $order->payments->reference_id : '---' }}
                     </p>
                     <div class="mt-4">
                         @auth
@@ -57,5 +59,4 @@
             </div>
         </div>
     </section>
-
 @endsection

@@ -11,7 +11,7 @@
             <table cellpadding="10" cellspacing="0" align="center" border="0" style="border:none;">
                 <tr>
                     <td align="center" style="border-right:1px solid #DDD; padding: 10px 15px; ">
-                        <big><strong>Payment Status <br />{!! $order->status ? '<span style="color:Green;">PAID' : '<span style="color:Red;">FAILED' !!}</span></strong></big>
+                        <big><strong>Order Status <br />{!! $order->status ? '<span style="color:Green;">PENDING' : '<span style="color:Red;">FAILED' !!}</span></strong></big>
                     </td>
                     <td align="center" style="padding: 10px 15px;">
                         <big><strong>Invoice# <br /><span
@@ -23,23 +23,25 @@
                         <big><strong>Order Amount <br /><span
                                     style="color:#df9b19;">{{ getPrice($order->grandtotal) }}</span></strong></big>
                     </td>
-
                 </tr>
             </table>
 
             <table cellpadding="10" cellspacing="0" border="0" align="center"
                 style="margin:15px auto; border:1px solid #DDD; border-radius:10px;" width="500">
                 <tr>
-                    <td align="center">
+                    {{-- <td align="center">
                         Order ID#:<br /><span style="text-decoration:underline;">{{ $order->id }}</span>
+                    </td> --}}
+                    <td align="center">
+                        Payment Method:<br /><span style="text-decoration:underline;">{{ $order->payment_method }}</span>
                     </td>
                     <td align="center">
                         Trans. ID:<br /><span
-                            style="text-decoration:underline;">{{ $order->payments->transaction_id }}</span>
+                            style="text-decoration:underline;">{{ $order->payments ? $order->payments->transaction_id : '---' }}</span>
                     </td>
                     <td align="center">
                         Reference Id#:<br /><span
-                            style="text-decoration:underline;">{{ $order->payments->reference_id }}</span>
+                            style="text-decoration:underline;">{{ $order->payments ? $order->payments->reference_id : '---' }}</span>
                     </td>
 
                 </tr>

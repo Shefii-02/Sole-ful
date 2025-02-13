@@ -88,13 +88,6 @@ class OrderController extends Controller
                 $calculations = json_decode($calculations);
 
                 $grandTotal       = $calculations->grandTotal;
-                if ($request->payment_method == 'online') {
-                    $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
-                } else {
-                    $result     = $this->submitCodForm($grandTotal, $user, $basket);
-                }
-
-
                 $billingAddress = Myaddress::where('user_id', $user->id)->where('id', $request->billing_address)->first();
                 if (!$billingAddress) {
                     $billingAddress = Myaddress::where('user_id', $user->id)->first();
@@ -102,6 +95,15 @@ class OrderController extends Controller
 
                 $this->storeAddress($billingAddress, $basket->id, 'billing');
                 $this->storeAddress($billingAddress, $basket->id, 'delivery');
+
+
+                if ($request->payment_method == 'online') {
+                    $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
+                } else {
+                    $result     = $this->submitCodForm($grandTotal, $user, $basket);
+                }
+
+
 
 
                 // if (env('APP_ENV') == 'local') {
@@ -568,7 +570,7 @@ class OrderController extends Controller
 
             $this->sendOrderNotification($order);
 
-            return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
+            return view('frontend.thanks', compact('order'));
         } else {
 
             //HANDLE YOUR ERROR MESSAGE HERE
@@ -634,7 +636,7 @@ class OrderController extends Controller
 
             $this->sendOrderNotification($order);
 
-            return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
+            return view('frontend.thanks', compact('order'));
         } else {
             dd('Invalid Attempt, Please Try Again Later.');
         }

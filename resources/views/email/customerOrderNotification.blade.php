@@ -11,7 +11,7 @@
             <table cellpadding="10" cellspacing="0" align="center" border="0" style="border:none; width: 100%;">
                 <tr>
                     <td align="center">
-                        <big><strong>Order Status: <span style="color:Green;">Processing</span></strong></big>
+                        <big><strong>Order Status: <span style="color:Green;">{{ $order->status }} for confirmation</span></strong></big>
                     </td>
                 </tr>
                 <tr>
@@ -22,6 +22,11 @@
                 <tr>
                     <td align="center">
                         <big><strong>Order Amount:</strong> <span style="color:#df9b19;">{{ getPrice($order->grandtotal) }}</span></big>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <big><strong>Payment Method:</strong> <span style="color:#df9b19;">{{ $order->payment_method }}</span></big>
                     </td>
                 </tr>
                 <tr>
