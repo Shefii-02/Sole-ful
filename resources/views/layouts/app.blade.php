@@ -714,7 +714,7 @@
     {{-- <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js?v=1') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script>
+    <script src="{{ asset('assets/plugins/lightgallery/lg-zoom.umd.js')}}"></script>
 
     <script>
         var defaultSize = false;
@@ -935,6 +935,7 @@
                     share: false,
                     plugins: [lgZoom],
                     mousewheel: true,
+                    showZoomInOutIcons: true,
                     zoom: true, // Enable zoom
                     actualSize: true, // Show actual image size on double click
                     scale: 0.5, // Default scale level
