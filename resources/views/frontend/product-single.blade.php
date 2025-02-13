@@ -52,8 +52,10 @@
                             <div class="col-lg-7">
                                 <div class="product-details-des">
                                     <h3 class="pro-det-title product-title">{{ $product->product_name }}</h3>
-                                    <div class="pro-review d-none">
-                                        <span><a href="#">0 Review(s)</a></span>
+                                    <div class="pro-review">
+                                        <span ><a href="#" id="wishlist-btn-{{ $product->id }}"
+                                            class="wishlist-btn fs-5" data-product-id="{{ $product->id }}"
+                                            title="Add To Wishlist"> <i class="bi bi-heart fs-5"></i> Add to Wishlist</a></span>
                                     </div>
                                     <div class="price-box">
                                         <span class="regular-price">{{ min_price($product->id) }}</span>

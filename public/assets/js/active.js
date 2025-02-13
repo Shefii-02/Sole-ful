@@ -331,12 +331,14 @@
 				wishlist = wishlist.filter(id => id !== productId);
 				$btn.removeClass('bi-heart-fill').addClass('bi-heart');
 				$(this).attr('title', 'Add to Wishlist');
+				toastr.error('Product removed from wishlist', "Removed");
 				// wishlist.pop(productId);
 			} else {
 				// Add to wishlist
 				wishlist.push(productId);
 				$btn.removeClass('bi-heart').addClass('bi-heart-fill');
 				$(this).attr('title', 'Remove from Wishlist');
+				toastr.success('Product added to wishlist', "Added");
 			}
 
 			// Update LocalStorage
@@ -402,7 +404,7 @@
 
 		$('body').on('click', '.quick_view-btn', function (e) {
 			e.preventDefault();
-			QuickView =true;
+			QuickView = true;
 			defaultSize = false;
 			var Id = $(this).data('product-id');
 			$.ajax({
@@ -414,7 +416,7 @@
 					var firstAvailableSize = $('.size-tab .size-button')
 						.not('.disabled')
 						.first();
-				
+
 					if (firstAvailableSize.length > 0) {
 						firstAvailableSize.find('input[type="radio"]').prop('checked', true).trigger('change');
 					}
