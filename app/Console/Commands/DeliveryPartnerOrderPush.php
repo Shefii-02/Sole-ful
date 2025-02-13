@@ -16,7 +16,7 @@ class DeliveryPartnerOrderPush extends Command
      * @var string
      */
     protected $signature = 'api:delivery-partner-order-push';
-    
+
     /**
      * The console command description.
      *
@@ -31,18 +31,18 @@ class DeliveryPartnerOrderPush extends Command
 
     public function handle()
     {
-        $orders = Order::whereDoesntHave('DeliveryPartnerResponse')->get();
+        $orders = Order::whereDoesntHave('DeliveryPartnerResponse')->where('status', 'confirmed')->get();
 
         // if ($orders->isEmpty() ) {
         //     $this->info("No pending orders to push.");
         //     return;
         // }
-       
+
 
         foreach ($orders ?? [] as $orderData) {
             try {
                 $orderPayload = $this->orderPushDataFormat($orderData);
-                $response = $this->apiService->pushOrder($orderPayload,$orderData);
+                $response = $this->apiService->pushOrder($orderPayload, $orderData);
 
                 if (isset($response['status']) && $response['status'] == 200) {
                     Log::info("Order {$orderData->id} pushed successfully.");
@@ -54,12 +54,12 @@ class DeliveryPartnerOrderPush extends Command
             }
         }
 
-        $ordersLabels = DeliveryPartnerResponse::where('status',0)->get();
+        $ordersLabels = DeliveryPartnerResponse::where('status', 0)->get();
 
         foreach ($ordersLabels ?? [] as $order) {
             try {
                 $orderLabelData = $this->apiService->labelAndInvoiceStore($order);
-                
+
 
                 if (isset($orderLabelData['status']) && $orderLabelData['status'] == 200) {
                     Log::info("Order {$order->order_id} label updated successfully.");
@@ -70,20 +70,18 @@ class DeliveryPartnerOrderPush extends Command
                 Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
             }
         }
-
-
-    }    
+    }
 
     private function orderPushDataFormat($order)
     {
         return [
-            "orderId" => $order->invoice_id.'9',
+            "orderId" => $order->invoice_id . '29',
             "orderSubtype" => "FORWARD",
             "readyToPick" => false,
             "orderCreatedAt" => $order->billed_at,
             "currency" => "INR",
             "amount" => floatval($order->grandtotal),
-            "weight" => 300*$order->basket->items->count(),
+            "weight" => 300 * $order->basket->items->count(),
             "lineItems" => $this->formatLineItems($order),
             "paymentType" => "ONLINE",
             "paymentStatus" => "SUCCESS",
