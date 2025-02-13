@@ -71,11 +71,11 @@ class DeliveryPartnerOrderPush extends Command
             }
         }
     }
-  
+   
     private function orderPushDataFormat($order)
     {
         return [
-            "orderId" => $order->invoice_id . 'TEST',
+            "orderId" => $order->invoice_id,
             "orderSubtype" => "FORWARD",
             "readyToPick" => false,
             "orderCreatedAt" => $order->billed_at,
