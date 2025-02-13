@@ -951,7 +951,7 @@
                         showCloseIcon: true,
                         download: false,
                         rotate: false,
-                        zoom: false,
+                        zoom: true,
                         gestureZoom: true,
                     }
                 });
