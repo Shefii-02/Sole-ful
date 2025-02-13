@@ -333,6 +333,12 @@
                 stroke: white;
             }
         }
+
+
+        .peer:checked ~ .peer-checked\:bg-theme-500 {
+                --tw-bg-opacity: 1;
+                background-color: rgb(223 155 25);
+            }
     </style>
 
     <!-- Google tag (gtag.js) -->

@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\DeliveryPincode; // Import your model
+use App\Models\DeliveryPincode; // Import the DeliveryPincode model
 
 class CheckoutFormRequest extends FormRequest
 {
@@ -21,37 +22,54 @@ class CheckoutFormRequest extends FormRequest
     {
         $rules = [
             'billing_address' => 'required|string',
+            'payment_method' => 'required|in:cod,online',
+            's_name' => 'required|string',
+            's_email' => 'required|email',
+            's_phone' => 'required|string',
+            's_address' => 'required|string',
+            's_locality' => 'required|string',
+            's_landmark' => 'nullable|string',
+            's_postal' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $record = DeliveryPincode::where('pincode', $value)->first();
+
+                    if (!$record) {
+                        return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
+                    }
+
+                    if ($record->state !== $this->input('s_state')) {
+                        return $fail('The provided state does not match the postal code.');
+                    }
+                },
+            ],
+            's_house_name' => 'nullable|string',
+            's_house_no' => 'nullable|string',
+            's_state' => 'required|string',
         ];
 
-        // if ($this->input('same_billing') == false) { // If different shipping address is provided
-            $rules += [
-               
-                's_name' => 'required|string',
-                's_email' => 'required|email',
-                's_phone' => 'required|string',
-                's_address' => 'required|string',
-                's_locality' => 'required|string',
-                's_landmark' => 'nullable|string',
-                's_postal' => [
+        // COD-Specific Validation (Check if COD is allowed for this pincode)
+        if ($this->input('payment_method') == 'cod') {
+
+            $rules = [
+                'payment_method' => [
                     'required',
                     'string',
                     function ($attribute, $value, $fail) {
-                        // Fetch the DeliveryPincode record
-                        $record = DeliveryPincode::where('pincode', $value)->first();
-                        if (!$record) {
+                        $pincode = $this->input('s_postal');
+                        $record2 = DeliveryPincode::where('pincode', $pincode)->first();
+                        if (!$record2) {
                             return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
                         }
-                        // Check if the provided state matches the one in the database
-                        if ($record->state !== $this->input('s_state')) {
-                            return $fail('The provided state does not match the postal code.');
+                        if ($record2->cod !== 'Yes') {
+
+                            return $fail('Cash on Delivery (COD) is not available for this pincode.');
                         }
                     },
                 ],
-                's_house_name' => 'nullable',
-                's_house_no' => 'nullable',
-                's_state' => 'required|string',
             ];
-        // }
+        }
 
         return $rules;
     }
@@ -63,7 +81,8 @@ class CheckoutFormRequest extends FormRequest
     {
         return [
             'billing_address.required' => 'The billing address is required.',
-            'shipping_address.required' => 'The shipping address is required.',
+            'payment_method.required' => 'Please select a payment method.',
+            'payment_method.in' => 'Invalid payment method selected.',
             's_name.required' => 'The recipient’s name is required.',
             's_email.required' => 'The recipient’s email is required.',
             's_email.email' => 'Please enter a valid email address.',

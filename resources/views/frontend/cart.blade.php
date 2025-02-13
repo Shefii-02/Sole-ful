@@ -271,10 +271,10 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-12 col-md-6 mb-3 mb-md-0">
-                                        <p>
+                                        <p class="d-none">
                                             Declimer here
                                         </p>
-                                        <textarea class="a-textarea" name="remark" id="remark" form="goto_checkout"></textarea>
+                                        {{-- <textarea class="a-textarea" name="remark" id="remark" form="goto_checkout"></textarea> --}}
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="for-checkout mt-4 d-flex gap-2 ">

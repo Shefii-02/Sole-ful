@@ -242,7 +242,7 @@
                                 <label class="form-check-label" role="button" for="same_billing">Shipping same as
                                     billing address?</label>
                             </div>
-                          
+
                             <div id="shipping-address-div" class="mb-2" style="">
                                 <div class="card-body">
                                     <div class="card">
@@ -255,8 +255,8 @@
                                                     <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Full name</label>
                                                         <input class="form-control @error('s_name') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_name') }}" type="text" id="s_name" name="s_name"
-                                                            placeholder="">
+                                                            autocomplete="off" value="{{ old('s_name') }}" type="text"
+                                                            id="s_name" name="s_name" placeholder="">
                                                         @error('s_name')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -265,8 +265,8 @@
                                                     <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Email</label>
                                                         <input class="form-control @error('s_email') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_email') }}"type="email" name="s_email"
-                                                            id="s_email" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_email') }}"type="email"
+                                                            name="s_email" id="s_email" placeholder="">
                                                         @error('s_email')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -276,8 +276,9 @@
                                                         <label for="">Phone Number</label>
                                                         <input
                                                             class="form-control phone_field @error('s_phone') is-invalid @enderror"
-                                                            autocomplete="off"  value="{{ old('s_phone') }}" type="text" name="s_phone"
-                                                            id="s_phone" minlength="10" maxlength="10" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_phone') }}"
+                                                            type="text" name="s_phone" id="s_phone" minlength="10"
+                                                            maxlength="10" placeholder="">
                                                         @error('s_phone')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -287,8 +288,9 @@
                                                         <label for="">Address</label>
                                                         <input
                                                             class="form-control address_fill @error('s_address') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_address') }}" type="text" name="s_address"
-                                                            id="s_address" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_address') }}"
+                                                            type="text" name="s_address" id="s_address"
+                                                            placeholder="">
                                                         @error('s_address')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -299,8 +301,9 @@
                                                         <label for="">Building/Flat Name/No</label>
                                                         <input
                                                             class="form-control @error('s_house_name') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_house_name') }}"  type="text" name="s_house_name"
-                                                            id="s_house_name" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_house_name') }}"
+                                                            type="text" name="s_house_name" id="s_house_name"
+                                                            placeholder="">
                                                         @error('s_house_name')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -310,8 +313,9 @@
                                                         <label for="">Landmark</label>
                                                         <input
                                                             class="form-control address_fill @error('s_landmark') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_landmark') }}" type="text" name="s_landmark"
-                                                            id="s_landmark" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_landmark') }}"
+                                                            type="text" name="s_landmark" id="s_landmark"
+                                                            placeholder="">
                                                         @error('s_landmark')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -319,22 +323,25 @@
                                                     <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Postal Code</label>
                                                         <input data-state="s_state" data-city="s_locality"
-                                                            data-msg="s_msg"
+                                                            data-msg="s_msg" data-cod="cod_msg"
                                                             class="form-control postal_fill postal mb-2 @error('s_postal') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_postal') }}" type="text" name="s_postal"
+                                                            autocomplete="off" value="{{ old('s_postal') }}"
+                                                            type="text" name="s_postal"
                                                             oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
                                                             id="s_postal" maxlength="6" placeholder="">
                                                         <span class="" id="s_msg"></span>
                                                         @error('s_postal')
-                                                            <span class="text-danger" id="s_postalErro">{{ $message }}</span>
+                                                            <span class="text-danger"
+                                                                id="s_postalErro">{{ $message }}</span>
                                                         @enderror
                                                     </div>
                                                     <div class="col-lg-4 form-group mb-2">
                                                         <label for="">Locality/City</label>
                                                         <input
                                                             class="form-control locality_fill @error('s_locality') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_locality') }}" type="text" name="s_locality"
-                                                            id="s_locality" placeholder="">
+                                                            autocomplete="off" value="{{ old('s_locality') }}"
+                                                            type="text" name="s_locality" id="s_locality"
+                                                            placeholder="">
                                                         @error('s_locality')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -343,8 +350,9 @@
                                                         <label>State</label>
                                                         <input
                                                             class="form-control state_fill @error('s_state') is-invalid @enderror"
-                                                            autocomplete="off" value="{{ old('s_state') }}"  type="text" name="s_state"
-                                                            id="s_state" placeholder="" required>
+                                                            autocomplete="off" value="{{ old('s_state') }}"
+                                                            type="text" name="s_state" id="s_state" placeholder=""
+                                                            required>
                                                         @error('s_state')
                                                             <span class="text-danger">{{ $message }}</span>
                                                         @enderror
@@ -430,7 +438,43 @@
                                 <h6 class="font-bold">The cart is empty</h6>
                             </div>
                         @endif
-                        <div class="col-md-8 mt-2">
+                        <div class="col-lg-12 mt-4">
+                            <div class="flex flex-col md:flex-row gap-4">
+                                <!-- Online Payment (Default Checked) -->
+                                <label class="w-full md:w-1/2 cursor-pointer">
+                                    <input form="place__order" type="radio" name="payment_method" value="online"
+                                        class="hidden peer"
+                                        {{ old('payment_method', 'online') == 'online' ? 'checked' : '' }}>
+                                    <div
+                                        class="border border-gray-300 p-2 rounded-2xl flex flex-col items-center justify-center transition-all duration-300 peer-checked:bg-theme-500 peer-checked:text-white shadow-md hover:bg-gray-100 hover:border-gray-400">
+                                        <img src="{{ asset('assets/img/icon/card-payment.png') }}" alt="Online Payment"
+                                            class="w-[50px] mb-3">
+                                        <h5 class="text-md font-semibold">Online Payment</h5>
+                                        <p class="text-sm text-center">Secure & hassle-free </p>
+                                    </div>
+                                </label>
+
+                                <!-- Cash on Delivery -->
+                                <label class="w-full md:w-1/2 cursor-pointer">
+                                    <input form="place__order" type="radio" name="payment_method" value="cod"
+                                        class="hidden peer" {{ old('payment_method') == 'cod' ? 'checked' : '' }}>
+                                    <div
+                                        class="border text-center border-gray-300 p-2 rounded-2xl flex flex-col items-center justify-center transition-all duration-300 peer-checked:bg-theme-500 peer-checked:text-white shadow-md hover:bg-gray-100 hover:border-gray-400">
+                                        <img src="{{ asset('assets/img/icon/cod.png') }}" alt="Cash on Delivery"
+                                            class="w-[90px] mb-3">
+                                        <h5 class="text-md font-semibold">Cash on Delivery</h5>
+                                        <p class="text-sm text-center">Pay at your doorstep</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mx-auto mt-2">
+                            @error('payment_method')
+                                <span class="text-danger" id="payment_methodError">{{ $message }}</span>
+                            @enderror
+                            <span class="text-danger" id="cod_msg"></span>
+
 
                             <div class="text-start mb-2 mt-3 text-end">
                                 <span class="col-lg-12 p-0 g-captcha-error text-danger small"></span><br>
@@ -644,9 +688,10 @@
             var pin_code = $(this).val();
             var Idstate = $(this).data('state');
             var Idcity = $(this).data('city');
-            var Idmsg = $(this).data('msg')
-            $('#s_postalErro').text('');
-
+            var Idmsg = $(this).data('msg');
+            var codMsg = $(this).data('cod');
+            $('#s_postalErro, #payment_methodError').text('');
+            
             if (pin_code.length == 6) {
                 $.ajax({
                     url: "{{ route('public.pincode.check') }}",
@@ -666,6 +711,8 @@
                         $('#' + Idstate).val(response.state)
                         $('#' + Idcity).val(response.city)
                         $('#' + Idmsg).text(response.message)
+                        $('#' + codMsg).text(response.cod_message)
+                        
                     }
                 });
             }

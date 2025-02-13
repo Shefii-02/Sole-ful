@@ -317,13 +317,21 @@ class BasketController extends Controller
         $responsePincode  = DeliveryPincode::where('pincode',$pincode)->first();
 
         if($responsePincode){
-            $result['message'] = 'Your order will be delivered within 4-7 days.';
+            $result['message'] = 'Your order will be delivered within 4-7 days.';  
+            if($responsePincode->state == 'yes'){
+                $result['cod_message'] = '';
+            }
+            else{
+                $result['cod_message'] = 'Cash on Delivery (COD) is not available for this pincode';
+            }
+
             $result['result']  = true;
             $result['state']   = $responsePincode->state;
             $result['city']    = $responsePincode->city;
         }
         else{
             $result['message'] = 'Sorry, we are unable to deliver to this pincode at the moment.';
+            $result['cod_message'] = 'Sorry, we are unable to deliver to this pincode at the moment.';
             $result['result']  = false;
             $result['state']   = '';
             $result['city']    = '';
