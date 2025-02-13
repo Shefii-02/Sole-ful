@@ -335,10 +335,10 @@
         }
 
 
-        .peer:checked ~ .peer-checked\:bg-theme-500 {
-                --tw-bg-opacity: 1;
-                background-color: rgb(223 155 25);
-            }
+        .peer:checked~.peer-checked\:bg-theme-500 {
+            --tw-bg-opacity: 1;
+            background-color: rgb(223 155 25);
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -645,6 +645,12 @@
 
 
 
+    <!--=== All Vendor Js ===-->
+    <script src="/assets/js/vendor.js"></script>
+    <!--=== All Plugins Js ===-->
+    <script src="/assets/js/plugins.js"></script>
+    <!--=== Active Js ===-->
+    <script src="/assets/js/active.js?v=1"></script>
 
 
 
@@ -704,12 +710,6 @@
         @endif
     </script>
     <!--=======================Javascript============================-->
-    <!--=== All Vendor Js ===-->
-    <script src="/assets/js/vendor.js"></script>
-    <!--=== All Plugins Js ===-->
-    <script src="/assets/js/plugins.js"></script>
-    <!--=== Active Js ===-->
-    <script src="/assets/js/active.js?v=1"></script>
 
     @stack('footer')
 
@@ -720,7 +720,7 @@
     {{-- <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js?v=1') }}"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
-    <script src="{{ asset('assets/plugins/lightgallery/lg-zoom.umd.js')}}"></script>
+    <script src="{{ asset('assets/plugins/lightgallery/lg-zoom.umd.js') }}"></script>
 
     <script>
         var defaultSize = false;
@@ -951,7 +951,7 @@
                         showCloseIcon: true,
                         download: false,
                         rotate: false,
-                        zoom: false, 
+                        zoom: false,
                     }
                 });
 

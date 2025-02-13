@@ -88,7 +88,12 @@ class OrderController extends Controller
                 $calculations = json_decode($calculations);
 
                 $grandTotal       = $calculations->grandTotal;
-                $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
+                if ($request->payment_method == 'online') {
+                    $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
+                } else {
+                    $result     = $this->submitCodForm($grandTotal, $user, $basket);
+                }
+
 
                 $billingAddress = Myaddress::where('user_id', $user->id)->where('id', $request->billing_address)->first();
                 if (!$billingAddress) {
@@ -98,28 +103,29 @@ class OrderController extends Controller
                 $this->storeAddress($billingAddress, $basket->id, 'billing');
                 $this->storeAddress($billingAddress, $basket->id, 'delivery');
 
-                if (env('APP_ENV') == 'local') {
-                    $transaction_id = $basket->id . $user->id . uniqid();
-                    $amount = $grandTotal * 100;
-                    // Store information into database
 
-                    $data = [
-                        'user_id'  => $user->id,
-                        'basket_id' => $basket->id,
-                        'transaction_id' => $transaction_id,
-                        'amount' => $amount,
-                        'merchantOrderId' => $basket->id . '-' . $user->id,
-                    ];
+                // if (env('APP_ENV') == 'local') {
+                //     $transaction_id = $basket->id . $user->id . uniqid();
+                //     $amount = $grandTotal * 100;
+                //     // Store information into database
 
-                    Payment::where('basket_id', $basket->id)->where('user_id', $user->id)->delete();
+                //     $data = [
+                //         'user_id'  => $user->id,
+                //         'basket_id' => $basket->id,
+                //         'transaction_id' => $transaction_id,
+                //         'amount' => $amount,
+                //         'merchantOrderId' => $basket->id . '-' . $user->id,
+                //     ];
 
-                    Payment::create($data);
+                //     Payment::where('basket_id', $basket->id)->where('user_id', $user->id)->delete();
 
-                    return redirect(url("/confirm?code=PAYMENT_SUCCESS&merchantId=M22ZUK6NQLM1Q&transactionId={$transaction_id}&amount={$amount}&providerReferenceId=T2501300212587508007957&merchantOrderId={$transaction_id}&param1=na&param2=na&param3=na&param4=na&param5=na&param6=na&param7=na&param8=na&param9=na&param10=na&param11=na&param12=na&param13=na&param14=na&param15=na&param16=na&param17=na&param18=na&param19=na&param20=na&checksum=991751a08c2893e455985046d17c3a586b79af7bd4686027e4c7ebf45e1d9d07###1"));
-                } else {
-                    return redirect()->to($result);
-                    // return $result;
-                }
+                //     Payment::create($data);
+
+                //     return redirect(url("/confirm?code=PAYMENT_SUCCESS&merchantId=M22ZUK6NQLM1Q&transactionId={$transaction_id}&amount={$amount}&providerReferenceId=T2501300212587508007957&merchantOrderId={$transaction_id}&param1=na&param2=na&param3=na&param4=na&param5=na&param6=na&param7=na&param8=na&param9=na&param10=na&param11=na&param12=na&param13=na&param14=na&param15=na&param16=na&param17=na&param18=na&param19=na&param20=na&checksum=991751a08c2893e455985046d17c3a586b79af7bd4686027e4c7ebf45e1d9d07###1"));
+                // } else {
+                //     return redirect()->to($result);
+                //     // return $result;
+                // }
             } else {
                 dd('your basket is empty');
             }
@@ -177,7 +183,7 @@ class OrderController extends Controller
                 "value" => $order->grandtotal ?? 0,
                 "tax" => $order->taxamount,
                 "shipping" => $order->shipping_charge,
-                "currency" => "CAD",
+                "currency" => "INR",
                 "coupon" => "",
                 "items" => $items // Removed the wrapping array []
             ];
@@ -516,8 +522,9 @@ class OrderController extends Controller
                         $order->coupon      = $couponCode;
                         $order->remarks     = '';
                         $order->billed_at   = date('Y-m-d H:i:s');
-                        $order->status       = 'SUCCESS';
+                        $order->status      = 'pending';
                         $order->paid        = 1;
+                        $order->payment_method = 'online';
                         $order->save();
 
                         OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
@@ -566,6 +573,70 @@ class OrderController extends Controller
 
             //HANDLE YOUR ERROR MESSAGE HERE
             dd('Failed : ' . $request->code . ', Please Try Again Later.');
+        }
+    }
+
+
+
+
+    public function submitCodForm($grandTotal = 1, User $user, $basket)
+    {
+        $amount         = $grandTotal;
+        $user_name      =  $user->name;
+        $user_mobile    =  $user->mobile;
+        if ($user) {
+            $user           = User::where('id', auth()->user()->id)->first();
+            if (session()->has('session_string') && $user) {
+                $session_string = session('session_string');
+                $basket = Basket::whereHas('items')->where('session', $session_string)->where('status', 0)->first();
+                if ($basket) {
+                    $calculations  = $this->GrandTotalCalculation($basket);
+                    $calculations = json_decode($calculations);
+
+                    $subTotal    = $calculations->subTotal;
+                    $tax_amount  = $calculations->TotalTax;
+                    $discount    = $calculations->Discount;
+                    $couponCode  = $calculations->DiscountCode;
+                    $ship_charge = $calculations->ShippingCharge;
+                    // $ship_tax    = $calculations->shippingTax;
+                    $grandTotal  = $calculations->grandTotal;
+
+                    $order              = new Order();
+                    $order->user_id     = $user->id;
+                    $order->invoice_id  = $this->invoiceNumberGenerate();
+                    $order->basket_id   = $basket->id;
+                    $order->subtotal    = $subTotal;
+                    $order->discount    = $discount;
+                    $order->tax         = $tax_amount;
+                    $order->shipping_charge = $ship_charge;
+                    $order->grandtotal  = $grandTotal;
+                    $order->ipaddress   = request()->ip();
+                    $order->coupon      = $couponCode;
+                    $order->remarks     = '';
+                    $order->billed_at   = date('Y-m-d H:i:s');
+                    $order->status      = 'pending';
+                    $order->paid        = 0;
+                    $order->payment_method = 'cod';
+                    $order->save();
+                    OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
+                    Basket::where('id', $basket->id)->update(['status' => 1]);
+                    $this->stockDecrease($basket->id);
+                    OrderAddress::where('basket_id', $basket->id)->where('user_id', $user->id)->update(['order_id' => $order->id]);
+                    Basket::where('id', $basket->id)->update(['status' => 1]);
+                } else {
+                    dd('access decided,basket doesn`t matched-userId : ' . auth()->user()->id);
+                }
+            } else {
+                dd('access decided,basket expired-userId : ' . auth()->user()->id);
+            }
+
+            $invoice_id = $order->invoice_id;
+
+            $this->sendOrderNotification($order);
+
+            return view('frontend.thanks', compact('providerReferenceId', 'transactionId', 'invoice_id'));
+        } else {
+            dd('Invalid Attempt, Please Try Again Later.');
         }
     }
 
