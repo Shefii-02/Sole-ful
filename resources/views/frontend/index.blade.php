@@ -110,6 +110,65 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-5"> 
+            <div class="col-12">
+                <div class="product2-carousel-4 mbn-50 slick-row-15 slick-arrow-style"  dir="rtl" >
+                 
+                    @foreach ($featuredProduct->reverse() ?? [] as $featuredPdct)
+                        <div class="product-item mb-50">
+                            <div class="product-thumb">
+                                <a target="_blank"
+                                    href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">
+                                    <img src="{{ isset($featuredPdct->product->MainThumbImage) && $featuredPdct->product->MainThumbImage->image ? asset('images/products/' . $featuredPdct->product->MainThumbImage->image) : asset('images/default.jpg') }}"
+                                        alt="{{ $featuredPdct->product->product_name }}">
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <h5 class="product-name">
+                                    <a target="_blank"
+                                        href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">{{ $featuredPdct->product->product_name }}</a>
+                                </h5>
+
+                                <div class="price-box">
+                                    <div class="">
+                                        <small>Sizes :
+                                            @foreach ($featuredPdct->product->variationSizes->unique('value')->pluck('value') ?? [] as $abSize)
+                                                <i class="text-grey">{{ $abSize }},</i>
+                                            @endforeach
+                                        </small>
+                                    </div>
+                                    <div class="my-2">
+                                        <small>Colors :
+                                            @foreach ($featuredPdct->product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
+                                                <i class="text-grey">{{ $abColor }},</i>
+                                            @endforeach
+                                        </small>
+                                    </div>
+
+                                    <span class="price-regular small fw-semibold">
+                                        {{ getPrice($featuredPdct->product->minPrice) }}
+                                    </span>
+                                </div>
+                                <div class="product-action-link">
+                                    <a href="#" id="wishlist-btn-{{ $featuredPdct->product->id }}"
+                                        class="wishlist-btn" data-product-id="{{ $featuredPdct->product->id }}"
+                                        title="Add To Wishlist"><i class="bi bi-heart"></i></a>
+                                    <a href="#" data-bs-toggle="modal"
+                                        data-product-id="{{ $featuredPdct->product->id }}" data-bs-target="#quick_view"
+                                        class="quick_view-btn" title="Add To Cart"><i class="bi bi-bag-check"></i></a>
+                                    <a target="_blank"
+                                        href="{{ route('public.product', ['uid' => $featuredPdct->product->unique_value, 'slug' => $featuredPdct->product->slug]) }}">
+                                        <span title="Detail View">
+                                            <i class="ion-ios-eye-outline"></i>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 

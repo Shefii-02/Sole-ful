@@ -650,7 +650,7 @@
     <!--=== All Plugins Js ===-->
     <script src="/assets/js/plugins.js"></script>
     <!--=== Active Js ===-->
-    <script src="/assets/js/active.js?v=1"></script>
+    <script src="/assets/js/active.js?v=1.1"></script>
 
 
 

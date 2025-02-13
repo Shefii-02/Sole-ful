@@ -123,7 +123,44 @@
 
 	// product carousel active
 	$('.product-carousel-4').slick({
+		autoplay: true,
+		infinite: true,
 		slidesToShow: 4,
+		autoplaySpeed: 1000,
+		speed: 1000,
+		rtl: false, // Normal Left to Right
+		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
+		responsive: [
+			{
+				breakpoint: 1200,
+				settings: {
+					slidesToShow: 3
+				}
+			},
+			{
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 2
+				}
+			},
+			{
+				breakpoint: 576,
+				settings: {
+					slidesToShow: 1
+				}
+			}
+		]
+	});
+
+	$('.product2-carousel-4').slick({
+		rtl: true,
+		autoplay: true,
+		infinite: true,
+		slidesToShow: 4,
+		autoplaySpeed: 1000,
+		speed: 1000,
+
 		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
 		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
 		responsive: [
