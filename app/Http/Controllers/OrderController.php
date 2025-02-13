@@ -98,7 +98,7 @@ class OrderController extends Controller
 
 
                 if ($request->payment_method == 'online') {
-                    $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
+                   return $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
                 } else {
                     $result     = $this->submitCodForm($grandTotal, $user, $basket);
 
