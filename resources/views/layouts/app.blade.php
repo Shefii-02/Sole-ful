@@ -953,7 +953,7 @@
                         rotate: false,
                         zoom: true,
                         gestureZoom: true,
-                        showZoomInOutIcons: false,
+                        showZoomInOutIcons: true,
                     }
                 });
 
