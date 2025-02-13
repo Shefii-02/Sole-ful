@@ -949,7 +949,7 @@
                 if (galleryElement.lg) {
                     galleryElement.lg.destroy(true);
                 }
-
+ 
                 // Initialize LightGallery
                 lightGallery(galleryElement, {
                     selector: '.pro-large-img img',
