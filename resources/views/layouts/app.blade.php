@@ -881,7 +881,7 @@
                 }
 
                 slideIndex = 0;
-
+  
 
                 // Clear the existing images in the main slider and the thumbnail slider
                 mainSlider.html('');
