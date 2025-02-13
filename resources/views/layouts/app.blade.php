@@ -881,7 +881,7 @@
                 }
 
                 slideIndex = 0;
-  
+
 
                 // Clear the existing images in the main slider and the thumbnail slider
                 mainSlider.html('');
@@ -942,7 +942,7 @@
                     plugins: [lgZoom],
                     mousewheel: true,
                     showZoomInOutIcons: true,
-                    zoom: false, // Enable zoom
+                    zoom: true, // Enable zoom
                     actualSize: true, // Show actual image size on double click
                     scale: 0.5, // Default scale level
                     enableZoomAfter: 100, // Delay zoom activation after opening
