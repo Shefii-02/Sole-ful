@@ -29,45 +29,44 @@ class CheckoutFormRequest extends FormRequest
             's_address' => 'required|string',
             's_locality' => 'required|string',
             's_landmark' => 'nullable|string',
+            's_house_name' => 'nullable|string',
+            's_house_no' => 'nullable|string',
+            's_state' => 'required|string',
             's_postal' => [
                 'required',
                 'string',
                 function ($attribute, $value, $fail) {
-                    $record = DeliveryPincode::where('pincode', $value)->first();
+                    $normalizedPincode = strtoupper($value); // Convert input to uppercase
+                    $record = DeliveryPincode::whereRaw('BINARY pincode = ?', [$normalizedPincode])->first();
 
                     if (!$record) {
                         return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
                     }
 
-                    if ($record->state !== $this->input('s_state')) {
+                    if (strtoupper($record->state) !== strtoupper($this->input('s_state'))) {
                         return $fail('The provided state does not match the postal code.');
                     }
                 },
             ],
-            's_house_name' => 'nullable|string',
-            's_house_no' => 'nullable|string',
-            's_state' => 'required|string',
         ];
 
         // COD-Specific Validation (Check if COD is allowed for this pincode)
         if ($this->input('payment_method') == 'cod') {
+            $rules['payment_method'] = [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $pincode = strtoupper($this->input('s_postal')); // Convert input to uppercase
+                    $record2 = DeliveryPincode::whereRaw('BINARY pincode = ?', [$pincode])->first();
+                    
+                    if (!$record2) {
+                        return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
+                    }
 
-            $rules = [
-                'payment_method' => [
-                    'required',
-                    'string',
-                    function ($attribute, $value, $fail) {
-                        $pincode = $this->input('s_postal');
-                        $record2 = DeliveryPincode::where('pincode', $pincode)->first();
-                        if (!$record2) {
-                            return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
-                        }
-                        if ($record2->cod !== 'Yes') {
-
-                            return $fail('Cash on Delivery (COD) is not available for this pincode.');
-                        }
-                    },
-                ],
+                    if (strtoupper($record2->cod) !== 'YES') {
+                        return $fail('Cash on Delivery (COD) is not available for this pincode.');
+                    }
+                },
             ];
         }
 
