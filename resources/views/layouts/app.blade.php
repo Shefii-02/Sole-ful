@@ -943,7 +943,7 @@
                     mousewheel: true,
                     showZoomInOutIcons: true,
                     zoom: true, // Enable zoom
-                    actualSize: true, // Show actual image size on double click
+                    actualSize: false, // Show actual image size on double click
                     scale: 0.5, // Default scale level
                     enableZoomAfter: 100, // Delay zoom activation after opening
                     mobileSettings: {
