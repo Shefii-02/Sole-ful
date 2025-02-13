@@ -40,7 +40,7 @@
                                                     <a class="dropdown-item" target="_blank"
                                                         href="{{ route('public.shop') }}">Shop</a>
                                                 </li>
-                                                <hr class="border-2 mb-2" />
+                               
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" ttarget="_blank"
                                                         href="{{ route('public.shop', ['categories[]' => 'Ethnic']) }}">Ethnic</a>
@@ -61,8 +61,6 @@
                                                         </a>
                                                 </li>
                                                
-                                                
-                                                <hr class="border-2 mb-2" />
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
                                                         href="{{ route('t-c') }}">Terms and Conditions</a>
