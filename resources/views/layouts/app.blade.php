@@ -942,7 +942,7 @@
                     plugins: [lgZoom],
                     mousewheel: true,
                     showZoomInOutIcons: true,
-                    zoom: true, // Enable zoom
+                    zoom: false, // Enable zoom
                     actualSize: true, // Show actual image size on double click
                     scale: 0.5, // Default scale level
                     enableZoomAfter: 100, // Delay zoom activation after opening
@@ -953,6 +953,7 @@
                         rotate: false,
                         zoom: true,
                         gestureZoom: true,
+                        showZoomInOutIcons: false,
                     }
                 });
 
