@@ -318,11 +318,11 @@ class BasketController extends Controller
 
         if($responsePincode){
             $result['message'] = 'Your order will be delivered within 4-7 days.';  
-            if($responsePincode->state == 'yes'){
+            if($responsePincode->cod == 'Yes'){
                 $result['cod_message'] = '';
             }
             else{
-                $result['cod_message'] = 'Cash on Delivery (COD) is not available for this pincode';
+                $result['cod_message'] = 'Cash on Delivery (COD) is not available for this pincode--1';
             }
 
             $result['result']  = true;

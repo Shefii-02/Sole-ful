@@ -101,6 +101,8 @@ class OrderController extends Controller
                     $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
                 } else {
                     $result     = $this->submitCodForm($grandTotal, $user, $basket);
+
+                    return $result->render();
                 }
 
 
@@ -569,7 +571,7 @@ class OrderController extends Controller
             $invoice_id = $order->invoice_id;
 
             $this->sendOrderNotification($order);
-
+            dd(123);
             return view('frontend.thanks', compact('order'));
         } else {
 
