@@ -160,7 +160,6 @@
 		slidesToShow: 4,
 		autoplaySpeed: 1000,
 		speed: 1000,
-
 		prevArrow: '<button type="button" class="slick-prev"><i class="fa fa-angle-left"></i></button>',
 		nextArrow: '<button type="button" class="slick-next"><i class="fa fa-angle-right"></i></button>',
 		responsive: [

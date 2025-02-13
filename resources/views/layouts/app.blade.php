@@ -952,6 +952,7 @@
                         download: false,
                         rotate: false,
                         zoom: false,
+                        gestureZoom: true,
                     }
                 });
 
