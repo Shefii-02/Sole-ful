@@ -3,10 +3,30 @@
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 @endpush
 @section('content')
-    <div class="container" style="padding-top: 5.5rem;">
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area bg-img pt-12" data-bg="/assets/img/breadcrumb-banner.webp">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">Sign in your Account</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Sign in</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb area end -->
+    <div class="container" style="padding: 3.5rem; 0 ">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="rounded-sm  border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div
+                    class="rounded-sm  border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                     <div class="flex flex-wrap items-center justify-center">
                         {{-- <div class="hidden w-full xl:block xl:w-1/2">
                             <div class="px-3 py-8 text-center">

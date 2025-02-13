@@ -3,7 +3,27 @@
     {{-- <link href="{{ asset('assets/admin/style.css') }}" rel="stylesheet"> --}}
 @endpush
 @section('content')
-    <div class="container" style="padding-top: 5.5rem;">
+<!-- breadcrumb area start -->
+<div class="breadcrumb-area bg-img pt-12" data-bg="assets/img/breadcrumb-banner.webp">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumb-wrap text-center">
+                    <nav aria-label="breadcrumb">
+                        <h1 class="breadcrumb-title">Sign up your Account</h1>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Sign up</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+    <div class="container" style="padding:  3.5rem 0;">
         <div class="row justify-content-center">
             @if ($errors->any())
                 <div class="alert alert-danger">

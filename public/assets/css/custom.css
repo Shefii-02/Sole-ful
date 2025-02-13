@@ -49,8 +49,12 @@ ul.first-ul {
 }
 
 ul.first-ul a {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+div#offcanvasExample {
+    width: 20%;
 }
 
 .logo {

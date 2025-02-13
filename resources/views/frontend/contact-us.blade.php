@@ -76,7 +76,7 @@
                         </ul>
                         <div class="working-time">
                             <h3>Working Hours</h3>
-                            <p class="pb-0"><span>Monday – Saturday:</span>08:00 AM – 09:30 PM</p>
+                            <p class="pb-0"><span>Monday – Saturday:</span>09:00 AM – 05:30 PM</p>
                         </div>
                     </div>
                 </div>

@@ -18,7 +18,7 @@ class CouponController extends Controller
     {
         //
         $coupons = Coupon::get();
-        return view('admin.coupons.index',compact('coupons'));
+        return view('admin.coupons.index', compact('coupons'));
     }
 
     /**
@@ -40,7 +40,9 @@ class CouponController extends Controller
         DB::beginTransaction();
         //
         try {
-            Coupon::create($request->validated());
+            $coupon = Coupon::create($request->validated());
+            $coupon->status = $request->has('status') ? 'active' : 'inactive';
+            $coupon->save();
             DB::commit();
             Session::flash('success_msg', 'Successfully Added');
             return  redirect()->route('admin.coupons.index');
@@ -65,14 +67,14 @@ class CouponController extends Controller
     public function edit(string $id)
     {
         //
-        $coupon = Coupon::Where('id',$id)->first() ?? abort(404);
-        return view('admin.coupons.form',compact('coupon'));
+        $coupon = Coupon::Where('id', $id)->first() ?? abort(404);
+        return view('admin.coupons.form', compact('coupon'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCouponRequest $request,$coupon)
+    public function update(UpdateCouponRequest $request, $coupon)
     {
         //
 
@@ -81,6 +83,8 @@ class CouponController extends Controller
         try {
             $coupon = Coupon::findOrFail($coupon) ?? abort(404);
             $coupon->update($request->validated());
+            $coupon->status = $request->has('status') ? 'active' : 'inactive';
+            $coupon->save();
             DB::commit();
             Session::flash('success_msg', 'Successfully Updated');
             return  redirect()->route('admin.coupons.index');
@@ -89,7 +93,6 @@ class CouponController extends Controller
             Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
             return redirect()->back();
         }
-
     }
 
     /**
@@ -98,13 +101,12 @@ class CouponController extends Controller
     public function destroy($id)
     {
         DB::beginTransaction();
-        try{
+        try {
             Coupon::where('id', $id)->delete() ?? abort(404);
             Db::commit();
             Session::flash('success_msg', 'Successfully Deleted');
             return  redirect()->route('admin.coupons.index');
-        }
-        catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollback();
             Session::flash('failed_msg', 'Failed..!' . $e->getMessage());
             return redirect()->back();

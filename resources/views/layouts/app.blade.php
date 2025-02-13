@@ -709,12 +709,12 @@
 
     <!-- LightGallery CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery/css/lightgallery.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.4.0-beta.0/css/lg-zoom.css">
     <!-- LightGallery JS (Latest) -->
-    <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js?v=1') }}"></script>
-    {{-- <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script> --}}
-
+    {{-- <script src="{{ asset('assets/plugins/lightgallery/lightgallery.umd.js?v=1') }}"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/lightgallery.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/thumbnail/lg-thumbnail.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery/plugins/zoom/lg-zoom.umd.js"></script>
 
     <script>
         var defaultSize = false;
@@ -932,7 +932,20 @@
                 lightGallery(galleryElement, {
                     selector: '.pro-large-img img',
                     download: false,
-                    share: false
+                    share: false,
+                    plugins: [lgZoom],
+                    mousewheel: true,
+                    zoom: true, // Enable zoom
+                    actualSize: true, // Show actual image size on double click
+                    scale: 0.5, // Default scale level
+                    enableZoomAfter: 100, // Delay zoom activation after opening
+                    mobileSettings: {
+                        controls: true,
+                        showCloseIcon: true,
+                        download: false,
+                        rotate: false,
+                        zoom: false, 
+                    }
                 });
 
                 $('#lightgallery').addClass('lg-initialized')

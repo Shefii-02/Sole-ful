@@ -15,6 +15,7 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Exception;
 
 class DashboardController extends Controller
 {
@@ -23,16 +24,33 @@ class DashboardController extends Controller
         $totalOrders        = Order::count();
         $totalProducts      = Product::count();
         $activeCoupons     = Coupon::count();
-        $totalAccounts      = User::where('type','user')->count();
+        $totalAccounts      = User::where('type', 'user')->count();
 
         // Google Analytics
-        $totalViews  = Analytics::sessions(Period::months(100));
+        try {
+            $totalViews  = Analytics::sessions(Period::months(100));
+        } catch (Exception $e) {
+            $totalViews  = 0;
+        }
+
+
         $last30DaysVisitors = GoogleAnalyticsVisitor::orderby('date', 'asc')->get();
         $topDevices = GoogleAnalyticsTopDevice::all();
         $topReferrers = GoogleAnalyticsTopReferrer::all();
         $topLandingPages = GoogleAnalyticsTopLandingPage::all();
-        return view('admin.dashboard.index', 
-               compact('totalOrders','totalProducts','activeCoupons','totalAccounts', 'topDevices', 'topReferrers', 
-                        'last30DaysVisitors', 'topLandingPages','totalViews'));
+        return view(
+            'admin.dashboard.index',
+            compact(
+                'totalOrders',
+                'totalProducts',
+                'activeCoupons',
+                'totalAccounts',
+                'topDevices',
+                'topReferrers',
+                'last30DaysVisitors',
+                'topLandingPages',
+                'totalViews'
+            )
+        );
     }
 }

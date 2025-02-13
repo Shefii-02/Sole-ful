@@ -82,7 +82,7 @@
                 startDate: `{{ isset($coupon) ? old('start_time', date('Y-m-d', strtotime($coupon->start_time))) : date('Y-m-d') }}`,
                 endDate: `{{ isset($coupon) ? old('end_time', date('Y-m-d', strtotime($coupon->end_time))) : date('Y-m-d') }}`,
                 minSale: `{{ old('min_sales', $coupon->min_sales ?? '0') }}`,
-                enabled: `{{ old('status', $coupon->status ?? true) }}`
+                enabled: {{ old('status', isset($coupon) && $coupon->status == 'active' ? 'true' : 'false') }}
             }"
                 action="{{ isset($coupon) ? route('admin.coupons.update', $coupon->id) : route('admin.coupons.store') }}"
                 method="POST" enctype="multipart/form-data" class="p-4">
@@ -90,6 +90,7 @@
                 @if (isset($coupon))
                     @method('PUT')
                 @endif
+
                 <div class="col-lg-12">
                     <div class="row">
                         <!-- Form Section -->
@@ -127,7 +128,8 @@
                                 @enderror
                             </div>
                             <div class="mb-2 w-5/12 me-3">
-                                <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Max Count</label>
+                                <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Max Coupon
+                                    Count</label>
                                 <input type="text" autocomplete="off" name="max_count" x-model="maxCount"
                                     placeholder="Max usage count" class="form-control"
                                     value="{{ old('max_count', $coupon->color_name ?? '') }}" />
@@ -155,26 +157,26 @@
                             </div>
 
                             <div class="mb-2 w-5/12 me-3">
-                                <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Minimum
-                                    Sale</label>
+                                <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Minimum Sale
+                                    Amount</label>
                                 <input type="text" autocomplete="off"name="min_sales" x-model="minSale"
                                     class="form-control" value="{{ old('min_sales', $coupon->color_name ?? '') }}" />
                                 @error('min_sales')
                                     <span class="fw-bold text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
                             <div class="mb-2 w-full me-3">
                                 <label class="block mb-2 text-sm font-medium text-black dark:text-dark">Status</label>
                                 <div class="form-group mb-3 col-md-4">
                                     <label class="form-check form-switch">
-                                        <input class="form-check-input" name="status" x-model="enabled" type="checkbox" value="active"
-                                            id="status"
-                                            {{ old('status', isset($coupon) && $coupon->status ? 'checked' : '') }}>
-                                        <span class="form-check-label">Enabled</span>
+                                        <input class="form-check-input" name="status" x-model="enabled" type="checkbox"
+                                            value="active" id="status"
+                                            {{ old('status', isset($coupon) && ($coupon->status == 'active' ? 'checked' : '')) }}>
+
+                                        <span class="form-check-label">Active</span>
                                     </label>
                                 </div>
-                                
+
                             </div>
 
 
@@ -202,7 +204,8 @@
                                         <span x-text="endDate || 'Not Set'"></span>
                                     </p>
                                     <p class="text-sm flex gap-2 mb-3"><span class="fw-bold">Status:</span> <span
-                                            x-text="enabled ? 'Enabled' : 'Disabled'"></span></p>
+                                            class="fw-bold" x-text="enabled == true ? 'Active' : 'In Active'"></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>

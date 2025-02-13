@@ -66,6 +66,7 @@
                         <div class="w-1/12 text-center"><span class="font-medium">Current Count</span></div>
                         <div class="w-1/12 text-center"><span class="font-medium">Minimum Sale</span></div>
                         <div class="w-2/12 text-center"><span class="font-medium">Start-End Date</span></div>
+                        <div class="w-1/12 text-center"><span class="font-medium">Status</span></div>
                         <div class="w-1/12 text-end"><span class="font-medium">Actions</span></div>
                     </div>
                 </div>
@@ -79,11 +80,19 @@
                                 </div>
                                 <div class="w-2/12 text-center"><span class="font-medium">{{ $coupon->code }}</span></div>
                                 <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->value }}</span></div>
-                                <div class="w-2/12 text-center text-capitalize"><span class="font-medium">{{ $coupon->value_type }}</span></div>
-                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->max_count }}</span></div>
-                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->orders ? $coupon->orders->count() : 0 }}</span></div>
-                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->min_sales }}</span></div>
-                                <div class="w-2/12 text-center"><span class="font-medium">{!! dateFormat($coupon->start_time) .'<br>'. dateFormat($coupon->end_time) !!}</span></div>
+                                <div class="w-2/12 text-center text-capitalize"><span
+                                        class="font-medium">{{ $coupon->value_type }}</span></div>
+                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->max_count }}</span>
+                                </div>
+                                <div class="w-1/12 text-center"><span
+                                        class="font-medium">{{ $coupon->orders ? $coupon->orders->count() : 0 }}</span>
+                                </div>
+                                <div class="w-1/12 text-center"><span class="font-medium">{{ $coupon->min_sales }}</span>
+                                </div>
+                                <div class="w-2/12 text-center"><span class="font-medium">{!! dateFormat($coupon->start_time) . '<br>' . dateFormat($coupon->end_time) !!}</span>
+                                </div>
+                                <div class="w-1/12 text-center"><span class="font-medium">{!! $coupon->status == 'active'  ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">In-Active</span>' !!}</span>
+                                </div>
                                 <div class=" w-1/12 text-end">
                                     <div class=" btn-group">
                                         <a href="{{ route('admin.coupons.edit', $coupon->id) }}"

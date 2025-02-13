@@ -158,7 +158,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Net Quantity</small><br>
-                                                        <small class="text-grey ms-2">1</small>
+                                                        <small class="text-grey ms-2">1 Pair</small>
                                                     </div>
 
                                                     <div class="col-lg-6 d-none">

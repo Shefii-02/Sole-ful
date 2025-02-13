@@ -41,27 +41,6 @@
 </section>
 <!-- Hero Slider Section End -->
 
-<!-- Service Features Start -->
-<section class="service-policy-area">
-    <div class="container">
-        <div class="row">
-            @foreach ([['icon' => 'policy-1.png', 'title' => 'FREE SHIPPING', 'desc' => 'Free shipping on all order'], ['icon' => 'policy-2.png', 'title' => 'ONLINE SUPPORT', 'desc' => 'Dedicated online support'], ['icon' => 'policy-3.png', 'title' => 'PAYMENTS', 'desc' => 'Hassle-Free Payments.']] as $policy)
-                <div class="col-lg-4">
-                    <div class="service-policy-item mt-30 bg-{{ $loop->iteration }} rounded-3">
-                        <div class="policy-icon">
-                            <img src="assets/img/icon/{{ $policy['icon'] }}" alt="policy icon">
-                        </div>
-                        <div class="policy-content">
-                            <h5 class="policy-title">{{ $policy['title'] }}</h5>
-                            <p class="policy-desc">{{ $policy['desc'] }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-<!-- Service Features End -->
 
 <!-- Featured Collections Start -->
 <section class="our-product section-padding">
@@ -293,9 +272,57 @@
     </section>
 @endif
 
+
+<!-- Service Features Start -->
+<section class="service-policy-area">
+    <div class="container">
+        <div class="row">
+            @foreach ([['icon' => 'policy-1.png', 'title' => 'FREE SHIPPING', 'desc' => 'Free shipping on all order'], ['icon' => 'policy-2.png', 'title' => 'ONLINE SUPPORT', 'desc' => 'Dedicated online support', 'id' => 'support-link'], ['icon' => 'policy-3.png', 'title' => 'PAYMENTS', 'desc' => 'Hassle-Free Payments.']] as $policy)
+                <div class="col-lg-4">
+                    @if (isset($policy['id']) && $policy['id'] == 'support-link')
+                        <a href="#" id="support-link">
+                    @endif
+                    <div class="service-policy-item mt-30 bg-{{ $loop->iteration }} rounded-3">
+                        <div class="policy-icon">
+                            <img src="assets/img/icon/{{ $policy['icon'] }}" alt="policy icon">
+                        </div>
+                        <div class="policy-content">
+                            <h5 class="policy-title">
+
+                                {{ $policy['title'] }}
+
+                            </h5>
+                            <p class="policy-desc">{{ $policy['desc'] }}</p>
+                        </div>
+                    </div>
+                    @if (isset($policy['id']) && $policy['id'] == 'support-link')
+                        </a>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+<!-- Service Features End -->
+
+
 @endsection
 
 @push('footer')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var supportLink = document.getElementById("support-link");
+        if (supportLink) {
+            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                supportLink.href = "https://wa.me/+917996666225"; // Replace with your WhatsApp number
+            } else {
+                supportLink.href = "mailto:relationship@soleful.in"; // Replace with your support email
+            }
+        }
+    });
+</script>
+
 <script>
     function bannerImageSwitcher() {
         return {
