@@ -92,7 +92,7 @@ class DeliveryPartnerOrderPush extends Command
             } catch (\Exception $e) {
                 Log::error("Error processing Manifest for Order {$manifestOrder->order_id}: " . $e->getMessage());
             }
-        }
+        }    
     }
 
     private function orderPushDataFormat($order)
