@@ -79,6 +79,7 @@ class DeliveryPartnerOrderPush extends Command
             ->get();
 
         foreach ($orders_manifest as $manifestOrder) {
+            Log::info($manifestOrder);
             try {
                 $orderManifestData = $this->apiService->createManifest($manifestOrder);
 
