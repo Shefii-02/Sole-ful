@@ -60,12 +60,12 @@
                         <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
                             <div class="flex justify-between items-center gap-x-6">
                                 <div class="w-1/12 text-left"><span class="small">#INV-No</span></div>
-                                <div class="w-2/12 text-center"><span class="small">Transaction Id</span></div>
-                                <div class="w-2/12 text-left"><span class="small">Customer</span></div>
+                                <div class="w-2/12 text-center"><span class="small">Customer</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Products</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Grand Total</span></div>
                                 <div class="w-2/12 text-center"><span class="small">Created at</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Payment Method</span></div>
+                                <div class="w-2/12 text-center"><span class="small">Cancellation at</span></div>
                                 <div class="w-1/12 text-end"><span class="small">Actions</span></div>
                             </div>
                         </div>
@@ -81,15 +81,10 @@
                                             </span>
                                         </div>
 
-                                        <!-- Transaction ID -->
-                                        <div class="w-2/12 text-center">
-                                            <span class="small">
-                                                {{ $order->payments ? $order->payments->transaction_id : '' }}
-                                            </span>
-                                        </div>
+                                       
 
                                         <!-- Customer Details -->
-                                        <div class="w-2/12 text-left">
+                                        <div class="w-2/12 text-center">
                                             @if ($order->billingAddress)
                                                 <span class="small">{{ $order->billingAddress->name }}</span><br>
                                                 <span class="small">{{ $order->billingAddress->mobile }}</span><br>
@@ -122,6 +117,13 @@
                                             <span
                                                 class="small fw-bolder text-capitalize {{ $order->payment_method == 'online' ? 'text-success' : 'text-danger' }}">
                                                 {!! $order->payment_method !!}
+                                            </span>
+                                        </div>
+
+                                         <!-- Transaction ID -->
+                                         <div class="w-2/12 text-center">
+                                            <span class="small">
+                                                {!! dateTimeFormat($order->verified_at) !!}
                                             </span>
                                         </div>
 

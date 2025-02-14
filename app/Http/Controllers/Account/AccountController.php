@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddressDetailsRequest;
 use App\Models\Myaddress;
 use App\Models\Order;
 use App\Models\User;
@@ -50,10 +51,10 @@ class AccountController extends Controller
         $user_id = $this->userId;
 
         $orders = Order::where('orders.user_id', $user_id)
-                        // ->whereBetween('orders.created_at', [$startDay, $endDay])
-                        ->orderBy('id', 'desc')
-                        ->get();
-      
+            // ->whereBetween('orders.created_at', [$startDay, $endDay])
+            ->orderBy('id', 'desc')
+            ->get();
+
 
         return view('frontend.account.orders', compact('orders'));
     }
@@ -65,22 +66,22 @@ class AccountController extends Controller
         $myadd = Myaddress::whereUserId($this->userId)->orderBy('base', 'DESC')->get();
         return view('frontend.account.my-address', compact('myadd'));
     }
-    public function addressCreate(Request $request)
+    public function addressCreate(AddressDetailsRequest $request)
     {
 
 
         $myadd              = new Myaddress();
         $myadd->user_id    = auth()->user()->id;
-        $myadd->name        = $request->name;
-        $myadd->email       = $request->email;
-        $myadd->mobile      = $request->mobile;
-        $myadd->address     = $request->address;
-        $myadd->locality    = $request->locality;
-        $myadd->landmark    = $request->landmark;
-        $myadd->pincode     = $request->pincode;
-        $myadd->house_name  = $request->house_name;
-        $myadd->house_no    = $request->house_no;
-        $myadd->state       = $request->state;
+        $myadd->name        = $request->name ?? null;
+        $myadd->email       = $request->email ?? null;
+        $myadd->mobile      = $request->mobile ?? null;
+        $myadd->address     = $request->address ?? null;
+        $myadd->locality    = $request->locality ?? null;
+        $myadd->landmark    = $request->landmark ?? null;
+        $myadd->pincode     = $request->pincode ?? null;
+        $myadd->house_name  = $request->house_name ?? null;
+        $myadd->house_no    = $request->house_no ?? null;
+        $myadd->state       = $request->state ?? null;
         $myadd->country     = 'India';
         $myadd->base        = $request->has('base') ? 1 : 0;
 
@@ -101,27 +102,26 @@ class AccountController extends Controller
         }
     }
 
-    public function addressUpdate(Request $request)
+    public function addressUpdate(AddressDetailsRequest $request)
     {
-
-
         $myadd = Myaddress::whereId($request->id)->whereUserId($this->userId)->first();
 
-        $myadd->name        = $request->name;
-        $myadd->address     = $request->address;
-        $myadd->postalcode  = $request->postalcode;
-        $myadd->city        = $request->city;
-        $myadd->province    = $request->province;
+        $myadd->name        = $request->name  ?? null;
+        $myadd->email       = $request->email  ?? null;
+        $myadd->mobile      = $request->mobile  ?? null;
+        $myadd->address     = $request->address  ?? null;
+        $myadd->locality    = $request->locality  ?? null;
+        $myadd->landmark    = $request->landmark  ?? null;
+        $myadd->pincode     = $request->pincode  ?? null;
+        $myadd->house_name  = $request->house_name  ?? null;
+        $myadd->house_no    = $request->house_no  ?? null;
+        $myadd->state       = $request->state  ?? null;
         $myadd->base        = $request->has('base') ? 1 : 0;
 
         try {
 
             $myadd->save();
-
-
-
             if ($myadd->base == 1) {
-
                 Myaddress::whereUserId($this->userId)->where('id', '<>', $myadd->id)->update(['base' => 0]);
             }
 
@@ -136,7 +136,7 @@ class AccountController extends Controller
 
     public function addressDelete($id)
     {
-        $my_add = Myaddress::whereUserId()->get();
+        $my_add = Myaddress::whereUserId($this->userId)->get();
         if ($my_add->count() > 1) {
             $address = Myaddress::whereId($id)->whereUserId($this->userId)->first();
 

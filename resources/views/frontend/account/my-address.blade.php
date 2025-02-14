@@ -65,27 +65,33 @@
                                         <div class="card-body text-dark fw-bold">
                                             <div class="d-flex w-100 justify-content-end">
                                                 @if ($item->base == 1)
-                                                    <input type="radio" class="me-2" {{ $item->base == '1' ? 'checked' : '' }}>
+                                                    <input type="radio" class="me-2"
+                                                        {{ $item->base == '1' ? 'checked' : '' }}>
                                                     {{ $item->base == 1 ? 'Default' : '' }}
                                                 @endif
                                             </div>
                                             <div class="d-flex flex-column">
-                                                <small class="text-capitalize">{{ $item->name }}</small>
-                                                <small class="text-capitalize">{{ $item->address }}</small>
-                                                <small class="text-capitalize">{{ $item->city . ',' . $item->postalcode }}</small>
-                                                <small class="text-capitalize">{{ $item->province . ',' . $item->country }}</small>
+                                                <small class="fw-bolder h6 text-capitalize">{{ $item->name }}</small><br>
+                                                <small class="fw-bolder h6 ">{{ $item->email }} /
+                                                    {{ $item->mobile }}</small><br>
+
+                                                <small
+                                                    class="fw-bolder h6 text-capitalize">{{ $item->address }},{{ $item->landmark }}
+                                                    {{ $item->house_name . ',' }}
+                                                    {{ $item->pincode . ', ' . $item->locality . ', ' . $item->state }}.
+                                                </small>
                                             </div>
                                         </div>
                                         <div class="card-footer bg-transparent border-success">
                                             <ul class="list-unstyled pe-2 d-flex ">
                                                 <li class="pe-2">
                                                     <small class="add_edit btn btn-light btn-sm cursor-pointer"
-                                                        data-name="{{ $item->name }}" data-id="{{ $item->id }}"
+                                                        data-name="{{ $item->name }}" data-email="{{ $item->email }}"
+                                                        data-phone="{{ $item->mobile }}" data-id="{{ $item->id }}"
                                                         data-address="{{ $item->address }}"
-                                                        data-city="{{ $item->city }}"
-                                                        data-postalcode="{{ $item->postalcode }}"
-                                                        data-province="{{ $item->province }}"
-                                                        data-country="{{ $item->country }}"
+                                                        data-city="{{ $item->locality }}"
+                                                        data-postalcode="{{ $item->pincode }}"
+                                                        data-province="{{ $item->state }}"
                                                         data-base="{{ $item->base }}">Edit</small>
                                                 </li>
                                                 @if ($myadd->count() > 1)
@@ -95,6 +101,7 @@
                                                             action="{{ route('account.address.delete', $item->id) }}"
                                                             class="validated not-ajax" id="add_{{ $item->id }}">
                                                             @csrf()
+                                                            @method('DELETE')
                                                             <button type="submit"
                                                                 class="btn btn-light btn-sm cursor-pointer"
                                                                 data-id="add_{{ $item->id }}">Delete</button>
@@ -131,27 +138,50 @@
                         <div class="col-lg-12 form-group mb-2">
                             <label class="mb-2" for="">Full Name</label>
                             <input type="text" required autocomplete="off" form="add_address" class="form-control"
-                                name="name">
+                                value="{{ old('name') }}" name="name">
+                        </div>
+                        <div class="col-lg-6 form-group mb-2">
+                            <label for="">Email</label>
+                            <input class="form-control @error('email') is-invalid @enderror" autocomplete="off"
+                                value="{{ old('email') }}" type="email" name="email" id="email" placeholder="">
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="col-lg-6 form-group mb-2">
+                            <label for="">Phone Number</label>
+                            <input class="form-control phone_field @error('mobile') is-invalid @enderror"
+                                autocomplete="off" value="{{ old('mobile') }}" type="text" name="mobile"
+                                id="mobile" minlength="10" maxlength="10" placeholder="">
+                            @error('mobile')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="col-lg-12 form-group mb-2">
                             <label class="mb-2" for="">Address</label>
-                            <input type="text" autocomplete="off" placeholder="" class="form-control address_fill"
-                                form="add_address" name="address">
+                            <input type="text" autocomplete="off" placeholder="" value="{{ old('address') }}"
+                                class="form-control address_fill" form="add_address" name="address">
                         </div>
+
                         <div class="col-lg-6 form-group mb-2">
                             <label class="mb-2" for="">Postal Code</label>
-                            <input type="text" required autocomplete="off" form="add_address"
-                                class="form-control postalCode_fill" name="postalcode">
+                            <input type="text" required autocomplete="off" form="add_address" maxlength="6"
+                                data-state="province" data-city="city" data-msg="s_msg" data-cod="cod_msg"
+                                value="{{ old('pincode') }}"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                                class="form-control postalCode_fill postal" name="pincode">
                         </div>
                         <div class="col-lg-6 form-group mb-2">
                             <label class="mb-2" for="">City</label>
-                            <input type="text" required autocomplete="off" form="add_address"
-                                class="form-control city_fill" name="city">
+                            <input type="text" id="city" required autocomplete="off" form="add_address"
+                                value="{{ old('locality') }}" class="form-control city_fill" name="locality">
                         </div>
                         <div class="col-lg-6 form-group mb-2">
                             <label class="mb-2" for="">State</label>
-                            <input form="add_address" class="form-control province_fill" autocomplete="off"
-                                type="text" name="province" id="province" placeholder="" required>
+                            <input form="add_address" id="province" class="form-control province_fill"
+                                value="{{ old('state') }}" autocomplete="off" type="text" name="state"
+                                id="province" placeholder="" required>
 
                         </div>
                         <div class="col-lg-12 form-group mb-2">
@@ -197,37 +227,53 @@
                             <input type="text" required autocomplete="off" class="form-control" form="edit_address"
                                 name="name" id="name">
                         </div>
+                        <div class="col-lg-6 form-group mb-2">
+                            <label for="Editemail">Email</label>
+                            <input class="form-control @error('email') is-invalid @enderror" autocomplete="off"
+                                value="{{ old('email') }}" type="email" name="email" id="Editemail"
+                                placeholder="">
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="col-lg-6 form-group mb-2">
+                            <label for="Editphone">Phone Number</label>
+                            <input class="form-control phone_field @error('mobile') is-invalid @enderror"
+                                autocomplete="off" value="{{ old('mobile') }}" type="text" name="mobile"
+                                id="Editphone" minlength="10" maxlength="10" placeholder="">
+                            @error('mobile')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="col-lg-12 form-group mb-2">
                             <label class="mb-2" for="Editaddress">Address</label>
                             <textarea autocomplete="off" class="form-control address_fill" name="address" form="edit_address" id="Editaddress"></textarea>
                         </div>
                         <div class="col-lg-6 form-group mb-2">
                             <label class="mb-2" for="Editpostalcode">Postal Code</label>
-                            <input type="text" required autocomplete="off" maxlength="7"
-                                class="form-control postalCode_fill" form="edit_address" name="postalcode"
+                            <input type="text" required autocomplete="off" maxlength="6" data-state="Editprovince"
+                                data-city="Editcity" data-msg="s_msg" data-cod="cod_msg"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                                class="form-control postalCode_fill postal" form="edit_address" name="pincode"
                                 id="Editpostalcode">
                         </div>
                         <div class="col-lg-6 form-group mb-2">
                             <label class="mb-2" for="Editcity">City</label>
                             <input type="text" required autocomplete="off" class="form-control city_fill"
-                                form="edit_address" name="city" id="Editcity">
+                                form="edit_address" name="locality" id="Editcity">
                         </div>
                         <div class="col-lg-6 form-group mb-2">
 
                             <label class="mb-2" for="">State</label>
                             <input form="edit_address" class="form-control province_fill" autocomplete="off"
-                                type="text" name="province" id="Editprovince" placeholder="" required>
-
-
+                                type="text" name="state" id="Editprovince" placeholder="" required>
                         </div>
-
                         <div class="col-lg-12 form-group mb-2">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" form="edit_address" type="checkbox" name="base"
                                     id="Editbase">
                                 <label class="form-check-label" for="Editbase">Default</label>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -253,8 +299,9 @@
             var city = $(this).data('city');
             var postalcode = $(this).data('postalcode');
             var province = $(this).data('province');
-            var country = $(this).data('country');
             var base = $(this).data('base');
+            var email = $(this).data('email');
+            var phone = $(this).data('phone');
 
 
             $('#name').val(name)
@@ -263,7 +310,8 @@
             $('#Editcity').val(city)
             $('#Editpostalcode').val(postalcode)
             $('#Editprovince').val(province)
-            $('#Editcountry').val(country)
+            $('#Editemail').val(email)
+            $('#Editphone').val(phone)
             if (base == 1) {
                 $("#Editbase").prop("checked", true);
             } else {
@@ -271,6 +319,40 @@
             }
 
             $('#edit_Modal').modal('show')
+        });
+
+        $('body').on('input', '.postal', function() {
+            var pin_code = $(this).val();
+            var Idstate = $(this).data('state');
+            var Idcity = $(this).data('city');
+            var Idmsg = $(this).data('msg');
+            var codMsg = $(this).data('cod');
+            $('#s_postalErro, #payment_methodError').text('');
+
+            if (pin_code.length == 6) {
+                $.ajax({
+                    url: "{{ route('public.pincode.check') }}",
+                    cache: false,
+                    type: "GET",
+                    data: {
+                        pin_code: pin_code
+                    },
+                    success: function(response) {
+                        $('#' + Idmsg).attr('class', '');
+                        if (response.result) {
+                            $('#' + Idmsg).addClass('text-success');
+                        } else {
+                            $('#' + Idmsg).addClass('text-danger');
+                        }
+
+                        $('#' + Idstate).val(response.state)
+                        $('#' + Idcity).val(response.city)
+                        $('#' + Idmsg).text(response.message)
+                        $('#' + codMsg).text(response.cod_message)
+
+                    }
+                });
+            }
         });
     </script>
 @endpush

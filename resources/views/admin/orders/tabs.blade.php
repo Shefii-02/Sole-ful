@@ -7,13 +7,13 @@
             <a class="nav-link {{ $active == 'confirmed' ? 'active' : '' }}" href="{{ route('admin.orders.confirmed') }}">Confirmed</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ $active == 'pickup' ? 'active' : '' }}" href="{{ route('admin.orders.ready-to-move') }}">Ready to Pickup</a>
+            <a class="nav-link {{ $active == 'in-transit' ? 'active' : '' }}" href="{{ route('admin.orders.in-transit') }}">In Transit</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ $active == 'deliveried' ? 'active' : '' }}" href="{{ route('admin.orders.deliveried') }}">Deliveried</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ $active == 'returned' ? 'active' : '' }}" href="{{ route('admin.orders.returned') }}">Returned</a>
+            <a class="nav-link {{ $active == 'undelivered' ? 'active' : '' }}" href="{{ route('admin.orders.undelivered') }}">Undelivered</a>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ $active == 'cancelled' ? 'active' : '' }}" href="{{ route('admin.orders.cancelled') }}">Cancelled</a>

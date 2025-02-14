@@ -70,12 +70,35 @@ class DeliveryPartnerOrderPush extends Command
                 Log::error("Error processing label updated Order {$order->order_id}: " . $e->getMessage());
             }
         }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        $orders_manifest = Order::whereHas('DeliveryPartnerResponse')
+            ->where('delivery_status', 'READY_FOR_DISPATCH')
+            ->where('status', 'confirmed')
+            ->get();
+
+        foreach ($orders_manifest as $manifestOrder) {
+            try {
+                $orderManifestData = $this->apiService->createManifest($manifestOrder);
+
+                if (isset($orderManifestData['status']) && $orderManifestData['status'] == 200) {
+                    $manifestOrder->delivery_status = 'OUT_FOR_PICKUP'; // Use correct variable
+                    $manifestOrder->save();
+                    Log::info("Order {$manifestOrder->order_id} Manifest created successfully.");
+                } else {
+                    Log::error("Failed to create Manifest for Order {$manifestOrder->order_id}. Response: " . json_encode($orderManifestData));
+                }
+            } catch (\Exception $e) {
+                Log::error("Error processing Manifest for Order {$manifestOrder->order_id}: " . $e->getMessage());
+            }
+        }
     }
-   
+
     private function orderPushDataFormat($order)
     {
         return [
-            "orderId" => $order->invoice_id,
+            "orderId" => $order->invoice_id . 'NEWTEST',
             "orderSubtype" => "FORWARD",
             "readyToPick" => false,
             "orderCreatedAt" => $order->billed_at,
@@ -83,7 +106,7 @@ class DeliveryPartnerOrderPush extends Command
             "amount" => floatval($order->grandtotal),
             "weight" => 300 * $order->basket->items->count(),
             "lineItems" => $this->formatLineItems($order),
-            "paymentType" => $order->payment_method == 'online' ? 'ONLINE' : 'COD', 
+            "paymentType" => $order->payment_method == 'online' ? 'ONLINE' : 'COD',
             "paymentStatus" => "SUCCESS",
             "subTotal" => $order->subtotal,
             "remarks" => $order->remarks,

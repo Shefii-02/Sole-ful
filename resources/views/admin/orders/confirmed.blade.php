@@ -30,7 +30,7 @@
                                 d="M14.1896 0.459804C14.3922 0.307837 14.6708 0.333165 14.8227 0.510459L16.5704 2.58734C17.0009 3.09389 17.0009 3.85373 16.545 4.41094L14.7974 6.48782C14.7214 6.58913 14.5948 6.63978 14.4682 6.63978C14.3668 6.63978 14.2655 6.61445 14.1896 6.53847C14.0123 6.36118 13.9869 6.08257 14.1389 5.90528L15.7852 3.95504H1.75361C1.50033 3.95504 1.29771 3.75241 1.29771 3.49914C1.29771 3.24586 1.50033 3.04324 1.75361 3.04324H15.7852L14.1389 1.093C13.9869 0.890376 14.0123 0.61177 14.1896 0.459804ZM15.0097 2.68302H1.75362C1.3014 2.68302 0.9375 3.04692 0.9375 3.49914C0.9375 3.95136 1.3014 4.31525 1.75362 4.31525H15.0097L13.8654 5.67085C13.8651 5.67123 13.8648 5.67161 13.8644 5.67199C13.5725 6.01385 13.646 6.50432 13.9348 6.79318C14.1022 6.96055 14.3113 7 14.4682 7C14.6795 7 14.9203 6.91713 15.0784 6.71335L16.8207 4.64286L16.8238 4.63904C17.382 3.95682 17.3958 3.00293 16.8455 2.35478C16.8453 2.35453 16.845 2.35429 16.8448 2.35404L15.0984 0.278534L15.0962 0.276033C14.8097 -0.0583053 14.3139 -0.0837548 13.9734 0.17163L13.964 0.17867L13.9551 0.186306C13.6208 0.472882 13.5953 0.968616 13.8507 1.30913L13.857 1.31743L15.0097 2.68302Z"
                                 fill=""></path>
                         </svg>
-                        Orders
+                        Confirmed Orders List
                     </li>
                 </ol>
             </nav>
@@ -44,7 +44,7 @@
                 <div class="p-4 md:p-6 xl:p-7.5">
                     <div class="flex items-start justify-between">
                         <h2 class="text-title-sm2 font-bold text-black dark:text-black">
-                            Orders List
+                            Confirmed Orders List
                         </h2>
                         <div class="relative">
 
@@ -52,7 +52,7 @@
                     </div>
 
                 </div>
-                @include('admin.orders.tabs',['active'=>'confirmed'])
+                @include('admin.orders.tabs', ['active' => 'confirmed'])
 
                 <div class="col-span-12">
                     <div
@@ -60,37 +60,41 @@
 
                         <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
                             <div class="flex justify-between items-center gap-x-6">
-                                <div class="w-1/12 text-left"><span class="small">#INV-No</span></div>
-                                <div class="w-2/12 text-center"><span class="small">Transaction Id</span></div>
-                                <div class="w-2/12 text-left"><span class="small">Customer</span></div>
+                                <div class="w-2/12 text-left"><span class="small">#INV-No</span></div>
+                                <div class="w-2/12 text-center"><span class="small">awbNumber / cAwbNumber</span></div>
+                                <div class="w-2/12 text-center"><span class="small">Customer</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Products</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Grand Total</span></div>
-                                <div class="w-2/12 text-center"><span class="small">Created at</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Payment Method</span></div>
+                                <div class="w-1/12 text-center"><span class="small">Created at</span></div>
+                                <div class="w-1/12 text-center"><span class="small">Confirmed at</span></div>
                                 <div class="w-1/12 text-end"><span class="small">Actions</span></div>
                             </div>
                         </div>
-
                         <div class="p-4 md:p-6 xl:p-7.5">
                             <div class="flex flex-col gap-y-4">
                                 @forelse ($orders as $key => $order)
                                     <div class="flex justify-between items-center gap-x-6">
                                         <!-- Invoice ID -->
-                                        <div class="w-1/12 text-center">
+                                        <div class="w-2/12 text-left">
                                             <span class="badge badge-outline small bg-primary">
                                                 <span class="small">{{ $order->invoice_id }}</span>
                                             </span>
                                         </div>
 
-                                        <!-- Transaction ID -->
                                         <div class="w-2/12 text-center">
                                             <span class="small">
-                                                {{ $order->payments ? $order->payments->transaction_id : '' }}
+                                
+                                                @if ($order->DeliveryPartnerResponse)
+                                                    {{ $order->DeliveryPartnerResponse->awb_number }}/
+                                                    {{ $order->DeliveryPartnerResponse->c_awb_number }}
+                                                @endif
                                             </span>
                                         </div>
 
+
                                         <!-- Customer Details -->
-                                        <div class="w-2/12 text-left">
+                                        <div class="w-2/12 text-center">
                                             @if ($order->billingAddress)
                                                 <span class="small">{{ $order->billingAddress->name }}</span><br>
                                                 <span class="small">{{ $order->billingAddress->mobile }}</span><br>
@@ -109,10 +113,6 @@
                                             <span class="small fw-bold">{{ getPrice($order->grandtotal) }}</span>
                                         </div>
 
-                                        <!-- Created At -->
-                                        <div class="w-2/12 text-center">
-                                            <span class="small">{!! dateTimeFormat($order->billed_at) !!}</span>
-                                        </div>
 
                                         <!-- Status -->
                                         <div class="w-1/12 text-center">
@@ -125,6 +125,17 @@
                                                 {!! $order->payment_method !!}
                                             </span>
                                         </div>
+                                        <!-- Created At -->
+                                        <div class="w-1/12 text-center">
+                                            <span class="small">{!! dateTimeFormat($order->billed_at) !!}</span>
+                                        </div>
+                                        <!-- Transaction ID -->
+                                        <div class="w-1/12 text-center">
+                                            <span class="small">
+                                                {!! dateTimeFormat($order->verified_at) !!}
+                                            </span>
+                                        </div>
+
 
                                         <!-- Actions -->
                                         <div class="w-1/12 text-end">

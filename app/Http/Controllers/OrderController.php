@@ -32,36 +32,38 @@ class OrderController extends Controller
     public function index()
     {
         //
-        $orders = Order::orderBy('created_at', 'desc')->get();
+        $orders = Order::where('status', 'pending')->orderBy('created_at', 'desc')->get();
         return view('admin.orders.index', compact('orders'));
     }
 
-    public function confirmed() {
-        $orders = Order::orderBy('created_at', 'desc')->get();
+    public function confirmed()
+    {
+        $orders = Order::where('status', 'confirmed')->whereNull('delivery_status')->orderBy('created_at', 'desc')->get();
         return view('admin.orders.confirmed', compact('orders'));
     }
-    public function readyToMove() {
-        $orders = Order::orderBy('created_at', 'desc')->get();
-        return view('admin.orders.ready_to_pickup', compact('orders'));
+    public function inTransit()
+    {
+        $excludedStatuses = ['DELIVERED', 'UNDELIVERED'];
+        $orders = Order::where('status', 'confirmed')
+            ->whereNotIn('delivery_status', $excludedStatuses)
+            ->orderBy('created_at', 'desc')->get();
+        return view('admin.orders.in-transit', compact('orders'));
     }
-    public function deliveried() {
-        $orders = Order::orderBy('created_at', 'desc')->get();
+    public function deliveried()
+    {
+        $orders = Order::where('status', 'confirmed')->where('delivery_status', 'DELIVERED')->orderBy('created_at', 'desc')->get();
         return view('admin.orders.deliveried', compact('orders'));
     }
-    public function cancelled() {
-        $orders = Order::orderBy('created_at', 'desc')->get();
+    public function cancelled()
+    {
+        $orders = Order::where('status', 'cancelled')->orderBy('created_at', 'desc')->get();
         return view('admin.orders.cancelled', compact('orders'));
     }
-    public function returned() {
-        $orders = Order::orderBy('created_at', 'desc')->get();
-        return view('admin.orders.returned', compact('orders'));
+    public function undelivered()
+    {
+        $orders = Order::where('status', 'confirmed')->where('delivery_status', 'UNDELIVERED')->orderBy('created_at', 'desc')->get();
+        return view('admin.orders.undelivered', compact('orders'));
     }
-
-
-
-
-
-
 
 
     public function show($id)
@@ -84,10 +86,14 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::where('id', $id)->first() ?? abort(404);
-        if ($request->verified_at == 'Verified') {
+        if ($request->status == 'confirmed') {
             $order->verified_at = date('Y-m-d H:i:s');
-        } else {
-            $order->verified_at = null;
+            $order->status = 'confirmed';
+        } else if ($request->status == 'cancelled') {
+            $order->verified_at = date('Y-m-d H:i:s');
+            $order->status = 'cancelled';
+        } elseif ($request->status == 'READY_FOR_DISPATCH') {
+            $order->delivery_status = 'READY_FOR_DISPATCH';
         }
 
         $order->save();
@@ -103,6 +109,7 @@ class OrderController extends Controller
     public function placeOrder(CheckoutFormRequest $request)
     {
 
+        dd($request->all());
         $user           = User::where('id', auth()->user()->id)->first();
         if (session()->has('session_string') && $user) {
 
@@ -122,8 +129,7 @@ class OrderController extends Controller
                 }
 
                 $this->storeAddress($billingAddress, $basket->id, 'billing');
-                $this->storeAddress($billingAddress, $basket->id, 'delivery');
-
+                $this->storeDeliveryAddress($request, $basket->id, 'delivery');
 
                 if ($request->payment_method == 'online') {
                     $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
@@ -270,7 +276,7 @@ class OrderController extends Controller
         return view('frontend.thanks', compact('invoice_id', 'googlecode'));
     }
 
-    public function storeAddress($data, $basket_id, $type)
+    public function storeBillingAddress($data, $basket_id, $type)
     {
         $address = $data;
         try {
@@ -287,6 +293,34 @@ class OrderController extends Controller
             $save_add->house_name  = $address->house_name;
             $save_add->house_no    = $address->house_no;
             $save_add->state       = $address->state;
+            $save_add->country     = 'India';
+            $save_add->type        = $type;
+            $save_add->basket_id   = $basket_id;
+            $save_add->save();
+
+            return 1;
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    public function storeDeliveryAddress(Request $request, $basket_id, $type)
+    {
+        $address = $request;
+        try {
+            $save_add              = new OrderAddress();
+            $save_add->user_id     = auth()->check() ? auth()->user()->id : 0;
+            $save_add->order_id    = 0;
+            $save_add->name        = $address['s_name'] ?? '';
+            $save_add->email       = $address['s_email'];
+            $save_add->mobile      = $address['s_phone'];
+            $save_add->address     = $address['s_address'];
+            $save_add->locality    = $address['s_locality'];
+            $save_add->landmark    = $address['s_landmark'] ?? null;
+            $save_add->pincode     = $address['s_postal'];
+            $save_add->house_name  = $validatedData['s_house_name'] ?? null;
+            $save_add->house_no    = $request->input('s_house_no', null);
+            $save_add->state       = $address['s_state'];
             $save_add->country     = 'India';
             $save_add->type        = $type;
             $save_add->basket_id   = $basket_id;

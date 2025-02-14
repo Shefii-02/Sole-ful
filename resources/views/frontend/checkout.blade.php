@@ -201,7 +201,7 @@
                                                                         data-phone="{{ auth()->user()->mobile }}"
                                                                         name="billing_address" value="{{ $item->id }}"
                                                                         id="BillingRadioaddress{{ $item->id }}"
-                                                                        @if ($item->base == 1) checked @endif>
+                                                                        @if (old('billing_address') == $item->id || ($item->base == 1 && !old('billing_address'))) checked @endif>
                                                                     <p class="form-check-label"
                                                                         for="BillingRadioaddress{{ $item->id }}">
                                                                         <small
@@ -539,10 +539,12 @@
                                     class="form-control landmark_fill" form="add_address" name="landmark">
                             </div>
 
+
                             <div class="col-lg-6 form-group mb-2">
                                 <label class="mb-2" for="pincode">Postal Code</label>
-                                <input type="text" required autocomplete="off" id="pincode" form="add_address"
-                                    class="form-control pincode_fill" name="pincode"
+                                <input type="text" data-state="state" data-city="locality" data-msg="123"
+                                    data-cod="123" required autocomplete="off" id="pincode" form="add_address"
+                                    class="form-control pincode_fill postal" name="pincode" maxlength="6"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');">
                             </div>
 
@@ -691,7 +693,7 @@
             var Idmsg = $(this).data('msg');
             var codMsg = $(this).data('cod');
             $('#s_postalErro, #payment_methodError').text('');
-            
+
             if (pin_code.length == 6) {
                 $.ajax({
                     url: "{{ route('public.pincode.check') }}",
@@ -712,7 +714,7 @@
                         $('#' + Idcity).val(response.city)
                         $('#' + Idmsg).text(response.message)
                         $('#' + codMsg).text(response.cod_message)
-                        
+
                     }
                 });
             }

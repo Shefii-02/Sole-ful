@@ -18,6 +18,7 @@ class DeliveryPartnerApi
     protected $pushOrder;
     protected $labelOrder;
     protected $trackOrder;
+    protected $manifestOrder;
 
     public function __construct()
     {
@@ -30,6 +31,7 @@ class DeliveryPartnerApi
         $this->pushOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/ecomm/push-order';
         $this->labelOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/download/label-invoice';
         $this->trackOrder  = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/order-tracking/';
+        $this->manifestOrder = env('DELIVERY_PARTNER_URL') . '/fulfillment/public/seller/order/create-manifest';
     }
 
 
@@ -199,5 +201,28 @@ class DeliveryPartnerApi
             );
         }
         return $responseData;
+    }
+
+
+    public function createManifest($order)
+    {
+        $accessToken = $this->getAccessToken(); // Ensure access token is retrieved first
+
+        // API request to create the manifest
+        $orderData = [
+            "awbNumber"  => [$order->awb_number], // Ensure correct format (array)
+            "cAwbNumber" => [$order->c_awb_number],
+        ];
+
+        // Send API request with authentication
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $accessToken,
+            'Content-Type'  => 'application/json',
+        ])->post($this->manifestOrder, $orderData);
+
+        // Parse response JSON correctly
+        $responseData = $response->json();
+
+        return $responseData; // Return JSON response
     }
 }
