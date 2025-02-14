@@ -1,9 +1,35 @@
 @extends('layouts.app')
 @push('header')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity= "sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         ol i {
             font-size: 10px;
             font-weight: 800;
+        }
+    </style>
+    <style>
+        .icon-box {
+            width: 55px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        hr {
+            border: none;
+            height: 3px;
+            margin-top: 5px;
+        }
+
+        hr.bg-success {
+            background: green !important;
+            color: green;
+            opacity: inherit;
         }
     </style>
 @endpush
@@ -30,7 +56,20 @@
         </div>
         <!-- breadcrumb area end -->
     </section>
+    @php
+        $orderStates = [
+            'PENDING' => 1,
+            'CONFIRMED' => 2,
+            'READY_FOR_DISPATCH' => 3,
+            'OUT_FOR_PICKUP' => 4,
+            'PICKED_UP' => 5,
+            'IN_TRANSIT' => 6,
+            'OUT_FOR_DELIVERY' => 7,
+            'DELIVERED' => 8,
+            'UNDELIVERED' => 9,
+        ];
 
+    @endphp
     <section class="py-10">
         <div class="container mx-auto max-w-4xl">
             @if ($orders->count() > 0)
@@ -57,7 +96,7 @@
 
                                 </div>
                             </div>
-                            <div class=" mt-3">
+                            {{-- <div class=" mt-3">
                                 <!-- Add class 'active' to progress -->
                                 <ol
                                     class="flex items-center w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
@@ -100,7 +139,7 @@
                                     </li>
                                 </ol>
 
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="collapse" id="order-{{ $order->id }}">
@@ -157,6 +196,51 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @php
+                                // Define order status steps with numerical order
+
+                                // Format order state keys to uppercase for comparison
+                                $orderStatesFormatted = [];
+                                foreach ($orderStates as $state => $step) {
+                                    $orderStatesFormatted[strtoupper($state)] = $step;
+                                }
+
+                                // Get current order status from DeliveryPartnerResponse (a single string)
+                                $currentStatus = strtoupper($order->delivery_status ?? $order->status);
+                                $currentStep = $orderStatesFormatted[$currentStatus] ?? 1;
+                            @endphp
+
+                            <div class="container my-2">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-12">
+                                        <div class="card bg-light shadow-lg border rounded-lg py-4 px-5">
+                                            <!-- Order Tracking Title -->
+                                            <h5 class="text-center mb-4 text-primary fw-bold">Order Tracking</h5>
+                                            <div class="row">
+                                                @foreach ($orderStates as $state => $step)
+                                                    <div class="col-md-3">
+                                                        <div class="d-flex align-items-center mb-4">
+                                                            <div
+                                                                class="icon-box rounded-circle {{ $currentStep >= $step ? 'bg-success text-white' : 'bg-secondary text-light' }}">
+                                                                <i class="fa-solid fa-{{ getIcon($state) }}"></i>
+                                                            </div>
+                                                            <span
+                                                                class="mb-0 text-sm text-capitalize text-center w-100 ms-3 d-flex flex-column">
+                                                                {!! str_replace('_', ' ', strtolower($state)) !!}
+                                                                <hr size="2"
+                                                                    class="w-100 h-1 {{ $currentStep >= $step ? 'bg-success' : 'bg-secondary' }}">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 @endforeach
@@ -186,4 +270,24 @@
             @endif
         </div>
     </section>
+    @php
+        /**
+         * Return a Font Awesome icon class based on the order state.
+         */
+        function getIcon($state)
+        {
+            $icons = [
+                'PENDING' => 'spinner',
+                'CONFIRMED' => 'clipboard-check',
+                'READY_FOR_DISPATCH' => 'boxes-packing',
+                'OUT_FOR_PICKUP' => 'truck-loading',
+                'PICKED_UP' => 'truck-moving',
+                'IN_TRANSIT' => 'truck-fast',
+                'OUT_FOR_DELIVERY' => 'truck-arrow-right',
+                'DELIVERED' => 'house-chimney',
+                'UNDELIVERED' => 'exclamation-triangle',
+            ];
+            return $icons[$state] ?? 'question-circle';
+        }
+    @endphp
 @endsection
