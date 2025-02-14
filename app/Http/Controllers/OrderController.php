@@ -127,7 +127,7 @@ class OrderController extends Controller
                     $billingAddress = Myaddress::where('user_id', $user->id)->first();
                 }
 
-                $this->storeAddress($billingAddress, $basket->id, 'billing');
+                $this->storeBillingAddress($billingAddress, $basket->id, 'billing');
                 $this->storeDeliveryAddress($request, $basket->id, 'delivery');
 
                 if ($request->payment_method == 'online') {
