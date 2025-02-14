@@ -14,11 +14,11 @@
     <link rel="icon" type="image/x-icon" href="/assets/img/logo/logo.png">
     {{-- <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" /> --}}
     <!--=== All Plugins CSS ===-->
-    <link href="/assets/css/plugins.css" rel="stylesheet">
+    <link href="/assets/css/plugins.css?v=1.2" rel="stylesheet">
     <!--=== All Vendor CSS ===-->
-    <link href="/assets/css/vendor.css" rel="stylesheet">
+    <link href="/assets/css/vendor.css?v=1.2" rel="stylesheet">
     <!--=== Main Style CSS ===-->
-    <link href="/assets/css/style.css?v=1" rel="stylesheet">
+    <link href="/assets/css/style.css?v=1.2" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -662,11 +662,11 @@
 
 
     <!--=== All Vendor Js ===-->
-    <script src="/assets/js/vendor.js"></script>
+    <script src="/assets/js/vendor.js?v=1.2"></script>
     <!--=== All Plugins Js ===-->
-    <script src="/assets/js/plugins.js"></script>
+    <script src="/assets/js/plugins.js?v=1.2"></script>
     <!--=== Active Js ===-->
-    <script src="/assets/js/active.js?v=1.1"></script>
+    <script src="/assets/js/active.js?v=1.2"></script>
 
 
 

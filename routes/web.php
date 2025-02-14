@@ -153,7 +153,13 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
 
     Route::resource('products', ProductController::class)->names('products');
 
-    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/pending', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/confirmed', [OrderController::class, 'confirmed'])->name('orders.confirmed');
+    Route::get('orders/ready-to-move', [OrderController::class, 'readyToMove'])->name('orders.ready-to-move');
+    Route::get('orders/deliveried', [OrderController::class, 'deliveried'])->name('orders.deliveried');
+    Route::get('orders/cancelled', [OrderController::class, 'cancelled'])->name('orders.cancelled');
+    Route::get('orders/returned', [OrderController::class, 'returned'])->name('orders.returned');
+    
     Route::post('orders/{invoice_id}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('orders/{invoice_id}/print', [OrderController::class, 'printInvoice'])->name('orders.print');
     Route::get('orders/{invoice_id}', [OrderController::class, 'show'])->name('orders.show');

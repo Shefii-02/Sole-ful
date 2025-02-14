@@ -30,7 +30,7 @@
                                 d="M14.1896 0.459804C14.3922 0.307837 14.6708 0.333165 14.8227 0.510459L16.5704 2.58734C17.0009 3.09389 17.0009 3.85373 16.545 4.41094L14.7974 6.48782C14.7214 6.58913 14.5948 6.63978 14.4682 6.63978C14.3668 6.63978 14.2655 6.61445 14.1896 6.53847C14.0123 6.36118 13.9869 6.08257 14.1389 5.90528L15.7852 3.95504H1.75361C1.50033 3.95504 1.29771 3.75241 1.29771 3.49914C1.29771 3.24586 1.50033 3.04324 1.75361 3.04324H15.7852L14.1389 1.093C13.9869 0.890376 14.0123 0.61177 14.1896 0.459804ZM15.0097 2.68302H1.75362C1.3014 2.68302 0.9375 3.04692 0.9375 3.49914C0.9375 3.95136 1.3014 4.31525 1.75362 4.31525H15.0097L13.8654 5.67085C13.8651 5.67123 13.8648 5.67161 13.8644 5.67199C13.5725 6.01385 13.646 6.50432 13.9348 6.79318C14.1022 6.96055 14.3113 7 14.4682 7C14.6795 7 14.9203 6.91713 15.0784 6.71335L16.8207 4.64286L16.8238 4.63904C17.382 3.95682 17.3958 3.00293 16.8455 2.35478C16.8453 2.35453 16.845 2.35429 16.8448 2.35404L15.0984 0.278534L15.0962 0.276033C14.8097 -0.0583053 14.3139 -0.0837548 13.9734 0.17163L13.964 0.17867L13.9551 0.186306C13.6208 0.472882 13.5953 0.968616 13.8507 1.30913L13.857 1.31743L15.0097 2.68302Z"
                                 fill=""></path>
                         </svg>
-                        Orders
+                        Cancelled Orders
                     </li>
                 </ol>
             </nav>
@@ -44,7 +44,7 @@
                 <div class="p-4 md:p-6 xl:p-7.5">
                     <div class="flex items-start justify-between">
                         <h2 class="text-title-sm2 font-bold text-black dark:text-black">
-                            Orders List
+                            Cancelled  Orders List
                         </h2>
                         <div class="relative">
 
@@ -52,9 +52,7 @@
                     </div>
 
                 </div>
-               
-                @include('admin.orders.tabs',['active'=>'pending'])
-
+                @include('admin.orders.tabs',['active'=>'returned'])
                 <div class="col-span-12">
                     <div
                         class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -62,6 +60,7 @@
                         <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
                             <div class="flex justify-between items-center gap-x-6">
                                 <div class="w-1/12 text-left"><span class="small">#INV-No</span></div>
+                                <div class="w-2/12 text-center"><span class="small">Transaction Id</span></div>
                                 <div class="w-2/12 text-left"><span class="small">Customer</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Products</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Grand Total</span></div>
@@ -79,6 +78,13 @@
                                         <div class="w-1/12 text-center">
                                             <span class="badge badge-outline small bg-primary">
                                                 <span class="small">{{ $order->invoice_id }}</span>
+                                            </span>
+                                        </div>
+
+                                        <!-- Transaction ID -->
+                                        <div class="w-2/12 text-center">
+                                            <span class="small">
+                                                {{ $order->payments ? $order->payments->transaction_id : '' }}
                                             </span>
                                         </div>
 
@@ -125,7 +131,7 @@
 
                                                 <a title="View order"
                                                     href="{{ route('admin.orders.show', $order->invoice_id) }}"
-                                                    class="mx-auto block hover:text-meta-1">
+                                                    target="_blank" class="mx-auto block hover:text-meta-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
                                                         <path
@@ -134,7 +140,44 @@
                                                             d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
                                                     </svg>
                                                 </a>
-                                               
+                                                <a title="Shipping Label"
+                                                    download="{{ 'Shipping-Label-' . $order->invoice_id . '.pdf' }}"
+                                                    target="_new"
+                                                    href="{{ $order->DeliveryPartnerResponse ? $order->DeliveryPartnerResponse->shipping_label_url : '#' }}"
+                                                    class="mx-auto block hover:text-meta-1 ms-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-file-earmark-break"
+                                                        viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M14 4.5V9h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v7H2V2a2 2 0 0 1 2-2h5.5zM13 12h1v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-2h1v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1zM.5 10a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1z" />
+                                                    </svg>
+                                                </a>
+                                                @if ($order->DeliveryPartnerResponse && $order->DeliveryPartnerResponse->invoice_url)
+                                                    <a title="Invoice"
+                                                        download="{{ 'Invoice-' . $order->invoice_id . '.pdf' }}"
+                                                        href="{{ $order->DeliveryPartnerResponse ? $order->DeliveryPartnerResponse->shipping_label_url : '#' }}"
+                                                        target="_new" class="mx-auto block hover:text-meta-1 ms-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-printer"
+                                                            viewBox="0 0 16 16">
+                                                            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+                                                            <path
+                                                                d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
+                                                        </svg>
+                                                    </a>
+                                                @else
+                                                    <a title="Invoice"
+                                                        href="{{ route('admin.orders.print', $order->invoice_id) }}"
+                                                        target="_new" class="mx-auto block hover:text-meta-1 ms-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                            height="16" fill="currentColor" class="bi bi-printer"
+                                                            viewBox="0 0 16 16">
+                                                            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1" />
+                                                            <path
+                                                                d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1" />
+                                                        </svg>
+                                                    </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

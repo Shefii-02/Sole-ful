@@ -36,6 +36,34 @@ class OrderController extends Controller
         return view('admin.orders.index', compact('orders'));
     }
 
+    public function confirmed() {
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.orders.confirmed', compact('orders'));
+    }
+    public function readyToMove() {
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.orders.ready_to_pickup', compact('orders'));
+    }
+    public function deliveried() {
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.orders.deliveried', compact('orders'));
+    }
+    public function cancelled() {
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.orders.cancelled', compact('orders'));
+    }
+    public function returned() {
+        $orders = Order::orderBy('created_at', 'desc')->get();
+        return view('admin.orders.returned', compact('orders'));
+    }
+
+
+
+
+
+
+
+
     public function show($id)
     {
         $order = Order::where('invoice_id', $id)->first() ?? abort(404);
@@ -100,7 +128,7 @@ class OrderController extends Controller
                 if ($request->payment_method == 'online') {
                     $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
                     return redirect($result);
-                } else {  
+                } else {
                     $result     = $this->submitCodForm($grandTotal, $user, $basket);
 
                     return $result->render();

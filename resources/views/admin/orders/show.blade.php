@@ -199,7 +199,6 @@
 
 
                         <form action="{{ route('admin.orders.update',$order->id) }}" method="POST">
-                       
                             @csrf
                             <h3  class="fw-bold">
                                 Order Status : 
