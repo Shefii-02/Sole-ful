@@ -110,7 +110,7 @@
 
                                         <!-- Grand Total -->
                                         <div class="w-1/12 text-center">
-                                            <span class="small fw-bold">{{ $order->delivery_status }}</span>
+                                            <span class="small fw-bold text-info">{{ $order->delivery_status }}</span>
                                         </div>
 
                                         <!-- Created At -->
