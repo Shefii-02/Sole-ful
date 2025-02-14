@@ -56,8 +56,16 @@ class FrontendController extends Controller
 
     public function getWishlist(Request $request)
     {
+
         $wishlistIds = $request->input('wishlist');
-        $products = Product::whereIn('id', $wishlistIds)->get();
+        if(is_array($wishlistIds)){
+            $products = Product::whereIn('id', $wishlistIds)->get();
+        }
+        else{
+            $products = collect();
+        }
+
+        
 
         return view('frontend.partials.wishlist', compact('products'));
     }
