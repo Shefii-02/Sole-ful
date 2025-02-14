@@ -64,8 +64,8 @@
                                 <div class="w-1/12 text-left"><span class="small">#INV-No</span></div>
                                 <div class="w-2/12 text-center"><span class="small">awbNumber / cAwbNumber</span></div>
                                 <div class="w-2/12 text-left"><span class="small">Customer</span></div>
-                                <div class="w-1/12 text-center"><span class="small">Products</span></div>
-                                <div class="w-1/12 text-center"><span class="small">Grand Total</span></div>
+                                <div class="w-1/12 text-center"><span class="small">Products/Grand Total</span></div>
+                                <div class="w-1/12 text-center"><span class="small">Current Status</span></div>
                                 <div class="w-2/12 text-center"><span class="small">Created at</span></div>
                                 <div class="w-1/12 text-center"><span class="small">Payment Method</span></div>
                                 <div class="w-1/12 text-end"><span class="small">Actions</span></div>
@@ -105,12 +105,12 @@
                                         <!-- Products Count -->
                                         <div class="w-1/12 text-center">
                                             <span
-                                                class="small">{{ $order->basket->items ? $order->basket->items->count() : 0 }}</span>
+                                                class="small">{{ $order->basket->items ? $order->basket->items->count() : 0 }} / {{ getPrice($order->grandtotal) }}</span>
                                         </div>
 
                                         <!-- Grand Total -->
                                         <div class="w-1/12 text-center">
-                                            <span class="small fw-bold">{{ getPrice($order->grandtotal) }}</span>
+                                            <span class="small fw-bold">{{ $order->delivery_status }}</span>
                                         </div>
 
                                         <!-- Created At -->

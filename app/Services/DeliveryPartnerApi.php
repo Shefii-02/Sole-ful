@@ -214,7 +214,7 @@ class DeliveryPartnerApi
             "cAwbNumber" => [$order->DeliveryPartnerResponse->c_awb_number],
         ];
 
-        Log::info($orderData);
+    
 
         // Send API request with authentication
         $response = Http::withHeaders([
