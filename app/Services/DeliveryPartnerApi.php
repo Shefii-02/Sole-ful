@@ -210,8 +210,8 @@ class DeliveryPartnerApi
 
         // API request to create the manifest
         $orderData = [
-            "awbNumber"  => [$order->awb_number], // Ensure correct format (array)
-            "cAwbNumber" => [$order->c_awb_number],
+            "awbNumber"  => [$order->DeliveryPartnerResponse->awb_number], // Ensure correct format (array)
+            "cAwbNumber" => [$order->DeliveryPartnerResponse->c_awb_number],
         ];
 
         Log::info($orderData);
