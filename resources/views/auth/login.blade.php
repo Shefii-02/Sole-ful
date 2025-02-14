@@ -40,7 +40,7 @@
                                 </span>
                             </div>
                         </div> --}}
-                        <div class="w-full  xl:w-1/2 ">
+                        <div class="w-full   ">
                             <div class="w-full p-4 sm:p-12.5 xl:p-17.5">
                                 {{-- <div class="w-full mx-auto">
                                     <a class="mb-5.5 inline-block" href="/">

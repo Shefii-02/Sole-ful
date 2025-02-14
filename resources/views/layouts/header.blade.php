@@ -1,4 +1,3 @@
-
 <!-- Start Header Area -->
 <header class="header-area">
     <div class="container bg-white rounded-5">
@@ -32,7 +31,6 @@
                                     <div class="for-sup">
                                         <div class="f-msp">
                                             <ul id="header-wr" class="menu">
-
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" href="/">Home</a>
                                                 </li>
@@ -40,56 +38,87 @@
                                                     <a class="dropdown-item" target="_blank"
                                                         href="{{ route('public.shop') }}">Shop</a>
                                                 </li>
-                               
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" ttarget="_blank"
-                                                        href="{{ route('public.shop', ['categories[]' => 'Ethnic']) }}">Ethnic</a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('public.shop', ['categories[]' => 'Casual']) }}">Casual
-                                                        </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" ttarget="_blank"
-                                                        href="{{ route('public.shop', ['categories[]' => 'Party']) }}">Party</a>
-                                                </li>
 
+                                                <!-- Occasion Dropdown Start -->
+                                                <li class="mb-2 dropdown">
+                                                    <a class="dropdown-item dropdown-toggle" href="#"
+                                                        id="occasionDropdown" role="button" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        Occasion
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="occasionDropdown">
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('public.shop', ['categories[]' => 'Ethnic']) }}">Ethnic</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('public.shop', ['categories[]' => 'Casual']) }}">Casual</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('public.shop', ['categories[]' => 'Party']) }}">Party</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('public.shop', ['categories[]' => 'Formal']) }}">Formal</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <!-- Occasion Dropdown End -->
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('public.shop', ['categories[]' => 'Formal']) }}">Formal
-                                                        </a>
+                                                        href="{{ url('/cart') }}">Cart</a>
                                                 </li>
-                                               
+                                            
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('t-c') }}">Terms and Conditions</a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('refund_policy') }}">Refund Policy</a>
+                                                        href="{{ url('/order-track') }}">Orders Tracking</a>
                                                 </li>
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('return_policy') }}">Returns & Exchanges</a>
+                                                        href="{{ route('public.contact-us') }}">Contact us</a>
                                                 </li>
-
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('shipping_policy') }}">Shipping & Delivery</a>
+                                                <!-- Pages Dropdown Start -->
+                                                <li class="mb-2 dropdown">
+                                                    <a class="dropdown-item dropdown-toggle" href="#"
+                                                        id="pagesDropdown" role="button" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                        Pages
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="pagesDropdown">
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('t-c') }}">Terms and Conditions</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('refund_policy') }}">Refund Policy</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('return_policy') }}">Returns &
+                                                                Exchanges</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('shipping_policy') }}">Shipping &
+                                                                Delivery</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" target="_blank"
+                                                                href="{{ route('privacy_policy') }}">Privacy Policy</a>
+                                                        </li>
+                                                    </ul>
                                                 </li>
-                                                <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ route('privacy_policy') }}">Privacy Policy</a>
-                                                </li>
-
                                             </ul>
+
 
                                         </div>
 
 
                                     </div>
-                                    <div class="social-links">
+                                    <div class="social-links position-fixed bottom-0 py-4">
                                         <div class="footer-social-link text-center text-md-end">
                                             <a href="#"><i class="fa fa-facebook"></i></a>
                                             <a href="#"><i class="fa fa-twitter"></i></a>
@@ -114,7 +143,7 @@
                     <ul class="d-flex gap-4 align-items-end align-content-end m-1">
                         <li class="position-relative d-none d-md-block">
                             <div class="search" id="search-bar" x-data="{
-                                placeholders: ['Type something...','Just type if you want Shoe type', 'Just type if you want Category', 'Just type if you want Color', 'Just type if you want Size', 'Just type if you want Product name'],
+                                placeholders: ['Type something...', 'Just type if you want Shoe type', 'Just type if you want Category', 'Just type if you want Color', 'Just type if you want Size', 'Just type if you want Product name'],
                                 currentIndex: 0,
                                 init() {
                                     this.cyclePlaceholders();
@@ -125,10 +154,10 @@
                                         this.currentIndex = (this.currentIndex + 1) % this.placeholders.length;
                                     }, 2000); // Change placeholder every 2 seconds
                                 }
-                            }"
-                            x-init="init()">
-                                <input type="text" x-ref="inputElement"  autocomplete="off" placeholder="Type something..." name="q"
-                                    class="search__input" id="search-input">
+                            }" x-init="init()">
+                                <input type="text" x-ref="inputElement" autocomplete="off"
+                                    placeholder="Type something..." name="q" class="search__input"
+                                    id="search-input">
                                 <div class="search__button" id="search-button">
                                     <i class="ri-search-2-line bi bi-search text-theme"></i>
                                     <i class="ri-close-line bi bi-x"></i>
@@ -145,7 +174,8 @@
                                 Now</a>
                         </li>
                         <li class="cursor-pointer ">
-                            <a href="{{ route('account.orders.show') }}" class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
+                            <a href="{{ route('account.orders.show') }}"
+                                class="btn btn-theme btn-sm rounded-5 fw-bold">Track Order</a>
                         </li>
                         <li class="d-none d-md-block">
                             <a href="#" class="cartList-btn-view" data-bs-toggle="offcanvas"
@@ -157,15 +187,15 @@
                             </a>
                         </li>
                         <li class="me-0 ms-2 wishlist-section " style="display: none">
-                            <a href="#" class="d-inline d-none d-md-block wishlist-btn-view" data-bs-toggle="offcanvas"
-                                data-bs-target="#Wishlist" aria-controls="Wishlist">
+                            <a href="#" class="d-inline d-none d-md-block wishlist-btn-view"
+                                data-bs-toggle="offcanvas" data-bs-target="#Wishlist" aria-controls="Wishlist">
                                 <div class="cart-icon text-center text-theme relative">
                                     <i class="bi bi-heart-fill fs-5"></i>
                                     <span style="top: -15px;" class="wishlist-count absolute count-rounded">0</span>
                                 </div>
                             </a>
                         </li>
-                        
+
                         @guest
                             @if (Route::has('login'))
                                 <li class="last-one d-none d-md-block">
@@ -178,7 +208,8 @@
                         @auth
                             <li class="last-one d-none d-md-block" x-data="{ open: false }" @click.away="open = false">
                                 <a href="#" @click="open = !open">
-                                    <i class="bi bi-person fs-5 text-theme"></i>
+                                    <i class="bi bi-person fs-5 text-theme"></i> 
+                                    <span class="fw-bold">{{ auth()->user()->name }}</span>
                                 </a>
                                 <div x-show="open" x-transition:enter="transition ease-out duration-200"
                                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -192,7 +223,8 @@
                                             <i class="bi bi-person"></i> Dashboard
                                         </a>
                                     @else
-                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme" href="{{ route('account.home') }}">
+                                        <a class="dropdown-item float-start fs-6 fw-medium text-theme"
+                                            href="{{ route('account.home') }}">
                                             <i class="bi bi-person"></i> My Account
                                         </a>
                                     @endif
@@ -222,7 +254,7 @@
 
         </div>
     </div>
-   
+
 </header>
 <!-- end Header Area -->
 
@@ -230,7 +262,7 @@
 @push('footer')
     <script>
         $(document).ready(function() {
-            $('body').on('input','#search-input', function() {
+            $('body').on('input', '#search-input', function() {
                 const $suggestionList = $('#suggestions-ul-search');
                 const query = $(this).val();
                 if (query.length >= 2) {
@@ -242,7 +274,7 @@
                             q: query
                         },
                         success: function(data) {
-                           
+
                             $suggestionList.empty(); // Clear existing suggestions
 
                             $suggestionList.html(data)
@@ -251,18 +283,16 @@
                             console.error('Error fetching search results:', error);
                         }
                     });
-                }
-                else{
+                } else {
                     $suggestionList.empty();
                 }
             });
 
-            $('body').on('click','.ri-close-line,.ri-search-2-line', function() {
-                $('#suggestions-ul-search').empty(); 
-                $('.search-input').val(''); 
+            $('body').on('click', '.ri-close-line,.ri-search-2-line', function() {
+                $('#suggestions-ul-search').empty();
+                $('.search-input').val('');
             });
 
         });
     </script>
-      
 @endpush

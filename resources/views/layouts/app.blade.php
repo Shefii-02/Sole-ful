@@ -340,21 +340,34 @@
             background-color: rgb(223 155 25);
         }
 
-        .lg-outer .lg-item:before, .lg-outer .lg-img-wrap:before {
+        .lg-outer .lg-item:before,
+        .lg-outer .lg-img-wrap:before {
             content: "";
             display: inline-block;
             height: 100%;
-            vertical-align: text-top !important; 
+            vertical-align: text-top !important;
         }
-        .lg-outer .lg-item, .lg-outer .lg-img-wrap {
+
+        .lg-outer .lg-item,
+        .lg-outer .lg-img-wrap {
             text-align: left !important;
             width: 100%;
         }
-        picture.lg-img-wrap{
+
+        picture.lg-img-wrap {
             display: flex !important;
             justify-content: center;
         }
-       
+
+        #header-wr {
+            min-height: 100vh;
+        }
+
+        #header-wr .dropdown-item:focus,
+        .dropdown-item:hover {
+            color: #ffffff !important;
+            background-color: #df9b19 !important;
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -461,12 +474,9 @@
                         <!-- footer widget item start -->
                         <div class="col-xl-2 col-lg-3 col-md-6">
                             <div class="widget-item mt-10">
-                                <h5 class="widget-title">Pages</h5>
+                                <h5 class="widget-title">Occasion</h5>
                                 <div class="widget-body">
                                     <ul class="useful-link">
-                                        <li class="mb-3">
-                                            <a target="_blank" href="{{ route('public.shop') }}">Shop</a>
-                                        </li>
                                         <li class="mb-3">
                                             <a target="_blank"
                                                 href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic']) }}">Ethnic</a>
@@ -949,7 +959,7 @@
                 if (galleryElement.lg) {
                     galleryElement.lg.destroy(true);
                 }
- 
+
                 // Initialize LightGallery
                 lightGallery(galleryElement, {
                     selector: '.pro-large-img img',

@@ -1,28 +1,30 @@
-
 @extends('layouts.app')
 
 @section('content')
-<style>
-    section.my-account-page .col-lg-10 .col-lg-4{
-        width: 32.3333%;
-    }
-    @media(max-width: 1025px){
-        section.my-account-page .col-lg-10 .col-lg-4 .card{
-        padding: 10px 0 !important;
+    <style>
+        section.my-account-page .col-lg-10 .col-lg-4 {
+            width: 32.3333%;
         }
-    }
-    @media(max-width: 992px){
-        section.my-account-page .col-lg-10 .col-lg-4{
-            width: 49%;
+
+        @media(max-width: 1025px) {
+            section.my-account-page .col-lg-10 .col-lg-4 .card {
+                padding: 10px 0 !important;
+            }
         }
-    }
-    @media(max-width: 600px){
-         section.my-account-page .col-lg-10 .col-lg-4{
-            width: 100%;
+
+        @media(max-width: 992px) {
+            section.my-account-page .col-lg-10 .col-lg-4 {
+                width: 49%;
+            }
         }
-    }
-</style>
-      
+
+        @media(max-width: 600px) {
+            section.my-account-page .col-lg-10 .col-lg-4 {
+                width: 100%;
+            }
+        }
+    </style>
+
     <section class="product-listing-banner">
         <!-- breadcrumb area start -->
         <div class="breadcrumb-area bg-img" data-bg="/assets/img/breadcrumb-banner.webp">
@@ -44,21 +46,24 @@
         </div>
         <!-- breadcrumb area end -->
     </section>
-    
+
     <section class="page_section my-account-page  py-5">
         <div class="container">
             <div class="row justify-content-center w-100 m-0">
-              <div class="col-md-12 col-lg-10 ">
-                  
+                <div class="col-md-12 col-lg-10 ">
+
+                    <h2 class="fw-bold my-3 text-2xl">
+                        Hello, <span class="text-capitalize">{{ auth()->user()->name }}</span>! Manage your account easily.
+                    </h2>
                     <div class="row justify-content-between">
                         <div class="col-md-6 col-lg-4 shadow mb-3">
-                            <a href="{{route('account.orders.show')}}" class="text-decoration-none">
+                            <a href="{{ route('account.orders.show') }}" class="text-decoration-none">
                                 <div class="card border-0 p-3 bg-body rounded">
                                     <div class="card-body">
                                         <div class="row g-0">
                                             <div class="col-3">
-                                                
-                                                <img src="{{url('assets/img/icon/orders.png')}}" class="img-fluid p-2">
+
+                                                <img src="{{ url('assets/img/icon/orders.png') }}" class="img-fluid p-2">
                                             </div>
                                             <div class="col-9">
                                                 <h6>My Orders</h6>
@@ -69,14 +74,14 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-md-6 col-lg-4 shadow mb-3">
-                            <a href="{{route('account.profile.show')}}" class="text-decoration-none">
+                            <a href="{{ route('account.profile.show') }}" class="text-decoration-none">
                                 <div class="card border-0 p-3 bg-body rounded">
                                     <div class="card-body">
                                         <div class="row g-0">
                                             <div class="col-3">
-                                                <img src="{{url('assets/img/icon/security.png')}}" class="img-fluid p-2">
+                                                <img src="{{ url('assets/img/icon/security.png') }}" class="img-fluid p-2">
                                             </div>
                                             <div class="col-9">
                                                 <h6>Profile & security</h6>
@@ -87,14 +92,15 @@
                                 </div>
                             </a>
                         </div>
-                        
+
                         <div class="col-md-6 col-lg-4 shadow mb-3">
-                            <a href="{{route('account.address.show')}}" class="text-decoration-none">
+                            <a href="{{ route('account.address.show') }}" class="text-decoration-none">
                                 <div class="card border-0 p-3 bg-body rounded">
                                     <div class="card-body">
                                         <div class="row g-0">
                                             <div class="col-3">
-                                                <img src="{{url('assets/img/icon/addresss.png')}}" style="width: 48px !important;" class="img-fluid">
+                                                <img src="{{ url('assets/img/icon/addresss.png') }}"
+                                                    style="width: 48px !important;" class="img-fluid">
                                             </div>
                                             <div class="col-9">
                                                 <h6>Addresses</h6>
@@ -105,16 +111,17 @@
                                 </div>
                             </a>
                         </div>
-                        
-                        
+
+
                         <div class="col-md-6 col-lg-4 shadow mb-3">
-                            
-                            <a href="{{route('account.support-center')}}" class="text-decoration-none">
+
+                            <a href="{{ route('account.support-center') }}" class="text-decoration-none">
                                 <div class="card border-0 p-3 bg-body rounded">
                                     <div class="card-body">
                                         <div class="row g-0">
                                             <div class="col-3">
-                                                <img src="{{url('assets/img/icon/technical-support.png')}}" class="img-fluid p-1">
+                                                <img src="{{ url('assets/img/icon/technical-support.png') }}"
+                                                    class="img-fluid p-1">
                                             </div>
                                             <div class="col-9">
                                                 <h6>Support Center</h6>
