@@ -41,19 +41,36 @@
         <!-- ===== Services List Start ===== -->
         <div class="col-span-12">
             <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+
                 <div class="p-4 md:p-6 xl:p-7.5">
-                    <div class="flex items-start justify-between">
+                    <div class="flex flex-wrap gap-3 items-start justify-between">
                         <h2 class="text-title-sm2 font-bold text-black dark:text-black">
                             Products List
                         </h2>
+                        <form>
+                            <div class="relative flex flex-1 flex-wrap space-x-2 items-center justify-center">
+                                <label class="me-1 fw-bold mb-2 text-sm">Product ID</label>
+                                <!-- Search by Product ID -->
+                                <input type="search" autocomplete="off" name="product_id"
+                                    value="{{ request()->get('product_id') }}" placeholder=""
+                                    class="border border-gray-300 px-3 py-1 mb-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <span class="mx-4 text-primary fw-bold mb-2 ">or</span>
+                                <label class="me-1 fw-bold mb-2 text-sm">Product SKU</label>
+                                <!-- Search by Product SKU -->
+                                <input type="search" autocomplete="off" name="sku" placeholder=""
+                                    value="{{ request()->get('sku') }}"
+                                    class="border border-gray-300 px-3 py-1 mb-2  rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <button class="btn btn-info mx-4" type="submit">Search</button>
+                            </div>
+                        </form>
                         <div class="relative">
                             <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
                                 href="{{ route('admin.products.create') }}">
                                 Create
                             </a>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
                 <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
                     <div class="flex justify-between items-center gap-x-6">
@@ -78,7 +95,15 @@
                                 <div class="w-2/12 text-center">
                                     <img src="{{ isset($product->MainThumbImage) && $product->MainThumbImage->image ? asset('images/products/' . $product->MainThumbImage->image) : asset('images/default.jpg') }}"
                                         class="w-10 mx-auto rounded-circle" />
-                                    <span class="small">{{ $product->product_name }}</span>
+                                    <span class="small">{{ $product->product_name }}</span><br>
+                                    <small x-data="{ copied: false }">
+                                        <span class="text-primary">{{ $product->unique_value }}</span>
+                                        <span role="button" class="copy"
+                                            @click="navigator.clipboard.writeText('{{ $product->unique_value }}'); copied = true; setTimeout(() => copied = false, 2000)">
+                                            <i class="bi bi-copy"></i>
+                                        </span>
+                                        <span x-show="copied" class="text-success" x-transition> Copied! </span>
+                                    </small>
                                 </div>
                                 <div class="w-1/12 text-center text-capitalize"><span
                                         class="small">{{ $product->art_code }}</span></div>
@@ -90,12 +115,15 @@
                                 <div class="w-1/12 text-center"><span class="small">{!! $product->status_text !!}</span></div>
                                 <div class="w-2/12 text-end">
                                     <div class=" btn-group">
-                                        <a href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}" target="_blank"
-                                            class="mx-auto block hover:text-meta-1 ">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z"/>
-                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0"/>
-                                              </svg>
+                                        <a href="{{ route('public.product', ['uid' => $product->unique_value, 'slug' => $product->slug]) }}"
+                                            target="_blank" class="mx-auto block hover:text-meta-1 ">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                <path
+                                                    d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                            </svg>
                                         </a>
                                         <a href="{{ route('admin.products.edit', $product->id) }}"
                                             class="mx-auto block hover:text-meta-1 ms-3 ">

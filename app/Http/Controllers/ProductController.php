@@ -28,10 +28,31 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $products = Product::orderBy('created_at', 'desc')->get();
+       // Start building the query
+       $products = Product::whereHas('product_variation', function ($query) use ($request) {
+        // Order variations by in_stock
+        $query->orderBy('in_stock', 'asc');
+
+        // Check if SKU filter is applied
+        if ($request->has('sku') && $request->sku != '') {
+            $query->where('sku', $request->sku); // Filter variations by SKU
+        }
+    })
+        ->with(['product_variation' => function ($query) {
+            // Order variations by in_stock
+            $query->orderBy('in_stock', 'asc');
+        }]);
+
+    // Check if product_id filter is applied
+    if ($request->has('product_id') && $request->product_id != '') {
+        $products = $products->where('unique_value', $request->product_id); // Filter by product_id
+    }
+
+    // Get the products with their variations
+    $products = $products->orderBy('created_at','desc')->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -271,7 +292,7 @@ class ProductController extends Controller
             VariationKey::where('product_id', $product->id)->delete();
             ProductCategory::where('product_id', $product->id)->delete();
 
-         
+
             if ($request->has('categories') && count($request->categories) > 0) {
                 foreach ($request->categories ?? [] as $category) {
                     $category_product                   = new ProductCategory();
@@ -279,7 +300,6 @@ class ProductController extends Controller
                     $category_product->product_id       = $product->id;
                     $category_product->save();
                 }
-            
             }
 
             if ($request->has('has_variants')) {
@@ -448,12 +468,35 @@ class ProductController extends Controller
 
 
 
-    public function stock()
+    public function stock(Request $request)
     {
-        $products = Product::get();
+        // Start building the query
+        $products = Product::whereHas('product_variation', function ($query) use ($request) {
+            // Order variations by in_stock
+            $query->orderBy('in_stock', 'asc');
 
+            // Check if SKU filter is applied
+            if ($request->has('sku') && $request->sku != '') {
+                $query->where('sku', $request->sku); // Filter variations by SKU
+            }
+        })
+            ->with(['product_variation' => function ($query) {
+                // Order variations by in_stock
+                $query->orderBy('in_stock', 'asc');
+            }]);
+
+        // Check if product_id filter is applied
+        if ($request->has('product_id') && $request->product_id != '') {
+            $products = $products->where('unique_value', $request->product_id); // Filter by product_id
+        }
+
+        // Get the products with their variations
+        $products = $products->get();
+
+        // Return the view with the products
         return view('admin.products.stocks', compact('products'));
     }
+
 
 
 
@@ -643,7 +686,7 @@ class ProductController extends Controller
         $sizeCode   = Size::where('size_value', $size)->pluck('size_code')->first();
         $colorCode  = Color::where('color_name', $color)->pluck('color_code')->first();
 
-        return $seller_code .'-'. $product_no .'-'. $art_code .'-'. $colorCode .'-'. $sizeCode;
+        return $seller_code . '-' . $product_no . '-' . $art_code . '-' . $colorCode . '-' . $sizeCode;
     }
 
 

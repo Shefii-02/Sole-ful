@@ -14,6 +14,7 @@ use App\Models\Account;
 use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Exception;
 
@@ -33,7 +34,7 @@ class DashboardController extends Controller
             $totalViews  = 0;
         }
 
-
+        $stockProducts = ProductVariant::where('in_stock','<', 10)->orderBy('in_stock', 'asc')->get();
         $last30DaysVisitors = GoogleAnalyticsVisitor::orderby('date', 'asc')->get();
         $topDevices = GoogleAnalyticsTopDevice::all();
         $topReferrers = GoogleAnalyticsTopReferrer::all();
@@ -49,7 +50,8 @@ class DashboardController extends Controller
                 'topReferrers',
                 'last30DaysVisitors',
                 'topLandingPages',
-                'totalViews'
+                'totalViews',
+                'stockProducts'
             )
         );
     }

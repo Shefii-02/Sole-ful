@@ -25,7 +25,11 @@ class CheckoutFormRequest extends FormRequest
             'payment_method' => 'required|in:cod,online',
             's_name' => 'required|string',
             's_email' => 'required|email',
-            's_phone' => 'required|string',
+            's_phone' => [
+                'required',
+                'string',
+                'regex:/^[6789]\d{9}$/', // Validate 10 digit mobile numbers starting with 7, 8, or 9
+            ],
             's_address' => 'required|string',
             's_locality' => 'required|string',
             's_landmark' => 'nullable|string',
@@ -58,7 +62,7 @@ class CheckoutFormRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $pincode = strtoupper($this->input('s_postal')); // Convert input to uppercase
                     $record2 = DeliveryPincode::whereRaw('BINARY pincode = ?', [$pincode])->first();
-                    
+
                     if (!$record2) {
                         return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
                     }
@@ -82,11 +86,11 @@ class CheckoutFormRequest extends FormRequest
             'billing_address.required' => 'The billing address is required.',
             'payment_method.required' => 'Please select a payment method.',
             'payment_method.in' => 'Invalid payment method selected.',
-            's_name.required' => 'The recipient’s name is required.',
-            's_email.required' => 'The recipient’s email is required.',
+            's_name.required' => 'The  name is required.',
+            's_email.required' => 'The  email is required.',
             's_email.email' => 'Please enter a valid email address.',
-            's_phone.required' => 'The recipient’s phone number is required.',
-            's_address.required' => 'The recipient’s address is required.',
+            's_phone.required' => 'The phone number is not valid.',
+            's_address.required' => 'The address is required.',
             's_locality.required' => 'The locality is required.',
             's_postal.required' => 'The postal code is required.',
             's_state.required' => 'The state is required.',
