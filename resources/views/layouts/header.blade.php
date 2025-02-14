@@ -209,7 +209,7 @@
                             <li class="last-one d-none d-md-block" x-data="{ open: false }" @click.away="open = false">
                                 <a href="#" @click="open = !open">
                                     <i class="bi bi-person fs-5 text-theme"></i> 
-                                    <span class="fw-bold">{{ auth()->user()->name }}</span>
+                                    <span class="fw-bold text-capitalize">{{ auth()->user()->name }}</span>
                                 </a>
                                 <div x-show="open" x-transition:enter="transition ease-out duration-200"
                                     x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
