@@ -109,7 +109,6 @@ class OrderController extends Controller
     public function placeOrder(CheckoutFormRequest $request)
     {
 
-        dd($request->all());
         $user           = User::where('id', auth()->user()->id)->first();
         if (session()->has('session_string') && $user) {
 
