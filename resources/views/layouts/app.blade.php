@@ -750,6 +750,7 @@
 
     <script>
         var defaultSize = false;
+        var choosedColor = '';
         $(document).ready(function() {
             let selectedSize = "{{ request()->get('size') }}";
             if (selectedSize) {
@@ -784,11 +785,15 @@
                         $('.color-tab').html(response);
                         let selectedColor = "{{ request()->get('color') }}";
                         // Set first color button as checked by default in the color-tab
-                        if (selectedColor) {
+                        
+                        if(choosedColor){
+                            $(".color-tab .color-button input[value='" + choosedColor + "']").prop("checked", true);
+                        }
+                        else if (selectedColor) {
                             // Find the radio button with the matching value and check it
-                            $(".color-tab .color-button input[value='" + selectedColor + "']")
-                                .prop("checked", true);
-                        } else {
+                            $(".color-tab .color-button input[value='" + selectedColor + "']").prop("checked", true);
+                        }
+                        else {
                             // If no color is selected, check the first available color option
                             $(".color-tab .color-button input").first().prop("checked", true);
                         }
@@ -805,7 +810,7 @@
 
                             defaultSize = true;
                         }
-
+// 
                         if (defaultSize && !QuickView) {
                             updateUrlWithSizeAndColor();
                         }
@@ -826,6 +831,8 @@
                     $('.color-button').removeClass('active');
                     colorButton.addClass('active');
                 }
+
+                choosedColor = $('.variColor_checkbox:checked').val();
 
                 var color = $(this).val();
                 var sku = $(this).data('sku');
@@ -944,10 +951,10 @@
 
 
                 // Image zoom effect for the newly added images
-                if (defaultSize && !QuickView) {
+                // if (defaultSize && !QuickView) {
                     updateUrlWithSizeAndColor();
 
-                }
+                // }
 
                 var galleryElement = document.getElementById('lightgallery');
 
@@ -1101,6 +1108,7 @@
             function updateUrlWithSizeAndColor() {
                 let selectedSize = $('.variSize_checkbox:checked').val();
                 let selectedColor = $('.variColor_checkbox:checked').val();
+                choosedColor = selectedColor;
 
                 // Construct the base URL (without parameters)
                 let baseUrl = window.location.origin + window.location.pathname;
