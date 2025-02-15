@@ -479,11 +479,11 @@
                                     <ul class="useful-link">
                                         <li class="mb-3">
                                             <a target="_blank"
-                                                href="{{ route('public.shop', ['shoe_type[]' => 'Ethnic']) }}">Ethnic</a>
+                                                href="{{ route('public.shop', ['categories[]' => 'Ethnic']) }}">Ethnic</a>
                                         </li>
                                         <li class="mb-3">
                                             <a target="_blank"
-                                                href="{{ route('public.shop', ['shoe_type[]' => 'Casual']) }}">Casual</a>
+                                                href="{{ route('public.shop', ['categories[]' => 'Casual']) }}">Casual</a>
                                         </li>
 
                                         <li class="mb-3">
