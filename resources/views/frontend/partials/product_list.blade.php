@@ -15,7 +15,6 @@
                     <h5 class="product-name">
                         {{ $product->v_name }}
                     </h5>
-       
                     <div class="price-box">
                         <div class="">
                             <small>Sizes :

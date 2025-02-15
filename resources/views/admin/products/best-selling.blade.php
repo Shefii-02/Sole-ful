@@ -53,6 +53,7 @@
                                     {{ in_array($item->id, $bestSell ?? []) ? 'checked' : '' }}>
                                 <label class="form-check-label"
                                     for="product-{{ $key }}">{{ $item->product_name }}</label>
+                                    <small>({{ $item->unique_value }})</small>
                             </div>
                         </div>
                     @endforeach
