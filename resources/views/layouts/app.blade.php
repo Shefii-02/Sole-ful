@@ -561,7 +561,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 order-1 order-md-2">
-                            <div class="footer-social-link flex justify-content-end gap-1 text-center text-md-end">
+                            <div class="footer-social-link-1 flex justify-content-end gap-1 text-center text-md-end">
                                 <a href="https://www.youtube.com/@Soleful.Ahdhia"  target="_blank">
                                     <img src="{{ asset('assets/img/icon/Youtube.png') }}" class="w-50">
                                 </a>

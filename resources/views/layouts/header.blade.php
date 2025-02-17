@@ -119,7 +119,7 @@
 
                                     </div>
                                     <div class="social-links position-fixed bottom-0 py-4 bg-white">
-                                        <div class="footer-social-link flex justify-content-between text-center text-md-end">
+                                        <div class="footer-social-link-2 flex justify-content-between text-center text-md-end">
                                             <a href="https://www.youtube.com/@Soleful.Ahdhia"  target="_blank">
                                                 <img src="{{ asset('assets/img/icon/Youtube.png') }}" class="w-50">
                                             </a>
