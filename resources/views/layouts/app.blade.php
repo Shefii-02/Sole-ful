@@ -497,7 +497,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>̧
+                            </div>
                         </div>
                         <!-- footer widget item end -->
 
