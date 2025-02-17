@@ -497,7 +497,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div>̧
                         </div>
                         <!-- footer widget item end -->
 
@@ -561,12 +561,18 @@
                             </div>
                         </div>
                         <div class="col-md-6 order-1 order-md-2">
-                            <div class="footer-social-link text-center text-md-end">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
+                            <div class="footer-social-link flex justify-content-end gap-1 text-center text-md-end">
+                                <a href="https://www.youtube.com/@Soleful.Ahdhia"  target="_blank">
+                                    <img src="{{ asset('assets/img/icon/Youtube.png') }}" class="w-50">
+                                </a>
+                                <a href="https://www.instagram.com/Soleful.ahdhia/" target="_blank">
+                                    <img src="{{ asset('assets/img/icon/instagram.png') }}" class="w-50">
+                                </a>
+                                <a href="https://www.facebook.com/Soleful.Ahdhia/"  target="_blank">
+                                    <img src="{{ asset('assets/img/icon/Facebook.png') }}" class="w-50">
+                                </a>
                             </div>
+                           
                         </div>
                     </div>
                 </div>
