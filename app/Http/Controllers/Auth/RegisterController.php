@@ -96,8 +96,8 @@ class RegisterController extends Controller
             'mobile' => $data['mobile'],
             'address' => $data['address'],
             'pincode' => $data['postalcode'],
-            'city' => $data['city'],
-            'province' => $data['state'],
+            'locality' => $data['city'],
+            'state' => $data['state'],
             'country' => 'India',
             'base' => 1,
         ]);
