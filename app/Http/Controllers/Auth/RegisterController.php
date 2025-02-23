@@ -94,7 +94,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'name' => $data['name'],
             'address' => $data['address'],
-            'postalcode' => $data['postalcode'],
+            'pincode' => $data['postalcode'],
             'city' => $data['city'],
             'province' => $data['state'],
             'country' => 'India',
