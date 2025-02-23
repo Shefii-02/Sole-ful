@@ -92,7 +92,7 @@ class RegisterController extends Controller
         Myaddress::create([
             'user_id' => $user->id,
             'name' => $data['name'],
-            'name' => $data['email'],
+            'email' => $data['email'],
             'mobile' => $data['mobile'],
             'address' => $data['address'],
             'pincode' => $data['postalcode'],
