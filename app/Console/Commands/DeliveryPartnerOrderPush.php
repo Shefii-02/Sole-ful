@@ -99,7 +99,7 @@ class DeliveryPartnerOrderPush extends Command
     private function orderPushDataFormat($order)
     {
         return [
-            "orderId" => $order->invoice_id . '2K25',
+            "orderId" => $order->invoice_id,
             "orderSubtype" => "FORWARD",
             "readyToPick" => false,
             "orderCreatedAt" => $order->billed_at,
