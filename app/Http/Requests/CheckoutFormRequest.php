@@ -22,7 +22,7 @@ class CheckoutFormRequest extends FormRequest
     {
         $rules = [
             'billing_address' => 'required|string',
-            'payment_method' => 'required|in:cod,online',
+            // 'payment_method' => 'required|in:cod,online',
             's_name' => 'required|string',
             's_email' => 'required|email',
             's_phone' => [
