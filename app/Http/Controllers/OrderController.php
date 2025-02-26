@@ -130,14 +130,14 @@ class OrderController extends Controller
                 $this->storeBillingAddress($billingAddress, $basket->id, 'billing');
                 $this->storeDeliveryAddress($request, $basket->id, 'delivery');
 
-                if ($request->payment_method == 'online') {
+                // if ($request->payment_method == 'online') {
                     $result     = $this->submitPaymentForm($grandTotal, $user, $basket);
                     return redirect($result);
-                } else {
-                    $result     = $this->submitCodForm($grandTotal, $user, $basket);
+                // } else {
+                //     $result     = $this->submitCodForm($grandTotal, $user, $basket);
 
-                    return $result->render();
-                }
+                //     return $result->render();
+                // }
 
 
 

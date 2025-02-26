@@ -438,7 +438,7 @@
                                 <h6 class="font-bold">The cart is empty</h6>
                             </div>
                         @endif
-                        <div class="col-lg-12 mt-4">
+                        {{-- <div class="col-lg-12 mt-4">
                             <div class="flex flex-col md:flex-row gap-4">
                                 <!-- Online Payment (Default Checked) -->
                                 <label class="w-full md:w-1/2 cursor-pointer">
@@ -467,14 +467,13 @@
                                     </div>
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-12 mx-auto mt-2">
                             @error('payment_method')
-                                <span class="text-danger" id="payment_methodError">{{ $message }}</span>
+                                {{-- <span class="text-danger" id="payment_methodError">{{ $message }}</span> --}}
                             @enderror
-                            <span class="text-danger" id="cod_msg"></span>
-
+                            {{-- <span class="text-danger" id="cod_msg"></span> --}}
 
                             <div class="text-start mb-2 mt-3 text-end">
                                 <span class="col-lg-12 p-0 g-captcha-error text-danger small"></span><br>
