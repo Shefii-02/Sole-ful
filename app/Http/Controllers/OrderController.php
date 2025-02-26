@@ -633,10 +633,10 @@ class OrderController extends Controller
             $invoice_id = $order->invoice_id;
 
             $this->sendOrderNotification($order);
-            dd(123);
             return view('frontend.thanks', compact('order'));
         } else {
-
+            Session::flash('failed_msg', 'Failed..!' . 'Failed : ' . $request->code . ', Please Try Again Later.');
+            return redirect()->back();
             //HANDLE YOUR ERROR MESSAGE HERE
             dd('Failed : ' . $request->code . ', Please Try Again Later.');
         }
