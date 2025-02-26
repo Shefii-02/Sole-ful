@@ -636,7 +636,7 @@ class OrderController extends Controller
             return view('frontend.thanks', compact('order'));
         } else {
             Session::flash('failed_msg', 'Failed..!' . 'Failed : ' . $request->code . ', Please Try Again Later.');
-            return redirect()->back();
+            return redirect('/checkout');
             //HANDLE YOUR ERROR MESSAGE HERE
             dd('Failed : ' . $request->code . ', Please Try Again Later.');
         }
