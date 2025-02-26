@@ -55,24 +55,24 @@ class CheckoutFormRequest extends FormRequest
         ];
 
         // COD-Specific Validation (Check if COD is allowed for this pincode)
-        if ($this->input('payment_method') == 'cod') {
-            $rules['payment_method'] = [
-                'required',
-                'string',
-                function ($attribute, $value, $fail) {
-                    $pincode = strtoupper($this->input('s_postal')); // Convert input to uppercase
-                    $record2 = DeliveryPincode::whereRaw('BINARY pincode = ?', [$pincode])->first();
+        // if ($this->input('payment_method') == 'cod') {
+        //     $rules['payment_method'] = [
+        //         'required',
+        //         'string',
+        //         function ($attribute, $value, $fail) {
+        //             $pincode = strtoupper($this->input('s_postal')); // Convert input to uppercase
+        //             $record2 = DeliveryPincode::whereRaw('BINARY pincode = ?', [$pincode])->first();
 
-                    if (!$record2) {
-                        return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
-                    }
+        //             if (!$record2) {
+        //                 return $fail('Sorry, we are unable to deliver to this pincode at the moment.');
+        //             }
 
-                    if (strtoupper($record2->cod) !== 'YES') {
-                        return $fail('Cash on Delivery (COD) is not available for this pincode.');
-                    }
-                },
-            ];
-        }
+        //             if (strtoupper($record2->cod) !== 'YES') {
+        //                 return $fail('Cash on Delivery (COD) is not available for this pincode.');
+        //             }
+        //         },
+        //     ];
+        // }
 
         return $rules;
     }
