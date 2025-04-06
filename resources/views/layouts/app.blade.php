@@ -34,6 +34,10 @@
         src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
         async="async"></script>
     <style>
+        :root, [data-bs-theme=light] {
+            --bs-body-font-family: "lato-bold" !important;
+        }
+
         .product-listing .cart-item,
         .product-detail-slider .cart-item {
             display: flex;
