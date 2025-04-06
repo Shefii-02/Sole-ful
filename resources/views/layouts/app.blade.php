@@ -359,9 +359,9 @@
             justify-content: center;
         }
 
-        #header-wr {
+        /* #header-wr {
             min-height: 100vh;
-        }
+        } */
 
         #header-wr .dropdown-item:focus,
         .dropdown-item:hover {
@@ -369,7 +369,7 @@
             background-color: #df9b19 !important;
         }
 
-        #header-wr li a,body {
+        body {
             font-family: "lato-bold" !important;
         }  
     </style>
