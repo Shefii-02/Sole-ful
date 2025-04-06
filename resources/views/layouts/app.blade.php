@@ -43,7 +43,9 @@
             --bs-body-font-family: "lato-bold" !important;
         }
 
-        .font-family-lato{
+      
+
+        .font-family-lato {
             font-family: "lato-bold" !important;
         }
 
@@ -1149,7 +1151,13 @@
 
         });
     </script>
-
+<style>
+      @media (min-width: 768px) {
+            body {
+                font-family: "lato-bold" !important;
+            }
+        }
+</style>
 </body>
 
 </html>
