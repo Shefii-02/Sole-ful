@@ -368,6 +368,10 @@
             color: #ffffff !important;
             background-color: #df9b19 !important;
         }
+
+        #header-wr li a {
+            font-family: "lato-bold" !important;
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -562,17 +566,17 @@
                         </div>
                         <div class="col-md-6 order-1 order-md-2">
                             <div class="footer-social-link-1 flex justify-content-end gap-1 text-center text-md-end">
-                                <a href="https://www.youtube.com/@Soleful.Ahdhia"  target="_blank">
+                                <a href="https://www.youtube.com/@Soleful.Ahdhia" target="_blank">
                                     <img src="{{ asset('assets/img/icon/Youtube.png') }}" class="w-50">
                                 </a>
                                 <a href="https://www.instagram.com/Soleful.ahdhia/" target="_blank">
                                     <img src="{{ asset('assets/img/icon/instagram.png') }}" class="w-50">
                                 </a>
-                                <a href="https://www.facebook.com/Soleful.Ahdhia/"  target="_blank">
+                                <a href="https://www.facebook.com/Soleful.Ahdhia/" target="_blank">
                                     <img src="{{ asset('assets/img/icon/Facebook.png') }}" class="w-50">
                                 </a>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -791,15 +795,15 @@
                         $('.color-tab').html(response);
                         let selectedColor = "{{ request()->get('color') }}";
                         // Set first color button as checked by default in the color-tab
-                        
-                        if(choosedColor){
-                            $(".color-tab .color-button input[value='" + choosedColor + "']").prop("checked", true);
-                        }
-                        else if (selectedColor) {
+
+                        if (choosedColor) {
+                            $(".color-tab .color-button input[value='" + choosedColor + "']")
+                                .prop("checked", true);
+                        } else if (selectedColor) {
                             // Find the radio button with the matching value and check it
-                            $(".color-tab .color-button input[value='" + selectedColor + "']").prop("checked", true);
-                        }
-                        else {
+                            $(".color-tab .color-button input[value='" + selectedColor + "']")
+                                .prop("checked", true);
+                        } else {
                             // If no color is selected, check the first available color option
                             $(".color-tab .color-button input").first().prop("checked", true);
                         }
@@ -816,7 +820,7 @@
 
                             defaultSize = true;
                         }
-// 
+                        // 
                         if (defaultSize && !QuickView) {
                             updateUrlWithSizeAndColor();
                         }
@@ -958,7 +962,7 @@
 
                 // Image zoom effect for the newly added images
                 // if (defaultSize && !QuickView) {
-                    updateUrlWithSizeAndColor();
+                updateUrlWithSizeAndColor();
 
                 // }
 

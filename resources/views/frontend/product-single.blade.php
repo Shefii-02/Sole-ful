@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- breadcrumb area start -->
-    <div class="breadcrumb-area bg-img" data-bg="/assets/img/breadcrumb-banner.webp">
+    <div class="breadcrumb-area bg-img" data-bg="/assets/img/breadcrumb-banner2.webp">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -138,36 +138,36 @@
 
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Shoe Type</small><br>
-                                                        <small class="text-grey ms-2">{{ $product->shoe_type }}</small>
+                                                        <small class="text-grey ">{{ $product->shoe_type }}</small>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Occasion</small><br>
                                                         @foreach ($product->categories ?? [] as $item)
-                                                            <small class="text-grey ms-2">{{ $item->name }}</small>
+                                                            <small class="text-grey ">{{ $item->name }}</small>
                                                         @endforeach
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Upper Material</small><br>
-                                                        <small class="text-grey ms-2">Vegan</small>
+                                                        <small class="text-grey ">Vegan</small>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Heel Type</small><br>
-                                                        <small class="text-grey ms-2">Flats</small>
+                                                        <small class="text-grey ">Flats</small>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Gender</small><br>
-                                                        <small class="text-grey ms-2">Women</small>
+                                                        <small class="text-grey ">Women</small>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Net Quantity</small><br>
-                                                        <small class="text-grey ms-2">1 Pair</small>
+                                                        <small class="text-grey ">1 Pair</small>
                                                     </div>
 
                                                     <div class="col-lg-6 d-none">
                                                         <small class="mt-3 fw-bold">Available Sizes</small><br>
                                                         @foreach ($sizes ?? [] as $Asize)
                                                             <small
-                                                                class="text-grey ms-2">{{ $Asize->value }}{{ $loop->last ? '' : ',' }}</small>
+                                                                class="text-grey text-capitalize">{{ $Asize->value }}{{ $loop->last ? '' : ',' }}</small>
                                                         @endforeach
                                                     </div>
 
@@ -175,17 +175,17 @@
                                                         <small class="mt-3 fw-bold">Available Colors</small><br>
                                                         @foreach ($colors ?? [] as $Acolor)
                                                             <small
-                                                                class="text-grey ms-2">{{ $Acolor->value }}{{ $loop->last ? '' : ',' }}</small>
+                                                                class="text-grey text-capitalize">{{ strtolower($Acolor->value) }}{{ $loop->last ? '' : ',' }}</small>
                                                         @endforeach
                                                     </div>
 
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Brand</small><br>
-                                                        <small class="text-grey ms-2">Soleful</small>
+                                                        <small class="text-grey ">Soleful</small>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <small class="mt-3 fw-bold">Country of Origin</small><br>
-                                                        <small class="text-grey ms-2">INDIA</small>
+                                                        <small class="text-grey ">India</small>
                                                     </div>
 
                                                 </div>

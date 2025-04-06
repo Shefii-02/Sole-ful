@@ -72,7 +72,7 @@
                                                 </li>
                                             
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item text-uppercase" target="_blank"
+                                                    <a class="dropdown-item" target="_blank"
                                                         href="{{ url('/order-track') }}">Order Tracking</a>
                                                 </li>
                                                 <li class="mb-2">
