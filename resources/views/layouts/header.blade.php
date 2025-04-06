@@ -32,10 +32,10 @@
                                         <div class="f-msp">
                                             <ul id="header-wr" class="menu">
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" href="/">Home</a>
+                                                    <a class="dropdown-item font-family-lato" href="/">Home</a>
                                                 </li>
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
+                                                    <a class="dropdown-item font-family-lato" target="_blank"
                                                         href="{{ route('public.shop') }}">Shop</a>
                                                 </li>
 

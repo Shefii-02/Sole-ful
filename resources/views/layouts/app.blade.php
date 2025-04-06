@@ -43,6 +43,10 @@
             --bs-body-font-family: "lato-bold" !important;
         }
 
+        .font-family-lato{
+            font-family: "lato-bold" !important;
+        }
+
         .product-listing .cart-item,
         .product-detail-slider .cart-item {
             display: flex;
