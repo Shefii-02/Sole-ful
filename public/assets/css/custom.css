@@ -171,7 +171,6 @@ header {
     height: 100%;
     border-radius: 4rem;
     padding-left: 14px;
-    font-family: var(--body-font);
     font-size: var(--small-font-size);
     font-weight: 500;
     opacity: 0;
