@@ -369,7 +369,7 @@
             background-color: #df9b19 !important;
         }
 
-        #header-wr li a {
+        #header-wr li a,body {
             font-family: "lato-bold" !important;
         }  
     </style>
@@ -464,7 +464,7 @@
                                             Bangalore - 560077.
 
                                         </li>
-                                        <li><i class="ion-ios-email-outline"></i>Mail us: <a
+                                        <li><i class="ion-ios-email-outline" ></i>Mail us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
                                         </li>
                                         <li><i class="ion-ios-telephone-outline"></i>Phone: <a
