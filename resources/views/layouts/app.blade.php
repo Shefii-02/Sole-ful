@@ -371,7 +371,7 @@
 
         #header-wr li a {
             font-family: "lato-bold" !important;
-        }
+        }  
     </style>
 
     <!-- Google tag (gtag.js) -->
