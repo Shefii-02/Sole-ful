@@ -34,7 +34,9 @@
         src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
         async="async"></script>
     <style>
-        :root, [data-bs-theme=light] {
+        :root,
+        [data-bs-theme=light].:host,
+        html {
             --bs-body-font-family: "lato-bold" !important;
         }
 
@@ -375,7 +377,7 @@
 
         body {
             font-family: "lato-bold" !important;
-        }  
+        }
     </style>
 
     <!-- Google tag (gtag.js) -->
@@ -468,7 +470,7 @@
                                             Bangalore - 560077.
 
                                         </li>
-                                        <li><i class="ion-ios-email-outline" ></i>Mail us: <a
+                                        <li><i class="ion-ios-email-outline"></i>Mail us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
                                         </li>
                                         <li><i class="ion-ios-telephone-outline"></i>Phone: <a
