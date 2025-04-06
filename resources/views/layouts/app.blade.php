@@ -414,7 +414,7 @@
                             class="text-center wishlist-btn-view mx-auto px-4 py-2  ">
                             <span class="block px-1 py-1">
                                 <span class="bi bi-heart"></span>
-                                <span class="ml-3 text-sm  align-bottom pb-1">Whishlist</span>
+                                <span class="ml-3 text-sm  align-bottom pb-1">Wishlist</span>
                             </span>
                         </a>
                     </div>
@@ -460,7 +460,7 @@
                                             Bangalore - 560077.
 
                                         </li>
-                                        <li><i class="ion-ios-email-outline"></i>Mail Us: <a
+                                        <li><i class="ion-ios-email-outline"></i>Mail us: <a
                                                 href="mailto:relationship@soleful.in">relationship@soleful.in</a>
                                         </li>
                                         <li><i class="ion-ios-telephone-outline"></i>Phone: <a

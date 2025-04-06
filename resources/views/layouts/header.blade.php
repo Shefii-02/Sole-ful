@@ -72,15 +72,15 @@
                                                 </li>
                                             
                                                 <li class="mb-2">
-                                                    <a class="dropdown-item" target="_blank"
-                                                        href="{{ url('/order-track') }}">Orders Tracking</a>
+                                                    <a class="dropdown-item text-uppercase" target="_blank"
+                                                        href="{{ url('/order-track') }}">Order Tracking</a>
                                                 </li>
                                                 <li class="mb-2">
                                                     <a class="dropdown-item" target="_blank"
                                                         href="{{ route('public.contact-us') }}">Contact us</a>
                                                 </li>
                                                 <!-- Pages Dropdown Start -->
-                                                <li class="mb-2 dropdown">
+                                                {{-- <li class="mb-2 dropdown">
                                                     <a class="dropdown-item dropdown-toggle" href="#"
                                                         id="pagesDropdown" role="button" data-bs-toggle="dropdown"
                                                         aria-expanded="false">
@@ -110,7 +110,7 @@
                                                                 href="{{ route('privacy_policy') }}">Privacy Policy</a>
                                                         </li>
                                                     </ul>
-                                                </li>
+                                                </li> --}}
                                             </ul>
 
 

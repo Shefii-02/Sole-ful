@@ -239,7 +239,7 @@
                                                 type="button"
                                                 @click="open === 'ConsumerComplaintContact' ? open = '' : open = 'ConsumerComplaintContact'"
                                                 aria-controls="flush-ConsumerComplaintContact">
-                                                Consumer Complaint Contact
+                                                 Contact us
                                             </button>
                                         </h2>
                                         <div id="flush-ConsumerComplaintContact" class="accordion-collapse collapse"

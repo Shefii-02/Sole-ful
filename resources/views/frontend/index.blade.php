@@ -336,7 +336,7 @@
 <section class="service-policy-area">
     <div class="container">
         <div class="row">
-            @foreach ([['icon' => 'policy-1.png', 'title' => 'FREE SHIPPING', 'desc' => 'Free shipping on all order'], ['icon' => 'policy-2.png', 'title' => 'ONLINE SUPPORT', 'desc' => 'Dedicated online support', 'id' => 'support-link'], ['icon' => 'policy-3.png', 'title' => 'PAYMENTS', 'desc' => 'Hassle-Free Payments.']] as $policy)
+            @foreach ([['icon' => 'policy-1.png', 'title' => 'FREE SHIPPING', 'desc' => 'Free shipping on all orders'], ['icon' => 'policy-2.png', 'title' => 'ONLINE SUPPORT', 'desc' => 'Dedicated online support', 'id' => 'support-link'], ['icon' => 'policy-3.png', 'title' => 'PAYMENTS', 'desc' => 'Hassle-Free Payments.']] as $policy)
                 <div class="col-lg-4">
                     @if (isset($policy['id']) && $policy['id'] == 'support-link')
                         <a href="#" id="support-link">
