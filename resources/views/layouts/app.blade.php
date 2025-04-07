@@ -387,8 +387,7 @@
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
+            font-family: 'Lato', sans-serif;font-weight: 700;
         }
     </style>
 
@@ -416,7 +415,7 @@
             <div class="bg-white bottom-0  position-fixed  px-3 rounded-2xl shadow-lg">
                 <div class="flex">
                     <div class="flex-auto ">
-                        <a href="#" class="text-center  mx-auto px-4 py-2  ">
+                        <a href="#" class="text-center  mx-auto px-4 py-2  " style="font-family: 'Lato', sans-serif;font-weight: 700;">
                             <span class="block px-1 py-1">
                                 <span class="bi bi-house"></span>
                                 <span class="ml-3 text-sm align-bottom pb-1">Home</span>
