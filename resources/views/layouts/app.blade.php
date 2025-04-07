@@ -47,7 +47,8 @@
       
 
         .font-family-lato {
-            font-family: "lato-bold" !important;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
         }
 
         .product-listing .cart-item,
@@ -386,7 +387,8 @@
         }
 
         body {
-            font-family: "lato-bold" !important;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
         }
     </style>
 
