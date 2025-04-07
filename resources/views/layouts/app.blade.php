@@ -388,8 +388,7 @@
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            font-weight: 700;
+            font-family: "lato-bold" !important;
         }
     </style>
 
@@ -406,13 +405,12 @@
         gtag('config', 'G-0QQTEYFCNM');
     </script>
     <style>
-        @media (min-width: 768px) {
-              body {
-                font-family: 'Lato', sans-serif;
-                font-weight: 700;
-              }
-          }
-  </style>
+      @media (min-width: 768px) {
+            body {
+                font-family: "lato-bold" !important;
+            }
+        }
+</style>
 </head>
 
 <body>
