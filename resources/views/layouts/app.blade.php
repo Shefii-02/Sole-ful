@@ -33,7 +33,7 @@
 
     @stack('header')
 
-    <script type="text/javascript"
+    {{-- <script type="text/javascript"
         src="https://platform-api.sharethis.com/js/sharethis.js#property=678d3d239b23f500127153b0&product=inline-share-buttons&source=platform"
         async="async"></script>
     <style>
@@ -387,7 +387,7 @@
         body {
             font-family: "lato-bold" !important;
         }
-    </style>
+    </style> --}}
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0QQTEYFCNM"></script>
