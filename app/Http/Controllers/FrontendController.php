@@ -51,7 +51,9 @@ class FrontendController extends Controller
         $featuredProduct        = FeaturedProduct::get();
         $blogs                  = BlogPost::orderBy('created_at', 'desc')->get();
         $productOffer           = Advertisement::where('text', 'product')->inRandomOrder()->limit(1)->first();
-        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs', 'productOffer'));
+        $offerAdvertisements = \App\Models\Advertisement::where('text','offer')->select('image','redirection')->get();
+     
+        return view('frontend.index', compact('slider_in_desktop', 'slider_in_mobile', 'bestSellProduct', 'featuredProduct', 'blogs', 'productOffer','offerAdvertisements'));
     }
 
     public function getWishlist(Request $request)
