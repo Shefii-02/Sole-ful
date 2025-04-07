@@ -14,9 +14,9 @@
     <link rel="icon" type="image/x-icon" href="/assets/img/logo/logo.png">
     {{-- <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon" /> --}}
     <!--=== All Plugins CSS ===-->
-    <link href="/assets/css/plugins.css?v=1.3" rel="stylesheet">
+    <link href="/assets/css/plugins.css?v=1.4" rel="stylesheet">
     <!--=== All Vendor CSS ===-->
-    <link href="/assets/css/vendor.css?v=1.3" rel="stylesheet">
+    <link href="/assets/css/vendor.css?v=1.4" rel="stylesheet">
     <!--=== Main Style CSS ===-->
     <link href="/assets/css/style.css?v=1.2" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -27,8 +27,9 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net"> --}}
+    {{-- <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
 
@@ -387,7 +388,8 @@
         }
 
         body {
-            font-family: "lato-bold" !important;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
         }
     </style>
 
@@ -403,6 +405,14 @@
 
         gtag('config', 'G-0QQTEYFCNM');
     </script>
+    <style>
+        @media (min-width: 768px) {
+              body {
+                font-family: 'Lato', sans-serif;
+                font-weight: 700;
+              }
+          }
+  </style>
 </head>
 
 <body>
@@ -1153,13 +1163,7 @@
 
         });
     </script>
-<style>
-      @media (min-width: 768px) {
-            body {
-                font-family: "lato-bold" !important;
-            }
-        }
-</style>
+
 </body>
 
 </html>
