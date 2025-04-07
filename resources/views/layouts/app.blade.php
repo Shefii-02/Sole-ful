@@ -1152,11 +1152,11 @@
         });
     </script>
 <style>
-      /* @media (min-width: 768px) {
+      @media (max-width: 768px) {
             body {
                 font-family: "lato-bold" !important;
             }
-        } */
+        }
 </style>
 </body>
 
