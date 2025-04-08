@@ -28,7 +28,7 @@ class CheckoutFormRequest extends FormRequest
             's_phone' => [
                 'required',
                 'string',
-                'regex:/^[6789]\d{12}$/', // Validate 10 digit mobile numbers starting with 7, 8, or 9
+                'regex:/^[6789]\d{3,14}$/', // Validate 10 digit mobile numbers starting with 7, 8, or 9
             ],
             's_address' => 'required|string',
             's_locality' => 'required|string',
