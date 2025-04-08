@@ -31,7 +31,6 @@
     {{-- <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
 
     @stack('header')
 
@@ -42,13 +41,13 @@
         :root,
         [data-bs-theme=light].:host,
         html {
-            --bs-body-font-family: "lato-bold" !important;
+            --bs-body-font-family: Arial, Helvetica, sans-serif !important;
         }
 
       
 
         .font-family-lato {
-            font-family: "lato-bold" !important;
+            font-family: Arial, Helvetica, sans-serif !important;
         }
 
         .product-listing .cart-item,
@@ -387,7 +386,7 @@
         }
 
         body {
-            font-family: "lato-bold" !important;
+            font-family: Arial, Helvetica, sans-serif !important;
         }
     </style>
 
@@ -406,7 +405,7 @@
     <style>
       @media (min-width: 768px) {
             body {
-                font-family: "lato-bold" !important;
+                font-family: Arial, Helvetica, sans-serif !important;
             }
         }
 </style>

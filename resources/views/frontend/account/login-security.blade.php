@@ -1,5 +1,29 @@
 @extends('layouts.app')
 @push('header')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" rel="stylesheet">
+<style>
+    .intl-tel-input,
+    .iti {
+        width: 100%;
+    }
+</style>
+@endpush
+@push('footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
+    <script>
+        $("#mobile").intlTelInput({
+            initialCountry: "in",
+            separateDialCode: false,
+            nationalMode: true,
+            formatOnDisplay: false,
+            // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
+        });
+        $('form').on('submit', function () {
+            var code = $("#mobile").intlTelInput("getSelectedCountryData").dialCode;
+            var phoneNumber = $('#mobile').val();
+            $("#mobile").val(code+phoneNumber); // This will replace the input value with full number (+91xxxx)
+        });
+    </script>
 @endpush
 @section('content')
     <section class="product-listing-banner">
@@ -91,13 +115,13 @@
         aria-labelledby="new_ModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title py-3 fs-5 fw-bold" id="new_ModalLabel">Edit Phone Number</h5>
+                <div class="modal-header justify-between">
+                    <h5 class="modal-title py-3 fs-5 fw-bold" id="new_ModalLabel">Edit Login and Security</h5>
                     <i class=" cursor-pointer fa fa-times text-dark fa-2x" data-bs-dismiss="modal" aria-label="Close"></i>
                 </div>
                 <div class="modal-body">
 
-                    <form action="{{ url('myaccount/login-security') }}" class="row" novalidate id="profile_edit"
+                    <form action="{{ route('account.profile.update') }}" class="row" novalidate id="profile_edit"
                         method="POST">
                         @csrf()
                         <div class="col-lg-12 form-group mb-2">
@@ -112,7 +136,7 @@
                         </div>
                         <div class="col-lg-12 form-group mb-2">
                             <label class="mb-2" for="">Phone Number</label>
-                            <input type="text" autocomplete="off" form="profile_edit" required
+                            <input type="text" autocomplete="off" id="mobile" form="profile_edit" required
                                 value="{{ $account->mobile }}" class="form-control" name="mobile">
                         </div>
                     </form>
@@ -131,13 +155,13 @@
         aria-labelledby="new_ModalLabel" aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header justify-between">
                     <h5 class="modal-title py-3 fs-5 fw-bold" id="new_ModalLabel">Reset Password</h5>
                     <i class=" cursor-pointer fa fa-times text-dark fa-2x" data-bs-dismiss="modal"
                         aria-label="Close"></i>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ url('myaccount/login-security/password-edit') }}" class="validated not-ajax"
+                    <form action="{{ route('account.profile.reset-password') }}" class="validated not-ajax"
                         id="password_edit" method="POST">
                         @csrf()
                         <div class="col-lg-12 form-group mb-2">

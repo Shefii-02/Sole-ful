@@ -171,13 +171,13 @@ class AccountController extends Controller
     {
 
         $acc        = User::whereId($this->userId)->first() ?? abort(404);
-        $acc->firstname = $request->firstname;
-        $acc->lastname  = $request->lastname;
-        $acc->name      = $request->firstname . ' ' . $request->lastname;
+        $acc->name      = $request->name;
         $acc->email = $request->email;
-        $acc->phone = $request->phone;
+        $acc->mobile = $request->mobile;
         try {
-            $acc->save();
+   
+            $acc->save();  
+    
             session()->flash('success', 'The profile has been successfully updated.');
             return redirect()->back();
         } catch (Exception $e) {

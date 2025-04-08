@@ -298,7 +298,7 @@
                                                             <div class="my-2">
                                                                 <small>Colors :
                                                                     @foreach ($similarProduct->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
-                                                                        <i class="text-grey">{{ $abColor }},</i>
+                                                                        <i class="text-grey text-capitalize">{{ strtolower($abColor) }},</i>
                                                                     @endforeach
                                                                 </small>
                                                             </div>

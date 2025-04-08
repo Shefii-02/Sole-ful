@@ -1,27 +1,50 @@
 @extends('layouts.app')
 @push('header')
     {{-- <link href="{{ asset('assets/admin/style.css') }}" rel="stylesheet"> --}}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" rel="stylesheet">
+    <style>
+        .intl-tel-input,
+        .iti {
+            width: 100%;
+        }
+    </style>
+@endpush
+@push('footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
+    <script>
+        $("#mobile_code").intlTelInput({
+            initialCountry: "in",
+            separateDialCode: true,
+            // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
+        });
+        $('form').on('submit', function () {
+            var code = $("#mobile_code").intlTelInput("getSelectedCountryData").dialCode;
+            var phoneNumber = $('#mobile_code').val();
+            $("#mobile_code").val(code+phoneNumber); // This will replace the input value with full number (+91xxxx)
+        });
+    </script>
 @endpush
 @section('content')
-<!-- breadcrumb area start -->
-<div class="breadcrumb-area bg-img pt-12" data-bg="assets/img/breadcrumb-banner.webp">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="breadcrumb-wrap text-center">
-                    <nav aria-label="breadcrumb">
-                        <h1 class="breadcrumb-title">Sign up your Account</h1>
-                        <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Sign up</li>
-                        </ul>
-                    </nav>
+    <!-- breadcrumb area start -->
+    <div class="breadcrumb-area bg-img pt-12" data-bg="assets/img/breadcrumb-banner.webp">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-wrap text-center">
+                        <nav aria-label="breadcrumb">
+                            <h1 class="breadcrumb-title">Sign up your Account</h1>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Sign up</li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- breadcrumb area end -->
+    <!-- breadcrumb area end -->
 
     <div class="container" style="padding:  3.5rem 0;">
         <div class="row justify-content-center">
@@ -76,19 +99,12 @@
                                             <label class="mb-2.5 block fs-6 text-black dark:text-white">Mobile
                                                 Number</label>
                                             <div class="relative">
-                                                <span class="absolute left-4 top-3.5">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                                        <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-                                                    </svg>
-                                                </span>
                                                 <input type="text" @error('mobile') is-invalid @enderror" name="mobile"
-                                                    value="{{ old('mobile') }}" autocomplete="off" autofocus
-                                                    placeholder="Enter your number" maxlength="12"
+                                                    id="mobile_code" value="{{ old('mobile') }}" autocomplete="off"
+                                                    autofocus placeholder="Enter your number" maxlength="12"
                                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
                                                     class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+
                                             </div>
                                             @error('mobile')
                                                 <span class="text-danger" role="alert">
@@ -168,7 +184,7 @@
                                                     class="w-10/12 rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             </div>
                                         </div>
-                                        
+
                                         <div class="mb-3 col-lg-6">
                                             <label class="mb-2.5 block fs-6 text-black dark:text-white">Pincode</label>
                                             <div class="relative">
@@ -183,8 +199,11 @@
                                                         </g>
                                                     </svg>
                                                 </span>
-                                                <input type="text" maxlength="6"  @error('postalcode') is-invalid @enderror" data-state="state" data-city="locality" data-msg="s_msg"
-                                                    name="postalcode" value="{{ old('postalcode') }}"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
+                                                <input type="text" maxlength="6"
+                                                    @error('postalcode') is-invalid @enderror" data-state="state"
+                                                    data-city="locality" data-msg="s_msg" name="postalcode"
+                                                    value="{{ old('postalcode') }}"
+                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
                                                     autocomplete="postalcode" placeholder="Enter your postal code"
                                                     class="w-10/12 postal rounded-lg border border-stroke bg-transparent py-2 pl-10 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
                                             </div>
@@ -278,15 +297,16 @@
                             $('#' + Idmsg).text('')
                         } else {
                             $('#' + Idmsg).addClass('text-danger');
-                            $('#' + Idmsg).text('Sorry, we are unable to deliver to this pincode at the moment.')
+                            $('#' + Idmsg).text(
+                                'Sorry, we are unable to deliver to this pincode at the moment.')
 
                         }
 
-                        
+
 
                         $('#' + Idstate).val(response.state)
                         $('#' + Idcity).val(response.city)
-                       
+
                     }
                 });
             }

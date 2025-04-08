@@ -35,7 +35,7 @@ body {
   font-weight: 400;
   line-height: 1.7;
   font-size: 16px;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
@@ -64,7 +64,7 @@ h6 {
   font-weight: 600;
   color: #333333;
   margin-bottom: 0;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 ul {
@@ -656,7 +656,7 @@ fieldset legend {
   position: relative;
   margin-left: 20px;
   padding-left: 20px;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .header-top-settings ul li:before {
@@ -862,7 +862,7 @@ fieldset legend {
   line-height: 1;
   text-transform: uppercase;
   border-radius: 5px;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .main-menu ul li a i {
@@ -2313,7 +2313,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .price-box {
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
   line-height: 1;
 }
 
@@ -2792,7 +2792,7 @@ only screen and (max-width: 767.98px) {
   color: #333333;
   font-size: 15px;
   font-weight: 500;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 /*----- blog post item end -----*/
@@ -2890,7 +2890,7 @@ only screen and (max-width: 767.98px) {
 .comment-section ul li .comment-body h5 {
   font-size: 14px;
   padding-bottom: 5px;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .comment-section ul li .comment-body .comment-post-date {
@@ -3008,7 +3008,7 @@ only screen and (max-width: 767.98px) {
   padding-bottom: 20px;
   display: inline-block;
   text-transform: capitalize;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 @media only screen and (max-width: 575.98px) {
@@ -3090,7 +3090,7 @@ only screen and (max-width: 767.98px) {
   font-weight: 500;
   line-height: 1;
   margin-top: -3px;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
   text-transform: capitalize;
 }
 
@@ -3693,7 +3693,7 @@ only screen and (max-width: 767.98px) {
   font-weight: 500;
   padding-bottom: 10px;
   text-transform: capitalize;
-  font-family: "lato-bold";
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 @media only screen and (max-width: 767.98px) {

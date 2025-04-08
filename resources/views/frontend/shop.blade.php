@@ -112,14 +112,14 @@
                             <!-- single sidebar start -->
                             <div class="sidebar-single">
                                 <div class="sidebar-title">
-                                    <h3>Available Colors</h3>
+                                    <h3 class="text-theme">Available Colors</h3>
                                 </div>
                                 <div class="sidebar-body">
                                     <ul class="color-list">
                                         @foreach ($available_colors->unique('value') ?? [] as $key => $color)
                                             <li role="button" class="d-flex justify-between">
                                                 <label for="{{ 'color-' . $key }}">
-                                                    <span class="text-capitalize">{{ $color->value }}
+                                                    <span class="text-capitalize">{{ strtolower($color->value) }}
                                                         <span>({{ $color->product_count }})</span></span></label>
                                                 <input
                                                     {{ in_array($color->value, request()->colors ?? []) ? 'checked' : '' }}
@@ -136,7 +136,7 @@
                             <!-- single sidebar start -->
                             <div class="sidebar-single ">
                                 <div class="sidebar-title">
-                                    <h3>Size</h3>
+                                    <h3 class="text-theme">Size</h3>
                                 </div>
                                 <div class="sidebar-body">
                                     <ul class="size-list">
@@ -311,14 +311,14 @@
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-title">
-                                <h3>Available Colors</h3>
+                                <h3 class="text-theme">Available Colors</h3>
                             </div>
                             <div class="sidebar-body">
                                 <ul class="color-list">
                                     @foreach ($available_colors->unique('value') ?? [] as $key => $color)
                                         <li role="button" class="d-flex justify-between">
                                             <label for="{{ 'color-' . $key }}">
-                                                <span class="text-capitalize">{{ $color->value }}
+                                                <span class="text-capitalize">{{ strtolower($color->value) }}
                                                     <span>({{ $color->product_count }})</span></span></label>
                                             <input {{ in_array($color->value, request()->colors ?? []) ? 'checked' : '' }}
                                                 form="filter" type="checkbox" name="colors[]"
@@ -334,7 +334,7 @@
                         <!-- single sidebar start -->
                         <div class="sidebar-single">
                             <div class="sidebar-title">
-                                <h3>Size</h3>
+                                <h3 class="text-theme">Size</h3>
                             </div>
                             <div class="sidebar-body">
                                 <ul class="size-list">
@@ -342,7 +342,7 @@
                                     @foreach ($available_sizes->unique('value') ?? [] as $key => $size)
                                         <li role="button" class="d-flex justify-between">
                                             <label for="{{ 'size-' . $key }}">
-                                                <span class="text-capitalize">{{ $size->value }}
+                                                <span class="text-capitalize">{{ strtolower($size->value) }}
                                                     <span>({{ $size->product_count }})</span></span></label>
                                             <input {{ in_array($size->value, request()->sizes ?? []) ? 'checked' : '' }}
                                                 form="filter" type="checkbox" name="sizes[]"

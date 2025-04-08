@@ -81,7 +81,7 @@
                                     <div class="my-2">
                                         <small>Colors :
                                             @foreach ($featuredPdct->product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
-                                                <i class="text-grey">{{ $abColor }},</i>
+                                                <i class="text-grey text-capitalize">{{ strtolower($abColor) }},</i>
                                             @endforeach
                                         </small>
                                     </div>
@@ -140,7 +140,7 @@
                                     <div class="my-2">
                                         <small>Colors :
                                             @foreach ($featuredPdct->product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
-                                                <i class="text-grey">{{ $abColor }},</i>
+                                                <i class="text-grey text-capitalize">{{ strtolower($abColor) }},</i>
                                             @endforeach
                                         </small>
                                     </div>
@@ -246,7 +246,7 @@
                                             <div class="my-2">
                                                 <small>Colors :
                                                     @foreach ($bestPRoduct->product->variationColors->unique('value')->pluck('value') ?? [] as $abColor)
-                                                        <i class="text-grey">{{ $abColor }},</i>
+                                                        <i class="text-grey text-capitalize">{{ strtolower($abColor) }},</i>
                                                     @endforeach
                                                 </small>
                                             </div>
@@ -291,44 +291,7 @@
 <!-- top seller area end -->
 @if ($blogs->count())
     <!-- Latest Blog Area Start -->
-    <section class="latest-blog-area section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title text-center">
-                        <h2 class="title">Our Blog</h2>
-                        <p class="sub-title">Lorem ipsum dolor sit amet consectetur adipisicing</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="blog-carousel-active slick-row-15">
-                        @foreach ($blogs ?? [] as $blog)
-                            <div class="blog-post-item">
-                                <div class="blog-thumb">
-                                    <a href="blog-details.html">
-                                        <img style="height:200px" src="{{ asset('images/' . $blog->image) }}"
-                                            alt="blog thumb">
-                                    </a>
-                                </div>
-                                <div class="blog-content">
-                                    <h5 class="blog-title">
-                                        <a href="blog-details.html">{{ $blog->title }}</a>
-                                    </h5>
-                                    <ul class="blog-meta">
-                                        <li><span>Created at: </span>{{ date('d-M-Y', strtotime($blog->created_at)) }}
-                                        </li>
-                                    </ul>
-                                    <a href="blog-details.html" class="read-more">Read More...</a>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
 @endif
 
 

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <style>
         section.my-account-page .col-lg-10 .col-lg-4 {
             width: 32.3333%;

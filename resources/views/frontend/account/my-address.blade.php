@@ -1,5 +1,12 @@
 @extends('layouts.app')
 @push('header')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css" rel="stylesheet">
+    <style>
+        .intl-tel-input,
+        .iti {
+            width: 100%;
+        }
+    </style>
     <style>
         .myaddress .box {
             border-style: dashed;
@@ -17,6 +24,36 @@
             justify-content: center;
         }
     </style>
+@endpush
+@push('footer')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
+    <script>
+        $("#mobile").intlTelInput({
+            initialCountry: "in",
+            separateDialCode: false,
+            nationalMode: true,
+            formatOnDisplay: false,
+            // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
+        });
+        $('form').on('submit', function () {
+            var code = $("#mobile").intlTelInput("getSelectedCountryData").dialCode;
+            var phoneNumber = $('#mobile').val();
+            $("#mobile").val(code+phoneNumber); // This will replace the input value with full number (+91xxxx)
+        });
+
+        $("#Editphone").intlTelInput({
+            initialCountry: "in",
+            separateDialCode: true,
+            // utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.4/js/utils.js"
+        });
+        $('form').on('submit', function () {
+            var code = $("#Editphone").intlTelInput("getSelectedCountryData").dialCode;
+            var phoneNumber = $('#Editphone').val();
+            $("#Editphone").val(code+phoneNumber); // This will replace the input value with full number (+91xxxx)
+        });
+
+        
+    </script>
 @endpush
 @section('content')
     <section class="product-listing-banner">
@@ -212,7 +249,7 @@
         aria-labelledby="new_ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header justify-between">
                     <h5 class="modal-title py-3 fs-5 fw-bold" id="new_ModalLabel">Edit Address</h5>
                     <i class=" fa fa-times text-dark fa-2x" role="button" data-bs-dismiss="modal"
                         aria-label="Close"></i>
@@ -239,7 +276,7 @@
                         <div class="col-lg-6 form-group mb-2">
                             <label for="Editphone">Phone Number</label>
                             <input class="form-control phone_field @error('mobile') is-invalid @enderror"
-                                autocomplete="off" value="{{ old('mobile') }}" type="text" name="mobile"
+                                autocomplete="off" value="{{ old('mobile') }}" type="text" name="mobile" 
                                 id="Editphone" minlength="10" maxlength="10" placeholder="">
                             @error('mobile')
                                 <span class="text-danger">{{ $message }}</span>
