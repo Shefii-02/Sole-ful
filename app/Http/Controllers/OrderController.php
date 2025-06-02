@@ -76,7 +76,8 @@ class OrderController extends Controller
     {
         $order = Order::where('invoice_id', $invoice_id)->first() ?? abort(404);
         $print = true;
-        return view('admin.orders.print', compact('order', 'print'));
+        // return view('admin.orders.print', compact('order', 'print'));
+        return view('pdf.invoice', compact('order', 'print'));
     }
 
 

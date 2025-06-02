@@ -39,6 +39,10 @@ Route::get('customerOrderNotification', function () {
 // });
 
 
+    Route::get('invoice', function () {
+        return view('pdf.invoice');
+    })->name('invoice');
+
 
 Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
 
@@ -192,4 +196,6 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
 
     Route::resource('blogs', BlogPostController::class)->names('blogs');
     Route::resource('blog-category', BlogCategoryController::class)->names('blogs-category');
+
+
 });
