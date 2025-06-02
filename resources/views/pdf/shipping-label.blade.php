@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Shipping Label</title>
     <style>
         @page {
-            size: 4in 6in; /* Specify exact size */
-            margin: 0; /* Remove default margin */
+            size: 4in 6in;
+            /* Specify exact size */
+            margin: 0;
+            /* Remove default margin */
         }
 
         body {
             width: 4in;
             height: 6in;
             margin: 0;
-            padding: 10px; /* Adjust padding as needed */
+            padding: 10px;
+            /* Adjust padding as needed */
             font-family: Arial, sans-serif;
             line-height: 1.4;
             box-sizing: border-box;
@@ -42,38 +46,43 @@
         }
     </style>
 </head>
+
 <body>
 
     <h2>Ship To:</h2>
     @if ($order->deliveryAddress)
         <p>{{ $order->deliveryAddress->name }}<br>
-           {{ $order->deliveryAddress->address }}<br>
-           #{{ $order->deliveryAddress->house_no }},{{ $order->deliveryAddress->house_name }}<br>
-           {{ $order->deliveryAddress->landmark }}<br>
-           {{ $order->deliveryAddress->pincode }}, {{ $order->deliveryAddress->locality }}, {{ $order->deliveryAddress->state }}<br>
+            {{ $order->deliveryAddress->address }}<br>
+            {{-- #{{ $order->deliveryAddress->house_no }},{{ $order->deliveryAddress->house_name }}<br> --}}
+            {{ $order->deliveryAddress->landmark }}<br>
+            {{ $order->deliveryAddress->pincode }}, {{ $order->deliveryAddress->locality }},
+            {{ $order->deliveryAddress->state }}<br>
         </p>
     @else
         <p>No delivery address available.</p>
     @endif
 
-    <p>Phone: 919886008064 / 9901711315</p>
+    <p>Phone: {{ $order->deliveryAddress->mobile }}
+        {{ $order->billingAddress->mobile != $order->deliveryAddress->mobile ? '/' . $order->billingAddress->mobile : '' }}
+    </p>
 
     <div class="separator"></div>
 
     <h2>From:</h2>
     <p>Soleful Ahdhia,<br>
-       #5, 1st floor, Geddalahalli,<br>
-       Hennur Bagalur Main Road, Bangalore - 560077.</p>
+        #5, 1st floor, Geddalahalli,<br>
+        Hennur Bagalur Main Road, Bangalore - 560077.</p>
     <p>Website: <a href="http://www.soleful.in">www.soleful.in</a><br>
-       Email: <a href="mailto:relationship@soleful.in">relationship@soleful.in</a><br>
-       Phone: +91 79966 66225</p>
+        Email: <a href="mailto:relationship@soleful.in">relationship@soleful.in</a><br>
+        Phone: +91 79966 66225</p>
 
     <div class="separator"></div>
 
     <h2>Mode of Payment:</h2>
     <p>Prepaid</p>
-  <script>
+    <script>
         window.print();
     </script>
 </body>
+
 </html>

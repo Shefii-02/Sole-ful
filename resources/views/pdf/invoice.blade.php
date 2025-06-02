@@ -100,7 +100,7 @@
                 @if ($order->billingAddress)
                     <p>{{ $order->billingAddress->name }}<br>
                         {{ $order->billingAddress->address }}<br />
-                        #{{ $order->billingAddress->house_no }},{{ $order->billingAddress->house_name }}
+                        {{-- #{{ $order->billingAddress->house_no }},{{ $order->billingAddress->house_name }} --}}
                         {{ $order->billingAddress->landmark }}<br>
                         {{ $order->billingAddress->locality }},{{ $order->billingAddress->pincode }}.
 
@@ -123,7 +123,7 @@
                 @if ($order->deliveryAddress)
                     <p>{{ $order->deliveryAddress->name }}<br>
                         {{ $order->deliveryAddress->address }}<br />
-                        #{{ $order->deliveryAddress->house_no }},{{ $order->deliveryAddress->house_name }}<br />
+                        {{-- #{{ $order->deliveryAddress->house_no }},{{ $order->deliveryAddress->house_name }}<br /> --}}
                         {{ $order->deliveryAddress->landmark }},<br />
                        {{ $order->deliveryAddress->locality }},{{ $order->deliveryAddress->pincode }}.
                     </p>
