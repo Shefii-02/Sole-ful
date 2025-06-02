@@ -23,6 +23,11 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+      public function product()
+    {
+        return $this->hasOne(Product::class);
+    }
+
     public function variationKeys()
     {
         return $this->hasMany(VariationKey::class);

@@ -31,28 +31,28 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         //
-       // Start building the query
-       $products = Product::whereHas('product_variation', function ($query) use ($request) {
-        // Order variations by in_stock
-        $query->orderBy('in_stock', 'asc');
-
-        // Check if SKU filter is applied
-        if ($request->has('sku') && $request->sku != '') {
-            $query->where('sku', $request->sku); // Filter variations by SKU
-        }
-    })
-        ->with(['product_variation' => function ($query) {
+        // Start building the query
+        $products = Product::whereHas('product_variation', function ($query) use ($request) {
             // Order variations by in_stock
             $query->orderBy('in_stock', 'asc');
-        }]);
 
-    // Check if product_id filter is applied
-    if ($request->has('product_id') && $request->product_id != '') {
-        $products = $products->where('unique_value', $request->product_id); // Filter by product_id
-    }
+            // Check if SKU filter is applied
+            if ($request->has('sku') && $request->sku != '') {
+                $query->where('sku', $request->sku); // Filter variations by SKU
+            }
+        })
+            ->with(['product_variation' => function ($query) {
+                // Order variations by in_stock
+                $query->orderBy('in_stock', 'asc');
+            }]);
 
-    // Get the products with their variations
-    $products = $products->orderBy('created_at','desc')->get();
+        // Check if product_id filter is applied
+        if ($request->has('product_id') && $request->product_id != '') {
+            $products = $products->where('unique_value', $request->product_id); // Filter by product_id
+        }
+
+        // Get the products with their variations
+        $products = $products->orderBy('created_at', 'desc')->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -561,9 +561,7 @@ class ProductController extends Controller
 
     public function featuredProductsUpdate(Request $request)
     {
-
         FeaturedProduct::query()->delete();
-
         foreach ($request->featuredProducts ?? [] as $item) {
             $best = new FeaturedProduct();
             $best->product_id = $item;
@@ -577,6 +575,23 @@ class ProductController extends Controller
 
 
 
+    public function MrpStickers(Request $request)
+    {
+        $products = Product::get();
+        return view('admin.products.mrp-stickers', compact('products'));
+    }
+
+    public function downloadMrpStickers(Request $request)
+    {
+        $variationIds = $request->input('variation_ids', []);
+        if (empty($variationIds)) {
+            return back()->with('error', 'No variations selected.');
+        }
+
+        $variations = ProductVariant::whereIn('id', $variationIds)->get();
+
+        return view('pdf.mrp-stickers', compact('variations'));
+    }
 
 
 

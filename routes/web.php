@@ -40,9 +40,9 @@ Route::get('customerOrderNotification', function () {
 // });
 
 
-    Route::get('shipping-label', function () {
-        return view('pdf.shipping-label');
-    })->name('invoice');
+Route::get('mrp-sticker', function () {
+    return view('pdf.mrp-sticker');
+});
 
 
 Route::get('home', 'App\Http\Controllers\FrontendController@home')->name('home');
@@ -155,6 +155,8 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
     Route::any('/products/product_no-check', [ProductController::class, 'productNoCheck'])->name('products.product_no-check');
     Route::any('/products/sku-check', [ProductController::class, 'skuCheck'])->name('products.sku-check');
     Route::any('/products/generate-autosku', [ProductController::class, 'generateAutosku'])->name('products.generate-autosku');
+    Route::get('/products/mrp-stickers', [ProductController::class, 'MrpStickers'])->name('products.mrp-stickers');
+    Route::post('/products/download-mrp-stickers', [ProductController::class, 'downloadMrpStickers'])->name('products.downloadMrpStickers');
 
     Route::resource('products', ProductController::class)->names('products');
 
@@ -164,11 +166,11 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
     Route::get('orders/deliveried', [OrderController::class, 'deliveried'])->name('orders.deliveried');
     Route::get('orders/cancelled', [OrderController::class, 'cancelled'])->name('orders.cancelled');
     Route::get('orders/undelivered', [OrderController::class, 'undelivered'])->name('orders.undelivered');
-    
+
     Route::post('orders/{invoice_id}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('orders/{invoice_id}/print', [OrderController::class, 'printInvoice'])->name('orders.print');
     Route::get('orders/{invoice_id}/print-shipping-label', [OrderController::class, 'printShippingLabel'])->name('orders.print-shipping-label');
-    
+
     Route::get('orders/{invoice_id}', [OrderController::class, 'show'])->name('orders.show');
 
 
@@ -183,7 +185,7 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
     Route::post('pincodes', [DeliveryPincodeController::class, 'importPincodes'])->name('pincodes.post');
     Route::post('pincodes/download', [DeliveryPincodeController::class, 'importPincodes'])->name('pincodes.download');
 
-    
+
 
 
 
@@ -199,6 +201,4 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
 
     Route::resource('blogs', BlogPostController::class)->names('blogs');
     Route::resource('blog-category', BlogCategoryController::class)->names('blogs-category');
-
-
 });
