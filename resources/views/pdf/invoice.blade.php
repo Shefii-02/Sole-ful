@@ -154,6 +154,7 @@
             <tr>
                 <th>Sl. No.</th>
                 <th>Description</th>
+                <th>HSN</th>
                 <th>Quantity</th>
                 <th>Rate (₹)</th>
                 {{-- <th>Discount</th> --}}
@@ -190,54 +191,68 @@
 
             <tbody>
                 @foreach ($order->basket->items as $key => $item)
+                    @php
+                        $totalAmount = $item->quantity * $item->price_amount;
+                        if ($totalAmount < 1000) {
+                            $cgstRate = 6;
+                            $sgstRate = 6;
+                        } else {
+                            $cgstRate = 9;
+                            $sgstRate = 9;
+                        }
+                        $cgstAmount = ($cgstRate / 100) * $totalAmount;
+                        $sgstAmount = ($sgstRate / 100) * $totalAmount;
+                    @endphp
                     <tr>
                         <td style="text-align: center">{{ $key + 1 }}</td>
-                        <td>{{ $item->product_name }}<br>
-                            SKU : {{ $item->product_sku }}
-                        </td>
-                        {{-- <td>{{ $item->product_sku }}</td> --}}
+                        <td>{{ $item->product_name }}<br>SKU : {{ $item->product_sku }}</td>
+                        <td>64059000</td>
                         <td style="text-align:center">{{ $item->quantity }}</td>
                         <td style="text-align:right">{{ number_format($item->price_amount, 2) }}</td>
-                        {{-- <td style="text-align:center">-</td> --}}
-                        <td style="text-align: right">{{ number_format($item->quantity * $item->price_amount, 2) }}
-                        </td>
+                        <td style="text-align:right">{{ number_format($totalAmount, 2) }}</td>
+                        {{-- IGST (If needed, but in your example it's blank) --}}
                         <td style="text-align:center;padding:0;">
                             <div style="width:100%;display:flex;">
                                 <div
-                                    style="width: 30%;border-right:1px solid #000;height:110px;padding:5px;display:flex;align-items:center;justify-content:center;">
-                                    -</div>
+                                    style="width:30%;border-right:1px solid #000;height:110px;padding:5px;display:flex;align-items:center;justify-content:center;">
+                                    -
+                                </div>
                                 <div
-                                    style="width: 70%;padding:5px;height:110px;display:flex;align-items:center;justify-content:center;">
-                                    -</div>
+                                    style="width:70%;padding:5px;height:110px;display:flex;align-items:center;justify-content:center;">
+                                    -
+                                </div>
                             </div>
                         </td>
+                        {{-- CGST --}}
                         <td style="text-align:center;padding:0;">
                             <div style="width:100%;display:flex;">
                                 <div
-                                    style="width: 30%;border-right:1px solid #000;height:110px;padding:5px;display:flex;align-items:center;justify-content:center;">
-                                    9%
+                                    style="width:30%;border-right:1px solid #000;height:110px;padding:5px;display:flex;align-items:center;justify-content:center;">
+                                    {{ $cgstRate }}%
                                 </div>
                                 <div
-                                    style="width: 70%;padding:5px;height:110px;display:flex;align-items:center;justify-content:center;">
-                                    {{ (9 / 100) * ($item->quantity * $item->price_amount) }}
+                                    style="width:70%;padding:5px;height:110px;display:flex;align-items:center;justify-content:center;">
+                                    {{ number_format($cgstAmount, 2) }}
                                 </div>
                             </div>
                         </td>
+                        {{-- SGST --}}
                         <td style="text-align:center;padding:0;">
                             <div style="width:100%;display:flex;">
                                 <div
-                                    style="width: 30%;border-right:1px solid #000;height:110px;padding:5px;display:flex;align-items:center;justify-content:center;">
-                                    9%
+                                    style="width:30%;border-right:1px solid #000;height:110px;padding:5px;display:flex;align-items:center;justify-content:center;">
+                                    {{ $sgstRate }}%
                                 </div>
                                 <div
-                                    style="width: 70%;padding:5px;height:110px;display:flex;align-items:center;justify-content:center;">
-                                    {{ (9 / 100) * ($item->quantity * $item->price_amount) }}
+                                    style="width:70%;padding:5px;height:110px;display:flex;align-items:center;justify-content:center;">
+                                    {{ number_format($sgstAmount, 2) }}
                                 </div>
                             </div>
                         </td>
-
                     </tr>
                 @endforeach
+
+
 
                 <tr>
                     <th colspan="10">

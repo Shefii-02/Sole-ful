@@ -39,8 +39,8 @@ Route::get('customerOrderNotification', function () {
 // });
 
 
-    Route::get('invoice', function () {
-        return view('pdf.invoice');
+    Route::get('product-slip', function () {
+        return view('pdf.product-slip');
     })->name('invoice');
 
 

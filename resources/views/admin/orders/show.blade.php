@@ -54,10 +54,16 @@
                         Invoice Id : {{ $order->invoice_id }}
                     </li>
                 </ol>
+                
                 <div class="text-end ">
                     <a href="{{ route('admin.orders.print', $order->invoice_id) }}" target="_new"
                         class="btn btn-theme button-1 text-white ctm-border-radius p-1 cursor-pointer mr-2">
                         Print Invoice</a>
+                </div>
+                <div class="text-end mt-3">
+                    <a href="{{ route('admin.orders.print', $order->invoice_id) }}" target="_new"
+                        class="btn btn-theme button-1 text-white ctm-border-radius p-1 cursor-pointer mr-2">
+                        Print Shipping Label</a>
                 </div>
             </nav>
         </div>
@@ -220,7 +226,8 @@
                         </h3>
                         @if ($order->verified_at)
                             <br>
-                            <h6> Order Verified at : {{ dateFormat($order->verified_at) . ' ' . TimeFormat($order->verified_at) }}</h6>
+                            <h6> Order Verified at :
+                                {{ dateFormat($order->verified_at) . ' ' . TimeFormat($order->verified_at) }}</h6>
                         @endif
                         @if ($order->status == 'pending')
                             <div class="col-lg-12 my-3 d-flex flex-col gap-3">
@@ -311,7 +318,8 @@
                                                         class="icon-box rounded-circle {{ $currentStep >= $step ? 'bg-success text-white' : 'bg-secondary text-light' }}">
                                                         <i class="fa-solid fa-{{ getIcon($state) }}"></i>
                                                     </div>
-                                                    <span class="mb-0 text-sm text-capitalize text-center w-100 ms-3 d-flex flex-column">
+                                                    <span
+                                                        class="mb-0 text-sm text-capitalize text-center w-100 ms-3 d-flex flex-column">
                                                         {!! str_replace('_', ' ', strtolower($state)) !!}
                                                         <hr size="2"
                                                             class="w-100 h-1 {{ $currentStep >= $step ? 'bg-success' : 'bg-secondary' }}">
@@ -358,12 +366,13 @@
                             font-weight: bold;
                         }
 
-                        hr{
+                        hr {
                             border: none;
                             height: 3px;
                             margin-top: 5px;
                         }
-                        hr.bg-success{
+
+                        hr.bg-success {
                             background: green !important;
                             color: green;
                             opacity: inherit;
