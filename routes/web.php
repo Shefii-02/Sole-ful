@@ -33,14 +33,15 @@ Route::get('customerOrderNotification', function () {
     dd(1);
     return view('email.customerOrderNotification123', compact('order'));
 });
+
 // Route::get('adminOrderNotification', function () { 
 //     $order = Order::orderBy('id','desc')->first();
 //    return view('email.adminOrderNotification',compact('order'));
 // });
 
 
-    Route::get('product-slip', function () {
-        return view('pdf.product-slip');
+    Route::get('shipping-label', function () {
+        return view('pdf.shipping-label');
     })->name('invoice');
 
 
@@ -166,6 +167,8 @@ Route::group(['middleware' => ['auth:web', 'check.account.admin'], 'prefix' => '
     
     Route::post('orders/{invoice_id}/update', [OrderController::class, 'update'])->name('orders.update');
     Route::get('orders/{invoice_id}/print', [OrderController::class, 'printInvoice'])->name('orders.print');
+    Route::get('orders/{invoice_id}/print-shipping-label', [OrderController::class, 'printShippingLabel'])->name('orders.print-shipping-label');
+    
     Route::get('orders/{invoice_id}', [OrderController::class, 'show'])->name('orders.show');
 
 

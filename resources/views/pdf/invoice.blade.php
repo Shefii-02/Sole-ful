@@ -102,7 +102,7 @@
                         {{ $order->billingAddress->address }}<br />
                         #{{ $order->billingAddress->house_no }},{{ $order->billingAddress->house_name }}
                         {{ $order->billingAddress->landmark }}<br>
-                        {{ $order->billingAddress->pincode }},{{ $order->billingAddress->locality }},
+                        {{ $order->billingAddress->locality }},{{ $order->billingAddress->pincode }}.
 
                     </p>
                 @else
@@ -125,8 +125,7 @@
                         {{ $order->deliveryAddress->address }}<br />
                         #{{ $order->deliveryAddress->house_no }},{{ $order->deliveryAddress->house_name }}<br />
                         {{ $order->deliveryAddress->landmark }},<br />
-                        {{ $order->deliveryAddress->pincode }},{{ $order->deliveryAddress->locality }},
-                        {{ $order->deliveryAddress->state }}<br>
+                       {{ $order->deliveryAddress->locality }},{{ $order->deliveryAddress->pincode }}.
                     </p>
                     Place of supply: KARNATAKA<br>
                     Place of Delivery: {{ $order->deliveryAddress->state }}

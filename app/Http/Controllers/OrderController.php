@@ -80,6 +80,11 @@ class OrderController extends Controller
         return view('pdf.invoice', compact('order', 'print'));
     }
 
+    public function printShippingLabel($invoice_id){
+          $order = Order::where('invoice_id', $invoice_id)->first() ?? abort(404);
+           return view('pdf.shipping-label', compact('order'));
+    }
+
 
     /**
      * Show the form for creating a new resource.

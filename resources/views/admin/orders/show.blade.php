@@ -61,7 +61,7 @@
                         Print Invoice</a>
                 </div>
                 <div class="text-end mt-3">
-                    <a href="{{ route('admin.orders.print', $order->invoice_id) }}" target="_new"
+                    <a href="{{ route('admin.orders.print-shipping-label', $order->invoice_id) }}" target="_new"
                         class="btn btn-theme button-1 text-white ctm-border-radius p-1 cursor-pointer mr-2">
                         Print Shipping Label</a>
                 </div>
