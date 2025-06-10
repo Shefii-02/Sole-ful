@@ -21,7 +21,9 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            justify-content: flex-start;
+            /* justify-content: flex-start; */
+
+            justify-content: space-between;
         }
 
         .label {
@@ -35,6 +37,11 @@
             justify-content: space-between;
             align-items: flex-start;
             page-break-inside: avoid;
+        }
+
+        .left,
+        .right {
+            margin-left: 30px;
         }
 
         .left,
@@ -68,7 +75,7 @@
         }
 
         /* @media print { */
-            /* .label {
+        /* .label {
                 border: none;
             } */
         /* } */
@@ -116,7 +123,7 @@
     </div>
 
     <script>
-        window.onload = function () {
+        window.onload = function() {
             window.print();
         };
     </script>
