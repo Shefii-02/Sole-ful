@@ -67,11 +67,11 @@
             margin-top: 2px;
         }
 
-        @media print {
-            .label {
+        /* @media print { */
+            /* .label {
                 border: none;
-            }
-        }
+            } */
+        /* } */
     </style>
 </head>
 
@@ -89,8 +89,8 @@
                             Universal Exports,<br>
                             Gala No 101 to 108,<br>
                             Arihant Commercial Complex,<br>
-                            Koper Bus Stop, Purna Village, Bhiwandi,<br>
-                            Dist-Thane 421302</p>
+                            Koper Bus Stop, Purna Village, <br>
+                            Bhiwandi,Dist-Thane 421302</p>
                     </div>
                     <div class="right">
                         <p>
