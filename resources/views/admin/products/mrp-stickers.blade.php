@@ -77,6 +77,7 @@
                                         <th class="p-2"></th>
                                         <th class="p-2">Image</th>
                                         <th class="p-2">Variation</th>
+                                        <th class="p-2">Stock</th>
                                         <th class="p-2">SKU</th>
                                         <th class="p-2">MRP</th>
                                     </tr>
@@ -93,6 +94,7 @@
                                                     class="w-12 h-12 rounded-md object-cover">
                                             </td>
                                             <td class="p-2">{{ $variation->variation_name }}</td>
+                                            <td class="p-2">{{ $variation->in_stock }}</td>
                                             <td class="p-2">{{ $variation->sku }}</td>
                                             <td class="p-2">{{ $variation->price }}</td>
                                         </tr>

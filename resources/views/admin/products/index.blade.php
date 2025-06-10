@@ -63,21 +63,18 @@
                                 <button class="btn btn-info mx-4" type="submit">Search</button>
                             </div>
                         </form>
-                       
-
 
                     </div>
-                     <diiv class="d-flex justify-content-end gap-2 mt-3">
-                     
-                                <a class=" bg-info hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
-                                    href="{{ route('admin.products.mrp-stickers') }}">
-                                    MRP Stickers
-                                </a>
-                                <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
-                                    href="{{ route('admin.products.create') }}">
-                                    Create
-                                </a>
-                        </diiv>
+                    <diiv class="d-flex justify-content-end gap-2 mt-3">
+                        <a class=" bg-info hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
+                            href="{{ route('admin.products.mrp-stickers') }}">
+                            MRP Stickers
+                        </a>
+                        <a class="bg-primary bg-warning hover:bg-opacity-90 inline-flex items-center justify-center px-6 py-2 rounded-md text-center text-sm text-white"
+                            href="{{ route('admin.products.create') }}">
+                            Create
+                        </a>
+                    </diiv>
                 </div>
                 <div class="border-b border-stroke px-4 pb-2 dark:border-strokedark md:px-6 xl:px-7.5">
                     <div class="flex justify-between items-center gap-x-6">
